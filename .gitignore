@@ -26,3 +26,32 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+# OS X
+.DS_Store*
+Icon?
+._*
+
+hosts.txt
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+.running
+*~
+
+
+# npm
+node_modules
+*.log
+*.gz
+
+
+# Coveralls
+coverage
+
+# Benchmarking
+benchmarks/graphs
