@@ -69,18 +69,20 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		if (!activeHosts.length) {
 			return;
 		}
-		alert('操作成功。')
+		
 		var content = $('#hostsText').val();
 		
 		if (activeHosts.hasClass('public-hosts')) {
 			$.post('/cgi-bin/hosts/save-public', {name: name, content: content});
-			return;
+		} else {
+			var name = activeHosts.text();
+			hostsData.hostsData[name] = content;
+			$.post('/cgi-bin/hosts/save', {name: name, content: content});
+			var glyphicon = newHostsList.find('.glyphicon-ok').remove();
+			activeHosts.append(glyphicon.length ? glyphicon : glyphiconOk);
 		}
-		var name = activeHosts.text();
-		hostsData.hostsData[name] = content;
-		$.post('/cgi-bin/hosts/save', {name: name, content: content});
-		var glyphicon = newHostsList.find('.glyphicon-ok').remove();
-		activeHosts.append(glyphicon.length ? glyphicon : glyphiconOk);
+		
+		alert('操作成功。');
 	});
 	
 	body.on('click', '.show-hosts', showHostsDialog);
