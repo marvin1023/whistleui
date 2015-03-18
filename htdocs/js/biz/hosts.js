@@ -9,11 +9,20 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			return;
 		}
 		
-		self.closest('.hosts-list').find('.list-group-item').removeClass('active');
+		var hostsList = self.closest('.hosts-list');
+		var activeItem = hostsList.find('.list-group-item').removeClass('active');
+		var hostsName = activeItem.text();
+		
+		if (activeItem.hasClass('public-hosts')) {
+			hostsData.publicHosts = $('#hostsText').val();
+		} else {
+			hostsData.hostsData[hostsName] = $('#hostsText').val();
+		}
+		
 		self.addClass('active');
 		
 		var hostsNav = $('#hostsNav');
-		var hostsName = self.text();
+		hostsName = self.text();
 		
 		hostsNav.find('.hosts-title').text(hostsName);
 		
@@ -79,6 +88,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			activeHosts.append(glyphicon.length ? glyphicon : glyphiconOk);
 		}
 		
+		removeChanged();
 		alert('操作成功。');
 	});
 	
@@ -126,15 +136,11 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 	}
 	
 	function setChanged() {
-		var item = $('#hostsList').find('a.active');
-		var flag = item.find('i').show();
-		if (!flag.length) {
-			item.prepend('<i>*</i>');
-		}
+		$('#hostsList').find('a.active').addClass('changed');
 	}
 	
 	function removeChanged() {
-		$('#hostsList').find('a.active').find('i').hide();
+		$('#hostsList').find('a.active').removeClass('changed');
 	}
 	
 
