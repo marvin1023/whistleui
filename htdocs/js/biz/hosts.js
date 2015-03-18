@@ -59,13 +59,10 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 	});
 	
-	body.on('click', '.apply-hosts,.save-hosts', function() {
+	body.on('click', '.apply-hosts', function() {
 		var self = $(this);
 		var hostsList = $('#hostsList');
 		var activeHosts = hostsList.find('.active');
-		if (self.hasClass('save-hosts')) {
-			$('#hostsDialog').modal('toggle');
-		}
 		if (!activeHosts.length) {
 			return;
 		}
@@ -84,8 +81,6 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		
 		alert('操作成功。');
 	});
-	
-	body.on('click', '.show-hosts', showHostsDialog);
 	
 	var createHostsBtn = $('#createHostsBtn').click(function() {
 		if (createHostsBtn.hasClass('disabled')) {
@@ -114,46 +109,6 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		newHostsList.scrollTop(1000);
 	});
 	
-	function showHostsDialog() {
-		if (hostsData) {
-			$('#hostsDialog').modal();
-		} else {
-			$.ajax({
-				url: '/cgi-bin/hosts/list',
-				dataType: 'json',
-				success: function(data) {
-					if (data) {
-						hostsData = data;
-						$('#hostsDialog').modal();
-						var hostsList = hostsData.hostsList;
-						var curHostsName = hostsData.curHostsName;
-						var hasActive;
-						for (var i = 0, len = hostsList.length; i < len; i++) {
-							var name = hostsList[i];
-							var item = createHosts(name);
-							if (curHostsName == name) {
-								item.append(glyphiconOk).trigger('click');
-								hasActive = true;
-								$('#hostsText').val(formatText(hostsData.hostsData[name]));
-								curHostsName = null;
-							}
-						}
-						if (hostsData.disabled) {
-							$('#publicHosts').find('.glyphicon-ok').hide();
-							$('#enablePublicHosts').prop('checked', false);
-						}
-						updateCreateHostsBtnState();
-						
-						if (!hasActive) {
-							$('#publicHosts').trigger('click');
-						}
-					}
-				}
-			});
-		}
-		
-	}
-	
 	function formatText(text) {
 		return text ? text.replace(/\t/g, '    ') : '';
 	}
@@ -170,5 +125,39 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 	}
 	
-	showHostsDialog();
+
+	$.ajax({
+		url: '/cgi-bin/hosts/list',
+		dataType: 'json',
+		success: function(data) {
+			hostsData = data || {};
+			var hostsList = hostsData.hostsList;
+			var curHostsName = hostsData.curHostsName;
+			var hasActive;
+			for (var i = 0, len = hostsList.length; i < len; i++) {
+				var name = hostsList[i];
+				var item = createHosts(name);
+				if (curHostsName == name) {
+					item.append(glyphiconOk).trigger('click');
+					hasActive = true;
+					$('#hostsText').val(formatText(hostsData.hostsData[name]));
+					curHostsName = null;
+				}
+			}
+			if (hostsData.disabled) {
+				$('#publicHosts').find('.glyphicon-ok').hide();
+				$('#enablePublicHosts').prop('checked', false);
+			}
+			updateCreateHostsBtnState();
+			
+			if (!hasActive) {
+				$('#publicHosts').trigger('click');
+			}
+		
+		},
+		error: function() {
+			alert('加载失败，请重新刷新页面。');
+		}
+	});
+
 });

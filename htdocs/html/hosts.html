@@ -34,7 +34,6 @@ html, body {height: 100%; padding: 0; margin: 0;}
 .hosts .new-hosts-list {overflow-x: hidden; overflow-y: auto; border-right: 1px solid #ddd;}
 .hosts .new-hosts-list .list-group-item {border-radius: 0;}
 .hosts .new-hosts-list .list-group-item:first-child {border-top: none;}
-.hosts .remove-hosts, .hosts .save-hosts {display: none;}
 
 .create-hosts-dialog .new-hosts-name {width: 570px; padding: 0 10px; height: 36px;}
 .hosts .disabled {color: #ccc;}
@@ -56,39 +55,8 @@ html, body {height: 100%; padding: 0; margin: 0;}
 		<textarea id="hostsText" class="hosts-text fill" spellcheck="false" ></textarea>
 		<div class="hosts-footer">
 				<button type="button" class="btn btn-success apply-hosts">应用</button>
-				<button type="button" class="btn btn-primary save-hosts">确定</button>
 		</div>
 	</div>
-</div>
-<div class="modal fade" id="hostsDialog" tabindex="-1">
-  <div class="modal-dialog hosts-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Hosts</h4>
-      </div>
-      <div class="hosts">
-	<div class="hosts-list">
-		<div id="hostsList" class="list-group">
-		  <a id="publicHosts" href="javascript:;" class="list-group-item public-hosts">公用hosts<span class="glyphicon glyphicon-ok"></span></a>
-		  <div id="newHostsList" class="new-hosts-list">
-			  
-		  </div>
-		  <a id="createHostsBtn" href="javascript:;" class="list-group-item create-hosts">+ 新建环境</a>
-		</div>
-	</div>
-	<div class="hosts-rules">
-		<div id="hostsNav" class="hosts-nav">
-			<h6 class="hosts-title"></h6><div class="action-bar"><a href="javascript:;" class="remove-hosts">删除</a><label class="enable-public-hosts"><input id="enablePublicHosts" type="checkbox" checked="checked" /> 启用</label></div>
-		</div>
-		<textarea id="hostsText" class="hosts-text" spellcheck="false" ></textarea>
-		<div class="hosts-footer">
-				<button type="button" class="btn btn-success apply-hosts">应用</button>
-				<button type="button" class="btn btn-primary save-hosts">确定</button>
-		</div>
-	</div>
-</div>
-    </div>
-  </div>
 </div>
 
 <div id="createHostsDialog" class="modal fade create-hosts-dialog">

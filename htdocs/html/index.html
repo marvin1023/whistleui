@@ -5,6 +5,8 @@
 <title>Whistle</title>
 <link href="/style/css/lib/bootstrap.css" rel="stylesheet" />
 <style>
+html, body {height: 100%; padding: 0; margin: 0;}
+
 ::-webkit-scrollbar{ width:10px; height:10px; }
 ::-webkit-scrollbar-button{ width:10px;height:1px; }
 ::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.2); border-radius:8px; min-height: 30px;}
@@ -13,60 +15,48 @@
 ::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}
 
 .hosts-dialog {width: 803px;}
-.hosts {width: 800px; height: 548px; background: #fff;}
-.hosts .hosts-list {float: left; width: 220px; height: 100%;}
-.hosts .hosts-rules {float: right; width: 580px; height: 100%;}
+.hosts {height: 100%; width: 100%; background: #fff; overflow: hidden; display:-moz-box; display:-webkit-box; display:box;}
+.hosts .box-orient-vertical {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}
+.hosts .fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}
+.hosts .hosts-list {width: 300px; height: 100%;}
+.hosts .hosts-rules {width: 580px; height: 100%;}
 .hosts .hosts-nav {height: 40px; border: 1px solid transparent;}
-.hosts .hosts-nav h6 {float: left; margin: 12px 0 0 10px; max-width: 400px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
-.hosts .hosts-nav .action-bar {float: right; margin-top: 10px; padding-right: 10px;}
+.hosts .hosts-nav h6 {float: left; margin: 12px 0 0 10px; max-width: 400px; font-weight: bold; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+.hosts .hosts-nav .action-bar {float: right; margin-top: 10px; padding-right: 20px;}
 .hosts .hosts-text {resize:none; width: 100%; height: 455px; padding: 10px; border: 1px solid #ddd; border-left: none; display: block;}
-.hosts .hosts-footer {height: 52px; text-align: right; padding-right: 10px;}
+.hosts .hosts-footer {height: 52px; text-align: right; padding-right: 30px;}
 .hosts .hosts-footer .btn {margin-left: 20px; margin-top: 10px;}
 .hosts .hosts-list .list-group-item {padding-right: 25px; position: relative;}
 .hosts .public-hosts {border-top-right-radius: 0; margin-bottom: 0; color: #000; border-top: none; font-weight: bold;}
 .hosts .create-hosts { border-bottom-right-radius: 0; line-height: 30px; color: #000; border-bottom: none; font-weight: bold;}
 .hosts .hosts-list .active {color: #fff;}
 .hosts .hosts-list .glyphicon-ok {color: #5bbd72; position: absolute; margin-top: -7px; top: 50%; right: 10px;}
-.hosts .new-hosts-list {height: 453px; overflow-x: hidden; overflow-y: auto; border-right: 1px solid #ddd;}
+.hosts .new-hosts-list {overflow-x: hidden; overflow-y: auto; border-right: 1px solid #ddd;}
 .hosts .new-hosts-list .list-group-item {border-radius: 0;}
 .hosts .new-hosts-list .list-group-item:first-child {border-top: none;}
-.hosts .remove-hosts, .hosts .save-hosts {display: none;}
 
 .create-hosts-dialog .new-hosts-name {width: 570px; padding: 0 10px; height: 36px;}
 .hosts .disabled {color: #ccc;}
 </style>
 </head>
 <body>
-<button type="button" class="btn btn-primary show-hosts" style="margin: 20px 0 0 60px;">打开Hosts</button>
-<div class="modal fade" id="hostsDialog" tabindex="-1">
-  <div class="modal-dialog hosts-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Hosts</h4>
-      </div>
-      <div class="hosts">
-	<div class="hosts-list">
-		<div id="hostsList" class="list-group">
-		  <a id="publicHosts" href="javascript:;" class="list-group-item public-hosts">公用hosts<span class="glyphicon glyphicon-ok"></span></a>
-		  <div id="newHostsList" class="new-hosts-list">
-			  
-		  </div>
-		  <a id="createHostsBtn" href="javascript:;" class="list-group-item create-hosts">+ 新建环境</a>
-		</div>
+<div class="main hosts">
+	<div id="hostsList" class="hosts-list box-orient-vertical list-group">
+	  <a id="publicHosts" href="javascript:;" class="list-group-item public-hosts">公用hosts<span class="glyphicon glyphicon-ok"></span></a>
+	  <div id="newHostsList" class="new-hosts-list fill">
+		  
+	  </div>
+	  <a id="createHostsBtn" href="javascript:;" class="list-group-item create-hosts">+ 新建环境</a>
 	</div>
-	<div class="hosts-rules">
+	<div class="hosts-rules box-orient-vertical fill">
 		<div id="hostsNav" class="hosts-nav">
 			<h6 class="hosts-title"></h6><div class="action-bar"><a href="javascript:;" class="remove-hosts">删除</a><label class="enable-public-hosts"><input id="enablePublicHosts" type="checkbox" checked="checked" /> 启用</label></div>
 		</div>
-		<textarea id="hostsText" class="hosts-text" spellcheck="false" ></textarea>
+		<textarea id="hostsText" class="hosts-text fill" spellcheck="false" ></textarea>
 		<div class="hosts-footer">
 				<button type="button" class="btn btn-success apply-hosts">应用</button>
-				<button type="button" class="btn btn-primary save-hosts">确定</button>
 		</div>
 	</div>
-</div>
-    </div>
-  </div>
 </div>
 
 <div id="createHostsDialog" class="modal fade create-hosts-dialog">
