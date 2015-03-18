@@ -57,7 +57,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		if (e.ctrlKey && e.keyCode == 83) {
 			$('.apply-hosts').trigger('click');
 		}
-	});
+	}).on('input, change', setChanged);
 	
 	body.on('click', '.apply-hosts', function() {
 		var self = $(this);
@@ -123,6 +123,18 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		} else {
 			createHostsBtn.removeClass('disabled');
 		}
+	}
+	
+	function setChanged() {
+		var item = $('#hostsList').find('a.active');
+		var flag = item.find('i').show();
+		if (!flag.length) {
+			item.prepend('<i>*</i>');
+		}
+	}
+	
+	function removeChanged() {
+		$('#hostsList').find('a.active').find('i').hide();
 	}
 	
 
