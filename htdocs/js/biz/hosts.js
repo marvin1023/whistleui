@@ -10,7 +10,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 		
 		var hostsList = self.closest('.hosts-list');
-		var activeItem = hostsList.find('.list-group-item').removeClass('active');
+		var activeItem = hostsList.find('.list-group-item.active').removeClass('active');
 		var hostsName = activeItem.text();
 		
 		if (activeItem.hasClass('public-hosts')) {
