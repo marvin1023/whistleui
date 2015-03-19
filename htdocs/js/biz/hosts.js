@@ -37,6 +37,24 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 	});
 	
+	function addTextChangeEvents() {
+		var hostsList = $('#hostsList');
+		$('#hostsText').on('keyup keypress mouseover mouseout keydown', function() {
+			var activeItem = hostsList.find('.list-group-item.active');
+			if (activeItem.hasClass('public-hosts')) {
+				if (hostsData.publicHosts !== this.value) {
+					setChanged();
+				}
+			} else {
+				if (hostsData.hostsData[activeItem.text()] !== this.value) {
+					setChanged();
+				}
+			}
+		});
+	}
+	
+	addTextChangeEvents();
+	
 	body.on('click', '.enable-public-hosts', function() {
 		var glyphicon = $('#publicHosts').find('.glyphicon-ok');
 		var enable = $('#enablePublicHosts').prop('checked');
