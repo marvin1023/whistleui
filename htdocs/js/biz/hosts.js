@@ -82,7 +82,9 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 	}).keyup(function(e) {
 		if (e.ctrlKey && e.keyCode == 83) {
+			$('#hostsText').blur();
 			$('.apply-hosts').trigger('click');
+			$('#hostsText').focus();
 		}
 	}).on('input, change', setChanged);
 	
@@ -108,7 +110,6 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 		
 		removeChanged();
-		alert('Hosts更新成功。');
 	});
 	
 	var createHostsBtn = $('#createHostsBtn').click(function() {
