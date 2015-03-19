@@ -89,7 +89,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 		
 		removeChanged();
-		alert('操作成功。');
+		alert('Hosts更新成功。');
 	});
 	
 	var createHostsBtn = $('#createHostsBtn').click(function() {
@@ -99,7 +99,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		$('#createHostsDialog').modal();
 	});
 	
-	$('#createHostsNameBtn').click(function() {
+	var createHostsNameBtn = $('#createHostsNameBtn').click(function() {
 		var name = $.trim($('#newHostsName').val());
 		if (!name) {
 			return;
@@ -107,7 +107,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		
 		for (var i in hostsData.hostsData) {
 			if (i == name) {
-				alert('改Hosts已存在。');
+				alert('该名称已存在。');
 				return;
 			}
 		}
@@ -117,6 +117,12 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		updateCreateHostsBtnState();
 		$('#newHostsName').val('');
 		newHostsList.scrollTop(1000);
+	});
+	
+	$('#newHostsName').keyup(function(e) {
+		if (e.keyCode == 13) {
+			createHostsNameBtn.trigger('click');
+		}
 	});
 	
 	function formatText(text) {
