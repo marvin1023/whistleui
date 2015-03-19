@@ -97,6 +97,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		var content = $('#hostsText').val();
 		
 		if (activeHosts.hasClass('public-hosts')) {
+			hostsData.publicHosts = content;
 			$.post('/cgi-bin/hosts/save-public', {name: name, content: content});
 		} else {
 			var name = activeHosts.text();
