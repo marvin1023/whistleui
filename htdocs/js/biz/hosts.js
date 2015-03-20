@@ -76,7 +76,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		
 	});
 	
-	$('#hostsText').keydown(function(e) {
+	$(window).keydown(function(e) {
 		if (e.ctrlKey && e.keyCode == 83) {
 			e.preventDefault();
 		}
