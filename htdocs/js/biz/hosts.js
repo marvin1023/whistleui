@@ -79,6 +79,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 	$(window).keydown(function(e) {
 		if (e.ctrlKey && e.keyCode == 83) {
 			e.preventDefault();
+			return false;
 		}
 	}).keyup(function(e) {
 		if (e.ctrlKey && e.keyCode == 83) {
@@ -86,7 +87,9 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			$('.apply-hosts').trigger('click');
 			$('#hostsText').focus();
 		}
-	}).on('input, change', setChanged);
+	});
+	
+	$('#hostsText').on('input, change', setChanged);
 	
 	body.on('click', '.apply-hosts', function() {
 		var self = $(this);
