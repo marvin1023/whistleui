@@ -58,11 +58,16 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 	addTextChangeEvents();
 	
 	body.on('click', '.enable-public-hosts', function() {
-		var glyphicon = $('#publicHosts').find('.glyphicon-ok');
 		var enable = $('#enablePublicHosts').prop('checked');
+		var glyphicon = $('#publicHosts').find('.glyphicon-ok');
 		enable ? glyphicon.show() : glyphicon.hide();
+		updatePublicHostsState();
 		$.post('/cgi-bin/hosts/enable',{enable: enable ? 1 : 0});
 	});
+	
+	function updatePublicHostsState() {
+		$('#publicHosts').css('color', $('#enablePublicHosts').prop('checked') ? '' : '#ccc');
+	}
 	
 	body.on('click', '.remove-hosts', function() {
 		if (confirm("确认删除？"))  {  
