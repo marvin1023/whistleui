@@ -35,6 +35,8 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			hostsNav.find('.enable-public-hosts').hide();
 			$('#hostsText').val(formatText(hostsData.hostsData[hostsName]));
 		}
+	}).on('dblclick', '.hosts-list .list-group-item', function() {
+		$('.apply-hosts').trigger('click');
 	});
 	
 	function addTextChangeEvents() {
