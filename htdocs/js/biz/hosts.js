@@ -68,7 +68,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 	function updatePublicHostsState() {
 		var enable = $('#enablePublicHosts').prop('checked');
 		$('#publicHosts').css('color', enable ? '' : '#ccc')
-		.attr('title', enable ? '先在启用的自定义分组分别查找找hosts、head协议、匹配规则，如果找不到再到公共hosts找' : '公共hosts已禁用');
+		.attr('title', enable ? '先在启用的自定义分组分别查找找hosts、head协议、匹配规则，如果找不到再到公共hosts找' : '公用hosts已禁用');
 	}
 	
 	body.on('click', '.remove-hosts', function() {
