@@ -98,7 +98,12 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 	});
 	
-	$('#hostsText').on('input, change', setChanged);
+	$('#hostsText').on('input, change', setChanged)
+	.keyup(function(e) {
+		if (e.ctrlKey && e.keyCode == 13) {
+			$('.apply-hosts').trigger('click');
+		}
+	});
 	
 	body.on('click', '.apply-hosts', function() {
 		var self = $(this);
