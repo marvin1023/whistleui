@@ -34,6 +34,7 @@ html, body {height: 100%; padding: 0; margin: 0; overflow: hidden;}
 .hosts .new-hosts-list .list-group-item {border-radius: 0; padding: 15px;}
 .hosts .new-hosts-list .list-group-item:first-child {border-top: none;}
 .hosts .changed:before {content: '*'; margin-right: 5px; color: red; margin-right: 5px;}
+.hosts .help {margin-left: 20px;}
 
 .create-hosts-dialog .new-hosts-name {width: 570px; padding: 0 10px; height: 36px;}
 .hosts .disabled {color: #ccc;}
@@ -50,7 +51,7 @@ html, body {height: 100%; padding: 0; margin: 0; overflow: hidden;}
 	</div>
 	<div class="hosts-rules box-orient-vertical fill">
 		<div id="hostsNav" class="hosts-nav">
-			<h6 class="hosts-title"></h6><div class="action-bar"><a href="javascript:;" class="remove-hosts">删除</a><label class="enable-public-hosts"><input id="enablePublicHosts" type="checkbox" checked="checked" /> 启用</label></div>
+			<h6 class="hosts-title"></h6><div class="action-bar"><a href="javascript:;" class="remove-hosts">删除</a><label class="enable-public-hosts"><input id="enablePublicHosts" type="checkbox" checked="checked" /> 启用</label><a href="https://github.com/avwo/whistle" class="help" target="_blank">帮助</a></div>
 		</div>
 		<textarea id="hostsText" class="hosts-text fill" spellcheck="false" ></textarea>
 		<div class="hosts-footer">
