@@ -167,7 +167,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 	}
 	
 	function createHosts(name) {
-		return $('<a href="javascript:;" class="list-group-item"></a>').text(name).appendTo(newHostsList);
+		return $('<a href="javascript:;" class="list-group-item" title="双击切换环境"></a>').text(name).appendTo(newHostsList);
 	}
 	
 	function updateCreateHostsBtnState() {
