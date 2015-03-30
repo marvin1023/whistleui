@@ -225,9 +225,11 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 				var hosts = hostsData.hostsData[activeItem.text()];
 				if (activeItem.hasClass('public-hosts')) {
 					if((!value && !hostsData.publicHosts) || hostsData.publicHosts == value) {
+						activeItem.removeClass('changed');
 						return;
 					}
 				} else if((!value && !hosts) || hosts == value) {
+						activeItem.removeClass('changed');
 						return;
 				}
 				
