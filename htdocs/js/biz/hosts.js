@@ -3,6 +3,41 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 	var newHostsList = $('#newHostsList');
 	var glyphiconOk = '<span class="glyphicon glyphicon-ok"></span>';
 	
+	var hostsEditor = CodeMirror($('#hostsEditor')[0], {
+    	mode: 'text/whistle'
+  	});
+	
+	var themeOptions = $('#themeOptions').change(function() {
+		var theme = this.value;
+		$.post('/cgi-bin/hosts/set-theme',{theme: theme});
+		hostsEditor.setOption('theme', theme);
+	});
+	
+	var fontSizeOptions = $('#fontSizeOptions').change(function() {
+        var fontSize = this.value;
+        $.post('/cgi-bin/hosts/set-font-size',{fontSize: fontSize});
+        hostsEditor.getWrapperElement().style.fontSize = fontSize;
+        hostsEditor.refresh();
+	});
+		
+	var showLineNumbers = $('#showLineNumbers').change(function() {
+		$.post('/cgi-bin/hosts/show-line-numbers',{showLineNumbers: this.checked ? 1 : 0});
+		hostsEditor.setOption('lineNumbers', this.checked);
+	});
+	
+	function initActionBar(data) {
+		if (data.theme) {
+			themeOptions.val(data.theme).trigger('change');
+		}
+		
+		if (data.fontSize) {
+			fontSizeOptions.val(data.fontSize).trigger('change');
+		}
+		
+		showLineNumbers.prop('checked', data.showLineNumbers == true);
+		showLineNumbers.trigger('change');
+	}
+	
 	var body = $(document.body).on('click', '.hosts-list .list-group-item', function() {
 		var self = $(this);
 		if (self.hasClass('create-hosts')) {
@@ -14,9 +49,9 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		var hostsName = activeItem.text();
 		
 		if (activeItem.hasClass('public-hosts')) {
-			hostsData.publicHosts = $('#hostsText').val();
+			hostsData.publicHosts = hostsEditor.getValue();
 		} else {
-			hostsData.hostsData[hostsName] = $('#hostsText').val();
+			hostsData.hostsData[hostsName] = hostsEditor.getValue();
 		}
 		
 		self.addClass('active');
@@ -29,33 +64,15 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		if (self.hasClass('public-hosts')) {
 			hostsNav.find('.remove-hosts').hide();
 			hostsNav.find('.enable-public-hosts').show();
-			$('#hostsText').val(formatText(hostsData.publicHosts));
+			hostsEditor.setValue(hostsData.publicHosts);
 		} else {
 			hostsNav.find('.remove-hosts').show();
 			hostsNav.find('.enable-public-hosts').hide();
-			$('#hostsText').val(formatText(hostsData.hostsData[hostsName]));
+			hostsEditor.setValue(hostsData.hostsData[hostsName]);
 		}
 	}).on('dblclick', '.hosts-list .list-group-item', function() {
 		$('.apply-hosts').trigger('click');
 	});
-	
-	function addTextChangeEvents() {
-		var hostsList = $('#hostsList');
-		$('#hostsText').on('keyup keypress mouseover mouseout keydown', function() {
-			var activeItem = hostsList.find('.list-group-item.active');
-			if (activeItem.hasClass('public-hosts')) {
-				if ((hostsData.publicHosts || '') != this.value) {
-					setChanged();
-				}
-			} else {
-				if ((hostsData.hostsData[activeItem.text()] || '') != this.value) {
-					setChanged();
-				}
-			}
-		});
-	}
-	
-	addTextChangeEvents();
 	
 	body.on('click', '.enable-public-hosts', function() {
 		var enable = $('#enablePublicHosts').prop('checked');
@@ -92,14 +109,11 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 	}).keyup(function(e) {
 		if (e.ctrlKey && e.keyCode == 83) {
-			$('#hostsText').blur();
 			$('.apply-hosts').trigger('click');
-			$('#hostsText').focus();
 		}
 	});
 	
-	$('#hostsText').on('input, change', setChanged)
-	.keyup(function(e) {
+	$('#hostsEditor').keyup(function(e) {
 		if (e.ctrlKey && e.keyCode == 13) {
 			$('.apply-hosts').trigger('click');
 		}
@@ -113,7 +127,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			return;
 		}
 		
-		var content = $('#hostsText').val();
+		var content = hostsEditor.getValue();
 		
 		if (activeHosts.hasClass('public-hosts')) {
 			hostsData.publicHosts = content;
@@ -126,7 +140,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			activeHosts.append(glyphicon.length ? glyphicon : glyphiconOk);
 		}
 		
-		removeChanged();
+		$('#hostsList').find('a.active').removeClass('changed');
 	});
 	
 	var createHostsBtn = $('#createHostsBtn').click(function() {
@@ -162,10 +176,6 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 	});
 	
-	function formatText(text) {
-		return text ? text.replace(/\t/g, '    ') : '';
-	}
-	
 	function createHosts(name) {
 		return $('<a href="javascript:;" class="list-group-item" title="双击切换环境"></a>').text(name).appendTo(newHostsList);
 	}
@@ -178,20 +188,13 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		}
 	}
 	
-	function setChanged() {
-		$('#hostsList').find('a.active').addClass('changed');
-	}
-	
-	function removeChanged() {
-		$('#hostsList').find('a.active').removeClass('changed');
-	}
-	
-
 	$.ajax({
 		url: '/cgi-bin/hosts/list',
 		dataType: 'json',
 		success: function(data) {
 			hostsData = data || {};
+			initActionBar(data);
+			
 			var hostsList = hostsData.hostsList;
 			var curHostsName = hostsData.curHostsName;
 			var hasActive;
@@ -201,7 +204,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 				if (curHostsName == name) {
 					item.append(glyphiconOk).trigger('click');
 					hasActive = true;
-					$('#hostsText').val(formatText(hostsData.hostsData[name]));
+					hostsEditor.setValue(hostsData.hostsData[name]);
 					curHostsName = null;
 				}
 			}
@@ -215,6 +218,19 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 				$('#publicHosts').trigger('click');
 			}
 			updatePublicHostsState();
+			setInterval(function() {
+				var activeItem = $('#hostsList').find('a.active');
+				var value = hostsEditor.getValue();
+				if (activeItem.hasClass('public-hosts')) {
+					if(hostsData.publicHosts == value) {
+						return;
+					}
+				} else if(hostsData.hostsData[activeItem.text()] == value) {
+						return;
+				}
+				
+				activeItem.addClass('changed');
+			}, 300)
 		},
 		error: function() {
 			alert('加载失败，请重新刷新页面。');
