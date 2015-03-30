@@ -217,6 +217,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			if (!hasActive) {
 				$('#publicHosts').trigger('click');
 			}
+			
 			updatePublicHostsState();
 			setInterval(function() {
 				var activeItem = $('#hostsList').find('a.active');
@@ -237,5 +238,20 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			alert('加载失败，请重新刷新页面。');
 		}
 	});
-
+	
+	function addResizeEvents() {
+		var editor = $('#hostsEditor')[0];
+		var timeoutId;
+		
+		function resize() {
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(function() {
+				hostsEditor.setSize(editor.offsetWidth, editor.offsetHeight - 2);
+			}, 60);
+		}
+		
+		$(window).on('resize', resize);
+		resize();
+	}
+	addResizeEvents();
 });
