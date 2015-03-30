@@ -64,11 +64,11 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 		if (self.hasClass('public-hosts')) {
 			hostsNav.find('.remove-hosts').hide();
 			hostsNav.find('.enable-public-hosts').show();
-			hostsEditor.setValue(hostsData.publicHosts);
+			hostsEditor.setValue(hostsData.publicHosts || '');
 		} else {
 			hostsNav.find('.remove-hosts').show();
 			hostsNav.find('.enable-public-hosts').hide();
-			hostsEditor.setValue(hostsData.hostsData[hostsName]);
+			hostsEditor.setValue(hostsData.hostsData[hostsName] || '');
 		}
 	}).on('dblclick', '.hosts-list .list-group-item', function() {
 		$('.apply-hosts').trigger('click');
@@ -204,7 +204,7 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 				if (curHostsName == name) {
 					item.append(glyphiconOk).trigger('click');
 					hasActive = true;
-					hostsEditor.setValue(hostsData.hostsData[name]);
+					hostsEditor.setValue(hostsData.hostsData[name] || '');
 					curHostsName = null;
 				}
 			}
@@ -221,11 +221,12 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			setInterval(function() {
 				var activeItem = $('#hostsList').find('a.active');
 				var value = hostsEditor.getValue();
+				var hosts = hostsData.hostsData[activeItem.text()];
 				if (activeItem.hasClass('public-hosts')) {
-					if(hostsData.publicHosts == value) {
+					if((!value && !hostsData.publicHosts) || hostsData.publicHosts == value) {
 						return;
 					}
-				} else if(hostsData.hostsData[activeItem.text()] == value) {
+				} else if((!value && !hosts) || hosts == value) {
 						return;
 				}
 				
