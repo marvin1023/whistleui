@@ -148,11 +148,9 @@ define('/style/js/biz/hosts.js', function(require, exports, module) {
 			return;
 		}
 		$('#createHostsDialog').modal();
-		try {
-			setTimeout(function() {
-				$('#newHostsName').focus();
-			}, 300);
-		} catch(e) {}
+		setTimeout(function() {
+			try {$('#newHostsName').focus();} catch(e) {}
+		}, 300);
 	});
 	
 	var createHostsNameBtn = $('#createHostsNameBtn').click(function() {
