@@ -8,6 +8,22 @@ CodeMirror.defineMode("whistle", function() {
 				return /^head:\/\//.test(str);
 			}
 			
+			function isWeinre(str) {
+				return /^weinre:\/\//.test(str);
+			}
+			
+			function isProxy(str) {
+				return /^proxy:\/\//.test(str);
+			}
+			
+			function isReq(str) {
+				return /^req:\/\//.test(str);
+			}
+			
+			function isRes(str) {
+				return /^res:\/\//.test(str);
+			}
+			
 			function isUrl(str) {
 				return /^https?:\/\//i.test(str);
 			}
@@ -45,11 +61,19 @@ CodeMirror.defineMode("whistle", function() {
 						str += ch;
 						if (!type && ch == '/' && pre == '/') {
 							if (isHead(str)) {
-								 type = 'header';
+								 type = 'header js-head js-type';
+							 } else if (isWeinre(str)) {
+								 type = 'atom js-weinre js-type';
+							 } else if (isProxy(str)) {
+								 type = 'tag js-proxy js-type';
+							 } else if (isReq(str)) {
+								 type = 'negative js-req js-type';
+							 } else if (isRes(str)) {
+								 type = 'positive js-res js-type';
 							 } else if (isUrl(str)) {
-								 type = 'def';
+								 type = 'string-2 js-url js-type';
 							 } else if (isRule(str)) {
-								 type = 'builtin';
+								 type = 'builtin js-rule js-type';
 							 }
 						}
 						pre = ch;
@@ -65,7 +89,7 @@ CodeMirror.defineMode("whistle", function() {
 					 }
 					 
 					 if (isRegExp(str)) {
-						 return 'string-2';
+						 return 'attribute';
 					 }
 					 
 					 return null;
