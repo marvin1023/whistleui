@@ -23,8 +23,7 @@
 		"jsx-loader": "*",
 		"style-loader": "*",
 		"css-loader": "*",
-		"react-hot-loader": "*",
-		"jsxhint": "*"
+		"react-hot-loader": "*"
   },
   "engines": {
     "node": ">= 0.10.0"

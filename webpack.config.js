@@ -2,20 +2,15 @@ var webpack = require('webpack');
 
 module.exports = {
   entry:{
-	  index: './index',
-	  rules: './rules',
-	  values: './values'
+	  index: './js/index',
+	  rules: './js/rules',
+	  values: './js/values'
   },
   output: {
     path: __dirname + '/dist/',
     filename: '[name].js'
   },
   module: {
-	    preLoaders: [{
-	      test: /\.js$/,
-	      exclude: /node_modules/,
-	      loader: 'jsxhint'
-	    }],
 	    loaders: [{
 	      test: /\.js$/,
 	      exclude: /node_modules/,
