@@ -15,11 +15,14 @@
 		"jquery": "*",
 		"codemirror": "*",
 		"bootstrap": "*"
+		
   },
   "devDependencies": {
 		"webpack": "*",
 		"jsx-loader": "*",
-		"css-loader": "*"
+		"style-loader": "*",
+		"css-loader": "*",
+		"react-hot-loader": "*"
   },
   "engines": {
     "node": ">= 0.10.0"
