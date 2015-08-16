@@ -21,7 +21,7 @@ module.exports = {
 			loader : 'style-loader!css-loader'
 		}, {
 			test : /\.(png|woff|woff2|eot|ttf|svg)$/,
-			loader : 'url-loader?limit=100000'
+			loader : 'url-loader?limit=1000000'
 		} ]
 	}/*,
 	plugins : [ new webpack.optimize.CommonsChunkPlugin('common.js') ]*/
