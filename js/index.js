@@ -1,3 +1,4 @@
+require('./css');
 var react = require('react');
 var ReqData = react.createClass({
 	render: function() {

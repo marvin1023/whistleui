@@ -12,18 +12,19 @@
     "fiddler"
   ],
   "dependencies": {
-		"jquery": "*",
-		"codemirror": "*",
-		"bootstrap": "*",
-		"react": "*"
-		
+    "jquery": "*",
+    "codemirror": "*",
+    "bootstrap": "*",
+    "react": "*"
   },
   "devDependencies": {
-		"webpack": "*",
-		"jsx-loader": "*",
-		"style-loader": "*",
-		"css-loader": "*",
-		"react-hot-loader": "*"
+    "css-loader": "*",
+    "file-loader": "^0.8.4",
+    "jsx-loader": "*",
+    "react-hot-loader": "*",
+    "style-loader": "*",
+    "url-loader": "^0.5.6",
+    "webpack": "*"
   },
   "engines": {
     "node": ">= 0.10.0"
