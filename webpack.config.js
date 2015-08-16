@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
 	entry : {
@@ -22,6 +23,6 @@ module.exports = {
 			test : /\.(png|woff|woff2|eot|ttf|svg)$/,
 			loader : 'url-loader?limit=100000'
 		} ]
-	},
-	plugins : [ new webpack.optimize.CommonsChunkPlugin('common.js') ]
+	}/*,
+	plugins : [ new webpack.optimize.CommonsChunkPlugin('common.js') ]*/
 };
