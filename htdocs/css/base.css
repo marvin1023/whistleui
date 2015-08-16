@@ -40,7 +40,7 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-list-headers .table {height: 30px;}
 .w-list-headers .table th {border: none!important; padding: 4px 0 4px 6px; font-weight: normal; color: #000;}
 .w-list-data {overflow-y: auto; overflow-x: hidden;}
-.w-list-data th, .w-list-data td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 4px 0 4px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.w-list-data th, .w-list-data td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .w-detail-tabs {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; display: block;}
 .w-detail-tabs .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}
 .w-detail-tabs .btn:first-child {border-left: none;}
