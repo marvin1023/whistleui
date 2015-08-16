@@ -46,7 +46,7 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-detail-tabs .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}
 .w-detail-tabs .btn:first-child {border-left: none;}
 .w-detail-content {position: relative;}
-.w-detail-separator {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}
+.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}
 .w-detail-tabs, .w-detail-content {min-width: 550px;}
 .w-list-bar, .w-list-content {min-width: 720px;}
 
