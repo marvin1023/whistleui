@@ -56,7 +56,7 @@
 			</div>
 		</div>
 		<div class="w-detail box-orient-vertical">
-			<div class="btn-group btn-group-sm w-detail-tabs" role="group" aria-label="...">
+			<div class="btn-group btn-group-sm w-detail-tabs">
 			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span>Overview</button>
 			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-send"></span>Request</button>
 			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-flash"></span>Response</button>
@@ -65,8 +65,8 @@
 			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span>Log</button>
 			</div>
 			<div class="w-detail-content fill">
-				<div class="w-detail-separator"></div>
-				<div class="w-detail-overview">
+				<div class="w-detail-separator" style="display: none;"></div>
+				<div class="w-detail-overview" style="display: none;">
 					<table class="table w-properties">
 						<tr>
 							<th>Content Download:</th>
@@ -99,10 +99,22 @@
 					</table>
 				</div>
 				<div class="w-detail-request">
-					
+					<div class="btn-group btn-group-sm w-btn-group-sm">
+					  <button type="button" class="btn btn-default">Headers</button>
+					  <button type="button" class="btn btn-default">TextView</button>
+					  <button type="button" class="btn btn-default">Cookies</button>
+					  <button type="button" class="btn btn-default">WebForms</button>
+					  <button type="button" class="btn btn-default">Raw</button>
+					</div>
 				</div>
 				<div class="w-detail-response">
-					
+					<div class="btn-group btn-group-sm w-btn-group-sm">
+					  <button type="button" class="btn btn-default">Headers</button>
+					  <button type="button" class="btn btn-default">TextView</button>
+					  <button type="button" class="btn btn-default">Cookies</button>
+					  <button type="button" class="btn btn-default">JSON</button>
+					  <button type="button" class="btn btn-default">Raw</button>
+					</div>
 				</div>
 				<div class="w-detail-Timeline">
 					
