@@ -14,7 +14,8 @@
   "dependencies": {
 		"jquery": "*",
 		"codemirror": "*",
-		"bootstrap": "*"
+		"bootstrap": "*",
+		"react": "*"
 		
   },
   "devDependencies": {
