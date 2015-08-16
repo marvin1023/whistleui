@@ -16,6 +16,11 @@
 		"codemirror": "*",
 		"bootstrap": "*"
   },
+  "devDependencies": {
+		"webpack": "*",
+		"jsx-loader": "*",
+		"css-loader": "*"
+  },
   "engines": {
     "node": ">= 0.10.0"
   }
