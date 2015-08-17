@@ -44,7 +44,6 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(2);
 	var React = __webpack_require__(13);
 	var Divider = __webpack_require__(171);
 

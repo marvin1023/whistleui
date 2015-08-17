@@ -1,4 +1,3 @@
-require('bootstrap/dist/css/bootstrap.css');
 var React = require('react');
 var Divider = require('./divider');
 
