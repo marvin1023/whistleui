@@ -1,4 +1,3 @@
-require('bootstrap/dist/css/bootstrap.css');
 require('../css/divider.css');
 var React = require('react');
 var util = require('./util');
