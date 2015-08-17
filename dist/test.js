@@ -45,19 +45,14 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(2);
-	var $ = __webpack_require__(169);
 	var React = __webpack_require__(13);
-	var util = __webpack_require__(170);
+	var Divider = __webpack_require__(171);
 
-	util.addDragEvent('.w-divider', function(target, x, y) {
-		target = target.parent();
-		var isVertical = target.hasClass('w-divider-bottom');
-		var size = isVertical ? target[0].offsetHeight - y : target[0].offsetWidth - x;
-		var conSize = target.parent()[0][isVertical ? 'offsetHeight' : 'offsetWidth'];
-		target[isVertical ? 'height' : 'width'](Math.min(conSize - 5, Math.max(5, size)));
-	});
+	React.render(React.createElement(Divider, {vertical: true}, 
+		React.createElement("div", null, "111111"), 
+		React.createElement("div", null, "222222")
+	), document.body);
 
-	window.util = util;
 
 /***/ },
 /* 1 */,
@@ -30077,6 +30072,86 @@
 
 	exports.addDragEvent = addDragEvent;
 	exports.removeDragEvent = removeDragEvent;
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(2);
+	__webpack_require__(172);
+	var React = __webpack_require__(13);
+	var util = __webpack_require__(170);
+
+	util.addDragEvent('.w-divider', function(target, x, y) {
+		target = target.parent();
+		var con = target.parent();
+		var isVertical = !con.hasClass('box');
+		var size = isVertical ? target[0].offsetHeight - y : target[0].offsetWidth - x;
+		var conSize = con[0][isVertical ? 'offsetHeight' : 'offsetWidth'];
+		target[isVertical ? 'height' : 'width'](Math.min(conSize - 5, Math.max(5, size)));
+	});
+
+	var Divider = React.createClass({displayName: "Divider",
+		componentDidMount: function() {
+			
+		},
+		render: function() {
+			var vertical = this.props.vertical;
+			return (
+					React.createElement("div", {className: (vertical ? 'box-orient-vertical' : 'box') + ' w-divider-con'}, 
+						React.createElement("div", {className: "fill w-divider-left"}, 
+							this.props.children[0]
+						), 
+						React.createElement("div", {className: "w-divider-right"}, 
+							React.createElement("div", {className: "w-divider"}), 
+							this.props.children[1]
+						)
+					)
+			);
+		}
+	});
+
+	module.exports = Divider;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(173);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./divider.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./divider.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".w-divider-con {width: 100%; height: 100%;}\n.w-divider-left, .w-divider-right {overflow: hidden;}\n.w-divider-con.box .w-divider-left, .w-divider-con.box .w-divider-right {height: 100%;}\n.w-divider-con.box .w-divider-right {width: 40%; min-width: 5px!important; position: relative;}\n.w-divider-con.box-orient-vertical .w-divider-right {height: 40%; min-height: 5px!important; position: relative;}\n.w-divider {position: absolute; left: 0; top: 0;}\n.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}\n.w-divider-con.box-orient-vertical .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

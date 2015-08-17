@@ -7,13 +7,13 @@
 <style>
 	.w-divider-con {width: 600px; height: 600px;}
 	
-	.w-divider-left, .w-divider-right {height: 100%;}
-	.w-divider-right {width: 40%; min-width: 5px!important; position: relative;}
-	.w-divider-bottom {height: 40%; min-height: 5px!important; position: relative;}
+	.w-divider-con.box .w-divider-left, .w-divider-con.box .w-divider-right {height: 100%;}
+	.w-divider-con.box .w-divider-right {width: 40%; min-width: 5px!important; position: relative;}
+	.w-divider-con.box-orient-vertical .w-divider-right {height: 40%; min-height: 5px!important; position: relative;}
 	
 	.w-divider {position: absolute; left: 0; top: 0;}
-	.w-divider-right .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}
-	.w-divider-bottom .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}
+	.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}
+	.w-divider-con.box-orient-vertical .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}
 </style>
 </head>
 <body>
@@ -26,10 +26,10 @@
 	</div>
 </div>
 <div class="box-orient-vertical w-divider-con">
-	<div class="fill w-divider-top">
+	<div class="fill w-divider-left">
 		
 	</div>
-	<div class="w-divider-bottom">
+	<div class="w-divider-right">
 		<div class="w-divider"></div>
 	</div>
 </div>
