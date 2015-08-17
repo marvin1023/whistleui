@@ -30390,7 +30390,7 @@
 		render: function() {
 			
 			return (
-					React.createElement("div", {className: "w-detail box-orient-vertical"}, 
+					React.createElement("div", {className: "fill box-orient-vertical w-detail"}, 
 					React.createElement("div", {className: "btn-group btn-group-sm w-detail-tabs"}, 
 					  React.createElement("button", {type: "button", className: "btn btn-default"}, React.createElement("span", {className: "glyphicon glyphicon-eye-open"}), "Overview"), 
 					  React.createElement("button", {type: "button", className: "btn btn-default"}, React.createElement("span", {className: "glyphicon glyphicon-send"}), "Request"), 
