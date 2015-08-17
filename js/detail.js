@@ -1,4 +1,4 @@
-require('.base-css.js');
+require('./base-css.js');
 require('../css/detail.css');
 var React = require('react');
 

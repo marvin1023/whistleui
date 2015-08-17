@@ -1,4 +1,4 @@
-require('../css/base.css');
+require('./base-css.js');
 var React = require('react');
 var Divider = require('./divider');
 var Menu = require('./menu');

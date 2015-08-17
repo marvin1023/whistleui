@@ -1,1 +1,1 @@
-require('.base-css.js');
+require('./base-css.js');
