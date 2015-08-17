@@ -20915,7 +20915,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-divider-left, .w-divider-right {overflow: hidden; position: relative;}\n.w-divider-con.box .w-divider-right {min-width: 5px!important;}\n.w-divider-con.box-orient-vertical .w-divider-right {min-height: 5px!important;}\n.w-divider {position: absolute; left: 0; top: 0;}\n.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}\n.w-divider-con.box-orient-vertical .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}", ""]);
+	exports.push([module.id, ".w-divider-left, .w-divider-right {overflow: hidden; position: relative;}\n.w-divider-con.box .w-divider-right {min-width: 5px!important;}\n.w-divider-con.box-orient-vertical .w-divider-right {min-height: 5px!important;}\n.w-divider {position: absolute; left: 0; top: 0; z-index: 1;}\n.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}\n.w-divider-con.box-orient-vertical .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}", ""]);
 
 	// exports
 
