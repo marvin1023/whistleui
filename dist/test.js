@@ -52,7 +52,7 @@
 	React.render(
 			React.createElement("div", {className: "main box-orient-vertical"}, 
 				React.createElement(Menu, null), 
-				React.createElement(Divider, null, 
+				React.createElement(Divider, {rate: "3:2"}, 
 					React.createElement("div", null, "111111"), 
 					React.createElement("div", null, "222222")
 				)
@@ -20878,6 +20878,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(172);
+	var $ = __webpack_require__(175);
 	var React = __webpack_require__(15);
 	var util = __webpack_require__(174);
 
@@ -20891,10 +20892,22 @@
 	});
 
 	var Divider = React.createClass({displayName: "Divider",
+		componentDidMount: function() {
+			var divider = this.refs.divider.getDOMNode();
+			var left = 1;
+			var right = 1;
+			if (/^(\d+):(\d+)$/.test(this.props.rate)) {
+				left = parseInt(RegExp.$1, 10) || 1;
+				right = parseInt(RegExp.$2, 10) || 1;
+			}
+			var width = this.props.vertical ? divider.offsetHeight : divider.offsetWidth;
+			$(divider).find('.w-divider-right')[this.props.vertical ?
+					'height' : 'width'](width * right / (left + right));
+		},
 		render: function() {
 			var vertical = this.props.vertical;
 			return (
-					React.createElement("div", {className: (vertical ? 'box-orient-vertical' : 'box') + ' fill w-divider-con'}, 
+					React.createElement("div", {ref: "divider", className: (vertical ? 'box-orient-vertical' : 'box') + ' fill w-divider-con'}, 
 						React.createElement("div", {className: "fill w-divider-left"}, 
 							this.props.children[0]
 						), 
@@ -20944,7 +20957,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-divider-left, .w-divider-right {overflow: hidden;}\n.w-divider-con.box .w-divider-right {width: 40%; min-width: 5px!important; position: relative;}\n.w-divider-con.box-orient-vertical .w-divider-right {height: 40%; min-height: 5px!important; position: relative;}\n.w-divider {position: absolute; left: 0; top: 0;}\n.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}\n.w-divider-con.box-orient-vertical .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}", ""]);
+	exports.push([module.id, ".w-divider-left, .w-divider-right {overflow: hidden; position: relative;}\n.w-divider-con.box .w-divider-right {min-width: 5px!important;}\n.w-divider-con.box-orient-vertical .w-divider-right {min-height: 5px!important;}\n.w-divider {position: absolute; left: 0; top: 0;}\n.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}\n.w-divider-con.box-orient-vertical .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}", ""]);
 
 	// exports
 

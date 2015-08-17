@@ -1,4 +1,5 @@
 require('../css/divider.css');
+var $ = require('jquery');
 var React = require('react');
 var util = require('./util');
 
@@ -12,10 +13,22 @@ util.addDragEvent('.w-divider', function(target, x, y) {
 });
 
 var Divider = React.createClass({
+	componentDidMount: function() {
+		var divider = this.refs.divider.getDOMNode();
+		var left = 1;
+		var right = 1;
+		if (/^(\d+):(\d+)$/.test(this.props.rate)) {
+			left = parseInt(RegExp.$1, 10) || 1;
+			right = parseInt(RegExp.$2, 10) || 1;
+		}
+		var width = this.props.vertical ? divider.offsetHeight : divider.offsetWidth;
+		$(divider).find('.w-divider-right')[this.props.vertical ?
+				'height' : 'width'](width * right / (left + right));
+	},
 	render: function() {
 		var vertical = this.props.vertical;
 		return (
-				<div className={(vertical ? 'box-orient-vertical' : 'box') + ' fill w-divider-con'}>
+				<div ref="divider" className={(vertical ? 'box-orient-vertical' : 'box') + ' fill w-divider-con'}>
 					<div className="fill w-divider-left">
 						{this.props.children[0]}
 					</div>

@@ -6,7 +6,7 @@ var Menu = require('./menu');
 React.render(
 		<div className="main box-orient-vertical">
 			<Menu />
-			<Divider>
+			<Divider rate="3:2">
 				<div>111111</div>
 				<div>222222</div>
 			</Divider>
