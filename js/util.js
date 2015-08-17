@@ -58,7 +58,7 @@ function removeDragEvent(selector, callback) {
 	if (typeof callback == 'function') {
 		var index = $.inArray(callback, callbacks);
 		if (index != -1) {
-			callbacks
+			callbacks.splice(index, 1);
 		}
 		return;
 	}
@@ -66,3 +66,4 @@ function removeDragEvent(selector, callback) {
 }
 
 exports.addDragEvent = addDragEvent;
+exports.removeDragEvent = removeDragEvent;

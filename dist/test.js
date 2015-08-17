@@ -51,9 +51,13 @@
 
 	util.addDragEvent('.w-divider', function(target, x, y) {
 		target = target.parent();
-		var width = target[0].offsetWidth - x;
-		target.width(Math.min(target.parent()[0].offsetWidth - 5, Math.max(5, width)));
+		var isVertical = target.hasClass('w-divider-bottom');
+		var size = isVertical ? target[0].offsetHeight - y : target[0].offsetWidth - x;
+		var conSize = target.parent()[0][isVertical ? 'offsetHeight' : 'offsetWidth'];
+		target[isVertical ? 'height' : 'width'](Math.min(conSize - 5, Math.max(5, size)));
 	});
+
+	window.util = util;
 
 /***/ },
 /* 1 */,
@@ -30064,7 +30068,7 @@
 		if (typeof callback == 'function') {
 			var index = $.inArray(callback, callbacks);
 			if (index != -1) {
-				callbacks
+				callbacks.splice(index, 1);
 			}
 			return;
 		}
@@ -30072,6 +30076,7 @@
 	}
 
 	exports.addDragEvent = addDragEvent;
+	exports.removeDragEvent = removeDragEvent;
 
 /***/ }
 /******/ ]);
