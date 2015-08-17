@@ -10,7 +10,7 @@ React.render(
 			<div className="w-rules-con"></div>
 			<div className="w-values-con"></div>
 			<Menu />
-			<Divider rate="3:2">
+			<Divider rightWidth="560">
 				<ReqData />
 				<Detail />
 			</Divider>

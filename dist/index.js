@@ -56,7 +56,7 @@
 				React.createElement("div", {className: "w-rules-con"}), 
 				React.createElement("div", {className: "w-values-con"}), 
 				React.createElement(Menu, null), 
-				React.createElement(Divider, {rate: "3:2"}, 
+				React.createElement(Divider, {rightWidth: "560"}, 
 					React.createElement(ReqData, null), 
 					React.createElement(Detail, null)
 				)
