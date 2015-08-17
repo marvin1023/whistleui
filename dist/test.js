@@ -49,7 +49,6 @@
 	var List = __webpack_require__(186);
 	var Menu = __webpack_require__(174);
 
-
 	React.render(
 			React.createElement("div", {className: "main box-orient-vertical"}, 
 				React.createElement("div", {className: "w-rules-con"}), 
@@ -30316,17 +30315,22 @@
 	var React = __webpack_require__(13);
 	var Divider = __webpack_require__(169);
 
-
-	var List = React.render(
-			React.createElement(Divider, {leftWidth: "200"}, 
-				React.createElement("div", {className: "w-list-data fill"}, 
-					React.createElement("a", {href: "javascript:;"}, "Default", React.createElement("span", {className: "glyphicon glyphicon-ok"})), 
-					React.createElement("a", {href: "javascript:;"}, "DefaultDefaultDefaultDefaultDefaultDefaultDefaultDefault")
-				), 
-				React.createElement("div", {className: "fill w-list-content"}
-					
-				)
-			), document.body);
+	var List = React.createClass({displayName: "List",
+		render: function() {
+			
+			return (
+					React.createElement(Divider, {leftWidth: "200"}, 
+						React.createElement("div", {className: "w-list-data fill"}, 
+							React.createElement("a", {href: "javascript:;"}, "Default", React.createElement("span", {className: "glyphicon glyphicon-ok"})), 
+							React.createElement("a", {href: "javascript:;"}, "DefaultDefaultDefaultDefaultDefaultDefaultDefaultDefault")
+						), 
+						React.createElement("div", {className: "fill w-list-content"}
+							
+						)
+					)
+			);
+		}
+	});
 
 	module.exports = List;
 
@@ -30366,7 +30370,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-list-data {border-top: 1px solid #ccc;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72;}\n.w-list-content {border: 1px solid #ccc;} ", ""]);
+	exports.push([module.id, ".w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72;}\n.w-list-content {border: 1px solid #ccc;} ", ""]);
 
 	// exports
 

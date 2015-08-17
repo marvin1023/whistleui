@@ -3,7 +3,6 @@ var React = require('react');
 var List = require('./list');
 var Menu = require('./menu');
 
-
 React.render(
 		<div className="main box-orient-vertical">
 			<div className="w-rules-con"></div>
