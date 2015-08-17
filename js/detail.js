@@ -9,7 +9,7 @@ var ReqData = React.createClass({
 	render: function() {
 		
 		return (
-				<div className="fill box-orient-vertical w-detail">
+				<div className="fill orient-vertical-box w-detail">
 				<div className="btn-group btn-group-sm w-detail-tabs">
 				  <button type="button" className="btn btn-default"><span className="glyphicon glyphicon-eye-open"></span>Overview</button>
 				  <button type="button" className="btn btn-default"><span className="glyphicon glyphicon-send"></span>Request</button>

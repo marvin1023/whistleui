@@ -6,7 +6,7 @@ var ReqData = require('./req-data');
 var Detail = require('./detail');
 
 React.render(
-		<div className="main box-orient-vertical">
+		<div className="main orient-vertical-box">
 			<div className="w-rules-con"></div>
 			<div className="w-values-con"></div>
 			<Menu />

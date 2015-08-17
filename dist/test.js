@@ -50,7 +50,7 @@
 	var Menu = __webpack_require__(174);
 
 	React.render(
-			React.createElement("div", {className: "main box-orient-vertical"}, 
+			React.createElement("div", {className: "main orient-vertical-box"}, 
 				React.createElement("div", {className: "w-rules-con"}), 
 				React.createElement("div", {className: "w-values-con"}), 
 				React.createElement("div", {className: "w-network-con"}), 
@@ -452,7 +452,7 @@
 
 
 	// module
-	exports.push([module.id, "html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}\n.main {min-width: 960px;}\n::-webkit-scrollbar{ width:10px; height:10px; }\n::-webkit-scrollbar-button{ width:10px;height:1px; }\n::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}\n::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}\n::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}\n::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}\n\n.box {display:-webkit-box; display:-moz-box; display:box;}\n.box-orient-vertical {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}\n.fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}\n.table {table-layout: fixed; margin: 0!important;}\n.w-sub-btn-group-sm {border-bottom: 1px solid #ccc; width: 100%;}\n.w-sub-btn-group-sm .btn {padding: 3px 10px 2px!important; border-radius: 0; border-top: none; border-bottom: none;}\n.w-sub-btn-group-sm .btn:first-child {border-left: none;}\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n\n\n", ""]);
+	exports.push([module.id, "html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}\n.main {min-width: 960px;}\n::-webkit-scrollbar{ width:10px; height:10px; }\n::-webkit-scrollbar-button{ width:10px;height:1px; }\n::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}\n::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}\n::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}\n::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}\n\n.box {display:-webkit-box; display:-moz-box; display:box;}\n.orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}\n.fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}\n.table {table-layout: fixed; margin: 0!important;}\n.w-sub-btn-group-sm {border-bottom: 1px solid #ccc; width: 100%;}\n.w-sub-btn-group-sm .btn {padding: 3px 10px 2px!important; border-radius: 0; border-top: none; border-bottom: none;}\n.w-sub-btn-group-sm .btn:first-child {border-left: none;}\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n\n\n", ""]);
 
 	// exports
 
@@ -20882,11 +20882,11 @@
 		render: function() {
 			var vertical = this.props.vertical;
 			return (
-					React.createElement("div", {ref: "divider", className: (vertical ? 'box-orient-vertical' : 'box') + ' fill w-divider-con'}, 
-						React.createElement("div", {className: 'fill w-divider-left box-orient-vertical' + (this.props.leftClassName || '')}, 
+					React.createElement("div", {ref: "divider", className: (vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con'}, 
+						React.createElement("div", {className: 'fill w-divider-left orient-vertical-box' + (this.props.leftClassName || '')}, 
 							this.props.children[0]
 						), 
-						React.createElement("div", {className: 'w-divider-right box-orient-vertical' + (this.props.rightClassName || '')}, 
+						React.createElement("div", {className: 'w-divider-right orient-vertical-box' + (this.props.rightClassName || '')}, 
 							React.createElement("div", {className: "w-divider"}), 
 							this.props.children[1]
 						)
@@ -20932,7 +20932,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-divider-left, .w-divider-right {overflow: hidden; position: relative;}\n.w-divider-con.box .w-divider-right {min-width: 5px!important;}\n.w-divider-con.box-orient-vertical .w-divider-right {min-height: 5px!important;}\n.w-divider {position: absolute; left: 0; top: 0; z-index: 1;}\n.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}\n.w-divider-con.box-orient-vertical .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}", ""]);
+	exports.push([module.id, ".w-divider-left, .w-divider-right {overflow: hidden; position: relative;}\n.w-divider-con.box .w-divider-right {min-width: 5px!important;}\n.w-divider-con.orient-vertical-box .w-divider-right {min-height: 5px!important;}\n.w-divider {position: absolute; left: 0; top: 0; z-index: 1;}\n.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}\n.w-divider-con.orient-vertical-box .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}", ""]);
 
 	// exports
 

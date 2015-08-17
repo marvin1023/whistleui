@@ -4,7 +4,7 @@ var List = require('./list');
 var Menu = require('./menu');
 
 React.render(
-		<div className="main box-orient-vertical">
+		<div className="main orient-vertical-box">
 			<div className="w-rules-con"></div>
 			<div className="w-network-con"></div>
 			<Menu name="values" />

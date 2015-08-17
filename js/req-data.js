@@ -9,8 +9,8 @@ var ReqData = React.createClass({
 	render: function() {
 		
 		return (
-				<div className="fill w-req-data-con box-orient-vertical">
-					<div className="w-req-data-content fill box-orient-vertical">
+				<div className="fill w-req-data-con orient-vertical-box">
+					<div className="w-req-data-content fill orient-vertical-box">
 						<div className="w-req-data-headers">
 							<table className="table">
 						      <thead>
