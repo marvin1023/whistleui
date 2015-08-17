@@ -15,7 +15,7 @@ var Divider = React.createClass({
 	render: function() {
 		var vertical = this.props.vertical;
 		return (
-				<div className={(vertical ? 'box-orient-vertical' : 'box') + ' w-divider-con'}>
+				<div className={(vertical ? 'box-orient-vertical' : 'box') + ' fill w-divider-con'}>
 					<div className="fill w-divider-left">
 						{this.props.children[0]}
 					</div>
