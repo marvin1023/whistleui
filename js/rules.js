@@ -7,7 +7,7 @@ React.render(
 		<div className="main box-orient-vertical">
 			<div className="w-values-con"></div>
 			<div className="w-network-con"></div>
-			<Menu />
+			<Menu name="rules" />
 			<List />
 		</div>, document.body);
 require('./css');

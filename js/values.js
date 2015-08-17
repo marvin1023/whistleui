@@ -7,6 +7,6 @@ React.render(
 		<div className="main box-orient-vertical">
 			<div className="w-rules-con"></div>
 			<div className="w-network-con"></div>
-			<Menu />
+			<Menu name="values" />
 			<List />
 		</div>, document.body);
