@@ -20874,9 +20874,10 @@
 				
 				rightWidth = width * right / (left + right);
 			}
-			
-			$(divider).find('.w-divider-right')[this.props.vertical ?
-					'height' : 'width'](rightWidth);
+			if (rightWidth > 0) {
+				$(divider).find('.w-divider-right')[this.props.vertical ?
+						'height' : 'width'](rightWidth);
+			}
 		},
 		render: function() {
 			var vertical = this.props.vertical;
