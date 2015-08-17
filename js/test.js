@@ -1,15 +1,14 @@
 require('./base-css.js');
 var React = require('react');
-var Divider = require('./divider');
+var List = require('./list');
 var Menu = require('./menu');
-var ReqData = require('./req-data');
-var Detail = require('./detail');
+
 
 React.render(
 		<div className="main box-orient-vertical">
+			<div className="w-rules-con"></div>
+			<div className="w-values-con"></div>
+			<div className="w-network-con"></div>
 			<Menu />
-			<Divider rate="3:2">
-				<ReqData />
-				<Detail />
-			</Divider>
+			<List />
 		</div>, document.body);

@@ -1,11 +1,17 @@
-require('./css');
-var react = require('react');
-var ReqData = react.createClass({
-	render: function() {
-		return (
-			<div>test</div>
-		);
-	}
-});
+require('./base-css.js');
+var React = require('react');
+var Divider = require('./divider');
+var Menu = require('./menu');
+var ReqData = require('./req-data');
+var Detail = require('./detail');
 
-module.exports = ReqData;
+React.render(
+		<div className="main box-orient-vertical">
+			<div className="w-rules-con"></div>
+			<div className="w-values-con"></div>
+			<Menu />
+			<Divider rate="3:2">
+				<ReqData />
+				<Detail />
+			</Divider>
+		</div>, document.body);

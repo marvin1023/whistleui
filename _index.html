@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test</title>
+<script src="dist/index.js"></script>
+</head>
+<body>
+<div class="w-rules-con"></div>
+<div class="w-values-con"></div>
+<div class="w-network-con"></div>
+<div class="main box-orient-vertical">
+	<div class="w-menu">
+		<a href="javascript:;"><span class="glyphicon glyphicon-list"></span>Rules</a>
+		<a href="javascript:;"><span class="glyphicon glyphicon-folder-open"></span>Values</a>
+		<a href="javascript:;"><span class="glyphicon glyphicon-repeat"></span>Replay</a>
+		<a href="javascript:;"><span class="glyphicon glyphicon-filter"></span>Filter</a>
+		<a href="javascript:;"><span class="glyphicon glyphicon-remove"></span>Clear</a>
+		<a href="javascript:;"><span class="glyphicon glyphicon-globe"></span>Weinre</a>
+		<a href="javascript:;"><span class="glyphicon glyphicon-download-alt"></span>RootCA</a>
+		<a href="https://github.com/avwo/whistle#whistle" target="_blank"><span class="glyphicon glyphicon-question-sign"></span>Help</a>
+		<a href="javascript:;"><span class="glyphicon glyphicon-info-sign"></span>About</a>
+		<a href="javascript:;" class="w-online"><span class="glyphicon glyphicon-stats"></span>Online</a>
+	</div>
+	<div class="fill box">
+		<div class="fill w-req-data-con box-orient-vertical">
+			<div class="w-req-data-content fill box-orient-vertical">
+				<div class="w-req-data-headers">
+					<table class="table">
+				      <thead>
+				        <tr>
+				          <th class="order">#</th>
+				          <th class="result">Result</th>
+				          <th class="protocol">Protocol</th>
+				          <th class="method">Method</th>
+				          <th class="host">Host</th>
+				          <th class="host-ip">Host IP</th>
+				          <th class="url">Url</th>
+				          <th class="type">Type</th>
+				          <th class="time">Time</th>
+				        </tr>
+				      </thead>
+				    </table>
+				</div>
+				<div class="w-req-data-list fill">
+					<table class="table">
+				      <tbody>
+				      	<tr id="1439623451575-2015" class="success">			        <th class="order" scope="row">2015</th>			        <td class="result">200</td>			        <td class="protocol">HTTP</td>			        <td class="method">GET</td>			        <td class="host">api.cupid.iqiyi.com</td>			        <td class="host-ip">101.227.14.80</td>			        <td class="url" title="http://api.cupid.iqiyi.com/track2?k=200766801&amp;j=6&amp;b=1439623451&amp;f=e57e36816a869438d8768caa2b4a3f7c&amp;s=ff2c7c1c7fa50e23f860fd0b151b560e&amp;cv=5.2.26&amp;ve=1&amp;r=6c20cbcbfae6aa6222fd1c47a4cb1432&amp;g=0ba53baedff5c4b528548d9726f3af9a&amp;a=0&amp;n=387365100&amp;u=1&amp;sv=AdManager%203.2.0&amp;o=4&amp;i=qc_100001_100016&amp;v=5000000707222&amp;c=cbbc0ad38b09743a0863402ae0055cd8&amp;p=1000000000457&amp;kp=e57e36816a869438d8768caa2b4a3f7c&amp;w=1&amp;d=5000000707222&amp;q=5000000774191">http://api.cupid.iqiyi.com/track2?k=200766801&amp;j=6&amp;b=1439623451&amp;f=e57e36816a869438d8768caa2b4a3f7c&amp;s=ff2c7c1c7fa50e23f860fd0b151b560e&amp;cv=5.2.26&amp;ve=1&amp;r=6c20cbcbfae6aa6222fd1c47a4cb1432&amp;g=0ba53baedff5c4b528548d9726f3af9a&amp;a=0&amp;n=387365100&amp;u=1&amp;sv=AdManager%203.2.0&amp;o=4&amp;i=qc_100001_100016&amp;v=5000000707222&amp;c=cbbc0ad38b09743a0863402ae0055cd8&amp;p=1000000000457&amp;kp=e57e36816a869438d8768caa2b4a3f7c&amp;w=1&amp;d=5000000707222&amp;q=5000000774191</td>			        <td class="type" title="text/html;&nbsp;charset=utf-8">text/html;&nbsp;charset=utf-8</td>			        <td class="time">18ms</td>			     </tr>
+				      	<tr id="1439623451576-2016" class="">			        <th class="order" scope="row">2016</th>			        <td class="result">200</td>			        <td class="protocol">HTTP</td>			        <td class="method">GET</td>			        <td class="host">api.cupid.iqiyi.com</td>			        <td class="host-ip">101.227.14.80</td>			        <td class="url" title="http://api.cupid.iqiyi.com/etx?k=200766801&amp;r=6c20cbcbfae6aa6222fd1c47a4cb1432&amp;b=1439623451&amp;f=e57e36816a869438d8768caa2b4a3f7c&amp;du=0&amp;cv=5.2.26&amp;ve=1&amp;z=1000000000457&amp;g=0ba53baedff5c4b528548d9726f3af9a&amp;a=0&amp;n=387365100&amp;s=f4791bd45eee5b018797e765ab679731&amp;ds=71000001&amp;sv=AdManager%203.2.0&amp;o=4&amp;i=qc_100001_100016&amp;v=CAASEGseMM8pVUkpiJFs6m_FE1YaIDlhZTlmN2FkN2I4MzFiMDEyZjkwZjIxMzkyNTlhZmNj&amp;c=cbbc0ad38b09743a0863402ae0055cd8&amp;j=6&amp;d=81000009&amp;q=5000000774191">http://api.cupid.iqiyi.com/etx?k=200766801&amp;r=6c20cbcbfae6aa6222fd1c47a4cb1432&amp;b=1439623451&amp;f=e57e36816a869438d8768caa2b4a3f7c&amp;du=0&amp;cv=5.2.26&amp;ve=1&amp;z=1000000000457&amp;g=0ba53baedff5c4b528548d9726f3af9a&amp;a=0&amp;n=387365100&amp;s=f4791bd45eee5b018797e765ab679731&amp;ds=71000001&amp;sv=AdManager%203.2.0&amp;o=4&amp;i=qc_100001_100016&amp;v=CAASEGseMM8pVUkpiJFs6m_FE1YaIDlhZTlmN2FkN2I4MzFiMDEyZjkwZjIxMzkyNTlhZmNj&amp;c=cbbc0ad38b09743a0863402ae0055cd8&amp;j=6&amp;d=81000009&amp;q=5000000774191</td>			        <td class="type" title=""></td>			        <td class="time">17ms</td>			     </tr>
+				      </tbody>
+				    </table>	
+				</div>
+			</div>
+			<div class="w-req-data-bar">
+				<input type="text" class="w-req-data-filter" maxlength="128" placeholder="type filter text" />
+			</div>
+		</div>
+		<div class="w-detail box-orient-vertical">
+			<div class="btn-group btn-group-sm w-detail-tabs">
+			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span>Overview</button>
+			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-send"></span>Request</button>
+			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-flash"></span>Response</button>
+			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>Timeline</button>
+			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span>Composer</button>
+			  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span>Log</button>
+			</div>
+			<div class="w-detail-content fill">
+				<div class="w-detail-divider"></div>
+				<div class="w-detail-overview" style="display: none;">
+					<table class="table w-properties">
+						<tr>
+							<th>Content Download:</th>
+							<td>sssssss</td>
+						</tr>
+						<tr>
+							<th>Content Download:</th>
+							<td>sssssss</td>
+						</tr>
+						<tr>
+							<th>Content Download:</th>
+							<td>sssssss</td>
+						</tr>
+						<tr>
+							<th>Content Download:</th>
+							<td>sssssss</td>
+						</tr>
+						<tr class="w-properties-separator">
+							<th>Content Download:</th>
+							<td>sssssss</td>
+						</tr>
+						<tr>
+							<th>Content Download:</th>
+							<td>sssssss</td>
+						</tr>
+						<tr>
+							<th>Content Download:</th>
+							<td>sssssss</td>
+						</tr>
+					</table>
+				</div>
+				<div class="w-detail-request">
+					<div class="btn-group btn-group-sm w-sub-btn-group-sm">
+					  <button type="button" class="btn btn-default">Headers</button>
+					  <button type="button" class="btn btn-default">TextView</button>
+					  <button type="button" class="btn btn-default">Cookies</button>
+					  <button type="button" class="btn btn-default">WebForms</button>
+					  <button type="button" class="btn btn-default">Raw</button>
+					</div>
+				</div>
+				<div class="w-detail-response">
+					<div class="btn-group btn-group-sm w-sub-btn-group-sm">
+					  <button type="button" class="btn btn-default">Headers</button>
+					  <button type="button" class="btn btn-default">TextView</button>
+					  <button type="button" class="btn btn-default">Cookies</button>
+					  <button type="button" class="btn btn-default">JSON</button>
+					  <button type="button" class="btn btn-default">Raw</button>
+					</div>
+				</div>
+				<div class="w-detail-Timeline">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
