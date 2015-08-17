@@ -1,4 +1,5 @@
 require('bootstrap/dist/css/bootstrap.css');
+require('../css/base.css');
 require('../css/req-data.css');
 var React = require('react');
 
