@@ -7,7 +7,7 @@ var ReqData = require('./req-data');
 React.render(
 		<div className="main box-orient-vertical">
 			<Menu />
-			<Divider rate="3:2" leftClassName="box-orient-vertical" rightClassName="box-orient-vertical">
+			<Divider rate="3:2">
 				<ReqData />
 				<div>222222</div>
 			</Divider>

@@ -53,7 +53,7 @@
 	React.render(
 			React.createElement("div", {className: "main box-orient-vertical"}, 
 				React.createElement(Menu, null), 
-				React.createElement(Divider, {rate: "3:2", leftClassName: "box-orient-vertical", rightClassName: "box-orient-vertical"}, 
+				React.createElement(Divider, {rate: "3:2"}, 
 					React.createElement(ReqData, null), 
 					React.createElement("div", null, "222222")
 				)
@@ -20909,10 +20909,10 @@
 			var vertical = this.props.vertical;
 			return (
 					React.createElement("div", {ref: "divider", className: (vertical ? 'box-orient-vertical' : 'box') + ' fill w-divider-con'}, 
-						React.createElement("div", {className: 'fill w-divider-left ' + (this.props.leftClassName || '')}, 
+						React.createElement("div", {className: 'fill w-divider-left box-orient-vertical' + (this.props.leftClassName || '')}, 
 							this.props.children[0]
 						), 
-						React.createElement("div", {className: 'w-divider-right ' + (this.props.rightClassName || '')}, 
+						React.createElement("div", {className: 'w-divider-right box-orient-vertical' + (this.props.rightClassName || '')}, 
 							React.createElement("div", {className: "w-divider"}), 
 							this.props.children[1]
 						)
