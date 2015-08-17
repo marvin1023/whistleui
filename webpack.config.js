@@ -3,6 +3,7 @@ var path = require('path');
 
 module.exports = {
 	entry : {
+		test : './js/test',
 		index : './js/index',
 		rules : './js/rules',
 		values : './js/values'
