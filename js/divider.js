@@ -1,4 +1,4 @@
-require('../css/base.css');
+require('.base-css.js');
 require('../css/divider.css');
 var $ = require('jquery');
 var React = require('react');

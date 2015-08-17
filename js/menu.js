@@ -1,4 +1,4 @@
-require('bootstrap/dist/css/bootstrap.css');
+require('.base-css.js');
 require('../css/menu.css');
 var React = require('react');
 
