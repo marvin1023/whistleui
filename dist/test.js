@@ -30091,9 +30091,6 @@
 	});
 
 	var Divider = React.createClass({displayName: "Divider",
-		componentDidMount: function() {
-			
-		},
 		render: function() {
 			var vertical = this.props.vertical;
 			return (

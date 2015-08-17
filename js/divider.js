@@ -13,9 +13,6 @@ util.addDragEvent('.w-divider', function(target, x, y) {
 });
 
 var Divider = React.createClass({
-	componentDidMount: function() {
-		
-	},
 	render: function() {
 		var vertical = this.props.vertical;
 		return (
