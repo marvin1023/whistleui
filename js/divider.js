@@ -37,7 +37,7 @@ var Divider = React.createClass({
 			
 			rightWidth = width * right / (left + right);
 		}
-		if (rightWidth > 0) {
+		if (rightWidth >= 5) {
 			$(divider).find('.w-divider-right')[this.props.vertical ?
 					'height' : 'width'](rightWidth);
 		}
