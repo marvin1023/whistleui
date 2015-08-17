@@ -1,0 +1,16 @@
+.w-req-data-con {overflow-x: auto;}
+.w-req-data-filter {width: 100%; background: rgba(0, 0, 0, 0.8); height: 30px; color: #fff; padding: 2px 5px; border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}
+.w-req-data-content {overflow-x: auto; overflow-y: hidden;}
+.w-req-data-content .order {width: 50px;}
+.w-req-data-content .result {width: 60px;}
+.w-req-data-content .protocol {width: 70px;}
+.w-req-data-content .method, .w-req-data-content .time {width: 65px;}
+.w-req-data-content .host-ip, .w-req-data-content .type {width: 100px;}
+.w-req-data-content .host {width: 136px;}
+
+.w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}
+.w-req-data-headers .table {height: 30px;}
+.w-req-data-headers .table th {border: none!important; padding: 4px 0 4px 6px; font-weight: normal; color: #000;}
+.w-req-data-list {overflow-y: auto; overflow-x: hidden;}
+.w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.w-req-data-bar, .w-req-data-content {min-width: 720px;}

@@ -48,12 +48,13 @@
 	var React = __webpack_require__(15);
 	var Divider = __webpack_require__(171);
 	var Menu = __webpack_require__(176);
+	var ReqData = __webpack_require__(179);
 
 	React.render(
 			React.createElement("div", {className: "main box-orient-vertical"}, 
 				React.createElement(Menu, null), 
-				React.createElement(Divider, {rate: "3:2"}, 
-					React.createElement("div", null, "111111"), 
+				React.createElement(Divider, {rate: "3:2", leftClassName: "box-orient-vertical", rightClassName: "box-orient-vertical"}, 
+					React.createElement(ReqData, null), 
 					React.createElement("div", null, "222222")
 				)
 			), document.body);
@@ -493,7 +494,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-menu {height: 28px; border-top: 1px solid #fcfcfc; border-bottom: 1px solid #d3d3d3; padding: 0 5px; \nbackground: -moz-linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213));\nbackground: -webkit-linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); \nbackground: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-right: 80px; position: relative;}\n.w-menu a {text-decoration: none; color: #000; padding: 0 5px; line-height: 26px; height: 26px; margin-right: 5px; display: inline-block;}\n.w-menu .glyphicon, .w-detail .glyphicon {margin-right: 3px;}\n.w-menu .glyphicon-folder-open {margin-right: 6px;}\n.w-menu .w-online {position: absolute; right: 0;}\n.w-menu .w-online, .w-menu a:hover {color: #337ab7;}\n.w-menu .w-offline {color: #ccc!important; cursor: default;}\n\n.w-detail {width: 560px; border-left: 1px solid #ccc; overflow-x: auto;}\n.w-req-data-con {overflow-x: auto;}\n.w-req-data-filter {width: 100%; background: rgba(0, 0, 0, 0.8); height: 30px; color: #fff; padding: 2px 5px; border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}\n.w-req-data-content {overflow-x: auto; overflow-y: hidden;}\n.w-req-data-content .order {width: 50px;}\n.w-req-data-content .result {width: 60px;}\n.w-req-data-content .protocol {width: 70px;}\n.w-req-data-content .method, .w-req-data-content .time {width: 65px;}\n.w-req-data-content .host-ip, .w-req-data-content .type {width: 100px;}\n.w-req-data-content .host {width: 136px;}\n\n.w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}\n.w-req-data-headers .table {height: 30px;}\n.w-req-data-headers .table th {border: none!important; padding: 4px 0 4px 6px; font-weight: normal; color: #000;}\n.w-req-data-list {overflow-y: auto; overflow-x: hidden;}\n.w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}\n.w-detail-tabs {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; display: block;}\n.w-detail-tabs .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}\n.w-detail-tabs .btn:first-child {border-left: none;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n.w-req-data-bar, .w-req-data-content {min-width: 720px;}\n\n\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}\n\n.w-list-data {width: 200px; border-top: 1px solid #ccc;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72;}\n.w-list-content {border: 1px solid #ccc;} \n", ""]);
+	exports.push([module.id, ".w-menu {height: 28px; border-top: 1px solid #fcfcfc; border-bottom: 1px solid #d3d3d3; padding: 0 5px; \nbackground: -moz-linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213));\nbackground: -webkit-linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); \nbackground: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-right: 80px; position: relative;}\n.w-menu a {text-decoration: none; color: #000; padding: 0 5px; line-height: 26px; height: 26px; margin-right: 5px; display: inline-block;}\n.w-menu .glyphicon, .w-detail .glyphicon {margin-right: 3px;}\n.w-menu .glyphicon-folder-open {margin-right: 6px;}\n.w-menu .w-online {position: absolute; right: 0;}\n.w-menu .w-online, .w-menu a:hover {color: #337ab7;}\n.w-menu .w-offline {color: #ccc!important; cursor: default;}\n\n.w-req-data-con {overflow-x: auto;}\n.w-req-data-filter {width: 100%; background: rgba(0, 0, 0, 0.8); height: 30px; color: #fff; padding: 2px 5px; border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}\n.w-req-data-content {overflow-x: auto; overflow-y: hidden;}\n.w-req-data-content .order {width: 50px;}\n.w-req-data-content .result {width: 60px;}\n.w-req-data-content .protocol {width: 70px;}\n.w-req-data-content .method, .w-req-data-content .time {width: 65px;}\n.w-req-data-content .host-ip, .w-req-data-content .type {width: 100px;}\n.w-req-data-content .host {width: 136px;}\n\n.w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}\n.w-req-data-headers .table {height: 30px;}\n.w-req-data-headers .table th {border: none!important; padding: 4px 0 4px 6px; font-weight: normal; color: #000;}\n.w-req-data-list {overflow-y: auto; overflow-x: hidden;}\n.w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}\n.w-req-data-bar, .w-req-data-content {min-width: 720px;}\n\n.w-detail {width: 560px; border-left: 1px solid #ccc; overflow-x: auto;}\n.w-detail-tabs {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; display: block;}\n.w-detail-tabs .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}\n.w-detail-tabs .btn:first-child {border-left: none;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n\n\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}\n\n.w-list-data {width: 200px; border-top: 1px solid #ccc;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72;}\n.w-list-content {border: 1px solid #ccc;} \n", ""]);
 
 	// exports
 
@@ -20908,10 +20909,10 @@
 			var vertical = this.props.vertical;
 			return (
 					React.createElement("div", {ref: "divider", className: (vertical ? 'box-orient-vertical' : 'box') + ' fill w-divider-con'}, 
-						React.createElement("div", {className: "fill w-divider-left"}, 
+						React.createElement("div", {className: 'fill w-divider-left ' + (this.props.leftClassName || '')}, 
 							this.props.children[0]
 						), 
-						React.createElement("div", {className: "w-divider-right"}, 
+						React.createElement("div", {className: 'w-divider-right ' + (this.props.rightClassName || '')}, 
 							React.createElement("div", {className: "w-divider"}), 
 							this.props.children[1]
 						)
@@ -30318,6 +30319,99 @@
 
 	// module
 	exports.push([module.id, ".w-menu {height: 28px; border-top: 1px solid #fcfcfc; border-bottom: 1px solid #d3d3d3; padding: 0 5px; \nbackground: -moz-linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213));\nbackground: -webkit-linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); \nbackground: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-right: 80px; position: relative;}\n.w-menu a {text-decoration: none; color: #000; padding: 0 5px; line-height: 26px; height: 26px; margin-right: 5px; display: inline-block;}\n.w-menu .glyphicon, .w-detail .glyphicon {margin-right: 3px;}\n.w-menu .glyphicon-folder-open {margin-right: 6px;}\n.w-menu .w-online {position: absolute; right: 0;}\n.w-menu .w-online, .w-menu a:hover {color: #337ab7;}\n.w-menu .w-offline {color: #ccc!important; cursor: default;}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(2);
+	__webpack_require__(180);
+	var React = __webpack_require__(15);
+
+	var ReqData = React.createClass({displayName: "ReqData",
+		componentDidMount: function() {
+			
+		},
+		render: function() {
+			
+			return (
+					React.createElement("div", {className: "fill w-req-data-con box-orient-vertical"}, 
+						React.createElement("div", {className: "w-req-data-content fill box-orient-vertical"}, 
+							React.createElement("div", {className: "w-req-data-headers"}, 
+								React.createElement("table", {className: "table"}, 
+							      React.createElement("thead", null, 
+							        React.createElement("tr", null, 
+							          React.createElement("th", {className: "order"}, "#"), 
+							          React.createElement("th", {className: "result"}, "Result"), 
+							          React.createElement("th", {className: "protocol"}, "Protocol"), 
+							          React.createElement("th", {className: "method"}, "Method"), 
+							          React.createElement("th", {className: "host"}, "Host"), 
+							          React.createElement("th", {className: "host-ip"}, "Host IP"), 
+							          React.createElement("th", {className: "url"}, "Url"), 
+							          React.createElement("th", {className: "type"}, "Type"), 
+							          React.createElement("th", {className: "time"}, "Time")
+							        )
+							      )
+							    )
+							), 
+							React.createElement("div", {className: "w-req-data-list fill"}, 
+								React.createElement("table", {className: "table"}, 
+							      React.createElement("tbody", null, 
+							      	React.createElement("tr", {id: "1439623451575-2015", className: "success"}, "           ", React.createElement("th", {className: "order", scope: "row"}, "2015"), "           ", React.createElement("td", {className: "result"}, "200"), "           ", React.createElement("td", {className: "protocol"}, "HTTP"), "           ", React.createElement("td", {className: "method"}, "GET"), "           ", React.createElement("td", {className: "host"}, "api.cupid.iqiyi.com"), "           ", React.createElement("td", {className: "host-ip"}, "101.227.14.80"), "           ", React.createElement("td", {className: "url", title: "http://api.cupid.iqiyi.com/track2?k=200766801&j=6&b=1439623451&f=e57e36816a869438d8768caa2b4a3f7c&s=ff2c7c1c7fa50e23f860fd0b151b560e&cv=5.2.26&ve=1&r=6c20cbcbfae6aa6222fd1c47a4cb1432&g=0ba53baedff5c4b528548d9726f3af9a&a=0&n=387365100&u=1&sv=AdManager%203.2.0&o=4&i=qc_100001_100016&v=5000000707222&c=cbbc0ad38b09743a0863402ae0055cd8&p=1000000000457&kp=e57e36816a869438d8768caa2b4a3f7c&w=1&d=5000000707222&q=5000000774191"}, "http://api.cupid.iqiyi.com/track2?k=200766801&j=6&b=1439623451&f=e57e36816a869438d8768caa2b4a3f7c&s=ff2c7c1c7fa50e23f860fd0b151b560e&cv=5.2.26&ve=1&r=6c20cbcbfae6aa6222fd1c47a4cb1432&g=0ba53baedff5c4b528548d9726f3af9a&a=0&n=387365100&u=1&sv=AdManager%203.2.0&o=4&i=qc_100001_100016&v=5000000707222&c=cbbc0ad38b09743a0863402ae0055cd8&p=1000000000457&kp=e57e36816a869438d8768caa2b4a3f7c&w=1&d=5000000707222&q=5000000774191"), "           ", React.createElement("td", {className: "type", title: "text/html; charset=utf-8"}, "text/html; charset=utf-8"), "           ", React.createElement("td", {className: "time"}, "18ms"), "        "), 
+							      	React.createElement("tr", {id: "1439623451576-2016", className: ""}, "           ", React.createElement("th", {className: "order", scope: "row"}, "2016"), "           ", React.createElement("td", {className: "result"}, "200"), "           ", React.createElement("td", {className: "protocol"}, "HTTP"), "           ", React.createElement("td", {className: "method"}, "GET"), "           ", React.createElement("td", {className: "host"}, "api.cupid.iqiyi.com"), "           ", React.createElement("td", {className: "host-ip"}, "101.227.14.80"), "           ", React.createElement("td", {className: "url", title: "http://api.cupid.iqiyi.com/etx?k=200766801&r=6c20cbcbfae6aa6222fd1c47a4cb1432&b=1439623451&f=e57e36816a869438d8768caa2b4a3f7c&du=0&cv=5.2.26&ve=1&z=1000000000457&g=0ba53baedff5c4b528548d9726f3af9a&a=0&n=387365100&s=f4791bd45eee5b018797e765ab679731&ds=71000001&sv=AdManager%203.2.0&o=4&i=qc_100001_100016&v=CAASEGseMM8pVUkpiJFs6m_FE1YaIDlhZTlmN2FkN2I4MzFiMDEyZjkwZjIxMzkyNTlhZmNj&c=cbbc0ad38b09743a0863402ae0055cd8&j=6&d=81000009&q=5000000774191"}, "http://api.cupid.iqiyi.com/etx?k=200766801&r=6c20cbcbfae6aa6222fd1c47a4cb1432&b=1439623451&f=e57e36816a869438d8768caa2b4a3f7c&du=0&cv=5.2.26&ve=1&z=1000000000457&g=0ba53baedff5c4b528548d9726f3af9a&a=0&n=387365100&s=f4791bd45eee5b018797e765ab679731&ds=71000001&sv=AdManager%203.2.0&o=4&i=qc_100001_100016&v=CAASEGseMM8pVUkpiJFs6m_FE1YaIDlhZTlmN2FkN2I4MzFiMDEyZjkwZjIxMzkyNTlhZmNj&c=cbbc0ad38b09743a0863402ae0055cd8&j=6&d=81000009&q=5000000774191"), "           ", React.createElement("td", {className: "type", title: ""}), "           ", React.createElement("td", {className: "time"}, "17ms"), "        ")
+							      )
+							    )	
+							)
+						), 
+						React.createElement("div", {className: "w-req-data-bar"}, 
+							React.createElement("input", {type: "text", className: "w-req-data-filter", maxlength: "128", placeholder: "type filter text"})
+						)
+				)
+			);
+		}
+	});
+
+	module.exports = ReqData;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(181);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./req-data.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./req-data.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".w-req-data-con {overflow-x: auto;}\n.w-req-data-filter {width: 100%; background: rgba(0, 0, 0, 0.8); height: 30px; color: #fff; padding: 2px 5px; border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}\n.w-req-data-content {overflow-x: auto; overflow-y: hidden;}\n.w-req-data-content .order {width: 50px;}\n.w-req-data-content .result {width: 60px;}\n.w-req-data-content .protocol {width: 70px;}\n.w-req-data-content .method, .w-req-data-content .time {width: 65px;}\n.w-req-data-content .host-ip, .w-req-data-content .type {width: 100px;}\n.w-req-data-content .host {width: 136px;}\n\n.w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}\n.w-req-data-headers .table {height: 30px;}\n.w-req-data-headers .table th {border: none!important; padding: 4px 0 4px 6px; font-weight: normal; color: #000;}\n.w-req-data-list {overflow-y: auto; overflow-x: hidden;}\n.w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}\n.w-req-data-bar, .w-req-data-content {min-width: 720px;}", ""]);
 
 	// exports
 
