@@ -25,13 +25,14 @@ var javascript = require('codemirror/mode/javascript/javascript');
 var css = require('codemirror/mode/css/css');
 var xml = require('codemirror/mode/xml/xml');
 var htmlmixed = require('codemirror/mode/htmlmixed/htmlmixed');
+var rules = require('./rules-mode');
 var DEFAULT_MODE = 'htmlmixed';
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
 
 var Editor = React.createClass({
 	setType: function(mode) {
-		mode = this._mode = /(javascript|css|xml)/.test(type) ? RegExp.$1 : DEFAULT_MODE;
+		mode = this._mode = /(javascript|css|xmlrules)/.test(type) ? RegExp.$1 : DEFAULT_MODE;
 		if (this._editor) {
 			this._editor.setOption('mode', mode);
 		}
