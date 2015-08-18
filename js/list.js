@@ -6,7 +6,7 @@ var Editor = require('./editor');
 
 var List = React.createClass({
 	componentDidMount: function() {
-		var isRulesEditor = this.props.type == 'rules';
+		
 	},
 	render: function() {
 		
@@ -16,7 +16,7 @@ var List = React.createClass({
 						<a href="javascript:;">Default<span className="glyphicon glyphicon-ok"></span></a>
 						<a href="javascript:;">DefaultDefaultDefaultDefaultDefaultDefaultDefaultDefault</a>
 					</div>
-					<Editor ref="editor" mode="rules" />
+					<Editor ref="editor" mode={this.props.type == 'rules' ? 'rules' : ''} />
 				</Divider>
 		);
 	}

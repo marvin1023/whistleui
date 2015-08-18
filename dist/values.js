@@ -30323,7 +30323,7 @@
 
 	var List = React.createClass({displayName: "List",
 		componentDidMount: function() {
-			var isRulesEditor = this.props.type == 'rules';
+			
 		},
 		render: function() {
 			
@@ -30333,7 +30333,7 @@
 							React.createElement("a", {href: "javascript:;"}, "Default", React.createElement("span", {className: "glyphicon glyphicon-ok"})), 
 							React.createElement("a", {href: "javascript:;"}, "DefaultDefaultDefaultDefaultDefaultDefaultDefaultDefault")
 						), 
-						React.createElement(Editor, {ref: "editor", mode: "rules"})
+						React.createElement(Editor, {ref: "editor", mode: this.props.type == 'rules' ? 'rules' : ''})
 					)
 			);
 		}
