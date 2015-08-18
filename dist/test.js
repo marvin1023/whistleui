@@ -20882,11 +20882,11 @@
 			
 			return (
 					React.createElement("div", {ref: "divider", className: (vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con'}, 
-						React.createElement("div", {className: (leftWidth ? '' : 'fill ') + 'w-divider-left orient-vertical-box' + (this.props.leftClassName || '')}, 
+						React.createElement("div", {className: (leftWidth ? '' : 'fill ') + 'w-divider-left orient-vertical-box ' + (this.props.leftClassName || '')}, 
 							leftWidth ? divider : '', 
 							this.props.children[0]
 						), 
-						React.createElement("div", {className: (leftWidth ? 'fill ' : '') + 'w-divider-right orient-vertical-box' + (this.props.rightClassName || '')}, 
+						React.createElement("div", {className: (leftWidth ? 'fill ' : '') + 'w-divider-right orient-vertical-box ' + (this.props.rightClassName || '')}, 
 							leftWidth ? '' : divider, 
 							this.props.children[1]
 						)
@@ -39257,21 +39257,21 @@
 				});
 			var con = this.refs.editor.getDOMNode();
 			var timeout;
-			
-			resize();
-			$(window).on('resize', function() {
-				clearTimeout(timeout);
-				timeout = setTimeout(resize, 30);
-			});
-			
-			function resize() {
-				myCodeMirror.setSize(con.offsetWidth, con.offsetHeight);
-			}
+			myCodeMirror.setOption("theme", 'ambiance');
+	//		resize();
+	//		$(window).on('resize', function() {
+	//			clearTimeout(timeout);
+	//			timeout = setTimeout(resize, 30);
+	//		});
+	//		
+	//		function resize() {
+	//			myCodeMirror.setSize(con.offsetWidth, con.offsetHeight);
+	//		}
 		},
 		render: function() {
 			
 			return (
-				React.createElement("div", {ref: "editor", className: "fill w-list-content"})
+				React.createElement("div", {ref: "editor", className: "fill orient-vertical-box w-list-content"})
 			);
 		}
 	});

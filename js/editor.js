@@ -34,21 +34,21 @@ var Editor = React.createClass({
 			});
 		var con = this.refs.editor.getDOMNode();
 		var timeout;
-		
-		resize();
-		$(window).on('resize', function() {
-			clearTimeout(timeout);
-			timeout = setTimeout(resize, 30);
-		});
-		
-		function resize() {
-			myCodeMirror.setSize(con.offsetWidth, con.offsetHeight);
-		}
+		myCodeMirror.setOption("theme", 'ambiance');
+//		resize();
+//		$(window).on('resize', function() {
+//			clearTimeout(timeout);
+//			timeout = setTimeout(resize, 30);
+//		});
+//		
+//		function resize() {
+//			myCodeMirror.setSize(con.offsetWidth, con.offsetHeight);
+//		}
 	},
 	render: function() {
 		
 		return (
-			<div ref="editor" className="fill w-list-content"></div>
+			<div ref="editor" className="fill orient-vertical-box w-list-content"></div>
 		);
 	}
 });

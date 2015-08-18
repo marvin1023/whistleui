@@ -20886,11 +20886,11 @@
 			
 			return (
 					React.createElement("div", {ref: "divider", className: (vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con'}, 
-						React.createElement("div", {className: (leftWidth ? '' : 'fill ') + 'w-divider-left orient-vertical-box' + (this.props.leftClassName || '')}, 
+						React.createElement("div", {className: (leftWidth ? '' : 'fill ') + 'w-divider-left orient-vertical-box ' + (this.props.leftClassName || '')}, 
 							leftWidth ? divider : '', 
 							this.props.children[0]
 						), 
-						React.createElement("div", {className: (leftWidth ? 'fill ' : '') + 'w-divider-right orient-vertical-box' + (this.props.rightClassName || '')}, 
+						React.createElement("div", {className: (leftWidth ? 'fill ' : '') + 'w-divider-right orient-vertical-box ' + (this.props.rightClassName || '')}, 
 							leftWidth ? '' : divider, 
 							this.props.children[1]
 						)
