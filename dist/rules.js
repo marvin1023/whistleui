@@ -30399,7 +30399,8 @@
 		rename: function(name, newName) {
 			var item = this.getItem(name);
 			if (item) {
-				this._list[this._list.indexOf(name)] = item.name = newName;
+				delete this._data[name];
+				this._data[newName] = this._list[this._list.indexOf(name)] = item.name = newName;
 				this.forceUpdate();
 			}
 		},
