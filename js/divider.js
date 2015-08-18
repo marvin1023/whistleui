@@ -18,8 +18,8 @@ var Divider = React.createClass({
 	componentDidMount: function() {
 		var divider = this.refs.divider.getDOMNode();
 		var prop = this.props.vertical ? 'height' : 'width';
-		if (this.props.leftWidth > 0) {
-			$(divider).find('.w-divider-left')[prop](this.props.leftWidth);
+		if (this._leftWidth > 0) {
+			$(divider).find('.w-divider-left')[prop](this._leftWidth);
 			return;
 		}
 		
@@ -37,7 +37,7 @@ var Divider = React.createClass({
 		var divider = <div className="w-divider"></div>;
 		var leftWidth = parseInt(this.props.leftWidth, 10);
 		if (leftWidth > 0) {
-			this.props.leftWidth = leftWidth;
+			this._leftWidth = leftWidth;
 		} else {
 			leftWidth = 0;
 		}

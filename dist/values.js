@@ -20855,8 +20855,8 @@
 		componentDidMount: function() {
 			var divider = this.refs.divider.getDOMNode();
 			var prop = this.props.vertical ? 'height' : 'width';
-			if (this.props.leftWidth > 0) {
-				$(divider).find('.w-divider-left')[prop](this.props.leftWidth);
+			if (this._leftWidth > 0) {
+				$(divider).find('.w-divider-left')[prop](this._leftWidth);
 				return;
 			}
 			
@@ -20874,7 +20874,7 @@
 			var divider = React.createElement("div", {className: "w-divider"});
 			var leftWidth = parseInt(this.props.leftWidth, 10);
 			if (leftWidth > 0) {
-				this.props.leftWidth = leftWidth;
+				this._leftWidth = leftWidth;
 			} else {
 				leftWidth = 0;
 			}
@@ -30320,22 +30320,91 @@
 	var React = __webpack_require__(13);
 	var Divider = __webpack_require__(169);
 	var Editor = __webpack_require__(186);
+	var index = 1;
+
+	function getKey() {
+		return 'editor-' + index++;
+	}
+
+	function getSuffix(name) {
+		if (typeof name != 'string') {
+			return '';
+		}
+		var index = name.lastIndexOf('.');
+		return index == -1 ? '' : name.substring(index + 1);
+	}
 
 	var List = React.createClass({displayName: "List",
+		add: function(name, value) {
+			if (!name || this._data[name]) {
+				return false;
+			}
+			var list = this._list;
+			var data = this._data;
+			
+			list.push(name);
+			data[name] = {
+					selected: true,
+					key: getKey(),
+					name: name,
+					value: value
+			};
+			this.setProps({
+				modal: {
+					list: list,
+					data: data
+				}
+			});
+			return true;
+		},
+		remove: function(name) {
+			
+		},
+		rename: function(name, newName) {
+			
+		},
+		select: function(name) {
+			
+		},
+		unselect: function(name) {
+			
+		},
+		enable: function(name) {
+			
+		},
+		disable: function(name) {
+			
+		},
+		getCurrentItem: function() {
+			
+		},
+		getItem: function(name) {
+			
+		},
 		componentDidMount: function() {
 			
 		},
 		render: function() {
 			var modal = this.props.modal || {};
-			var list = modal.list || [];
-			var data = modal.data || {};
+			var list = this._list = modal.list || ['Default'];
+			var data = this._data = modal.data || {Default: {
+				key: getKey(),
+				selected: true,
+				value: 'test'
+			}};
+			
 			return (
 					React.createElement(Divider, {leftWidth: "200"}, 
 						React.createElement("div", {className: "w-list-data fill"}, 
 							
-								list.map(function(item) {
-									return React.createElement("a", {key: item.id, className: (item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : ''), 
-												href: "javascript:;"}, item.name, React.createElement("span", {className: "glyphicon glyphicon-ok"}));
+								list.map(function(name) {
+									var item = data[name];
+									return React.createElement("a", {key: item.key, onClick: function() {
+										console.log('click');
+									}, onDoubleClick: function() {
+										console.log('dblclick');
+									}, className: (item.selected ? 'w-selected' : '') + (item.show ? ' w-active' : ''), 
+												href: "javascript:;"}, name, React.createElement("span", {className: "glyphicon glyphicon-ok"}));
 								})
 							
 						), 
