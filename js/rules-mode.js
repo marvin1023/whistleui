@@ -96,5 +96,3 @@ CodeMirror.defineMode('rules', function() {
 				 }
 			};
 });
-
-CodeMirror.defineMIME('text/rules', 'rules');

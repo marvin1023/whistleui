@@ -31,8 +31,8 @@ var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
 
 var Editor = React.createClass({
-	setType: function(mode) {
-		mode = this._mode = /(javascript|css|xmlrules)/.test(type) ? RegExp.$1 : DEFAULT_MODE;
+	setMode: function(mode) {
+		mode = this._mode = /(javascript|css|xml|rules)/.test(mode) ? RegExp.$1 : DEFAULT_MODE;
 		if (this._editor) {
 			this._editor.setOption('mode', mode);
 		}
@@ -70,6 +70,7 @@ var Editor = React.createClass({
 		var timeout;
 		var elem = this.refs.editor.getDOMNode();
 		var editor = this._editor = CodeMirror(elem);
+		this.setMode(this.props.mode);
 		elem.style.fontSize = this._fontSize || DEFAULT_FONT_SIZE;
 		editor.setOption('mode', this._mode || DEFAULT_MODE);
 		editor.setOption('value', this._value || '');

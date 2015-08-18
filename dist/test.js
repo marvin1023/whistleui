@@ -30324,7 +30324,7 @@
 
 	var List = React.createClass({displayName: "List",
 		componentDidMount: function() {
-			
+			var isRulesEditor = this.props.type == 'rules';
 		},
 		render: function() {
 			
@@ -30334,7 +30334,7 @@
 							React.createElement("a", {href: "javascript:;"}, "Default", React.createElement("span", {className: "glyphicon glyphicon-ok"})), 
 							React.createElement("a", {href: "javascript:;"}, "DefaultDefaultDefaultDefaultDefaultDefaultDefaultDefault")
 						), 
-						React.createElement(Editor, {ref: "editor"})
+						React.createElement(Editor, {ref: "editor", mode: "rules"})
 					)
 			);
 		}
@@ -39254,8 +39254,8 @@
 	var DEFAULT_FONT_SIZE = '16px';
 
 	var Editor = React.createClass({displayName: "Editor",
-		setType: function(mode) {
-			mode = this._mode = /(javascript|css|xmlrules)/.test(type) ? RegExp.$1 : DEFAULT_MODE;
+		setMode: function(mode) {
+			mode = this._mode = /(javascript|css|xml|rules)/.test(mode) ? RegExp.$1 : DEFAULT_MODE;
 			if (this._editor) {
 				this._editor.setOption('mode', mode);
 			}
@@ -39293,6 +39293,7 @@
 			var timeout;
 			var elem = this.refs.editor.getDOMNode();
 			var editor = this._editor = CodeMirror(elem);
+			this.setMode(this.props.mode);
 			elem.style.fontSize = this._fontSize || DEFAULT_FONT_SIZE;
 			editor.setOption('mode', this._mode || DEFAULT_MODE);
 			editor.setOption('value', this._value || '');
@@ -42131,8 +42132,6 @@
 					 }
 				};
 	});
-
-	CodeMirror.defineMIME('text/rules', 'rules');
 
 /***/ }
 /******/ ]);
