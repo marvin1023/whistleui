@@ -33,6 +33,7 @@ var Editor = React.createClass({
 			  mode:  "css"
 			});
 		var con = this.refs.editor.getDOMNode();
+		$(con).find('.CodeMirror').addClass('fill');
 		var timeout;
 		myCodeMirror.setOption("theme", 'ambiance');
 //		resize();
