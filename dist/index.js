@@ -20850,7 +20850,8 @@
 		target = target.parent();
 		var con = target.parent();
 		var isVertical = !con.hasClass('box');
-		var size = isVertical ? target[0].offsetHeight - y : target[0].offsetWidth - x;
+		var isRight = target.hasClass('w-divider-right');
+		var size = isVertical ? target[0].offsetHeight - (isRight ? y : -y) : target[0].offsetWidth - (isRight ? x : -x);
 		var conSize = con[0][isVertical ? 'offsetHeight' : 'offsetWidth'];
 		target[isVertical ? 'height' : 'width'](Math.min(conSize - 5, Math.max(5, size)));
 	});
