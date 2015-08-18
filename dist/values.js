@@ -30456,19 +30456,19 @@
 					target: elem,
 					data: item
 			};
-			item.active ? this.__onDisable(e) : this._onEnable(e);
+			item.active ? this._onDisable(e) : this._onEnable(e);
 		},
 		_onEnable: function(e) {
 			if (typeof this.props.onEnable == 'function' && 
 					this.props.onEnable(e) !== false) {
-				item.active = true;
+				e.data.active = true;
 				this.forceUpdate();
 			}
 		},
 		_onDisable: function(e) {
 			if (typeof this.props.onDisable == 'function' && 
-					this.props.onEnable(e) !== false) {
-				item.active = false;
+					this.props.onDisable(e) !== false) {
+				e.data.active = false;
 				this.forceUpdate();
 			}
 		},

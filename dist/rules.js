@@ -64,7 +64,11 @@
 				React.createElement("div", {className: "w-values-con"}), 
 				React.createElement("div", {className: "w-network-con"}), 
 				React.createElement(Menu, {name: "rules"}), 
-				React.createElement(List, {name: "rules", modal: modal})
+				React.createElement(List, {name: "rules", onEnable: function() {
+					console.log('enable')
+				}, onDisable: function() {
+					console.log('disable')
+				}, modal: modal})
 			), document.body);
 
 /***/ },
@@ -30465,19 +30469,19 @@
 					target: elem,
 					data: item
 			};
-			item.active ? this.__onDisable(e) : this._onEnable(e);
+			item.active ? this._onDisable(e) : this._onEnable(e);
 		},
 		_onEnable: function(e) {
 			if (typeof this.props.onEnable == 'function' && 
 					this.props.onEnable(e) !== false) {
-				item.active = true;
+				e.data.active = true;
 				this.forceUpdate();
 			}
 		},
 		_onDisable: function(e) {
 			if (typeof this.props.onDisable == 'function' && 
-					this.props.onEnable(e) !== false) {
-				item.active = false;
+					this.props.onDisable(e) !== false) {
+				e.data.active = false;
 				this.forceUpdate();
 			}
 		},

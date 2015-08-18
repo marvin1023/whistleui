@@ -18,5 +18,9 @@ React.render(
 			<div className="w-values-con"></div>
 			<div className="w-network-con"></div>
 			<Menu name="rules" />
-			<List name="rules" modal={modal} />
+			<List name="rules" onEnable={function() {
+				console.log('enable')
+			}} onDisable={function() {
+				console.log('disable')
+			}} modal={modal} />
 		</div>, document.body);
