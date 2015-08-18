@@ -83,17 +83,36 @@ var List = React.createClass({
 		$(e.target).closest('a').removeClass('w-hover');
 	},
 	onClick: function(e) {
-		
+		var elem = $(e.target).closest('a');
+		var item = this._getItemByKey(elem.attr('data-key'));
+		var data = this._data;
+		Object.keys(data).forEach(function(name) {
+			data[name].selected = false;
+		});
+		item.selected = true;
+		this.forceUpdate();
 	},
 	onDoubleClick: function(e) {
-		
+		var elem = $(e.target).closest('a');
+		var item = this._getItemByKey(elem.attr('data-key'));
+		item.active = true;
+		this.forceUpdate();
+		//this.select(item && item.name);
+	},
+	_getItemByKey: function(key) {
+		for (var i in this._data) {
+			var item = this._data[i];
+			if (item.key == key) {
+				return item;
+			}
+		}
 	},
 	render: function() {
 		var self = this;
 		var modal = self.props.modal || {};
 		var list = self._list = modal.list || [];
 		var data = self._data = modal.data || {};
-		var seletedItem;
+		var selectedItem;
 		list.forEach(function(name) {
 			var item = data[name];
 			if (item) {
@@ -103,7 +122,7 @@ var List = React.createClass({
 					if (selectedItem) {
 						item.selected = false;
 					} else {
-						seletedItem = item;
+						selectedItem = item;
 					}
 				}
 				return;
@@ -115,10 +134,13 @@ var List = React.createClass({
 			};
 		});
 		
-		if (!seletedItem && list[0]) {
-			seletedItem = data[list[0]];
-			seletedItem.selected = true;
+		if (!selectedItem && list[0]) {
+			selectedItem = data[list[0]];
+			selectedItem.selected = true;
 		}
+		
+		self._onItemClick = self.props.onItemClick;
+		self._onItemDoubleClick = self.props.onDoubleClick;
 		
 		return (
 				<Divider leftWidth="200">
@@ -126,7 +148,7 @@ var List = React.createClass({
 						{
 							list.map(function(name) {
 								var item = data[name];
-								return <a key={item.key}
+								return <a key={item.key} data-key={item.key}
 											onMouseEnter={self.onMouseEnter}
 											onMouseLeave={self.onMouseLeave}
 											onClick={self.onClick} 
@@ -136,7 +158,7 @@ var List = React.createClass({
 							})
 						}
 					</div>
-					<Editor {...self.props} ref="editor" value={seletedItem && seletedItem.value} mode={this.props.name == 'rules' ? 'rules' : ''} />
+					<Editor {...self.props} ref="editor" readOnly value={selectedItem && selectedItem.value} mode={this.props.name == 'rules' ? 'rules' : ''} />
 				</Divider>
 		);
 	}
