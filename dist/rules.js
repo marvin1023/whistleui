@@ -30507,7 +30507,7 @@
 			}
 			
 			var value = e.getValue();
-			if (value != item.value && !item.changed && value != item.value) {
+			if (value != item.value && value != item.value) {
 				item.changed = true;
 				item.value = value;
 				this.forceUpdate();
