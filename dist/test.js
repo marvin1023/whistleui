@@ -30462,7 +30462,7 @@
 		setFontSize: function(fontSize) {
 			fontSize = this._fontSize = fontSize || DEFAULT_FONT_SIZE;
 			if (this._editor) {
-				elem.style.fontSize = fontSize;
+				this.refs.editor.getDOMNode().style.fontSize = fontSize;
 			}
 		},
 		showLineNumber: function(show) {
@@ -30476,6 +30476,10 @@
 			var elem = this.refs.editor.getDOMNode();
 			var editor = this._editor = CodeMirror(elem);
 			this.setMode(this.props.mode);
+			this.setValue(this.props.value);
+			this.setTheme(this.props.mode);
+			this.setFontSize(this.props.fontSize);
+			this.showLineNumber(this.props.lineNumbers || false);
 			elem.style.fontSize = this._fontSize || DEFAULT_FONT_SIZE;
 			editor.setOption('mode', this._mode);
 			editor.setOption('value', this._value || '');
