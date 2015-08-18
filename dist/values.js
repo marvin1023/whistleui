@@ -30513,8 +30513,8 @@
 		render: function() {
 			var self = this;
 			var modal = self.props.modal || {};
-			var list = self._list = modal.list || [];
-			var data = self._data = modal.data || {};
+			var list = self._list = modal.list = modal.list || [];
+			var data = self._data = modal.data = modal.data || {};
 			list.forEach(function(name) {
 				var item = data[name];
 				if (item) {
@@ -30664,7 +30664,7 @@
 		},
 		setValue: function(value) {
 			value = this._value = value == null ? '' : value + '';
-			if (!this._editor) {
+			if (!this._editor || this._editor.getValue() == value) {
 				return;
 			}
 			this._editor.setOption('value', value);

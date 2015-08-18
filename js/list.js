@@ -192,8 +192,8 @@ var List = React.createClass({
 	render: function() {
 		var self = this;
 		var modal = self.props.modal || {};
-		var list = self._list = modal.list || [];
-		var data = self._data = modal.data || {};
+		var list = self._list = modal.list = modal.list || [];
+		var data = self._data = modal.data = modal.data || {};
 		list.forEach(function(name) {
 			var item = data[name];
 			if (item) {
