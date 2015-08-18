@@ -49,12 +49,16 @@
 	var List = __webpack_require__(183);
 	var Menu = __webpack_require__(174);
 
+	var modal = {
+			list: ['1.js', '2.html', '3.md', '4.json', '5.css', '6.xml', 7, 8, 9, 0]
+	};
+
 	React.render(
 			React.createElement("div", {className: "main orient-vertical-box"}, 
 				React.createElement("div", {className: "w-rules-con"}), 
 				React.createElement("div", {className: "w-network-con"}), 
 				React.createElement(Menu, {name: "values"}), 
-				React.createElement(List, null)
+				React.createElement(List, {modal: modal})
 			), document.body);
 
 
@@ -30340,6 +30344,17 @@
 			this._data = {};
 			this._list = [];
 		},
+		getEnableItems: function() {
+			var items = [];
+			for (var i in this._data) {
+				var item = this._data[i];
+				if (item.active) {
+					items.push(item);
+				}
+			}
+			
+			return items;
+		},
 		add: function(name, value) {
 			if (this.getItem(name)) {
 				return false;
@@ -30444,8 +30459,8 @@
 		_onClick: function(e) {
 			var elem = $(e.target).closest('a');
 			var item = this._getItemByKey(elem.attr('data-key'));
-			if (!item || typeof this.props.onSelect == 'function' && 
-					this.props.onSelect.call(this, {target: elem, data: item}) === false) {
+			if (!item || (typeof this.props.onSelect == 'function' && 
+					this.props.onSelect.call(this, {target: elem, data: item}) === false)) {
 				return;
 			}
 			this.select(item.name);
@@ -30538,8 +30553,8 @@
 								})
 							
 						), 
-						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", onChange: self._onChange, readOnly: !selectedItem, 
-						value: selectedItem && selectedItem.value, mode: self.props.name == 'rules' ? 'rules' : ''}))
+						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", onChange: self._onChange, readOnly: !selectedItem, value: selectedItem && selectedItem.value, 
+						mode: self.props.name == 'rules' ? 'rules' : getSuffix(selectedItem && selectedItem.name)}))
 					)
 			);
 		}

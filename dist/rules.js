@@ -30355,6 +30355,17 @@
 			this._data = {};
 			this._list = [];
 		},
+		getEnableItems: function() {
+			var items = [];
+			for (var i in this._data) {
+				var item = this._data[i];
+				if (item.active) {
+					items.push(item);
+				}
+			}
+			
+			return items;
+		},
 		add: function(name, value) {
 			if (this.getItem(name)) {
 				return false;
@@ -30459,8 +30470,8 @@
 		_onClick: function(e) {
 			var elem = $(e.target).closest('a');
 			var item = this._getItemByKey(elem.attr('data-key'));
-			if (!item || typeof this.props.onSelect == 'function' && 
-					this.props.onSelect.call(this, {target: elem, data: item}) === false) {
+			if (!item || (typeof this.props.onSelect == 'function' && 
+					this.props.onSelect.call(this, {target: elem, data: item}) === false)) {
 				return;
 			}
 			this.select(item.name);
@@ -30553,8 +30564,8 @@
 								})
 							
 						), 
-						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", onChange: self._onChange, readOnly: !selectedItem, 
-						value: selectedItem && selectedItem.value, mode: self.props.name == 'rules' ? 'rules' : ''}))
+						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", onChange: self._onChange, readOnly: !selectedItem, value: selectedItem && selectedItem.value, 
+						mode: self.props.name == 'rules' ? 'rules' : getSuffix(selectedItem && selectedItem.name)}))
 					)
 			);
 		}
