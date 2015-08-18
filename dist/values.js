@@ -30400,18 +30400,18 @@
 			}
 		},
 		enable: function(name) {
-			if (name == getItem(name)) {
+			if (name = this.getItem(name)) {
 				name.active = true;
 				this.forceUpdate();
 			}
 		},
 		disable: function(name) {
-			if (!argumetns.length) {
+			if (!arguments.length) {
 				Object.keys(data).forEach(function(name) {
 					data[name].active = false;
 				});
 				this.forceUpdate();
-			} else if (name == getItem(name)) {
+			} else if (name = this.getItem(name)) {
 				name.active = false;
 				this.forceUpdate();
 			}
@@ -30444,7 +30444,7 @@
 			var elem = $(e.target).closest('a');
 			var item = this._getItemByKey(elem.attr('data-key'));
 			if (!item || typeof this.props.onSelect == 'function' && 
-					this.props.onSelect({target: elem, data: item}) === false) {
+					this.props.onSelect.call(this, {target: elem, data: item}) === false) {
 				return;
 			}
 			this.select(item.name);
@@ -30460,14 +30460,14 @@
 		},
 		_onEnable: function(e) {
 			if (typeof this.props.onEnable == 'function' && 
-					this.props.onEnable(e) !== false) {
+					this.props.onEnable.call(this, e) !== false) {
 				e.data.active = true;
 				this.forceUpdate();
 			}
 		},
 		_onDisable: function(e) {
 			if (typeof this.props.onDisable == 'function' && 
-					this.props.onDisable(e) !== false) {
+					this.props.onDisable.call(this, e) !== false) {
 				e.data.active = false;
 				this.forceUpdate();
 			}
@@ -30517,7 +30517,7 @@
 												onClick: self._onClick, 
 												onDoubleClick: self._onDoubleClick, 
 												className: (item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : ''), 
-												href: "javascript:;"}, name, React.createElement("span", {className: "glyphicon glyphicon-ok"}));
+												href: "javascript:;"}, name, React.createElement("span", {onClick: self._onDoubleClick, className: "glyphicon glyphicon-ok"}));
 								})
 							
 						), 
