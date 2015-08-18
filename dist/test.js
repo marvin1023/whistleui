@@ -30493,7 +30493,7 @@
 			}
 			
 			var value = e.getValue();
-			if (value != item.value && !item.changed) {
+			if (value != item.value && !item.changed && value != item.value) {
 				item.changed = true;
 				item.value = value;
 				this.forceUpdate();
@@ -30664,7 +30664,7 @@
 			if (!this._editor || this._editor.getValue() == value) {
 				return;
 			}
-			this._editor.setOption('value', value);
+			this._editor.setValue(value);
 		},
 		getValue: function() {
 			return this._editor ? '' : this._editor.getValue();

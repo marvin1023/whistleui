@@ -175,7 +175,7 @@ var List = React.createClass({
 		}
 		
 		var value = e.getValue();
-		if (value != item.value && !item.changed) {
+		if (value != item.value && !item.changed && value != item.value) {
 			item.changed = true;
 			item.value = value;
 			this.forceUpdate();

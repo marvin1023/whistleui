@@ -58,7 +58,7 @@ var Editor = React.createClass({
 		if (!this._editor || this._editor.getValue() == value) {
 			return;
 		}
-		this._editor.setOption('value', value);
+		this._editor.setValue(value);
 	},
 	getValue: function() {
 		return this._editor ? '' : this._editor.getValue();
