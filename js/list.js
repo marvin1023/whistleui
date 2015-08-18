@@ -129,7 +129,36 @@ var List = React.createClass({
 		return this._data[name];
 	},
 	componentDidMount: function() {
+		var list = $(this.refs.list.getDOMNode());
+		$(window).keydown(function(e) {
+			if ((e.ctrlKey || e.metaKey) && e.keyCode == 83) {
+				return false;
+			}
+		}).keydown(function(e) {
+			if (isSaveCutShort(e)) {
+				list.find('.w-changed').filter(':not(.w-selected)').trigger('dblclick');
+				triggerSelectedElement();
+			}
+		});
 		
+		$(this.refs.editor.getDOMNode()).keydown(function(e) {
+			if (isSaveCutShort(e)) {
+				triggerSelectedElement();
+				return false;
+			}
+		});
+		
+		function triggerSelectedElement() {
+			var selectedElem = list.find('.w-selected');
+			if (selectedElem.hasClass('w-changed') || !selectedElem.hasClass('w-active')) {
+				selectedElem.trigger('dblclick');
+			}
+		}
+		
+		function isSaveCutShort(e) {
+			return (e.ctrlKey || e.metaKey)
+			&& (e.keyCode == 13 || e.keyCode == 83);
+		}
 	},
 	_onMouseEnter: function(e) {
 		$(e.target).closest('a').addClass('w-hover');
@@ -218,7 +247,7 @@ var List = React.createClass({
 		
 		return (
 				<Divider leftWidth="200">
-					<div className="w-list-data fill">
+					<div ref="list" className="w-list-data fill">
 						{
 							list.map(function(name) {
 								var item = data[name];
