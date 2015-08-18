@@ -68,7 +68,8 @@ var List = React.createClass({
 		var item = this.getItem(name);
 		if (item) {
 			delete this._data[name];
-			this._data[newName] = this._list[this._list.indexOf(name)] = item.name = newName;
+			this._data[newName] = item;
+			this._list[this._list.indexOf(name)] = item.name = newName;
 			this.forceUpdate();
 		}
 	},
