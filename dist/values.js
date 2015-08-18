@@ -30402,6 +30402,7 @@
 		enable: function(name) {
 			if (name = this.getItem(name)) {
 				name.active = true;
+				name.changed = false;
 				this.forceUpdate();
 			}
 		},
@@ -30450,13 +30451,14 @@
 			this.select(item.name);
 		},
 		_onDoubleClick: function(e) {
-			var elem = $(e.target).closest('a');
+			var target = $(e.target);
+			var elem = target.closest('a');
 			var item = this._getItemByKey(elem.attr('data-key'));
 			var e = {
 					target: elem,
 					data: item
 			};
-			item.active ? this._onDisable(e) : this._onEnable(e);
+			item.active && (target.hasClass('glyphicon-ok') || !item.changed) ? this._onDisable(e) : this._onEnable(e);
 		},
 		_onEnable: function(e) {
 			if (typeof this.props.onEnable == 'function' && 
@@ -30469,6 +30471,19 @@
 			if (typeof this.props.onDisable == 'function' && 
 					this.props.onDisable.call(this, e) !== false) {
 				e.data.active = false;
+				this.forceUpdate();
+			}
+		},
+		_onChange: function(e) {
+			var item = this.getSelectedItem();
+			if (!item) {
+				return;
+			}
+			
+			var value = e.getValue();
+			if (value != item.value && !item.changed) {
+				item.changed = true;
+				item.value = value;
 				this.forceUpdate();
 			}
 		},
@@ -30516,12 +30531,15 @@
 												onMouseLeave: self._onMouseLeave, 
 												onClick: self._onClick, 
 												onDoubleClick: self._onDoubleClick, 
-												className: (item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : ''), 
+												className: (item.selected ? 'w-selected' : '') 
+												+ (item.changed ? ' w-changed' : '')
+												+ (item.active ? ' w-active' : ''), 
 												href: "javascript:;"}, name, React.createElement("span", {onClick: self._onDoubleClick, className: "glyphicon glyphicon-ok"}));
 								})
 							
 						), 
-						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", readOnly: !selectedItem, value: selectedItem && selectedItem.value, mode: this.props.name == 'rules' ? 'rules' : ''}))
+						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", onChange: self._onChange, readOnly: !selectedItem, 
+						value: selectedItem && selectedItem.value, mode: self.props.name == 'rules' ? 'rules' : ''}))
 					)
 			);
 		}
@@ -30565,7 +30583,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-divider-con .w-divider {border: none!important;}\n.w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow-x: hidden; overflow-y: auto;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72; display: none;}\n.w-list-content {border: 1px solid #ccc;} \n\n.w-list-data .w-selected, .w-list-data .w-hover {background: #337AB7; color: #fff;}\n.w-list-data .w-active .glyphicon-ok {display: inline-block;}", ""]);
+	exports.push([module.id, ".w-divider-con .w-divider {border: none!important;}\n.w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow-x: hidden; overflow-y: auto;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72; display: none;}\n.w-list-content {border: 1px solid #ccc;} \n.w-list-data .w-changed:before {content: '*'; margin-right: 5px; color: red; margin-right: 5px;}\n.w-list-data .w-selected, .w-list-data .w-hover {background: #337AB7; color: #fff;}\n.w-list-data .w-active .glyphicon-ok {display: inline-block;}", ""]);
 
 	// exports
 
@@ -30666,9 +30684,15 @@
 		},
 		componentDidMount: function() {
 			var timeout;
-			var elem = this.refs.editor.getDOMNode();
-			var editor = this._editor = CodeMirror(elem);
-			this._init();
+			var self = this;
+			var elem = self.refs.editor.getDOMNode();
+			var editor = self._editor = CodeMirror(elem);
+			editor.on('change', function(e) {
+				if (typeof self.props.onChange == 'function') {
+					self.props.onChange.call(self, e);
+				}
+			});
+			self._init();
 			$(elem).find('.CodeMirror').addClass('fill');
 			resize();
 			$(window).on('resize', function() {
@@ -30688,8 +30712,11 @@
 			this.showLineNumber(this.props.lineNumbers || false);
 			this.setReadOnly(this.props.readOnly || false);
 		},
-		render: function() {
+		componentDidUpdate: function() {
 			this._init();
+		},
+		render: function() {
+			
 			return (
 				React.createElement("div", {ref: "editor", className: "fill orient-vertical-box w-list-content"})
 			);

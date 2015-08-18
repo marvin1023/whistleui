@@ -85,6 +85,7 @@ var List = React.createClass({
 	enable: function(name) {
 		if (name = this.getItem(name)) {
 			name.active = true;
+			name.changed = false;
 			this.forceUpdate();
 		}
 	},
@@ -133,13 +134,14 @@ var List = React.createClass({
 		this.select(item.name);
 	},
 	_onDoubleClick: function(e) {
-		var elem = $(e.target).closest('a');
+		var target = $(e.target);
+		var elem = target.closest('a');
 		var item = this._getItemByKey(elem.attr('data-key'));
 		var e = {
 				target: elem,
 				data: item
 		};
-		item.active ? this._onDisable(e) : this._onEnable(e);
+		item.active && (target.hasClass('glyphicon-ok') || !item.changed) ? this._onDisable(e) : this._onEnable(e);
 	},
 	_onEnable: function(e) {
 		if (typeof this.props.onEnable == 'function' && 
@@ -152,6 +154,19 @@ var List = React.createClass({
 		if (typeof this.props.onDisable == 'function' && 
 				this.props.onDisable.call(this, e) !== false) {
 			e.data.active = false;
+			this.forceUpdate();
+		}
+	},
+	_onChange: function(e) {
+		var item = this.getSelectedItem();
+		if (!item) {
+			return;
+		}
+		
+		var value = e.getValue();
+		if (value != item.value && !item.changed) {
+			item.changed = true;
+			item.value = value;
 			this.forceUpdate();
 		}
 	},
@@ -199,12 +214,15 @@ var List = React.createClass({
 											onMouseLeave={self._onMouseLeave}
 											onClick={self._onClick} 
 											onDoubleClick={self._onDoubleClick} 
-											className={(item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : '')} 
+											className={(item.selected ? 'w-selected' : '') 
+											+ (item.changed ? ' w-changed' : '')
+											+ (item.active ? ' w-active' : '')} 
 											href="javascript:;">{name}<span onClick={self._onDoubleClick} className="glyphicon glyphicon-ok"></span></a>;
 							})
 						}
 					</div>
-					<Editor {...self.props} ref="editor" readOnly={!selectedItem} value={selectedItem && selectedItem.value} mode={this.props.name == 'rules' ? 'rules' : ''} />
+					<Editor {...self.props} ref="editor" onChange={self._onChange} readOnly={!selectedItem} 
+					value={selectedItem && selectedItem.value} mode={self.props.name == 'rules' ? 'rules' : ''} />
 				</Divider>
 		);
 	}
