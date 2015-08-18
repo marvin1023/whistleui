@@ -39243,30 +39243,69 @@
 	var $ = __webpack_require__(172);
 	var React = __webpack_require__(13);
 	var CodeMirror = __webpack_require__(186);
-	var jsMode = __webpack_require__(192);
-	var cssMode = __webpack_require__(193);
-	var xmlMode = __webpack_require__(194);
-	var htmlMode = __webpack_require__(195);
+	var javascript = __webpack_require__(192);
+	var css = __webpack_require__(193);
+	var xml = __webpack_require__(194);
+	var htmlmixed = __webpack_require__(195);
+	var DEFAULT_MODE = 'htmlmixed';
+	var DEFAULT_THEME = 'cobalt';
+	var DEFAULT_FONT_SIZE = '16px';
 
 	var Editor = React.createClass({displayName: "Editor",
+		setType: function(mode) {
+			mode = this._mode = /(javascript|css|xml)/.test(type) ? RegExp.$1 : DEFAULT_MODE;
+			if (this._editor) {
+				this._editor.setOption('mode', mode);
+			}
+		},
+		setValue: function(value) {
+			value = this._value = value == null ? '' : value + '';
+			if (!this._editor) {
+				return;
+			}
+			this._editor.setOption('value', value);
+		},
+		getValue: function() {
+			return this._editor ? '' : this._editor.getValue();
+		},
+		setTheme: function(theme) {
+			theme = this._theme = theme || DEFAULT_THEME;
+			if (!this._editor) {
+				return;
+			}
+			this._editor.setOption('theme', theme);
+		},
+		setFontSize: function(fontSize) {
+			fontSize = this._fontSize = fontSize || DEFAULT_FONT_SIZE;
+			if (this._editor) {
+				elem.style.fontSize = fontSize;
+			}
+		},
+		showLineNumber: function(show) {
+			show = this._showLineNumber = show === false ? false : true;
+			if (this._editor) {
+				this._editor.setOption('lineNumbers', show);
+			}
+		},
 		componentDidMount: function() {
-			var myCodeMirror = CodeMirror(this.refs.editor.getDOMNode(), {
-				  value: "function myScript(){return 100;}\n",
-				  mode:  "css"
-				});
-			var con = this.refs.editor.getDOMNode();
-			$(con).find('.CodeMirror').addClass('fill');
 			var timeout;
-			myCodeMirror.setOption("theme", 'ambiance');
-	//		resize();
-	//		$(window).on('resize', function() {
-	//			clearTimeout(timeout);
-	//			timeout = setTimeout(resize, 30);
-	//		});
-	//		
-	//		function resize() {
-	//			myCodeMirror.setSize(con.offsetWidth, con.offsetHeight);
-	//		}
+			var elem = this.refs.editor.getDOMNode();
+			var editor = this._editor = CodeMirror(elem);
+			elem.style.fontSize = this._fontSize || DEFAULT_FONT_SIZE;
+			editor.setOption('mode', this._mode || DEFAULT_MODE);
+			editor.setOption('value', this._value || '');
+			editor.setOption('font', this._showLineNumber);
+			editor.setOption('lineNumbers', this._showLineNumber);
+			editor.setOption('theme', this._theme || DEFAULT_THEME);
+			$(elem).find('.CodeMirror').addClass('fill');
+			resize();
+			$(window).on('resize', function() {
+				clearTimeout(timeout);
+				timeout = setTimeout(resize, 30);
+			});
+			function resize() {
+				editor.setSize(null, elem.offsetHeight);
+			}
 		},
 		render: function() {
 			
