@@ -1,5 +1,6 @@
 require('./base-css.js');
 require('../css/list.css');
+var $ = require('jquery');
 var React = require('react');
 var Divider = require('./divider');
 var Editor = require('./editor');
@@ -75,18 +76,35 @@ var List = React.createClass({
 	componentDidMount: function() {
 		
 	},
+	onMouseEnter: function(e) {
+		$(e.target).closest('a').addClass('w-hover');
+	},
+	onMouseLeave: function(e) {
+		$(e.target).closest('a').removeClass('w-hover');
+	},
+	onClick: function(e) {
+		
+	},
+	onDoubleClick: function(e) {
+		
+	},
 	render: function() {
-		var modal = this.props.modal || {};
-		var list = this._list = modal.list || [];
-		var data = this._data = modal.data || {};
-		var hasSelected;
+		var self = this;
+		var modal = self.props.modal || {};
+		var list = self._list = modal.list || [];
+		var data = self._data = modal.data || {};
+		var seletedItem;
 		list.forEach(function(name) {
 			var item = data[name];
 			if (item) {
 				item.key = item.key || getKey();
 				item.name = name;
 				if (item.selected) {
-					hasSelected = true;
+					if (selectedItem) {
+						item.selected = false;
+					} else {
+						seletedItem = item;
+					}
 				}
 				return;
 			}
@@ -97,8 +115,9 @@ var List = React.createClass({
 			};
 		});
 		
-		if (!hasSelected && list[0]) {
-			data[list[0]].selected = true;
+		if (!seletedItem && list[0]) {
+			seletedItem = data[list[0]];
+			seletedItem.selected = true;
 		}
 		
 		return (
@@ -107,16 +126,17 @@ var List = React.createClass({
 						{
 							list.map(function(name) {
 								var item = data[name];
-								return <a key={item.key} onClick={function() {
-									console.log('click');
-								}} onDoubleClick={function() {
-									console.log('dblclick');
-								}} className={(item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : '')} 
+								return <a key={item.key}
+											onMouseEnter={self.onMouseEnter}
+											onMouseLeave={self.onMouseLeave}
+											onClick={self.onClick} 
+											onDoubleClick={self.onDoubleClick} 
+											className={(item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : '')} 
 											href="javascript:;">{name}<span className="glyphicon glyphicon-ok"></span></a>;
 							})
 						}
 					</div>
-					<Editor {...this.props} ref="editor" mode={this.props.name == 'rules' ? 'rules' : ''} />
+					<Editor {...self.props} ref="editor" value={seletedItem && seletedItem.value} mode={this.props.name == 'rules' ? 'rules' : ''} />
 				</Divider>
 		);
 	}

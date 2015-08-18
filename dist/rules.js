@@ -30326,6 +30326,7 @@
 
 	__webpack_require__(1);
 	__webpack_require__(184);
+	var $ = __webpack_require__(172);
 	var React = __webpack_require__(13);
 	var Divider = __webpack_require__(169);
 	var Editor = __webpack_require__(186);
@@ -30401,18 +30402,35 @@
 		componentDidMount: function() {
 			
 		},
+		onMouseEnter: function(e) {
+			$(e.target).closest('a').addClass('w-hover');
+		},
+		onMouseLeave: function(e) {
+			$(e.target).closest('a').removeClass('w-hover');
+		},
+		onClick: function(e) {
+			
+		},
+		onDoubleClick: function(e) {
+			
+		},
 		render: function() {
-			var modal = this.props.modal || {};
-			var list = this._list = modal.list || [];
-			var data = this._data = modal.data || {};
-			var hasSelected;
+			var self = this;
+			var modal = self.props.modal || {};
+			var list = self._list = modal.list || [];
+			var data = self._data = modal.data || {};
+			var seletedItem;
 			list.forEach(function(name) {
 				var item = data[name];
 				if (item) {
 					item.key = item.key || getKey();
 					item.name = name;
 					if (item.selected) {
-						hasSelected = true;
+						if (selectedItem) {
+							item.selected = false;
+						} else {
+							seletedItem = item;
+						}
 					}
 					return;
 				}
@@ -30423,8 +30441,9 @@
 				};
 			});
 			
-			if (!hasSelected && list[0]) {
-				data[list[0]].selected = true;
+			if (!seletedItem && list[0]) {
+				seletedItem = data[list[0]];
+				seletedItem.selected = true;
 			}
 			
 			return (
@@ -30433,16 +30452,17 @@
 							
 								list.map(function(name) {
 									var item = data[name];
-									return React.createElement("a", {key: item.key, onClick: function() {
-										console.log('click');
-									}, onDoubleClick: function() {
-										console.log('dblclick');
-									}, className: (item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : ''), 
+									return React.createElement("a", {key: item.key, 
+												onMouseEnter: self.onMouseEnter, 
+												onMouseLeave: self.onMouseLeave, 
+												onClick: self.onClick, 
+												onDoubleClick: self.onDoubleClick, 
+												className: (item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : ''), 
 												href: "javascript:;"}, name, React.createElement("span", {className: "glyphicon glyphicon-ok"}));
 								})
 							
 						), 
-						React.createElement(Editor, React.__spread({},  this.props, {ref: "editor", mode: this.props.name == 'rules' ? 'rules' : ''}))
+						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", value: seletedItem && seletedItem.value, mode: this.props.name == 'rules' ? 'rules' : ''}))
 					)
 			);
 		}
@@ -30486,7 +30506,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-divider-con .w-divider {border: none!important;}\n.w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow-x: hidden; overflow-y: auto;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72; display: none;}\n.w-list-content {border: 1px solid #ccc;} \n\n.w-list-data .w-selected {background: #337AB7; color: #fff;}\n.w-list-data .w-active .glyphicon-ok {display: inline-block;}", ""]);
+	exports.push([module.id, ".w-divider-con .w-divider {border: none!important;}\n.w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow-x: hidden; overflow-y: auto;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72; display: none;}\n.w-list-content {border: 1px solid #ccc;} \n\n.w-list-data .w-selected, .w-list-data .w-hover {background: #337AB7; color: #fff;}\n.w-list-data .w-active .glyphicon-ok {display: inline-block;}", ""]);
 
 	// exports
 
