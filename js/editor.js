@@ -26,13 +26,20 @@ var css = require('codemirror/mode/css/css');
 var xml = require('codemirror/mode/xml/xml');
 var htmlmixed = require('codemirror/mode/htmlmixed/htmlmixed');
 var rules = require('./rules-mode');
-var DEFAULT_MODE = 'htmlmixed';
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
 
 var Editor = React.createClass({
 	setMode: function(mode) {
-		mode = this._mode = /(javascript|css|xml|rules)/.test(mode) ? RegExp.$1 : DEFAULT_MODE;
+		if (/(javascript|css|xml|rules)/.test(mode)) {
+			mode = RegExp.$1;
+		} else if (/js/.test(mode)) {
+			mode = 'javascript';
+		} else if (/html?/.test(mode)) {
+			mode = 'htmlmixed';
+		}
+		
+		this._mode = mode;
 		if (this._editor) {
 			this._editor.setOption('mode', mode);
 		}
@@ -72,7 +79,7 @@ var Editor = React.createClass({
 		var editor = this._editor = CodeMirror(elem);
 		this.setMode(this.props.mode);
 		elem.style.fontSize = this._fontSize || DEFAULT_FONT_SIZE;
-		editor.setOption('mode', this._mode || DEFAULT_MODE);
+		editor.setOption('mode', this._mode);
 		editor.setOption('value', this._value || '');
 		editor.setOption('font', this._showLineNumber);
 		editor.setOption('lineNumbers', this._showLineNumber);

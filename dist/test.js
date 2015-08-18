@@ -39249,13 +39249,20 @@
 	var xml = __webpack_require__(194);
 	var htmlmixed = __webpack_require__(195);
 	var rules = __webpack_require__(230);
-	var DEFAULT_MODE = 'htmlmixed';
 	var DEFAULT_THEME = 'cobalt';
 	var DEFAULT_FONT_SIZE = '16px';
 
 	var Editor = React.createClass({displayName: "Editor",
 		setMode: function(mode) {
-			mode = this._mode = /(javascript|css|xml|rules)/.test(mode) ? RegExp.$1 : DEFAULT_MODE;
+			if (/(javascript|css|xml|rules)/.test(mode)) {
+				mode = RegExp.$1;
+			} else if (/js/.test(mode)) {
+				mode = 'javascript';
+			} else if (/html?/.test(mode)) {
+				mode = 'htmlmixed';
+			}
+			
+			this._mode = mode;
 			if (this._editor) {
 				this._editor.setOption('mode', mode);
 			}
@@ -39295,7 +39302,7 @@
 			var editor = this._editor = CodeMirror(elem);
 			this.setMode(this.props.mode);
 			elem.style.fontSize = this._fontSize || DEFAULT_FONT_SIZE;
-			editor.setOption('mode', this._mode || DEFAULT_MODE);
+			editor.setOption('mode', this._mode);
 			editor.setOption('value', this._value || '');
 			editor.setOption('font', this._showLineNumber);
 			editor.setOption('lineNumbers', this._showLineNumber);
