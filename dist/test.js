@@ -30447,14 +30447,15 @@
 			return this._data[name];
 		},
 		componentDidMount: function() {
-			var list = $(this.refs.list.getDOMNode());
+			var self = this;
+			var list = $(self.refs.list.getDOMNode());
 			$(window).keydown(function(e) {
 				if ((e.ctrlKey || e.metaKey) && e.keyCode == 83) {
 					return false;
 				}
 			}).keydown(function(e) {
 				if (isSaveCutShort(e)) {
-					list.find('.w-changed').filter(':not(.w-selected)').trigger('dblclick');
+					list.find('.w-changed').filter(':not(.w-selected)').each(trigger);
 					triggerSelectedElement();
 				}
 			});
@@ -30469,8 +30470,12 @@
 			function triggerSelectedElement() {
 				var selectedElem = list.find('.w-selected');
 				if (selectedElem.hasClass('w-changed') || !selectedElem.hasClass('w-active')) {
-					selectedElem.trigger('dblclick');
+					selectedElem.each(trigger);
 				}
+			}
+			
+			function trigger() {
+				self._onDoubleClick({target: this});
 			}
 			
 			function isSaveCutShort(e) {
