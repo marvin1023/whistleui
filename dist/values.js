@@ -30420,11 +30420,17 @@
 	var xml = __webpack_require__(228);
 	var htmlmixed = __webpack_require__(229);
 	var markdown = __webpack_require__(230);
+	var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', 'cobalt', 'eclipse'
+	              , 'rubyblue', 'lesser-dark', 'xq-dark', 'xq-light', 'ambiance'
+	              , 'blackboard', 'vibrant-ink', 'solarized dark', 'solarized light', 'twilight', 'midnight'];
 	var rules = __webpack_require__(232);
 	var DEFAULT_THEME = 'cobalt';
 	var DEFAULT_FONT_SIZE = '16px';
 
 	var Editor = React.createClass({displayName: "Editor",
+		getThemes: function() {
+			return themes;
+		},
 		setMode: function(mode) {
 			if (/(javascript|css|xml|rules|markdown)/.test(mode)) {
 				mode = RegExp.$1;

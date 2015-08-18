@@ -26,11 +26,17 @@ var css = require('codemirror/mode/css/css');
 var xml = require('codemirror/mode/xml/xml');
 var htmlmixed = require('codemirror/mode/htmlmixed/htmlmixed');
 var markdown = require('codemirror/mode/markdown/markdown');
+var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', 'cobalt', 'eclipse'
+              , 'rubyblue', 'lesser-dark', 'xq-dark', 'xq-light', 'ambiance'
+              , 'blackboard', 'vibrant-ink', 'solarized dark', 'solarized light', 'twilight', 'midnight'];
 var rules = require('./rules-mode');
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
 
 var Editor = React.createClass({
+	getThemes: function() {
+		return themes;
+	},
 	setMode: function(mode) {
 		if (/(javascript|css|xml|rules|markdown)/.test(mode)) {
 			mode = RegExp.$1;
