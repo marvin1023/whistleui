@@ -18,8 +18,16 @@ function getSuffix(name) {
 }
 
 var List = React.createClass({
+	componentWillMount: function() {
+		this._data = {};
+		this._list = [];
+	},
+	exists: function(name) {
+		
+		return typeof name == 'string' ? this._data[name] : false;
+	},
 	add: function(name, value) {
-		if (!name || this._data[name]) {
+		if (this.exists(name)) {
 			return false;
 		}
 		var list = this._list;
@@ -69,12 +77,29 @@ var List = React.createClass({
 	},
 	render: function() {
 		var modal = this.props.modal || {};
-		var list = this._list = modal.list || ['Default'];
-		var data = this._data = modal.data || {Default: {
-			key: getKey(),
-			selected: true,
-			value: 'test'
-		}};
+		var list = this._list = modal.list || [];
+		var data = this._data = modal.data || {};
+		var hasSelected;
+		list.forEach(function(name) {
+			var item = data[name];
+			if (item) {
+				item.key = item.key || getKey();
+				item.name = name;
+				if (item.selected) {
+					hasSelected = true;
+				}
+				return;
+			}
+			data[name] = {
+				key: getKey(),
+				name: name,
+				value: ''
+			};
+		});
+		
+		if (!hasSelected && list[0]) {
+			data[list[0]].selected = true;
+		}
 		
 		return (
 				<Divider leftWidth="200">
@@ -86,7 +111,7 @@ var List = React.createClass({
 									console.log('click');
 								}} onDoubleClick={function() {
 									console.log('dblclick');
-								}} className={(item.selected ? 'w-selected' : '') + (item.show ? ' w-active' : '')} 
+								}} className={(item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : '')} 
 											href="javascript:;">{name}<span className="glyphicon glyphicon-ok"></span></a>;
 							})
 						}

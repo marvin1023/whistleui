@@ -30336,8 +30336,16 @@
 	}
 
 	var List = React.createClass({displayName: "List",
+		componentWillMount: function() {
+			this._data = {};
+			this._list = [];
+		},
+		exists: function(name) {
+			
+			return typeof name == 'string' ? this._data[name] : false;
+		},
 		add: function(name, value) {
-			if (!name || this._data[name]) {
+			if (this.exists(name)) {
 				return false;
 			}
 			var list = this._list;
@@ -30387,12 +30395,29 @@
 		},
 		render: function() {
 			var modal = this.props.modal || {};
-			var list = this._list = modal.list || ['Default'];
-			var data = this._data = modal.data || {Default: {
-				key: getKey(),
-				selected: true,
-				value: 'test'
-			}};
+			var list = this._list = modal.list || [];
+			var data = this._data = modal.data || {};
+			var hasSelected;
+			list.forEach(function(name) {
+				var item = data[name];
+				if (item) {
+					item.key = item.key || getKey();
+					item.name = name;
+					if (item.selected) {
+						hasSelected = true;
+					}
+					return;
+				}
+				data[name] = {
+					key: getKey(),
+					name: name,
+					value: ''
+				};
+			});
+			
+			if (!hasSelected && list[0]) {
+				data[list[0]].selected = true;
+			}
 			
 			return (
 					React.createElement(Divider, {leftWidth: "200"}, 
@@ -30404,7 +30429,7 @@
 										console.log('click');
 									}, onDoubleClick: function() {
 										console.log('dblclick');
-									}, className: (item.selected ? 'w-selected' : '') + (item.show ? ' w-active' : ''), 
+									}, className: (item.selected ? 'w-selected' : '') + (item.active ? ' w-active' : ''), 
 												href: "javascript:;"}, name, React.createElement("span", {className: "glyphicon glyphicon-ok"}));
 								})
 							
@@ -30453,7 +30478,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-divider-con .w-divider {border: none!important;}\n.w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow-x: hidden; overflow-y: auto;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72;}\n.w-list-content {border: 1px solid #ccc;} ", ""]);
+	exports.push([module.id, ".w-divider-con .w-divider {border: none!important;}\n.w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow-x: hidden; overflow-y: auto;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72; display: none;}\n.w-list-content {border: 1px solid #ccc;} \n\n.w-list-data .w-selected {background: #337AB7; color: #fff;}\n.w-list-data .w-active .glyphicon-ok {display: inline-block;}", ""]);
 
 	// exports
 
