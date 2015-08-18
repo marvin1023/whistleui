@@ -16,7 +16,7 @@ var List = React.createClass({
 						<a href="javascript:;">Default<span className="glyphicon glyphicon-ok"></span></a>
 						<a href="javascript:;">DefaultDefaultDefaultDefaultDefaultDefaultDefaultDefault</a>
 					</div>
-					<Editor ref="editor" mode={this.props.type == 'rules' ? 'rules' : ''} />
+					<Editor ref="editor" mode={this.props.name == 'rules' ? 'rules' : ''} />
 				</Divider>
 		);
 	}

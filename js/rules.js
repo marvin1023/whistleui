@@ -8,5 +8,5 @@ React.render(
 			<div className="w-values-con"></div>
 			<div className="w-network-con"></div>
 			<Menu name="rules" />
-			<List />
+			<List name="rules" />
 		</div>, document.body);

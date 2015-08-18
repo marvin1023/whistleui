@@ -54,7 +54,7 @@
 				React.createElement("div", {className: "w-values-con"}), 
 				React.createElement("div", {className: "w-network-con"}), 
 				React.createElement(Menu, {name: "rules"}), 
-				React.createElement(List, null)
+				React.createElement(List, {name: "rules"})
 			), document.body);
 
 /***/ },
@@ -30332,7 +30332,7 @@
 							React.createElement("a", {href: "javascript:;"}, "Default", React.createElement("span", {className: "glyphicon glyphicon-ok"})), 
 							React.createElement("a", {href: "javascript:;"}, "DefaultDefaultDefaultDefaultDefaultDefaultDefaultDefault")
 						), 
-						React.createElement(Editor, {ref: "editor", mode: this.props.type == 'rules' ? 'rules' : ''})
+						React.createElement(Editor, {ref: "editor", mode: this.props.name == 'rules' ? 'rules' : ''})
 					)
 			);
 		}
