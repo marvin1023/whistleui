@@ -38,7 +38,8 @@ var ReqData = React.createClass({
 						</div>
 					</div>
 					<div className="w-req-data-bar">
-						<input type="text" className="w-req-data-filter" maxlength="128" placeholder="type filter text" />
+						<input type="text" className="w-req-data-filter" maxLength="128" placeholder="type filter text" />
+						<button type="button" className="close"><span aria-hidden="true">&times;</span></button>
 					</div>
 			</div>
 		);

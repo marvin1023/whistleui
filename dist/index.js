@@ -30354,7 +30354,8 @@
 							)
 						), 
 						React.createElement("div", {className: "w-req-data-bar"}, 
-							React.createElement("input", {type: "text", className: "w-req-data-filter", maxlength: "128", placeholder: "type filter text"})
+							React.createElement("input", {type: "text", className: "w-req-data-filter", maxLength: "128", placeholder: "type filter text"}), 
+							React.createElement("button", {type: "button", className: "close"}, React.createElement("span", {"aria-hidden": "true"}, "×"))
 						)
 				)
 			);
@@ -30398,7 +30399,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-req-data-con {overflow-x: auto;}\n.w-req-data-filter {width: 100%; background: rgba(0, 0, 0, 0.8); height: 30px; color: #fff; padding: 2px 5px; border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}\n.w-req-data-content {overflow-x: auto; overflow-y: hidden;}\n.w-req-data-content .order {width: 50px;}\n.w-req-data-content .result {width: 60px;}\n.w-req-data-content .protocol {width: 70px;}\n.w-req-data-content .method, .w-req-data-content .time {width: 65px;}\n.w-req-data-content .host-ip, .w-req-data-content .type {width: 100px;}\n.w-req-data-content .host {width: 136px;}\n\n.w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}\n.w-req-data-headers .table {height: 30px;}\n.w-req-data-headers .table th {border: none!important; padding: 4px 0 4px 6px; font-weight: normal; color: #000;}\n.w-req-data-list {overflow-y: auto; overflow-x: hidden;}\n.w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}\n.w-req-data-bar, .w-req-data-content {min-width: 720px;}", ""]);
+	exports.push([module.id, ".w-req-data-con {overflow-x: auto;}\n.w-req-data-filter {width: 100%; background: rgba(0, 0, 0, 0.8); height: 30px; color: #fff; padding: 2px 5px; border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}\n.w-req-data-content {overflow-x: auto; overflow-y: hidden;}\n.w-req-data-content .order {width: 50px;}\n.w-req-data-content .result {width: 60px;}\n.w-req-data-content .protocol {width: 70px;}\n.w-req-data-content .method, .w-req-data-content .time {width: 65px;}\n.w-req-data-content .host-ip, .w-req-data-content .type {width: 100px;}\n.w-req-data-content .host {width: 136px;}\n\n.w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}\n.w-req-data-headers .table {height: 30px;}\n.w-req-data-headers .table th {border: none!important; padding: 4px 0 4px 6px; font-weight: normal; color: #000;}\n.w-req-data-list {overflow-y: auto; overflow-x: hidden;}\n.w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}\n.w-req-data-bar, .w-req-data-content {min-width: 720px;}\n.w-req-data-bar {position: relative;}\n.w-req-data-bar .close {position: absolute; right: 5px; top: 5px; color: #fff; line-height: 16px; display: none;}", ""]);
 
 	// exports
 

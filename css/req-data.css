@@ -14,3 +14,5 @@
 .w-req-data-list {overflow-y: auto; overflow-x: hidden;}
 .w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .w-req-data-bar, .w-req-data-content {min-width: 720px;}
+.w-req-data-bar {position: relative;}
+.w-req-data-bar .close {position: absolute; right: 5px; top: 5px; color: #fff; line-height: 16px; display: none;}
