@@ -25,18 +25,21 @@ var javascript = require('codemirror/mode/javascript/javascript');
 var css = require('codemirror/mode/css/css');
 var xml = require('codemirror/mode/xml/xml');
 var htmlmixed = require('codemirror/mode/htmlmixed/htmlmixed');
+var markdown = require('codemirror/mode/markdown/markdown');
 var rules = require('./rules-mode');
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
 
 var Editor = React.createClass({
 	setMode: function(mode) {
-		if (/(javascript|css|xml|rules)/.test(mode)) {
+		if (/(javascript|css|xml|rules|markdown)/.test(mode)) {
 			mode = RegExp.$1;
 		} else if (/js/.test(mode)) {
 			mode = 'javascript';
 		} else if (/html?/.test(mode)) {
 			mode = 'htmlmixed';
+		} else if (/md/.test(mode)) {
+			mode = 'markdown';
 		}
 		
 		this._mode = mode;
