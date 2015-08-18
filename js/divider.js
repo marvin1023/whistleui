@@ -17,41 +17,39 @@ util.addDragEvent('.w-divider', function(target, x, y) {
 var Divider = React.createClass({
 	componentDidMount: function() {
 		var divider = this.refs.divider.getDOMNode();
-		var leftWidth = parseInt(this.props.leftWidth, 10);
-		var rightWidth;
-		var width = this.props.vertical ? divider.offsetHeight : divider.offsetWidth;
-		if (leftWidth > 0) {
-			rightWidth = width - leftWidth;
+		var prop = this.props.vertical ? 'height' : 'width';
+		if (this.props.leftWidth > 0) {
+			$(divider).find('.w-divider-left')[prop](this.props.leftWidth);
+			return;
 		}
 		
+		var rightWidth = parseInt(this.props.rightWidth, 10);
 		if (!(rightWidth > 0)) {
-			rightWidth = parseInt(this.props.rightWidth, 10);
+			rightWidth = (this.props.vertical ? divider.offsetHeight : divider.offsetWidth) / 2;
 		}
 		
-		if (!(rightWidth > 0)) {
-			var left = 1;
-			var right = 1;
-			if (/^(\d+):(\d+)$/.test(this.props.rate)) {
-				left = parseInt(RegExp.$1, 10) || 1;
-				right = parseInt(RegExp.$2, 10) || 1;
-			}
-			
-			rightWidth = width * right / (left + right);
-		}
 		if (rightWidth >= 5) {
-			$(divider).find('.w-divider-right')[this.props.vertical ?
-					'height' : 'width'](rightWidth);
+			$(divider).find('.w-divider-right')[prop](rightWidth);
 		}
 	},
 	render: function() {
 		var vertical = this.props.vertical;
+		var divider = <div className="w-divider"></div>;
+		var leftWidth = parseInt(this.props.leftWidth, 10);
+		if (leftWidth > 0) {
+			this.props.leftWidth = leftWidth;
+		} else {
+			leftWidth = 0;
+		}
+		
 		return (
 				<div ref="divider" className={(vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con'}>
-					<div className={'fill w-divider-left orient-vertical-box' + (this.props.leftClassName || '')}>
+					<div className={(leftWidth ? '' : 'fill ') + 'w-divider-left orient-vertical-box' + (this.props.leftClassName || '')}>
+						{leftWidth ? divider : ''}
 						{this.props.children[0]}
 					</div>
-					<div className={'w-divider-right orient-vertical-box' + (this.props.rightClassName || '')}>
-						<div className="w-divider"></div>
+					<div className={(leftWidth ? 'fill ' : '') + 'w-divider-right orient-vertical-box' + (this.props.rightClassName || '')}>
+						{leftWidth ? '' : divider}
 						{this.props.children[1]}
 					</div>
 				</div>

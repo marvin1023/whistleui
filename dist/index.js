@@ -20859,41 +20859,39 @@
 	var Divider = React.createClass({displayName: "Divider",
 		componentDidMount: function() {
 			var divider = this.refs.divider.getDOMNode();
-			var leftWidth = parseInt(this.props.leftWidth, 10);
-			var rightWidth;
-			var width = this.props.vertical ? divider.offsetHeight : divider.offsetWidth;
-			if (leftWidth > 0) {
-				rightWidth = width - leftWidth;
+			var prop = this.props.vertical ? 'height' : 'width';
+			if (this.props.leftWidth > 0) {
+				$(divider).find('.w-divider-left')[prop](this.props.leftWidth);
+				return;
 			}
 			
+			var rightWidth = parseInt(this.props.rightWidth, 10);
 			if (!(rightWidth > 0)) {
-				rightWidth = parseInt(this.props.rightWidth, 10);
+				rightWidth = (this.props.vertical ? divider.offsetHeight : divider.offsetWidth) / 2;
 			}
 			
-			if (!(rightWidth > 0)) {
-				var left = 1;
-				var right = 1;
-				if (/^(\d+):(\d+)$/.test(this.props.rate)) {
-					left = parseInt(RegExp.$1, 10) || 1;
-					right = parseInt(RegExp.$2, 10) || 1;
-				}
-				
-				rightWidth = width * right / (left + right);
-			}
 			if (rightWidth >= 5) {
-				$(divider).find('.w-divider-right')[this.props.vertical ?
-						'height' : 'width'](rightWidth);
+				$(divider).find('.w-divider-right')[prop](rightWidth);
 			}
 		},
 		render: function() {
 			var vertical = this.props.vertical;
+			var divider = React.createElement("div", {className: "w-divider"});
+			var leftWidth = parseInt(this.props.leftWidth, 10);
+			if (leftWidth > 0) {
+				this.props.leftWidth = leftWidth;
+			} else {
+				leftWidth = 0;
+			}
+			
 			return (
 					React.createElement("div", {ref: "divider", className: (vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con'}, 
-						React.createElement("div", {className: 'fill w-divider-left orient-vertical-box' + (this.props.leftClassName || '')}, 
+						React.createElement("div", {className: (leftWidth ? '' : 'fill ') + 'w-divider-left orient-vertical-box' + (this.props.leftClassName || '')}, 
+							leftWidth ? divider : '', 
 							this.props.children[0]
 						), 
-						React.createElement("div", {className: 'w-divider-right orient-vertical-box' + (this.props.rightClassName || '')}, 
-							React.createElement("div", {className: "w-divider"}), 
+						React.createElement("div", {className: (leftWidth ? 'fill ' : '') + 'w-divider-right orient-vertical-box' + (this.props.rightClassName || '')}, 
+							leftWidth ? '' : divider, 
 							this.props.children[1]
 						)
 					)
@@ -20938,7 +20936,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-divider-left, .w-divider-right {overflow: hidden; position: relative;}\n.w-divider-con.box .w-divider-right {min-width: 5px!important;}\n.w-divider-con.orient-vertical-box .w-divider-right {min-height: 5px!important;}\n.w-divider {position: absolute; left: 0; top: 0; z-index: 1;}\n.w-divider-con.box .w-divider {width: 5px; height: 100%; cursor: ew-resize; border-left: 1px solid #ccc;}\n.w-divider-con.orient-vertical-box .w-divider {height: 5px; width: 100%; cursor: ns-resize; border-top: 1px solid #ccc;}", ""]);
+	exports.push([module.id, ".w-divider-left, .w-divider-right {overflow: hidden; position: relative;}\n.w-divider-con.box .w-divider-right {min-width: 5px!important;}\n.w-divider-con.orient-vertical-box .w-divider-right {min-height: 5px!important;}\n.w-divider {position: absolute; z-index: 1;}\n.w-divider-con.box .w-divider {top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-divider-con.box .w-divider-left .w-divider {right: 0; border-right: 1px solid #ccc;}\n.w-divider-con.box .w-divider-right .w-divider {left: 0; border-left: 1px solid #ccc;}\n.w-divider-con.orient-vertical-box .w-divider {left: 0; height: 5px; width: 100%; cursor: ns-resize;}\n.w-divider-con.orient-vertical-box .w-divider-left .w-divider {bottom: 0; border-bottom: 1px solid #ccc;}\n.w-divider-con.orient-vertical-box .w-divider-right .w-divider {top: 0; border-top: 1px solid #ccc;}\n", ""]);
 
 	// exports
 
