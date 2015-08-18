@@ -30474,7 +30474,7 @@
 				}
 			});
 			
-			$(this.refs.editor.getDOMNode()).keydown(function(e) {
+			var editor = $(this.refs.editor.getDOMNode()).keydown(function(e) {
 				if (isSaveCutShort(e)) {
 					triggerSelectedElement();
 					return false;
@@ -30493,7 +30493,7 @@
 			}
 			
 			function isSaveCutShort(e) {
-				return (e.ctrlKey || e.metaKey)
+				return editor.is(':visible') && (e.ctrlKey || e.metaKey)
 				&& (e.keyCode == 13 || e.keyCode == 83);
 			}
 		},
