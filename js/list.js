@@ -204,7 +204,7 @@ var List = React.createClass({
 							})
 						}
 					</div>
-					<Editor {...self.props} ref="editor" readOnly value={selectedItem && selectedItem.value} mode={this.props.name == 'rules' ? 'rules' : ''} />
+					<Editor {...self.props} ref="editor" readOnly={!selectedItem} value={selectedItem && selectedItem.value} mode={this.props.name == 'rules' ? 'rules' : ''} />
 				</Divider>
 		);
 	}

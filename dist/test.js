@@ -30522,7 +30522,7 @@
 								})
 							
 						), 
-						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", readOnly: true, value: selectedItem && selectedItem.value, mode: this.props.name == 'rules' ? 'rules' : ''}))
+						React.createElement(Editor, React.__spread({},  self.props, {ref: "editor", readOnly: !selectedItem, value: selectedItem && selectedItem.value, mode: this.props.name == 'rules' ? 'rules' : ''}))
 					)
 			);
 		}
@@ -30669,13 +30669,7 @@
 			var timeout;
 			var elem = this.refs.editor.getDOMNode();
 			var editor = this._editor = CodeMirror(elem);
-			this.setMode(this.props.mode);
-			this.setValue(this.props.value);
-			this.setTheme(this.props.mode);
-			this.setFontSize(this.props.fontSize);
-			this.setTheme(this.props.theme);
-			this.showLineNumber(this.props.lineNumbers || false);
-			this.setReadOnly(this.props.readOnly || false);
+			this._init();
 			$(elem).find('.CodeMirror').addClass('fill');
 			resize();
 			$(window).on('resize', function() {
@@ -30686,8 +30680,17 @@
 				editor.setSize(null, elem.offsetHeight);
 			}
 		},
+		_init: function() {
+			this.setMode(this.props.mode);
+			this.setValue(this.props.value);
+			this.setTheme(this.props.mode);
+			this.setFontSize(this.props.fontSize);
+			this.setTheme(this.props.theme);
+			this.showLineNumber(this.props.lineNumbers || false);
+			this.setReadOnly(this.props.readOnly || false);
+		},
 		render: function() {
-			
+			this._init();
 			return (
 				React.createElement("div", {ref: "editor", className: "fill orient-vertical-box w-list-content"})
 			);

@@ -92,13 +92,7 @@ var Editor = React.createClass({
 		var timeout;
 		var elem = this.refs.editor.getDOMNode();
 		var editor = this._editor = CodeMirror(elem);
-		this.setMode(this.props.mode);
-		this.setValue(this.props.value);
-		this.setTheme(this.props.mode);
-		this.setFontSize(this.props.fontSize);
-		this.setTheme(this.props.theme);
-		this.showLineNumber(this.props.lineNumbers || false);
-		this.setReadOnly(this.props.readOnly || false);
+		this._init();
 		$(elem).find('.CodeMirror').addClass('fill');
 		resize();
 		$(window).on('resize', function() {
@@ -109,8 +103,17 @@ var Editor = React.createClass({
 			editor.setSize(null, elem.offsetHeight);
 		}
 	},
+	_init: function() {
+		this.setMode(this.props.mode);
+		this.setValue(this.props.value);
+		this.setTheme(this.props.mode);
+		this.setFontSize(this.props.fontSize);
+		this.setTheme(this.props.theme);
+		this.showLineNumber(this.props.lineNumbers || false);
+		this.setReadOnly(this.props.readOnly || false);
+	},
 	render: function() {
-		
+		this._init();
 		return (
 			<div ref="editor" className="fill orient-vertical-box w-list-content"></div>
 		);
