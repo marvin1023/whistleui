@@ -30338,7 +30338,7 @@
 								})
 							
 						), 
-						React.createElement(Editor, {ref: "editor", mode: this.props.name == 'rules' ? 'rules' : ''})
+						React.createElement(Editor, React.__spread({},  this.props, {ref: "editor", mode: this.props.name == 'rules' ? 'rules' : ''}))
 					)
 			);
 		}
@@ -30470,7 +30470,7 @@
 			}
 		},
 		setReadOnly: function(readOnly) {
-			readOnly = this._readOnly = readOnly === false ? false : true;
+			readOnly = this._readOnly = readOnly === false || readOnly === 'false' ? false : true;
 			if (this._editor) {
 				this._editor.setOption('readOnly', readOnly);
 			}

@@ -77,7 +77,7 @@ var Editor = React.createClass({
 		}
 	},
 	setReadOnly: function(readOnly) {
-		readOnly = this._readOnly = readOnly === false ? false : true;
+		readOnly = this._readOnly = readOnly === false || readOnly === 'false' ? false : true;
 		if (this._editor) {
 			this._editor.setOption('readOnly', readOnly);
 		}

@@ -22,7 +22,7 @@ var List = React.createClass({
 							})
 						}
 					</div>
-					<Editor ref="editor" mode={this.props.name == 'rules' ? 'rules' : ''} />
+					<Editor {...this.props} ref="editor" mode={this.props.name == 'rules' ? 'rules' : ''} />
 				</Divider>
 		);
 	}
