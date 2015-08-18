@@ -76,6 +76,12 @@ var Editor = React.createClass({
 			this._editor.setOption('lineNumbers', show);
 		}
 	},
+	setReadOnly: function(readOnly) {
+		readOnly = this._readOnly = readOnly === false ? false : true;
+		if (this._editor) {
+			this._editor.setOption('readOnly', readOnly);
+		}
+	},
 	componentDidMount: function() {
 		var timeout;
 		var elem = this.refs.editor.getDOMNode();
@@ -84,13 +90,9 @@ var Editor = React.createClass({
 		this.setValue(this.props.value);
 		this.setTheme(this.props.mode);
 		this.setFontSize(this.props.fontSize);
+		this.setTheme(this.props.theme);
 		this.showLineNumber(this.props.lineNumbers || false);
-		elem.style.fontSize = this._fontSize || DEFAULT_FONT_SIZE;
-		editor.setOption('mode', this._mode);
-		editor.setOption('value', this._value || '');
-		editor.setOption('font', this._showLineNumber);
-		editor.setOption('lineNumbers', this._showLineNumber);
-		editor.setOption('theme', this._theme || DEFAULT_THEME);
+		this.setReadOnly(this.props.readOnly || false);
 		$(elem).find('.CodeMirror').addClass('fill');
 		resize();
 		$(window).on('resize', function() {
