@@ -30231,6 +30231,12 @@
 	exports.addDragEvent = addDragEvent;
 	exports.removeDragEvent = removeDragEvent;
 
+	var keyIndex = 1;
+
+	exports.getKey = function getKey() {
+		return 'w-reactkey-' + keyIndex++;
+	};
+
 /***/ },
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {

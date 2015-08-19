@@ -1,14 +1,10 @@
 require('./base-css.js');
 require('../css/list.css');
 var $ = require('jquery');
+var util = require('./util');
 var React = require('react');
 var Divider = require('./divider');
 var Editor = require('./editor');
-var index = 1;
-
-function getKey() {
-	return 'editor-' + index++;
-}
 
 function getSuffix(name) {
 	if (typeof name != 'string') {
@@ -44,7 +40,7 @@ var List = React.createClass({
 		list.push(name);
 		data[name] = {
 				selected: true,
-				key: getKey(),
+				key: util.getKey(),
 				name: name,
 				value: value
 		};
@@ -231,12 +227,12 @@ var List = React.createClass({
 		list.forEach(function(name) {
 			var item = data[name];
 			if (item) {
-				item.key = item.key || getKey();
+				item.key = item.key || util.getKey();
 				item.name = name;
 				return;
 			}
 			data[name] = {
-				key: getKey(),
+				key: util.getKey(),
 				name: name,
 				value: ''
 			};

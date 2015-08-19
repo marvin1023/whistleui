@@ -30241,6 +30241,12 @@
 	exports.addDragEvent = addDragEvent;
 	exports.removeDragEvent = removeDragEvent;
 
+	var keyIndex = 1;
+
+	exports.getKey = function getKey() {
+		return 'w-reactkey-' + keyIndex++;
+	};
+
 /***/ },
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
@@ -30333,14 +30339,10 @@
 	__webpack_require__(1);
 	__webpack_require__(184);
 	var $ = __webpack_require__(172);
+	var util = __webpack_require__(173);
 	var React = __webpack_require__(13);
 	var Divider = __webpack_require__(169);
 	var Editor = __webpack_require__(186);
-	var index = 1;
-
-	function getKey() {
-		return 'editor-' + index++;
-	}
 
 	function getSuffix(name) {
 		if (typeof name != 'string') {
@@ -30376,7 +30378,7 @@
 			list.push(name);
 			data[name] = {
 					selected: true,
-					key: getKey(),
+					key: util.getKey(),
 					name: name,
 					value: value
 			};
@@ -30563,12 +30565,12 @@
 			list.forEach(function(name) {
 				var item = data[name];
 				if (item) {
-					item.key = item.key || getKey();
+					item.key = item.key || util.getKey();
 					item.name = name;
 					return;
 				}
 				data[name] = {
-					key: getKey(),
+					key: util.getKey(),
 					name: name,
 					value: ''
 				};
