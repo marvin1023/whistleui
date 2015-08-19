@@ -30319,8 +30319,24 @@
 	var React = __webpack_require__(13);
 
 	var ReqData = React.createClass({displayName: "ReqData",
+		getInitialState: function() {
+			return {};
+		},
 		componentDidMount: function() {
 			
+		},
+		_onFilterChange: function(e) {
+			this.setState({filterText: e.target.value});
+		},
+		_onFilterKeyDown: function(e) {
+			if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
+				this._clearFilterText();
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		},
+		_clearFilterText: function() {
+			this.setState({filterText: ''});
 		},
 		render: function() {
 			
@@ -30354,8 +30370,13 @@
 							)
 						), 
 						React.createElement("div", {className: "w-req-data-bar"}, 
-							React.createElement("input", {type: "text", className: "w-req-data-filter", maxLength: "128", placeholder: "type filter text"}), 
-							React.createElement("button", {type: "button", className: "close"}, React.createElement("span", {"aria-hidden": "true"}, "×"))
+							React.createElement("input", {type: "text", value: this.state.filterText, 
+							onChange: this._onFilterChange, 
+							onKeyDown: this._onFilterKeyDown, 
+							className: "w-req-data-filter", maxLength: "128", placeholder: "type filter text"}), 
+							React.createElement("button", {
+							onClick: this._clearFilterText, 
+							style: {display: this.state.filterText ? 'block' :  'none'}, type: "button", className: "close", title: "Ctrl+D"}, React.createElement("span", {"aria-hidden": "true"}, "×"))
 						)
 				)
 			);

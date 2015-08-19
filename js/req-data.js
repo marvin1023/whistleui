@@ -3,8 +3,24 @@ require('../css/req-data.css');
 var React = require('react');
 
 var ReqData = React.createClass({
+	getInitialState: function() {
+		return {};
+	},
 	componentDidMount: function() {
 		
+	},
+	_onFilterChange: function(e) {
+		this.setState({filterText: e.target.value});
+	},
+	_onFilterKeyDown: function(e) {
+		if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
+			this._clearFilterText();
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	},
+	_clearFilterText: function() {
+		this.setState({filterText: ''});
 	},
 	render: function() {
 		
@@ -38,8 +54,13 @@ var ReqData = React.createClass({
 						</div>
 					</div>
 					<div className="w-req-data-bar">
-						<input type="text" className="w-req-data-filter" maxLength="128" placeholder="type filter text" />
-						<button type="button" className="close"><span aria-hidden="true">&times;</span></button>
+						<input type="text" value={this.state.filterText} 
+						onChange={this._onFilterChange} 
+						onKeyDown={this._onFilterKeyDown}
+						className="w-req-data-filter" maxLength="128" placeholder="type filter text" />
+						<button
+						onClick={this._clearFilterText}
+						style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl+D"><span aria-hidden="true">&times;</span></button>
 					</div>
 			</div>
 		);

@@ -30450,18 +30450,15 @@
 			var self = this;
 			var list = $(self.refs.list.getDOMNode());
 			$(window).keydown(function(e) {
-				if ((e.ctrlKey || e.metaKey) && e.keyCode == 83) {
-					return false;
-				}
-			}).keydown(function(e) {
-				if (isSaveCutShort(e)) {
+				if (isSaveFile(e)) {
 					list.find('.w-changed').filter(':not(.w-selected)').each(trigger);
 					triggerSelectedElement();
+					return false;
 				}
 			});
 			
 			var editor = $(this.refs.editor.getDOMNode()).keydown(function(e) {
-				if (isSaveCutShort(e)) {
+				if (isSaveFile(e)) {
 					triggerSelectedElement();
 					return false;
 				}
@@ -30478,9 +30475,8 @@
 				self._onDoubleClick({target: this});
 			}
 			
-			function isSaveCutShort(e) {
-				return editor.is(':visible') && (e.ctrlKey || e.metaKey)
-				&& (e.keyCode == 13 || e.keyCode == 83);
+			function isSaveFile(e) {
+				return editor.is(':visible') && (e.ctrlKey || e.metaKey) && e.keyCode == 83;
 			}
 		},
 		_onMouseEnter: function(e) {
