@@ -30480,10 +30480,12 @@
 			}
 		},
 		_onMouseEnter: function(e) {
-			$(e.target).closest('a').addClass('w-hover');
+			this._getItemByKey($(e.target).closest('a').attr('data-key')).hover = true;
+			this.forceUpdate();
 		},
 		_onMouseLeave: function(e) {
-			$(e.target).closest('a').removeClass('w-hover');
+			this._getItemByKey($(e.target).closest('a').attr('data-key')).hover = false;
+			this.forceUpdate();
 		},
 		_onClick: function(e) {
 			var elem = $(e.target).closest('a');
@@ -30498,11 +30500,13 @@
 			var target = $(e.target);
 			var elem = target.closest('a');
 			var item = this._getItemByKey(elem.attr('data-key'));
-			var e = {
+			var okIcon = target.hasClass('glyphicon-ok');
+			var data = {
 					target: elem,
 					data: item
 			};
-			item.active && (target.hasClass('glyphicon-ok') || !item.changed) ? this._onDisable(e) : this._onEnable(e);
+			item.active && !item.changed || okIcon ? this._onDisable(data) : this._onEnable(data);
+			okIcon && e.stopPopagation();
 		},
 		_onEnable: function(e) {
 			if (typeof this.props.onEnable != 'function' || 
@@ -30573,7 +30577,8 @@
 												onMouseLeave: self._onMouseLeave, 
 												onClick: self._onClick, 
 												onDoubleClick: self._onDoubleClick, 
-												className: (item.selected ? 'w-selected' : '') 
+												className: (item.hover ? 'w-hover' : '') 
+												+ (item.selected ? ' w-selected' : '') 
 												+ (item.changed ? ' w-changed' : '')
 												+ (item.active ? ' w-active' : ''), 
 												href: "javascript:;"}, name, React.createElement("span", {onClick: self._onDoubleClick, className: "glyphicon glyphicon-ok"}));
