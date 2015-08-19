@@ -250,7 +250,7 @@ var List = React.createClass({
 		
 		return (
 				<Divider leftWidth="200">
-					<div ref="list" className="w-list-data fill">
+					<div ref="list" className={'w-list-data fill ' + (this.props.className || '')}>
 						{
 							list.map(function(name) {
 								var item = data[name];

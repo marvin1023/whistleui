@@ -30582,7 +30582,7 @@
 			
 			return (
 					React.createElement(Divider, {leftWidth: "200"}, 
-						React.createElement("div", {ref: "list", className: "w-list-data fill"}, 
+						React.createElement("div", {ref: "list", className: 'w-list-data fill ' + (this.props.className || '')}, 
 							
 								list.map(function(name) {
 									var item = data[name];

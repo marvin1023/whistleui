@@ -45,6 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
+	__webpack_require__(233);
 	var React = __webpack_require__(13);
 	var List = __webpack_require__(183);
 	var Menu = __webpack_require__(174);
@@ -58,7 +59,7 @@
 				React.createElement("div", {className: "w-rules-con"}), 
 				React.createElement("div", {className: "w-network-con"}), 
 				React.createElement(Menu, {name: "values"}), 
-				React.createElement(List, {modal: modal})
+				React.createElement(List, {modal: modal, className: "w-values-list"})
 			), document.body);
 
 
@@ -30571,7 +30572,7 @@
 			
 			return (
 					React.createElement(Divider, {leftWidth: "200"}, 
-						React.createElement("div", {ref: "list", className: "w-list-data fill"}, 
+						React.createElement("div", {ref: "list", className: 'w-list-data fill ' + (this.props.className || '')}, 
 							
 								list.map(function(name) {
 									var item = data[name];
@@ -43404,6 +43405,46 @@
 					 }
 				};
 	});
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(234);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./values.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./values.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".w-values-list a .glyphicon-ok {display: none!important;}", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

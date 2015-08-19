@@ -1,4 +1,5 @@
 require('./base-css.js');
+require('../css/values.css');
 var React = require('react');
 var List = require('./list');
 var Menu = require('./menu');
@@ -12,5 +13,5 @@ React.render(
 			<div className="w-rules-con"></div>
 			<div className="w-network-con"></div>
 			<Menu name="values" />
-			<List modal={modal} />
+			<List modal={modal} className="w-values-list" />
 		</div>, document.body);
