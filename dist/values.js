@@ -30509,7 +30509,8 @@
 					data: item
 			};
 			item.active && !item.changed || okIcon ? this._onDisable(data) : this._onEnable(data);
-			okIcon && e.stopPopagation();
+			console.log(okIcon)
+			okIcon && e.stopPropagation();
 		},
 		_onEnable: function(e) {
 			if (typeof this.props.onEnable != 'function' || 
