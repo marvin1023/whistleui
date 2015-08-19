@@ -30523,17 +30523,15 @@
 			item.active && (target.hasClass('glyphicon-ok') || !item.changed) ? this._onDisable(e) : this._onEnable(e);
 		},
 		_onEnable: function(e) {
-			if (typeof this.props.onEnable == 'function' && 
+			if (typeof this.props.onEnable != 'function' || 
 					this.props.onEnable.call(this, e) !== false) {
-				e.data.active = true;
-				this.forceUpdate();
+				this.enable(e.data.name);
 			}
 		},
 		_onDisable: function(e) {
-			if (typeof this.props.onDisable == 'function' && 
+			if (typeof this.props.onDisable != 'function' || 
 					this.props.onDisable.call(this, e) !== false) {
-				e.data.active = false;
-				this.forceUpdate();
+				this.disable(e.data.name);
 			}
 		},
 		_onChange: function(e) {
