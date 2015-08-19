@@ -30520,7 +30520,6 @@
 					data: item
 			};
 			item.active && !item.changed || okIcon ? this._onDisable(data) : this._onEnable(data);
-			console.log(okIcon)
 			okIcon && e.stopPropagation();
 		},
 		_onEnable: function(e) {
