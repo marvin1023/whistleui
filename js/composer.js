@@ -7,7 +7,7 @@ var Composer = React.createClass({
 	render: function() {
 		return (
 			<div className="fill orient-vertical-box w-detail-composer">
-				<Divider>
+				<Divider leftWidth={(window.innerHeight - 120) / 2 + 'px'} vertical="true">
 					<div>1</div>
 					<div>2</div>
 				</Divider>
