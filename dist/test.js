@@ -30237,6 +30237,34 @@
 		return 'w-reactkey-' + keyIndex++;
 	};
 
+	function getProperty(obj, name, defaultValue) {
+		if (obj && (name || name !== '')) {
+			if (typeof name == 'string') {
+				name = name.split('.');
+			}
+			for (var i = 0, len = name.length - 1; i <= len; i++) {
+				var prop = name[i];
+				if (prop in obj) {
+					obj = obj[prop];
+					if (i == len) {
+						return obj;
+					}
+					if (!obj) {
+						return defaultValue;
+					}
+				} else {
+					return defaultValue;
+				}
+			}
+		}
+		
+		return defaultValue;
+	}
+
+	exports.getProperty = getProperty;
+
+
+
 /***/ },
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {

@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/detail.css');
 var React = require('react');
+var util = require('./util');
 var BtnGroup = require('./btn-group');
 var Overview = require('./overview');
 var ReqDetail = require('./req-detail');
@@ -10,8 +11,7 @@ var Composer = require('./composer');
 var Log = require('./log');
 var TABS = [{
 				name: 'Overview',
-				icon: 'eye-open',
-				active: true
+				icon: 'eye-open'
 			}, {
 				name: 'Request',
 				icon: 'send'
@@ -30,19 +30,17 @@ var TABS = [{
 			}];
 
 var ReqData = React.createClass({
-	_handleTab: function(btn) {
-		
+	_handleTab: function(tab) {
+		this.setState({tab: tab});
 	}, 
 	componentDidMount: function() {
 		
 	},
 	render: function() {
-		
 		return (
 				<div className="fill orient-vertical-box w-detail">
-				<BtnGroup tabs={TABS} />
-				<div className="w-detail-content fill">
-					<div className="w-detail-divider"></div>
+				<div className={'fill w-detail-content w-show-detail-' + util.getProperty(this, 'state.tab.name', '').toLowerCase()}>
+					<BtnGroup onClick={this._handleTab} tabs={TABS} />
 					<Overview />
 					<ReqDetail />
 					<ResDetail />

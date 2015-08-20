@@ -15,21 +15,19 @@ var BtnGroup = React.createClass({
 					{list.map(function(btn, i) {
 						
 						 function onClick(first) {
+							 if (btn.active) {
+								 return;
+							 }
 							 list.forEach(function(btn) {
 								 btn.active = false;
 							 });
 							 btn.active = true;
-							 btn.clicked = true;
 							 handleClick(btn);
 							first !== true && self.forceUpdate();
 						 }
 						 
 						 var icon = btn.icon ? <span className={'glyphicon glyphicon-' + btn.icon}></span> : '';
 						 btn.key = btn.key || util.getKey();
-						 if (btn.active && !btn.clicked) {
-							 onClick(true);
-						 }
-						 
 						 return <button onClick={onClick} key={btn.key} type="button" 
 							 	className={'btn btn-default' + (btn.active ? ' active' : '')}>
 								 {icon}{btn.name}

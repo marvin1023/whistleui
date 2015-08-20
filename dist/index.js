@@ -30241,6 +30241,34 @@
 		return 'w-reactkey-' + keyIndex++;
 	};
 
+	function getProperty(obj, name, defaultValue) {
+		if (obj && (name || name !== '')) {
+			if (typeof name == 'string') {
+				name = name.split('.');
+			}
+			for (var i = 0, len = name.length - 1; i <= len; i++) {
+				var prop = name[i];
+				if (prop in obj) {
+					obj = obj[prop];
+					if (i == len) {
+						return obj;
+					}
+					if (!obj) {
+						return defaultValue;
+					}
+				} else {
+					return defaultValue;
+				}
+			}
+		}
+		
+		return defaultValue;
+	}
+
+	exports.getProperty = getProperty;
+
+
+
 /***/ },
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
@@ -30442,6 +30470,7 @@
 	__webpack_require__(1);
 	__webpack_require__(181);
 	var React = __webpack_require__(13);
+	var util = __webpack_require__(173);
 	var BtnGroup = __webpack_require__(237);
 	var Overview = __webpack_require__(251);
 	var ReqDetail = __webpack_require__(238);
@@ -30451,8 +30480,7 @@
 	var Log = __webpack_require__(246);
 	var TABS = [{
 					name: 'Overview',
-					icon: 'eye-open',
-					active: true
+					icon: 'eye-open'
 				}, {
 					name: 'Request',
 					icon: 'send'
@@ -30471,19 +30499,17 @@
 				}];
 
 	var ReqData = React.createClass({displayName: "ReqData",
-		_handleTab: function(btn) {
-			
+		_handleTab: function(tab) {
+			this.setState({tab: tab});
 		}, 
 		componentDidMount: function() {
 			
 		},
 		render: function() {
-			
 			return (
 					React.createElement("div", {className: "fill orient-vertical-box w-detail"}, 
-					React.createElement(BtnGroup, {tabs: TABS}), 
-					React.createElement("div", {className: "w-detail-content fill"}, 
-						React.createElement("div", {className: "w-detail-divider"}), 
+					React.createElement("div", {className: 'fill w-detail-content w-show-detail-' + util.getProperty(this, 'state.tab.name', '').toLowerCase()}, 
+						React.createElement(BtnGroup, {onClick: this._handleTab, tabs: TABS}), 
 						React.createElement(Overview, null), 
 						React.createElement(ReqDetail, null), 
 						React.createElement(ResDetail, null), 
@@ -30533,7 +30559,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}", ""]);
+	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}\n\n.w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}\n.w-show-detail-overview w-detail-overview,  .w-show-detail-request .w-detail-request, \n.w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, \n.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display: block;}", ""]);
 
 	// exports
 
@@ -30651,21 +30677,19 @@
 						list.map(function(btn, i) {
 							
 							 function onClick(first) {
+								 if (btn.active) {
+									 return;
+								 }
 								 list.forEach(function(btn) {
 									 btn.active = false;
 								 });
 								 btn.active = true;
-								 btn.clicked = true;
 								 handleClick(btn);
 								first !== true && self.forceUpdate();
 							 }
 							 
 							 var icon = btn.icon ? React.createElement("span", {className: 'glyphicon glyphicon-' + btn.icon}) : '';
 							 btn.key = btn.key || util.getKey();
-							 if (btn.active && !btn.clicked) {
-								 onClick(true);
-							 }
-							 
 							 return React.createElement("button", {onClick: onClick, key: btn.key, type: "button", 
 								 	className: 'btn btn-default' + (btn.active ? ' active' : '')}, 
 									 icon, btn.name
@@ -30686,7 +30710,7 @@
 	__webpack_require__(242);
 	var React = __webpack_require__(13);
 	var BtnGroup = __webpack_require__(237);
-	var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
+	var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
 
 	var ReqDetail = React.createClass({displayName: "ReqDetail",
 		render: function() {
@@ -30711,7 +30735,7 @@
 	__webpack_require__(240);
 	var React = __webpack_require__(13);
 	var BtnGroup = __webpack_require__(237);
-	BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
+	BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
 
 	var ResDetail = React.createClass({displayName: "ResDetail",
 		render: function() {
