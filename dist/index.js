@@ -31184,7 +31184,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding-top: 3px!important; padding-bottom: 3px!important;}\n.w-properties tr {border-bottom: 1px solid #ccc;}\n.w-properties th {background: #e1e3e6; padding-right: 3px; white-space: nowrap;}\n.w-properties td {padding-left: 5px; vertical-align: top;}", ""]);
+	exports.push([module.id, ".w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding-top: 3px!important; padding-bottom: 3px!important;}\n.w-properties tr {border-bottom: 1px solid #ccc;}\n.w-properties th {background: #e1e3e6; padding-right: 3px;}\n.w-properties td {padding-left: 5px; vertical-align: top;}", ""]);
 
 	// exports
 
