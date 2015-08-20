@@ -39,8 +39,8 @@ var ReqData = React.createClass({
 	render: function() {
 		return (
 				<div className="fill orient-vertical-box w-detail">
+				<BtnGroup onClick={this._handleTab} tabs={TABS} />
 				<div className={'fill w-detail-content w-show-detail-' + util.getProperty(this, 'state.tab.name', '').toLowerCase()}>
-					<BtnGroup onClick={this._handleTab} tabs={TABS} />
 					<Overview />
 					<ReqDetail />
 					<ResDetail />

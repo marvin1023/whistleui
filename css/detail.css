@@ -1,7 +1,7 @@
-.w-detail {border-left: 1px solid #ccc; overflow-x: auto;}
-.w-detail-content {position: relative;}
+.w-detail {border-left: 1px solid #ccc; overflow: hidden;}
+.w-detail-content {position: relative; overflow: auto;}
 .w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}
-.w-detail-tabs, .w-detail-content {min-width: 550px;}
+.w-detail-content, .w-detail>.w-tabs-sm {min-width: 550px;}
 
 .w-properties th {width: 120px; text-align: right; font-weight: normal;}
 .w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}

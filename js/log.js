@@ -7,7 +7,7 @@ var Log = React.createClass({
 		
 		return (
 			<div className="w-detail-log">
-				
+				<div style={{height: '1000px'}}></div>
 			</div>		
 		);
 	}

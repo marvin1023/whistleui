@@ -30508,8 +30508,8 @@
 		render: function() {
 			return (
 					React.createElement("div", {className: "fill orient-vertical-box w-detail"}, 
+					React.createElement(BtnGroup, {onClick: this._handleTab, tabs: TABS}), 
 					React.createElement("div", {className: 'fill w-detail-content w-show-detail-' + util.getProperty(this, 'state.tab.name', '').toLowerCase()}, 
-						React.createElement(BtnGroup, {onClick: this._handleTab, tabs: TABS}), 
 						React.createElement(Overview, null), 
 						React.createElement(ReqDetail, null), 
 						React.createElement(ResDetail, null), 
@@ -30559,7 +30559,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}\n\n.w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}\n.w-show-detail-overview .w-detail-overview,  .w-show-detail-request .w-detail-request, \n.w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, \n.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display: block;}", ""]);
+	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow: hidden;}\n.w-detail-content {position: relative; overflow: auto;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-content, .w-detail>.w-tabs-sm {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}\n\n.w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}\n.w-show-detail-overview .w-detail-overview,  .w-show-detail-request .w-detail-request, \n.w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, \n.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display: block;}", ""]);
 
 	// exports
 
@@ -30739,7 +30739,8 @@
 		render: function() {
 			return (
 				React.createElement("div", {className: "w-detail-request"}, 
-					React.createElement(BtnGroup, {btns: BTNS})
+					React.createElement(BtnGroup, {btns: BTNS}), 
+					React.createElement("div", {style: {height: '1000px'}})
 				)
 			);
 		}
@@ -30764,7 +30765,8 @@
 		render: function() {
 			return (
 				React.createElement("div", {className: "w-detail-response"}, 
-					React.createElement(BtnGroup, {btns: BTNS})
+					React.createElement(BtnGroup, {btns: BTNS}), 
+					React.createElement("div", {style: {height: '1000px'}})
 				)
 			);
 		}
@@ -30865,8 +30867,8 @@
 		render: function() {
 			
 			return (
-				React.createElement("div", {className: "w-detail-Timeline"}
-					
+				React.createElement("div", {className: "w-detail-Timeline"}, 
+					React.createElement("div", {style: {height: '1000px'}})
 				)
 			);
 		}
@@ -30885,8 +30887,8 @@
 	var Composer = React.createClass({displayName: "Composer",
 		render: function() {
 			return (
-				React.createElement("div", {className: "w-detail-composer"}
-					
+				React.createElement("div", {className: "w-detail-composer"}, 
+					React.createElement("div", {style: {height: '1000px', width: '1000px'}})
 				)
 			);
 		}
@@ -30906,8 +30908,8 @@
 		render: function() {
 			
 			return (
-				React.createElement("div", {className: "w-detail-log"}
-					
+				React.createElement("div", {className: "w-detail-log"}, 
+					React.createElement("div", {style: {height: '1000px'}})
 				)		
 			);
 		}
@@ -31037,7 +31039,8 @@
 							React.createElement("th", null, "Content Download:"), 
 							React.createElement("td", null, "sssssss")
 						)
-					)
+					), 
+					React.createElement("div", {style: {height: '1000px'}})
 				)		
 			);
 		}

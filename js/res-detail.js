@@ -9,6 +9,7 @@ var ResDetail = React.createClass({
 		return (
 			<div className="w-detail-response">
 				<BtnGroup btns={BTNS} />
+				<div style={{height: '1000px'}}></div>
 			</div>
 		);
 	}
