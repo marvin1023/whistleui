@@ -1,0 +1,6 @@
+.w-detail-response-headers, .w-detail-response-textview, .w-detail-response-cookies
+, .w-detail-response-json, .w-detail-response-raw {display: none;}
+
+.w-detail-show-response-headers .w-detail-response-headers, .w-detail-response-textview .w-detail-response-textview,
+.w-detail-show-response-cookies .w-detail-response-cookies, .w-detail-show-response-json .w-detail-response-json, 
+.w-detail-show-response-raw .w-detail-response-raw {display:-webkit-box; display:-moz-box; display:box;}

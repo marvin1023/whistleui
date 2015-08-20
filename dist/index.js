@@ -30736,9 +30736,13 @@
 	var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
 
 	var ReqDetail = React.createClass({displayName: "ReqDetail",
+		_onClickBtn: function(btn) {
+			this.setState({btn: btn});
+		},
 		render: function() {
 			return (
-				React.createElement("div", {className: "fill orient-vertical-box w-detail-request"}, 
+				React.createElement("div", {className: 'fill orient-vertical-box w-detail-request w-detail-show-request-' 
+						+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}, 
 					React.createElement(BtnGroup, {btns: BTNS}), 
 					React.createElement("div", {className: "fill w-detail-response-headers"}), 
 					React.createElement("div", {className: "fill w-detail-response-textview"}), 
@@ -30762,14 +30766,20 @@
 	__webpack_require__(1);
 	__webpack_require__(240);
 	var React = __webpack_require__(13);
+	var util = __webpack_require__(173);
 	var BtnGroup = __webpack_require__(237);
 	BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
 
 	var ResDetail = React.createClass({displayName: "ResDetail",
+		_onClickBtn: function(btn) {
+			this.setState({btn: btn});
+		},
 		render: function() {
+			
 			return (
-				React.createElement("div", {className: "fill orient-vertical-box w-detail-response"}, 
-					React.createElement(BtnGroup, {btns: BTNS}), 
+				React.createElement("div", {className: 'fill orient-vertical-box w-detail-response w-detail-show-response-' 
+					+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}, 
+					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
 					React.createElement("div", {className: "fill w-detail-response-headers"}), 
 					React.createElement("div", {className: "fill w-detail-response-textview"}), 
 					React.createElement("div", {className: "fill w-detail-response-cookies"}), 
@@ -30818,7 +30828,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, ".w-detail-response-headers, .w-detail-response-textview, .w-detail-response-cookies\n, .w-detail-response-json, .w-detail-response-raw {display: none;}\n\n.w-detail-show-response-headers .w-detail-response-headers, .w-detail-response-textview .w-detail-response-textview,\n.w-detail-show-response-cookies .w-detail-response-cookies, .w-detail-show-response-json .w-detail-response-json, \n.w-detail-show-response-raw .w-detail-response-raw {display:-webkit-box; display:-moz-box; display:box;}", ""]);
 
 	// exports
 
@@ -30858,7 +30868,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, ".w-detail-request-headers, .w-detail-request-textview, .w-detail-request-cookies\n, .w-detail-request-json, .w-detail-request-raw {display: none;}\n\n.w-detail-show-request-headers .w-detail-request-headers, .w-detail-request-textview .w-detail-request-textview,\n.w-detail-show-request-cookies .w-detail-request-cookies, .w-detail-show-request-json .w-detail-request-json, \n.w-detail-show-request-raw .w-detail-request-raw {display:-webkit-box; display:-moz-box; display:box;}", ""]);
 
 	// exports
 
