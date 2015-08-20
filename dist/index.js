@@ -20871,9 +20871,7 @@
 				rightWidth = (vertical ? divider.offsetHeight : divider.offsetWidth) / 2;
 			}
 			
-			if (rightWidth >= 5) {
-				$(divider).children('.w-divider-right')[prop](rightWidth);
-			}
+			$(divider).children('.w-divider-right')[prop](Math.max(rightWidth, 5));
 		},
 		render: function() {
 			var vertical = util.getBoolean(this.props.vertical);
@@ -31020,7 +31018,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-composer {overflow: hidden;}", ""]);
+	exports.push([module.id, ".w-detail-composer {overflow-x: hidden; overflow-y: auto;}", ""]);
 
 	// exports
 

@@ -29,9 +29,7 @@ var Divider = React.createClass({
 			rightWidth = (vertical ? divider.offsetHeight : divider.offsetWidth) / 2;
 		}
 		
-		if (rightWidth >= 5) {
-			$(divider).children('.w-divider-right')[prop](rightWidth);
-		}
+		$(divider).children('.w-divider-right')[prop](Math.max(rightWidth, 5));
 	},
 	render: function() {
 		var vertical = util.getBoolean(this.props.vertical);

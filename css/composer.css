@@ -1,1 +1,1 @@
-.w-detail-composer {overflow: hidden;}
+.w-detail-composer {overflow-x: hidden; overflow-y: auto;}
