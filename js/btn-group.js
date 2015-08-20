@@ -4,6 +4,9 @@ var React = require('react');
 var util = require('./util');
 
 var BtnGroup = React.createClass({
+	componentDidMount: function() {
+		this._handleInitClick && this._handleInitClick();
+	},
 	render: function() {
 		var self = this;
 		var tabs = self.props.tabs;
@@ -14,7 +17,7 @@ var BtnGroup = React.createClass({
 				<div className={'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}>
 					{list.map(function(btn, i) {
 						
-						 function onClick(first) {
+						 function onClick() {
 							 if (btn.active) {
 								 return;
 							 }
@@ -23,7 +26,15 @@ var BtnGroup = React.createClass({
 							 });
 							 btn.active = true;
 							 handleClick(btn);
-							first !== true && self.forceUpdate();
+							 self.forceUpdate();
+						 }
+						 
+						 if (btn.active) {
+							 self._handleInitClick = function() {
+								 self._handleInitClick = null;
+								 btn.active = false;
+								 onClick();
+							 };
 						 }
 						 
 						 var icon = btn.icon ? <span className={'glyphicon glyphicon-' + btn.icon}></span> : '';

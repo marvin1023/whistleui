@@ -30666,6 +30666,9 @@
 	var util = __webpack_require__(173);
 
 	var BtnGroup = React.createClass({displayName: "BtnGroup",
+		componentDidMount: function() {
+			this._handleInitClick && this._handleInitClick();
+		},
 		render: function() {
 			var self = this;
 			var tabs = self.props.tabs;
@@ -30676,7 +30679,7 @@
 					React.createElement("div", {className: 'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}, 
 						list.map(function(btn, i) {
 							
-							 function onClick(first) {
+							 function onClick() {
 								 if (btn.active) {
 									 return;
 								 }
@@ -30685,7 +30688,15 @@
 								 });
 								 btn.active = true;
 								 handleClick(btn);
-								first !== true && self.forceUpdate();
+								 self.forceUpdate();
+							 }
+							 
+							 if (btn.active) {
+								 self._handleInitClick = function() {
+									 self._handleInitClick = null;
+									 btn.active = false;
+									 onClick();
+								 };
 							 }
 							 
 							 var icon = btn.icon ? React.createElement("span", {className: 'glyphicon glyphicon-' + btn.icon}) : '';
