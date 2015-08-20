@@ -9,7 +9,7 @@ var Log = React.createClass({
 				<div  className="w-detail-log">
 					<ul>
 						<li className="fatal">
-							<h5>Level: fatal</h5>
+							<h5>Level: FATAL</h5>
 							<h5>Date: xxxxxx</h5>
 							<h5>Source:</h5>
 							<pre>
@@ -29,7 +29,7 @@ var Log = React.createClass({
 							</pre>
 						</li>
 						<li className="error">
-							<h5>Level: error</h5>
+							<h5>Level: ERROR</h5>
 							<h5>Date: xxxxxx</h5>
 							<h5>Source:</h5>
 							<pre>
@@ -49,7 +49,7 @@ var Log = React.createClass({
 							</pre>
 						</li>
 						<li className="warn">
-							<h5>Level: warn</h5>
+							<h5>Level: WARN</h5>
 							<h5>Date: xxxxxx</h5>
 							<h5>Source:</h5>
 							<pre>
@@ -69,7 +69,7 @@ var Log = React.createClass({
 							</pre>
 						</li>
 						<li className="info">
-							<h5>Level: info</h5>
+							<h5>Level: INFO</h5>
 							<h5>Date: xxxxxx</h5>
 							<h5>Source:</h5>
 							<pre>
@@ -89,7 +89,7 @@ var Log = React.createClass({
 							</pre>
 						</li>
 						<li className="debug">
-							<h5>Level: debug</h5>
+							<h5>Level: DEBUG</h5>
 							<h5>Date: xxxxxx</h5>
 							<h5>Source:</h5>
 							<pre>

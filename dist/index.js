@@ -30964,7 +30964,7 @@
 					React.createElement("div", {className: "w-detail-log"}, 
 						React.createElement("ul", null, 
 							React.createElement("li", {className: "fatal"}, 
-								React.createElement("h5", null, "Level: fatal"), 
+								React.createElement("h5", null, "Level: FATAL"), 
 								React.createElement("h5", null, "Date: xxxxxx"), 
 								React.createElement("h5", null, "Source:"), 
 								React.createElement("pre", null, 
@@ -30984,7 +30984,7 @@
 								)
 							), 
 							React.createElement("li", {className: "error"}, 
-								React.createElement("h5", null, "Level: error"), 
+								React.createElement("h5", null, "Level: ERROR"), 
 								React.createElement("h5", null, "Date: xxxxxx"), 
 								React.createElement("h5", null, "Source:"), 
 								React.createElement("pre", null, 
@@ -31004,7 +31004,7 @@
 								)
 							), 
 							React.createElement("li", {className: "warn"}, 
-								React.createElement("h5", null, "Level: warn"), 
+								React.createElement("h5", null, "Level: WARN"), 
 								React.createElement("h5", null, "Date: xxxxxx"), 
 								React.createElement("h5", null, "Source:"), 
 								React.createElement("pre", null, 
@@ -31024,7 +31024,7 @@
 								)
 							), 
 							React.createElement("li", {className: "info"}, 
-								React.createElement("h5", null, "Level: info"), 
+								React.createElement("h5", null, "Level: INFO"), 
 								React.createElement("h5", null, "Date: xxxxxx"), 
 								React.createElement("h5", null, "Source:"), 
 								React.createElement("pre", null, 
@@ -31044,7 +31044,7 @@
 								)
 							), 
 							React.createElement("li", {className: "debug"}, 
-								React.createElement("h5", null, "Level: debug"), 
+								React.createElement("h5", null, "Level: DEBUG"), 
 								React.createElement("h5", null, "Date: xxxxxx"), 
 								React.createElement("h5", null, "Source:"), 
 								React.createElement("pre", null, 
