@@ -31020,7 +31020,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, ".w-detail-composer {overflow: hidden;}", ""]);
 
 	// exports
 
