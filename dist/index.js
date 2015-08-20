@@ -30169,6 +30169,10 @@
 
 	exports.noop = noop;
 
+	exports.preventDefault = function preventDefault(e) {
+		e.preventDefault();
+	};
+
 	$(document).on('mousedown', function(e) {
 		stopDrag();
 		var target = $(e.target);
@@ -30748,11 +30752,11 @@
 				React.createElement("div", {className: 'fill orient-vertical-box w-detail-request w-detail-show-request-' 
 						+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}, 
 					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
-					React.createElement("div", {className: "fill w-detail-request-headers"}, "1"), 
-					React.createElement("div", {className: "fill w-detail-request-textview"}, "2"), 
-					React.createElement("div", {className: "fill w-detail-request-cookies"}, "3"), 
-					React.createElement("div", {className: "fill w-detail-request-webforms"}, "4"), 
-					React.createElement("div", {className: "fill w-detail-request-raw"}, "5")
+					React.createElement("div", {className: "w-detail-request-headers"}, "1"), 
+					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-textview"}, "2"), 
+					React.createElement("div", {className: "w-detail-request-cookies"}, "3"), 
+					React.createElement("div", {className: "w-detail-request-webforms"}, "4"), 
+					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-raw"}, "5")
 				)
 			);
 		}
@@ -30784,11 +30788,11 @@
 				React.createElement("div", {className: 'fill orient-vertical-box w-detail-response w-detail-show-response-' 
 					+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}, 
 					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
-					React.createElement("div", {className: "fill w-detail-response-headers"}, "11"), 
-					React.createElement("div", {className: "fill w-detail-response-textview"}, "22"), 
-					React.createElement("div", {className: "fill w-detail-response-cookies"}, "33"), 
-					React.createElement("div", {className: "fill w-detail-response-json"}, "44"), 
-					React.createElement("div", {className: "fill w-detail-response-raw"}, "55")
+					React.createElement("div", {className: "w-detail-response-headers"}, "11"), 
+					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-textview"}, "22"), 
+					React.createElement("div", {className: "w-detail-response-cookies"}, "33"), 
+					React.createElement("div", {className: "w-detail-response-json"}, "44"), 
+					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-raw"}, "55")
 				)
 			);
 		}
@@ -30832,7 +30836,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-response-headers, .w-detail-response-textview, .w-detail-response-cookies\n, .w-detail-response-json, .w-detail-response-raw {display: none;}\n\n.w-detail-show-response-headers .w-detail-response-headers, .w-detail-show-response-textview .w-detail-response-textview,\n.w-detail-show-response-cookies .w-detail-response-cookies, .w-detail-show-response-json .w-detail-response-json, \n.w-detail-show-response-raw .w-detail-response-raw {display:-webkit-box; display:-moz-box; display:box;}", ""]);
+	exports.push([module.id, ".w-detail-response-headers, .w-detail-response-textview, .w-detail-response-cookies\n, .w-detail-response-json, .w-detail-response-raw {display: none;}\n.w-detail-response textarea {padding: 5px; border: none;}\n.w-detail-show-response-headers .w-detail-response-headers, .w-detail-show-response-textview .w-detail-response-textview,\n.w-detail-show-response-cookies .w-detail-response-cookies, .w-detail-show-response-json .w-detail-response-json, \n.w-detail-show-response-raw .w-detail-response-raw {display:-webkit-box; display:-moz-box; display:box; -moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}", ""]);
 
 	// exports
 
@@ -30872,7 +30876,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-request-headers, .w-detail-request-textview, .w-detail-request-cookies\n, .w-detail-request-webforms, .w-detail-request-raw {display: none;}\n\n.w-detail-show-request-headers .w-detail-request-headers, .w-detail-show-request-textview .w-detail-request-textview,\n.w-detail-show-request-cookies .w-detail-request-cookies, .w-detail-show-request-webforms .w-detail-request-webforms, \n.w-detail-show-request-raw .w-detail-request-raw {display:-webkit-box; display:-moz-box; display:box;}", ""]);
+	exports.push([module.id, ".w-detail-request-headers, .w-detail-request-textview, .w-detail-request-cookies\n, .w-detail-request-webforms, .w-detail-request-raw {display: none;}\n.w-detail-request textarea {padding: 5px; border: none;}\n.w-detail-show-request-headers .w-detail-request-headers, .w-detail-show-request-textview .w-detail-request-textview,\n.w-detail-show-request-cookies .w-detail-request-cookies, .w-detail-show-request-webforms .w-detail-request-webforms, \n.w-detail-show-request-raw .w-detail-request-raw {display:-webkit-box; display:-moz-box; display:box;  -moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}", ""]);
 
 	// exports
 

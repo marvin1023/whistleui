@@ -15,11 +15,11 @@ var ResDetail = React.createClass({
 			<div className={'fill orient-vertical-box w-detail-response w-detail-show-response-' 
 				+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}>
 				<BtnGroup onClick={this._onClickBtn} btns={BTNS} />
-				<div className="fill w-detail-response-headers">11</div>
-				<div className="fill w-detail-response-textview">22</div>
-				<div className="fill w-detail-response-cookies">33</div>
-				<div className="fill w-detail-response-json">44</div>
-				<div className="fill w-detail-response-raw">55</div>
+				<div className="w-detail-response-headers">11</div>
+				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-response-textview">22</textarea>
+				<div className="w-detail-response-cookies">33</div>
+				<div className="w-detail-response-json">44</div>
+				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-response-raw">55</textarea>
 			</div>
 		);
 	}

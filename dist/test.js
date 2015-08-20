@@ -30165,6 +30165,10 @@
 
 	exports.noop = noop;
 
+	exports.preventDefault = function preventDefault(e) {
+		e.preventDefault();
+	};
+
 	$(document).on('mousedown', function(e) {
 		stopDrag();
 		var target = $(e.target);

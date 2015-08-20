@@ -1,6 +1,6 @@
 .w-detail-response-headers, .w-detail-response-textview, .w-detail-response-cookies
 , .w-detail-response-json, .w-detail-response-raw {display: none;}
-
+.w-detail-response textarea {padding: 5px; border: none;}
 .w-detail-show-response-headers .w-detail-response-headers, .w-detail-show-response-textview .w-detail-response-textview,
 .w-detail-show-response-cookies .w-detail-response-cookies, .w-detail-show-response-json .w-detail-response-json, 
-.w-detail-show-response-raw .w-detail-response-raw {display:-webkit-box; display:-moz-box; display:box;}
+.w-detail-show-response-raw .w-detail-response-raw {display:-webkit-box; display:-moz-box; display:box; -moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}

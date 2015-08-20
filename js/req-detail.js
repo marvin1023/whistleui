@@ -14,11 +14,11 @@ var ReqDetail = React.createClass({
 			<div className={'fill orient-vertical-box w-detail-request w-detail-show-request-' 
 					+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}>
 				<BtnGroup onClick={this._onClickBtn} btns={BTNS} />
-				<div className="fill w-detail-request-headers">1</div>
-				<div className="fill w-detail-request-textview">2</div>
-				<div className="fill w-detail-request-cookies">3</div>
-				<div className="fill w-detail-request-webforms">4</div>
-				<div className="fill w-detail-request-raw">5</div>
+				<div className="w-detail-request-headers">1</div>
+				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-request-textview">2</textarea>
+				<div className="w-detail-request-cookies">3</div>
+				<div className="w-detail-request-webforms">4</div>
+				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-request-raw">5</textarea>
 			</div>
 		);
 	}
