@@ -7,7 +7,6 @@ var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies
 
 var ReqDetail = React.createClass({
 	_onClickBtn: function(btn) {
-		console.log(btn)
 		this.setState({btn: btn});
 	},
 	render: function() {

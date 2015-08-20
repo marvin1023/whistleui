@@ -30743,7 +30743,6 @@
 
 	var ReqDetail = React.createClass({displayName: "ReqDetail",
 		_onClickBtn: function(btn) {
-			console.log(btn)
 			this.setState({btn: btn});
 		},
 		render: function() {
@@ -30913,7 +30912,7 @@
 	var Composer = React.createClass({displayName: "Composer",
 		render: function() {
 			return (
-				React.createElement("div", {className: "w-detail-composer"}, 
+				React.createElement("div", {className: "fill orient-vertical-box w-detail-composer"}, 
 					React.createElement(Divider, null, 
 						React.createElement("div", null, "1"), 
 						React.createElement("div", null, "2")

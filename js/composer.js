@@ -6,7 +6,7 @@ var Divider = require('./divider');
 var Composer = React.createClass({
 	render: function() {
 		return (
-			<div className="w-detail-composer">
+			<div className="fill orient-vertical-box w-detail-composer">
 				<Divider>
 					<div>1</div>
 					<div>2</div>
