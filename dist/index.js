@@ -30559,7 +30559,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}\n\n.w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}\n.w-show-detail-overview w-detail-overview,  .w-show-detail-request .w-detail-request, \n.w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, \n.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display: block;}", ""]);
+	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}\n\n.w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}\n.w-show-detail-overview .w-detail-overview,  .w-show-detail-request .w-detail-request, \n.w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, \n.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display: block;}", ""]);
 
 	// exports
 
@@ -30733,7 +30733,7 @@
 	__webpack_require__(242);
 	var React = __webpack_require__(13);
 	var BtnGroup = __webpack_require__(237);
-	var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
+	var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
 
 	var ReqDetail = React.createClass({displayName: "ReqDetail",
 		render: function() {
@@ -30758,7 +30758,7 @@
 	__webpack_require__(240);
 	var React = __webpack_require__(13);
 	var BtnGroup = __webpack_require__(237);
-	BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
+	BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
 
 	var ResDetail = React.createClass({displayName: "ResDetail",
 		render: function() {
