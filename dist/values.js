@@ -20859,7 +20859,8 @@
 	var Divider = React.createClass({displayName: "Divider",
 		componentDidMount: function() {
 			var divider = this.refs.divider.getDOMNode();
-			var prop = this.props.vertical ? 'height' : 'width';
+			var vertical = util.getBoolean(this.props.vertical);
+			var prop = vertical ? 'height' : 'width';
 			if (this._leftWidth > 0) {
 				$(divider).find('.w-divider-left')[prop](this._leftWidth);
 				return;
@@ -20867,7 +20868,7 @@
 			
 			var rightWidth = parseInt(this.props.rightWidth, 10);
 			if (!(rightWidth > 0)) {
-				rightWidth = (this.props.vertical ? divider.offsetHeight : divider.offsetWidth) / 2;
+				rightWidth = (vertical ? divider.offsetHeight : divider.offsetWidth) / 2;
 			}
 			
 			if (rightWidth >= 5) {
@@ -20875,7 +20876,7 @@
 			}
 		},
 		render: function() {
-			var vertical = this.props.vertical;
+			var vertical = util.getBoolean(this.props.vertical);
 			var divider = React.createElement("div", {className: "w-divider"});
 			var leftWidth = parseInt(this.props.leftWidth, 10);
 			if (leftWidth > 0) {

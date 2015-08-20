@@ -17,7 +17,8 @@ util.addDragEvent('.w-divider', function(target, x, y) {
 var Divider = React.createClass({
 	componentDidMount: function() {
 		var divider = this.refs.divider.getDOMNode();
-		var prop = this.props.vertical ? 'height' : 'width';
+		var vertical = util.getBoolean(this.props.vertical);
+		var prop = vertical ? 'height' : 'width';
 		if (this._leftWidth > 0) {
 			$(divider).find('.w-divider-left')[prop](this._leftWidth);
 			return;
@@ -25,7 +26,7 @@ var Divider = React.createClass({
 		
 		var rightWidth = parseInt(this.props.rightWidth, 10);
 		if (!(rightWidth > 0)) {
-			rightWidth = (this.props.vertical ? divider.offsetHeight : divider.offsetWidth) / 2;
+			rightWidth = (vertical ? divider.offsetHeight : divider.offsetWidth) / 2;
 		}
 		
 		if (rightWidth >= 5) {
@@ -33,7 +34,7 @@ var Divider = React.createClass({
 		}
 	},
 	render: function() {
-		var vertical = this.props.vertical;
+		var vertical = util.getBoolean(this.props.vertical);
 		var divider = <div className="w-divider"></div>;
 		var leftWidth = parseInt(this.props.leftWidth, 10);
 		if (leftWidth > 0) {
