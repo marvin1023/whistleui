@@ -30752,11 +30752,11 @@
 				React.createElement("div", {className: 'fill orient-vertical-box w-detail-request w-detail-show-request-' 
 						+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}, 
 					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
-					React.createElement("div", {className: "w-detail-request-headers"}, "1"), 
-					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-textview"}, "2"), 
-					React.createElement("div", {className: "w-detail-request-cookies"}, "3"), 
-					React.createElement("div", {className: "w-detail-request-webforms"}, "4"), 
-					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-raw"}, "5")
+					React.createElement("div", {className: "w-detail-request-headers"}), 
+					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-textview"}), 
+					React.createElement("div", {className: "w-detail-request-cookies"}), 
+					React.createElement("div", {className: "w-detail-request-webforms"}), 
+					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-raw"})
 				)
 			);
 		}
@@ -30788,11 +30788,11 @@
 				React.createElement("div", {className: 'fill orient-vertical-box w-detail-response w-detail-show-response-' 
 					+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}, 
 					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
-					React.createElement("div", {className: "w-detail-response-headers"}, "11"), 
-					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-textview"}, "22"), 
-					React.createElement("div", {className: "w-detail-response-cookies"}, "33"), 
-					React.createElement("div", {className: "w-detail-response-json"}, "44"), 
-					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-raw"}, "55")
+					React.createElement("div", {className: "w-detail-response-headers"}), 
+					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-textview"}), 
+					React.createElement("div", {className: "w-detail-response-cookies"}), 
+					React.createElement("div", {className: "w-detail-response-json"}), 
+					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-raw"})
 				)
 			);
 		}
