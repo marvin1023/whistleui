@@ -30651,7 +30651,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-tabs-sm {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; display: block; width: 100%;}\n.w-tabs-sm .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}\n.w-tabs-sm .btn:first-child {border-left: none;}\n\n.w-btn-group-sm {border-bottom: 1px solid #ccc; width: 100%;}\n.w-btn-group-sm .btn {padding: 3px 10px 2px!important; border-radius: 0; border-top: none; border-bottom: none;}\n.w-btn-group-sm .btn:first-child {border-left: none;}", ""]);
+	exports.push([module.id, ".w-tabs-sm {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; width: 100%;}\n.w-tabs-sm .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}\n.w-tabs-sm .btn:first-child {border-left: none;}\n\n.w-btn-group-sm {border-bottom: 1px solid #ccc; width: 100%;}\n.w-btn-group-sm .btn {padding: 3px 10px 2px!important; border-radius: 0; border-top: none; border-bottom: none;}\n.w-btn-group-sm .btn:first-child {border-left: none;}", ""]);
 
 	// exports
 
