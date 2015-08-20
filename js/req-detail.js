@@ -7,9 +7,13 @@ var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies
 var ReqDetail = React.createClass({
 	render: function() {
 		return (
-			<div className="w-detail-request">
+			<div className="fill orient-vertical-box w-detail-request">
 				<BtnGroup btns={BTNS} />
-				<div style={{height: '1000px'}}></div>
+				<div className="fill w-detail-response-headers"></div>
+				<div className="fill w-detail-response-textview"></div>
+				<div className="fill w-detail-response-cookies"></div>
+				<div className="fill w-detail-response-webforms"></div>
+				<div className="fill w-detail-response-raw"></div>
 			</div>
 		);
 	}
