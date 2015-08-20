@@ -30954,16 +30954,117 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(252);
+	__webpack_require__(257);
 	var React = __webpack_require__(13);
 
 	var Log = React.createClass({displayName: "Log",
 		render: function() {
 			
 			return (
-				React.createElement("div", {className: "w-detail-log"}, 
-					React.createElement("div", {style: {height: '1000px'}})
-				)		
+					React.createElement("div", {className: "w-detail-log"}, 
+						React.createElement("ul", null, 
+							React.createElement("li", {className: "fatal"}, 
+								React.createElement("h5", null, "Level: fatal"), 
+								React.createElement("h5", null, "Date: xxxxxx"), 
+								React.createElement("h5", null, "Source:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								), 
+								React.createElement("h5", null, "Message:"), 
+								React.createElement("pre", null, 
+									"mmmmmmm"
+								), 
+								React.createElement("h5", null, "stack:"), 
+								React.createElement("pre", null, 
+									"ssssssssssssssss"
+								), 
+								React.createElement("h5", null, "UA:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								)
+							), 
+							React.createElement("li", {className: "error"}, 
+								React.createElement("h5", null, "Level: error"), 
+								React.createElement("h5", null, "Date: xxxxxx"), 
+								React.createElement("h5", null, "Source:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								), 
+								React.createElement("h5", null, "Message:"), 
+								React.createElement("pre", null, 
+									"mmmmmmm"
+								), 
+								React.createElement("h5", null, "stack:"), 
+								React.createElement("pre", null, 
+									"ssssssssssssssss"
+								), 
+								React.createElement("h5", null, "UA:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								)
+							), 
+							React.createElement("li", {className: "warn"}, 
+								React.createElement("h5", null, "Level: warn"), 
+								React.createElement("h5", null, "Date: xxxxxx"), 
+								React.createElement("h5", null, "Source:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								), 
+								React.createElement("h5", null, "Message:"), 
+								React.createElement("pre", null, 
+									"mmmmmmm"
+								), 
+								React.createElement("h5", null, "stack:"), 
+								React.createElement("pre", null, 
+									"ssssssssssssssss"
+								), 
+								React.createElement("h5", null, "UA:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								)
+							), 
+							React.createElement("li", {className: "info"}, 
+								React.createElement("h5", null, "Level: info"), 
+								React.createElement("h5", null, "Date: xxxxxx"), 
+								React.createElement("h5", null, "Source:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								), 
+								React.createElement("h5", null, "Message:"), 
+								React.createElement("pre", null, 
+									"mmmmmmm"
+								), 
+								React.createElement("h5", null, "stack:"), 
+								React.createElement("pre", null, 
+									"ssssssssssssssss"
+								), 
+								React.createElement("h5", null, "UA:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								)
+							), 
+							React.createElement("li", {className: "debug"}, 
+								React.createElement("h5", null, "Level: debug"), 
+								React.createElement("h5", null, "Date: xxxxxx"), 
+								React.createElement("h5", null, "Source:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								), 
+								React.createElement("h5", null, "Message:"), 
+								React.createElement("pre", null, 
+									"mmmmmmm"
+								), 
+								React.createElement("h5", null, "stack:"), 
+								React.createElement("pre", null, 
+									"ssssssssssssssss"
+								), 
+								React.createElement("h5", null, "UA:"), 
+								React.createElement("pre", null, 
+									"xxxxxx"
+								)
+							)
+						)
+				)
 			);
 		}
 	});
@@ -31185,6 +31286,46 @@
 
 	// module
 	exports.push([module.id, ".w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding-top: 3px!important; padding-bottom: 3px!important;}\n.w-properties tr {border-bottom: 1px solid #ccc;}\n.w-properties th {background: #e1e3e6; padding-right: 3px;}\n.w-properties td {padding-left: 5px; vertical-align: top;}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(258);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./log.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./log.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".w-detail-log ul, .w-detail-log li {list-style: none; padding: 5px; margin: 0; display: block; width: 100%;}\n.w-detail-log li {border-bottom: 1px solid #ccc; width: 100%;}\n.w-detail-log pre {background: none; border: none;}\n.w-detail-log li.fatal {background: #bbb;}\n.w-detail-log li.error {background: #f2dede;}\n.w-detail-log li.warn {background: #fee;}\n.w-detail-log li.info {background: #f5f5f5;}\n.w-detail-log li.debug {background: #fff;}\n", ""]);
 
 	// exports
 
