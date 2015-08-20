@@ -20858,7 +20858,7 @@
 			var vertical = util.getBoolean(this.props.vertical);
 			var prop = vertical ? 'height' : 'width';
 			if (this._leftWidth > 0) {
-				$(divider).find('.w-divider-left')[prop](this._leftWidth);
+				$(divider).children('.w-divider-left')[prop](this._leftWidth);
 				return;
 			}
 			
@@ -20868,7 +20868,7 @@
 			}
 			
 			if (rightWidth >= 5) {
-				$(divider).find('.w-divider-right')[prop](rightWidth);
+				$(divider).children('.w-divider-right')[prop](rightWidth);
 			}
 		},
 		render: function() {
