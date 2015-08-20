@@ -31325,7 +31325,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-log ul, .w-detail-log li {list-style: none; padding: 0; margin: 0; display: block; width: 100%;}\n.w-detail-log li {border-bottom: 1px solid #ccc; width: 100%; padding: 10px 0;}\n.w-detail-log h5 {padding-left: 10px;}\n.w-detail-log pre {background: none; border: none; padding: 0 10px 0 20px;}\n.w-detail-log li.fatal {background: #bbb;}\n.w-detail-log li.error {background: #f2dede;}\n.w-detail-log li.warn {background: #fee;}\n.w-detail-log li.info {background: #f5f5f5;}\n.w-detail-log li.debug {background: #fff;}\n", ""]);
+	exports.push([module.id, ".w-detail-log ul, .w-detail-log li {list-style: none; padding: 0; margin: 0; display: block; width: 100%;}\n.w-detail-log li {border-bottom: 1px solid #ccc; width: 100%; padding: 1px 0;}\n.w-detail-log h5 {padding-left: 10px;}\n.w-detail-log pre {background: none; border: none; padding: 0 10px 0 20px;}\n.w-detail-log li.fatal {background: #bbb;}\n.w-detail-log li.error {background: #f2dede;}\n.w-detail-log li.warn {background: #fee;}\n.w-detail-log li.info {background: #f5f5f5;}\n.w-detail-log li.debug {background: #fff;}\n", ""]);
 
 	// exports
 
