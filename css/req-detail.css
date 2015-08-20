@@ -1,6 +1,6 @@
 .w-detail-request-headers, .w-detail-request-textview, .w-detail-request-cookies
-, .w-detail-request-json, .w-detail-request-raw {display: none;}
+, .w-detail-request-webforms, .w-detail-request-raw {display: none;}
 
-.w-detail-show-request-headers .w-detail-request-headers, .w-detail-request-textview .w-detail-request-textview,
-.w-detail-show-request-cookies .w-detail-request-cookies, .w-detail-show-request-json .w-detail-request-json, 
+.w-detail-show-request-headers .w-detail-request-headers, .w-detail-show-request-textview .w-detail-request-textview,
+.w-detail-show-request-cookies .w-detail-request-cookies, .w-detail-show-request-webforms .w-detail-request-webforms, 
 .w-detail-show-request-raw .w-detail-request-raw {display:-webkit-box; display:-moz-box; display:box;}
