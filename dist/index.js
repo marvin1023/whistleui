@@ -30867,7 +30867,7 @@
 		render: function() {
 			
 			return (
-				React.createElement("div", {className: "w-detail-Timeline"}, 
+				React.createElement("div", {className: "w-detail-timeline"}, 
 					React.createElement("div", {style: {height: '1000px'}})
 				)
 			);

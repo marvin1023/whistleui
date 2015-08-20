@@ -6,7 +6,7 @@ var Timeline = React.createClass({
 	render: function() {
 		
 		return (
-			<div className="w-detail-Timeline">
+			<div className="w-detail-timeline">
 				<div style={{height: '1000px'}}></div>
 			</div>
 		);
