@@ -30267,6 +30267,13 @@
 
 	exports.getProperty = getProperty;
 
+	function getBoolean(val) {
+		
+		return !(!val || val === 'false');
+	}
+
+	exports.getBoolean = getBoolean;
+
 
 
 /***/ },

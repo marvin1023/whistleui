@@ -26,10 +26,7 @@ var BtnGroup = React.createClass({
 		return (
 				<div className={'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}>
 					{list.map(function(btn, i) {
-						var disabled = self.props.disabled;
-						if (!disabled || disabled === 'false') {
-							disabled = false;
-						}
+						var disabled = util.getBoolean(self.props.disabled);
 						 function onClick() {
 							 if (btn.active || disabled) {
 								 return;
