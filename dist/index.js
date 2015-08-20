@@ -30911,9 +30911,31 @@
 		render: function() {
 			return (
 				React.createElement("div", {className: "fill orient-vertical-box w-detail-composer"}, 
-					React.createElement(Divider, {leftWidth: (window.innerHeight - 120) / 2 + 'px', vertical: "true"}, 
-						React.createElement("div", null, "1"), 
-						React.createElement("div", null, "2")
+					React.createElement("div", {className: "w-composer-url box"}, 
+						React.createElement("input", {type: "text", maxLength: "256", placeholder: "url", className: "fill w-composer-input"}), 
+						React.createElement("select", {className: "form-control w-composer-method"}, 
+			          		React.createElement("option", {value: "GET"}, "GET"), 
+			          		React.createElement("option", {value: "POST"}, "POST"), 
+			          		React.createElement("option", {value: "PUT"}, "PUT"), 
+			          		React.createElement("option", {value: "HEAD"}, "HEAD"), 
+			          		React.createElement("option", {value: "TRACE"}, "TRACE"), 
+			          		React.createElement("option", {value: "DELETE"}, "DELETE"), 
+			          		React.createElement("option", {value: "SEARCH"}, "SEARCH"), 
+			          		React.createElement("option", {value: "CONNECT"}, "CONNECT"), 
+			          		React.createElement("option", {value: "PROPFIND"}, "PROPFIND"), 
+			          		React.createElement("option", {value: "PROPPATCH"}, "PROPPATCH"), 
+			          		React.createElement("option", {value: "MKCOL"}, "MKCOL"), 
+			          		React.createElement("option", {value: "COPY"}, "COPY"), 
+			          		React.createElement("option", {value: "MOVE"}, "MOVE"), 
+			          		React.createElement("option", {value: "LOCK"}, "LOCK"), 
+			          		React.createElement("option", {value: "UNLOCK"}, "UNLOCK"), 
+			          		React.createElement("option", {value: "OPTIONS"}, "OPTIONS")
+			          	), 
+						React.createElement("button", {className: "btn btn-primary w-composer-execute"}, "Execute")
+					), 
+					React.createElement(Divider, {leftWidth: (Math.max(window.innerHeight, 360) - 120) / 2, vertical: "true"}, 
+						React.createElement("textarea", {className: "fill w-composer-headers", placeholder: "headers"}), 
+						React.createElement("textarea", {className: "fill w-composer-body", placeholder: "body"})
 					)
 				)
 			);
@@ -31018,7 +31040,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-composer {overflow-x: hidden; overflow-y: auto;}", ""]);
+	exports.push([module.id, ".w-detail-composer {overflow-x: hidden; overflow-y: auto;}\n.w-detail-composer textarea {display: block; width: 100%; resize: none; border: none; padding: 5px;}\n.w-composer-url {padding: 5px 3px 5px 0; border-bottom: 1px solid #ccc;}\n.w-composer-input, .w-composer-method, .w-composer-execute {height: 26px;}\n.w-composer-input {padding: 0 5px; display: block; border: 1px solid #ccc; border-left: none;}\n.w-composer-method {display: block; width: 118px; margin: 0 5px;}\n.w-composer-execute {padding: 0 6px; line-height: 24px;}\n.w-composer-headers {}", ""]);
 
 	// exports
 
