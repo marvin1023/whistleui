@@ -456,7 +456,7 @@
 
 
 	// module
-	exports.push([module.id, "html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}\n.main {min-width: 960px; min-height: 280px;}\n::-webkit-scrollbar{ width:10px; height:10px; }\n::-webkit-scrollbar-button{ width:10px;height:1px; }\n::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}\n::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}\n::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}\n::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}\n\n.box {display:-webkit-box; display:-moz-box; display:box;}\n.orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}\n.fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}\n.table {table-layout: fixed; margin: 0!important;}\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n\n.cm-header {text-decoration: line-through;}\n.cm-s-ambiance ::-webkit-scrollbar-thumb, \n.cm-s-blackboard ::-webkit-scrollbar-thumb, \n.cm-s-cobalt ::-webkit-scrollbar-thumb, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb, \n.cm-s-midnight ::-webkit-scrollbar-thumb, \n.cm-s-monokai ::-webkit-scrollbar-thumb, \n.cm-s-night ::-webkit-scrollbar-thumb, \n.cm-s-dark ::-webkit-scrollbar-thumb, \n.cm-s-twilight ::-webkit-scrollbar-thumb, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb {background-color:rgba(255,255,255,.5);}\n\n.cm-s-ambiance ::-webkit-scrollbar-thumb:hover, \n.cm-s-blackboard ::-webkit-scrollbar-thumb:hover, \n.cm-s-cobalt ::-webkit-scrollbar-thumb:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-midnight ::-webkit-scrollbar-thumb:hover, \n.cm-s-monokai ::-webkit-scrollbar-thumb:hover, \n.cm-s-night ::-webkit-scrollbar-thumb:hover, \n.cm-s-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-twilight ::-webkit-scrollbar-thumb:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb:hover {background-color:rgba(255,255,255,.7);}\n\n.cm-s-ambiance ::-webkit-scrollbar-track:hover, \n.cm-s-blackboard ::-webkit-scrollbar-track:hover, \n.cm-s-cobalt ::-webkit-scrollbar-track:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-track:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-track:hover, \n.cm-s-midnight ::-webkit-scrollbar-track:hover, \n.cm-s-monokai ::-webkit-scrollbar-track:hover, \n.cm-s-night ::-webkit-scrollbar-track:hover, \n.cm-s-dark ::-webkit-scrollbar-track:hover, \n.cm-s-twilight ::-webkit-scrollbar-track:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-track:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-track:hover {background-color:rgba(255,255,255,.15);}\n\n\n", ""]);
+	exports.push([module.id, "html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}\n.main {min-width: 960px; min-height: 280px;}\n::-webkit-scrollbar{ width:10px; height:10px; }\n::-webkit-scrollbar-button{ width:10px;height:1px; }\n::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}\n::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}\n::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}\n::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}\n\ntextarea[readonly] {outline: none;}\n.box {display:-webkit-box; display:-moz-box; display:box;}\n.orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}\n.fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}\n.table {table-layout: fixed; margin: 0!important;}\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n\n.cm-header {text-decoration: line-through;}\n.cm-s-ambiance ::-webkit-scrollbar-thumb, \n.cm-s-blackboard ::-webkit-scrollbar-thumb, \n.cm-s-cobalt ::-webkit-scrollbar-thumb, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb, \n.cm-s-midnight ::-webkit-scrollbar-thumb, \n.cm-s-monokai ::-webkit-scrollbar-thumb, \n.cm-s-night ::-webkit-scrollbar-thumb, \n.cm-s-dark ::-webkit-scrollbar-thumb, \n.cm-s-twilight ::-webkit-scrollbar-thumb, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb {background-color:rgba(255,255,255,.5);}\n\n.cm-s-ambiance ::-webkit-scrollbar-thumb:hover, \n.cm-s-blackboard ::-webkit-scrollbar-thumb:hover, \n.cm-s-cobalt ::-webkit-scrollbar-thumb:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-midnight ::-webkit-scrollbar-thumb:hover, \n.cm-s-monokai ::-webkit-scrollbar-thumb:hover, \n.cm-s-night ::-webkit-scrollbar-thumb:hover, \n.cm-s-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-twilight ::-webkit-scrollbar-thumb:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb:hover {background-color:rgba(255,255,255,.7);}\n\n.cm-s-ambiance ::-webkit-scrollbar-track:hover, \n.cm-s-blackboard ::-webkit-scrollbar-track:hover, \n.cm-s-cobalt ::-webkit-scrollbar-track:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-track:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-track:hover, \n.cm-s-midnight ::-webkit-scrollbar-track:hover, \n.cm-s-monokai ::-webkit-scrollbar-track:hover, \n.cm-s-night ::-webkit-scrollbar-track:hover, \n.cm-s-dark ::-webkit-scrollbar-track:hover, \n.cm-s-twilight ::-webkit-scrollbar-track:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-track:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-track:hover {background-color:rgba(255,255,255,.15);}\n\n\n", ""]);
 
 	// exports
 
@@ -30170,7 +30170,7 @@
 	exports.noop = noop;
 
 	exports.preventDefault = function preventDefault(e) {
-		e.preventDefault();
+		e.keyCode == 8 && e.preventDefault();
 	};
 
 	$(document).on('mousedown', function(e) {
@@ -30302,6 +30302,7 @@
 						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-plus"}), "Create"), 
 						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-edit"}), "Edit"), 
 						React.createElement("a", {style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-repeat"}), "Replay"), 
+						React.createElement("a", {style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-edit"}), "Composer"), 
 						React.createElement("a", {style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-filter"}), "Filter"), 
 						React.createElement("a", {style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-remove"}), "Clear"), 
 						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-trash"}), "Delete"), 
@@ -30569,7 +30570,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto; overflow-y: hidden;}\n.w-detail-content {position: relative; overflow: auto;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-content, .w-detail>.w-tabs-sm {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}\n\n.w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}\n.w-show-detail-overview .w-detail-overview,  .w-show-detail-request .w-detail-request, \n.w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, \n.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display:-webkit-box; display:-moz-box; display:box;}", ""]);
+	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto; overflow-y: hidden;}\n.w-detail-content {position: relative; overflow: auto;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-content, .w-detail>.w-tabs-sm {min-width: 550px;}\n\n.w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}\n.w-show-detail-overview .w-detail-overview,  .w-show-detail-request .w-detail-request, \n.w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, \n.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display:-webkit-box; display:-moz-box; display:box;}", ""]);
 
 	// exports
 
@@ -30916,7 +30917,7 @@
 			return (
 				React.createElement("div", {className: "fill orient-vertical-box w-detail-composer"}, 
 					React.createElement("div", {className: "w-composer-url box"}, 
-						React.createElement("input", {type: "text", maxLength: "256", placeholder: "url", className: "fill w-composer-input"}), 
+						React.createElement("input", {type: "text", maxLength: "8192", placeholder: "url", className: "fill w-composer-input"}), 
 						React.createElement("select", {className: "form-control w-composer-method"}, 
 			          		React.createElement("option", {value: "GET"}, "GET"), 
 			          		React.createElement("option", {value: "POST"}, "POST"), 
@@ -31044,7 +31045,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-composer {overflow-x: hidden; overflow-y: auto;}\n.w-detail-composer textarea {display: block; width: 100%; resize: none; border: none; padding: 5px;}\n.w-composer-url {padding: 5px 3px 5px 0; border-bottom: 1px solid #ccc;}\n.w-composer-input, .w-composer-method, .w-composer-execute {height: 26px;}\n.w-composer-input {padding: 0 5px; display: block; border: 1px solid #ccc; border-left: none;}\n.w-composer-method {display: block; width: 118px; margin: 0 5px;}\n.w-composer-execute {padding: 0 6px; line-height: 24px;}\n.w-composer-headers {}", ""]);
+	exports.push([module.id, ".w-detail-composer {overflow-x: hidden; overflow-y: auto;}\n.w-detail-composer textarea {display: block; width: 100%; resize: none; border: none; padding: 5px;}\n.w-composer-url {padding: 5px 3px 5px 0; border-bottom: 1px solid #ccc;}\n.w-composer-input, .w-composer-method, .w-composer-execute {height: 26px;}\n.w-composer-input {padding: 0 5px; display: block; border: 1px solid #ccc; border-left: none;}\n.w-composer-method {display: block; width: 118px; margin: 0 3px;}\n.w-composer-execute {padding: 0 6px; line-height: 24px;}\n.w-composer-headers {}", ""]);
 
 	// exports
 
@@ -31056,43 +31057,21 @@
 	__webpack_require__(1);
 	__webpack_require__(252);
 	var React = __webpack_require__(13);
+	var Properties = __webpack_require__(254);
+	var OVERVIEW_PROPS = ['Url', 'Method', 'Status Code', 'Host IP', 'Client IP', 'Request Length', 'Content Length'
+	                      , 'Start Date', 'DNS Lookup', 'Request Sent', 'Content Download', 'Host', 'Req', 'Rule', 'Res', 'Weinre', 'Filter', 
+	                      'Log', 'reqHeaders', 'reqBody', 'prependReq', 'appendReq', 'resHeaders', 'resBody', 'prependRes', 'appendRes'];
 
 	var Overview = React.createClass({displayName: "Overview",
 		render: function() {
-			
+			var modal = {};
+			var _modal = this.props.modal || {};
+			OVERVIEW_PROPS.forEach(function(name) {
+				modal[name] = _modal[name];
+			});
 			return (
 				React.createElement("div", {className: "w-detail-overview"}, 
-					React.createElement("table", {className: "table w-properties"}, 
-						React.createElement("tr", null, 
-							React.createElement("th", null, "Content Download:"), 
-							React.createElement("td", null, "sssssss")
-						), 
-						React.createElement("tr", null, 
-							React.createElement("th", null, "Content Download:"), 
-							React.createElement("td", null, "sssssss")
-						), 
-						React.createElement("tr", null, 
-							React.createElement("th", null, "Content Download:"), 
-							React.createElement("td", null, "sssssss")
-						), 
-						React.createElement("tr", null, 
-							React.createElement("th", null, "Content Download:"), 
-							React.createElement("td", null, "sssssss")
-						), 
-						React.createElement("tr", {className: "w-properties-separator"}, 
-							React.createElement("th", null, "Content Download:"), 
-							React.createElement("td", null, "sssssss")
-						), 
-						React.createElement("tr", null, 
-							React.createElement("th", null, "Content Download:"), 
-							React.createElement("td", null, "sssssss")
-						), 
-						React.createElement("tr", null, 
-							React.createElement("th", null, "Content Download:"), 
-							React.createElement("td", null, "sssssss")
-						)
-					), 
-					React.createElement("div", {style: {height: '1000px'}})
+					React.createElement(Properties, {modal: modal})
 				)		
 			);
 		}
@@ -31136,6 +31115,76 @@
 
 	// module
 	exports.push([module.id, "", ""]);
+
+	// exports
+
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(255);
+	var React = __webpack_require__(13);
+
+	var Properties = React.createClass({displayName: "Properties",
+		render: function() {
+			var modal = this.props.modal || {};
+			return (
+					React.createElement("table", {className: "table w-properties"}, 
+						
+							Object.keys(modal).map(function(name) {
+								return (
+										React.createElement("tr", null, 
+											React.createElement("th", null, name), 
+											React.createElement("td", null, modal[name])
+										)	
+								);
+							})
+						
+					)
+			);
+		}
+	});
+
+	module.exports = Properties;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(256);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./properties.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./properties.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding-top: 3px!important; padding-bottom: 3px!important;}\n.w-properties tr {border-bottom: 1px solid #ccc;}\n.w-properties th {background: #e1e3e6; padding-right: 3px;}\n.w-properties td {padding-left: 5px;}", ""]);
 
 	// exports
 

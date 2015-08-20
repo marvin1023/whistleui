@@ -8,7 +8,7 @@ function noop() {}
 exports.noop = noop;
 
 exports.preventDefault = function preventDefault(e) {
-	e.preventDefault();
+	e.keyCode == 8 && e.preventDefault();
 };
 
 $(document).on('mousedown', function(e) {

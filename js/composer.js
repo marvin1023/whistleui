@@ -8,7 +8,7 @@ var Composer = React.createClass({
 		return (
 			<div className="fill orient-vertical-box w-detail-composer">
 				<div className="w-composer-url box">
-					<input type="text" maxLength="256" placeholder="url" className="fill w-composer-input" />
+					<input type="text" maxLength="8192" placeholder="url" className="fill w-composer-input" />
 					<select className="form-control w-composer-method">
 		          		<option value="GET">GET</option>
 		          		<option value="POST">POST</option>

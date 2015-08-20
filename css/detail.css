@@ -3,10 +3,6 @@
 .w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}
 .w-detail-content, .w-detail>.w-tabs-sm {min-width: 550px;}
 
-.w-properties th {width: 120px; text-align: right; font-weight: normal;}
-.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}
-.w-properties-separator {border-top: 1px solid #ccc;}
-
 .w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}
 .w-show-detail-overview .w-detail-overview,  .w-show-detail-request .w-detail-request, 
 .w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, 
