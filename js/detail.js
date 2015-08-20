@@ -2,8 +2,12 @@ require('./base-css.js');
 require('../css/detail.css');
 var React = require('react');
 var BtnGroup = require('./btn-group');
+var Overview = require('./overview');
 var ReqDetail = require('./req-detail');
 var ResDetail = require('./res-detail');
+var Timeline = require('./timeline');
+var Composer = require('./composer');
+var Log = require('./log');
 var TABS = [{
 				name: 'Overview',
 				icon: 'eye-open',
@@ -26,6 +30,9 @@ var TABS = [{
 			}];
 
 var ReqData = React.createClass({
+	_handleTab: function(btn) {
+		
+	}, 
 	componentDidMount: function() {
 		
 	},
@@ -36,43 +43,12 @@ var ReqData = React.createClass({
 				<BtnGroup tabs={TABS} />
 				<div className="w-detail-content fill">
 					<div className="w-detail-divider"></div>
-					<div className="w-detail-overview" style={{display: 'none'}}>
-						<table className="table w-properties">
-							<tr>
-								<th>Content Download:</th>
-								<td>sssssss</td>
-							</tr>
-							<tr>
-								<th>Content Download:</th>
-								<td>sssssss</td>
-							</tr>
-							<tr>
-								<th>Content Download:</th>
-								<td>sssssss</td>
-							</tr>
-							<tr>
-								<th>Content Download:</th>
-								<td>sssssss</td>
-							</tr>
-							<tr className="w-properties-separator">
-								<th>Content Download:</th>
-								<td>sssssss</td>
-							</tr>
-							<tr>
-								<th>Content Download:</th>
-								<td>sssssss</td>
-							</tr>
-							<tr>
-								<th>Content Download:</th>
-								<td>sssssss</td>
-							</tr>
-						</table>
-					</div>
+					<Overview />
 					<ReqDetail />
 					<ResDetail />
-					<div className="w-detail-Timeline">
-						
-					</div>
+					<Timeline />
+					<Composer />
+					<Log />
 				</div>
 			</div>
 		);

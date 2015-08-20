@@ -30443,8 +30443,12 @@
 	__webpack_require__(181);
 	var React = __webpack_require__(13);
 	var BtnGroup = __webpack_require__(237);
+	var Overview = __webpack_require__(251);
 	var ReqDetail = __webpack_require__(238);
 	var ResDetail = __webpack_require__(239);
+	var Timeline = __webpack_require__(244);
+	var Composer = __webpack_require__(245);
+	var Log = __webpack_require__(246);
 	var TABS = [{
 					name: 'Overview',
 					icon: 'eye-open',
@@ -30467,6 +30471,9 @@
 				}];
 
 	var ReqData = React.createClass({displayName: "ReqData",
+		_handleTab: function(btn) {
+			
+		}, 
 		componentDidMount: function() {
 			
 		},
@@ -30477,43 +30484,12 @@
 					React.createElement(BtnGroup, {tabs: TABS}), 
 					React.createElement("div", {className: "w-detail-content fill"}, 
 						React.createElement("div", {className: "w-detail-divider"}), 
-						React.createElement("div", {className: "w-detail-overview", style: {display: 'none'}}, 
-							React.createElement("table", {className: "table w-properties"}, 
-								React.createElement("tr", null, 
-									React.createElement("th", null, "Content Download:"), 
-									React.createElement("td", null, "sssssss")
-								), 
-								React.createElement("tr", null, 
-									React.createElement("th", null, "Content Download:"), 
-									React.createElement("td", null, "sssssss")
-								), 
-								React.createElement("tr", null, 
-									React.createElement("th", null, "Content Download:"), 
-									React.createElement("td", null, "sssssss")
-								), 
-								React.createElement("tr", null, 
-									React.createElement("th", null, "Content Download:"), 
-									React.createElement("td", null, "sssssss")
-								), 
-								React.createElement("tr", {className: "w-properties-separator"}, 
-									React.createElement("th", null, "Content Download:"), 
-									React.createElement("td", null, "sssssss")
-								), 
-								React.createElement("tr", null, 
-									React.createElement("th", null, "Content Download:"), 
-									React.createElement("td", null, "sssssss")
-								), 
-								React.createElement("tr", null, 
-									React.createElement("th", null, "Content Download:"), 
-									React.createElement("td", null, "sssssss")
-								)
-							)
-						), 
+						React.createElement(Overview, null), 
 						React.createElement(ReqDetail, null), 
 						React.createElement(ResDetail, null), 
-						React.createElement("div", {className: "w-detail-Timeline"}
-							
-						)
+						React.createElement(Timeline, null), 
+						React.createElement(Composer, null), 
+						React.createElement(Log, null)
 					)
 				)
 			);
@@ -30825,6 +30801,238 @@
 
 /***/ },
 /* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "", ""]);
+
+	// exports
+
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(247);
+	var React = __webpack_require__(13);
+
+	var Timeline = React.createClass({displayName: "Timeline",
+		render: function() {
+			
+			return (
+				React.createElement("div", {className: "w-detail-Timeline"}
+					
+				)
+			);
+		}
+	});
+
+	module.exports = Timeline;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(249);
+	var React = __webpack_require__(13);
+
+	var Composer = React.createClass({displayName: "Composer",
+		render: function() {
+			return (
+				React.createElement("div", {className: "w-detail-composer"}
+					
+				)
+			);
+		}
+	});
+
+	module.exports = Composer;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(252);
+	var React = __webpack_require__(13);
+
+	var Log = React.createClass({displayName: "Log",
+		render: function() {
+			
+			return (
+				React.createElement("div", {className: "w-detail-log"}
+					
+				)		
+			);
+		}
+	});
+
+	module.exports = Log;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(248);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./timeline.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./timeline.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "", ""]);
+
+	// exports
+
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(250);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./composer.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./composer.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "", ""]);
+
+	// exports
+
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(252);
+	var React = __webpack_require__(13);
+
+	var Overview = React.createClass({displayName: "Overview",
+		render: function() {
+			
+			return (
+				React.createElement("div", {className: "w-detail-overview"}, 
+					React.createElement("table", {className: "table w-properties"}, 
+						React.createElement("tr", null, 
+							React.createElement("th", null, "Content Download:"), 
+							React.createElement("td", null, "sssssss")
+						), 
+						React.createElement("tr", null, 
+							React.createElement("th", null, "Content Download:"), 
+							React.createElement("td", null, "sssssss")
+						), 
+						React.createElement("tr", null, 
+							React.createElement("th", null, "Content Download:"), 
+							React.createElement("td", null, "sssssss")
+						), 
+						React.createElement("tr", null, 
+							React.createElement("th", null, "Content Download:"), 
+							React.createElement("td", null, "sssssss")
+						), 
+						React.createElement("tr", {className: "w-properties-separator"}, 
+							React.createElement("th", null, "Content Download:"), 
+							React.createElement("td", null, "sssssss")
+						), 
+						React.createElement("tr", null, 
+							React.createElement("th", null, "Content Download:"), 
+							React.createElement("td", null, "sssssss")
+						), 
+						React.createElement("tr", null, 
+							React.createElement("th", null, "Content Download:"), 
+							React.createElement("td", null, "sssssss")
+						)
+					)
+				)		
+			);
+		}
+	});
+
+	module.exports = Overview;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(253);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./overview.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./overview.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
