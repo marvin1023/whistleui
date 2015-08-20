@@ -30166,6 +30166,10 @@
 	var dragCallbacks = {};
 	var dragTarget, dragOffset, dragCallback;
 
+	function noop() {}
+
+	exports.noop = noop;
+
 	$(document).on('mousedown', function(e) {
 		stopDrag();
 		var target = $(e.target);
@@ -30439,9 +30443,12 @@
 	__webpack_require__(181);
 	var React = __webpack_require__(13);
 	var BtnGroup = __webpack_require__(237);
+	var ReqDetail = __webpack_require__(238);
+	var ResDetail = __webpack_require__(239);
 	var TABS = [{
 					name: 'Overview',
-					icon: 'eye-open'
+					icon: 'eye-open',
+					active: true
 				}, {
 					name: 'Request',
 					icon: 'send'
@@ -30458,9 +30465,6 @@
 					name: 'Log',
 					icon: 'file'
 				}];
-
-	var REQ_BTNS = ['Headers', 'TextView', 'Cookies', 'WebForms', 'Raw'];
-	var RES_BTNS = ['Headers', 'TextView', 'Cookies', 'JSON', 'Raw'];
 
 	var ReqData = React.createClass({displayName: "ReqData",
 		componentDidMount: function() {
@@ -30505,12 +30509,8 @@
 								)
 							)
 						), 
-						React.createElement("div", {className: "w-detail-request"}, 
-							React.createElement(BtnGroup, {btns: REQ_BTNS})
-						), 
-						React.createElement("div", {className: "w-detail-response"}, 
-							React.createElement(BtnGroup, {btns: RES_BTNS})
-						), 
+						React.createElement(ReqDetail, null), 
+						React.createElement(ResDetail, null), 
 						React.createElement("div", {className: "w-detail-Timeline"}
 							
 						)
@@ -30665,20 +30665,42 @@
 
 	var BtnGroup = React.createClass({displayName: "BtnGroup",
 		render: function() {
-			var tabs = this.props.tabs;
-			var list = tabs || this.props.btns;
+			var self = this;
+			var tabs = self.props.tabs;
+			var list = tabs || self.props.btns;
+			var handleClick = self.props.onClick || util.noop;
+			
 			return (
 					React.createElement("div", {className: 'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}, 
 						list.map(function(btn) {
+							var _btn = btn;
 							 if (typeof btn == 'string') {
 								 btn = {
 										key: btn,
 										name: btn
 								 };
 							 }
+							 
+							 function onClick(first) {
+								 list.forEach(function(btn) {
+									 btn.active = false;
+								 });
+								 btn.active = true;
+								 btn.clicked = true;
+								 handleClick(_btn);
+								first !== true && self.forceUpdate();
+							 }
+							 
 							 var icon = btn.icon ? React.createElement("span", {className: 'glyphicon glyphicon-' + btn.icon}) : '';
 							 btn.key = btn.key || util.getKey();
-							 return React.createElement("button", {key: btn.key, type: "button", className: "btn btn-default"}, icon, btn.name);	
+							 if (btn.active && !btn.clicked) {
+								 onClick(true);
+							 }
+							 
+							 return React.createElement("button", {onClick: onClick, key: btn.key, type: "button", 
+								 	className: 'btn btn-default' + (btn.active ? ' active' : '')}, 
+									 icon, btn.name
+									);	
 						 })
 					)
 			);
@@ -30686,6 +30708,134 @@
 	});
 
 	module.exports = BtnGroup;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(242);
+	var React = __webpack_require__(13);
+	var BtnGroup = __webpack_require__(237);
+	var BTNS = [{name: 'Headers', active: true}, 'TextView', 'Cookies', 'WebForms', 'Raw'];
+
+	var ReqDetail = React.createClass({displayName: "ReqDetail",
+		render: function() {
+			return (
+				React.createElement("div", {className: "w-detail-request"}, 
+					React.createElement(BtnGroup, {btns: BTNS})
+				)
+			);
+		}
+	});
+
+	module.exports = ReqDetail;
+
+
+
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(240);
+	var React = __webpack_require__(13);
+	var BtnGroup = __webpack_require__(237);
+	BTNS = [{name: 'Headers', active: true}, 'TextView', 'Cookies', 'JSON', 'Raw'];
+
+	var ResDetail = React.createClass({displayName: "ResDetail",
+		render: function() {
+			return (
+				React.createElement("div", {className: "w-detail-response"}, 
+					React.createElement(BtnGroup, {btns: BTNS})
+				)
+			);
+		}
+	});
+
+	module.exports = ResDetail;
+
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(241);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./res-detail.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./res-detail.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "", ""]);
+
+	// exports
+
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(243);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./req-detail.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./req-detail.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

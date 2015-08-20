@@ -2,9 +2,12 @@ require('./base-css.js');
 require('../css/detail.css');
 var React = require('react');
 var BtnGroup = require('./btn-group');
+var ReqDetail = require('./req-detail');
+var ResDetail = require('./res-detail');
 var TABS = [{
 				name: 'Overview',
-				icon: 'eye-open'
+				icon: 'eye-open',
+				active: true
 			}, {
 				name: 'Request',
 				icon: 'send'
@@ -21,9 +24,6 @@ var TABS = [{
 				name: 'Log',
 				icon: 'file'
 			}];
-
-var REQ_BTNS = ['Headers', 'TextView', 'Cookies', 'WebForms', 'Raw'];
-var RES_BTNS = ['Headers', 'TextView', 'Cookies', 'JSON', 'Raw'];
 
 var ReqData = React.createClass({
 	componentDidMount: function() {
@@ -68,12 +68,8 @@ var ReqData = React.createClass({
 							</tr>
 						</table>
 					</div>
-					<div className="w-detail-request">
-						<BtnGroup btns={REQ_BTNS} />
-					</div>
-					<div className="w-detail-response">
-						<BtnGroup btns={RES_BTNS} />
-					</div>
+					<ReqDetail />
+					<ResDetail />
 					<div className="w-detail-Timeline">
 						
 					</div>

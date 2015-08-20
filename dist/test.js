@@ -30162,6 +30162,10 @@
 	var dragCallbacks = {};
 	var dragTarget, dragOffset, dragCallback;
 
+	function noop() {}
+
+	exports.noop = noop;
+
 	$(document).on('mousedown', function(e) {
 		stopDrag();
 		var target = $(e.target);
