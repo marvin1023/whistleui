@@ -10,4 +10,4 @@
 .w-detail-overview, .w-detail-request, .w-detail-response, .w-detail-timeline, .w-detail-composer, .w-detail-log  {display: none;}
 .w-show-detail-overview .w-detail-overview,  .w-show-detail-request .w-detail-request, 
 .w-show-detail-response .w-detail-response,  .w-show-detail-timeline .w-detail-timeline, 
-.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display: block;}
+.w-show-detail-composer .w-detail-composer,  .w-show-detail-log .w-detail-log  {display:-webkit-box; display:-moz-box; display:box;}
