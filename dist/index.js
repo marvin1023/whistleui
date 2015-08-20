@@ -456,7 +456,7 @@
 
 
 	// module
-	exports.push([module.id, "html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}\n.main {min-width: 960px; min-height: 280px;}\n::-webkit-scrollbar{ width:10px; height:10px; }\n::-webkit-scrollbar-button{ width:10px;height:1px; }\n::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}\n::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}\n::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}\n::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}\n\n.box {display:-webkit-box; display:-moz-box; display:box;}\n.orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}\n.fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}\n.table {table-layout: fixed; margin: 0!important;}\n.w-sub-btn-group-sm {border-bottom: 1px solid #ccc; width: 100%;}\n.w-sub-btn-group-sm .btn {padding: 3px 10px 2px!important; border-radius: 0; border-top: none; border-bottom: none;}\n.w-sub-btn-group-sm .btn:first-child {border-left: none;}\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n\n.cm-header {text-decoration: line-through;}\n.cm-s-ambiance ::-webkit-scrollbar-thumb, \n.cm-s-blackboard ::-webkit-scrollbar-thumb, \n.cm-s-cobalt ::-webkit-scrollbar-thumb, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb, \n.cm-s-midnight ::-webkit-scrollbar-thumb, \n.cm-s-monokai ::-webkit-scrollbar-thumb, \n.cm-s-night ::-webkit-scrollbar-thumb, \n.cm-s-dark ::-webkit-scrollbar-thumb, \n.cm-s-twilight ::-webkit-scrollbar-thumb, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb {background-color:rgba(255,255,255,.5);}\n\n.cm-s-ambiance ::-webkit-scrollbar-thumb:hover, \n.cm-s-blackboard ::-webkit-scrollbar-thumb:hover, \n.cm-s-cobalt ::-webkit-scrollbar-thumb:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-midnight ::-webkit-scrollbar-thumb:hover, \n.cm-s-monokai ::-webkit-scrollbar-thumb:hover, \n.cm-s-night ::-webkit-scrollbar-thumb:hover, \n.cm-s-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-twilight ::-webkit-scrollbar-thumb:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb:hover {background-color:rgba(255,255,255,.7);}\n\n.cm-s-ambiance ::-webkit-scrollbar-track:hover, \n.cm-s-blackboard ::-webkit-scrollbar-track:hover, \n.cm-s-cobalt ::-webkit-scrollbar-track:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-track:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-track:hover, \n.cm-s-midnight ::-webkit-scrollbar-track:hover, \n.cm-s-monokai ::-webkit-scrollbar-track:hover, \n.cm-s-night ::-webkit-scrollbar-track:hover, \n.cm-s-dark ::-webkit-scrollbar-track:hover, \n.cm-s-twilight ::-webkit-scrollbar-track:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-track:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-track:hover {background-color:rgba(255,255,255,.15);}\n\n\n", ""]);
+	exports.push([module.id, "html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}\n.main {min-width: 960px; min-height: 280px;}\n::-webkit-scrollbar{ width:10px; height:10px; }\n::-webkit-scrollbar-button{ width:10px;height:1px; }\n::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}\n::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}\n::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}\n::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}\n\n.box {display:-webkit-box; display:-moz-box; display:box;}\n.orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}\n.fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}\n.table {table-layout: fixed; margin: 0!important;}\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n\n.cm-header {text-decoration: line-through;}\n.cm-s-ambiance ::-webkit-scrollbar-thumb, \n.cm-s-blackboard ::-webkit-scrollbar-thumb, \n.cm-s-cobalt ::-webkit-scrollbar-thumb, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb, \n.cm-s-midnight ::-webkit-scrollbar-thumb, \n.cm-s-monokai ::-webkit-scrollbar-thumb, \n.cm-s-night ::-webkit-scrollbar-thumb, \n.cm-s-dark ::-webkit-scrollbar-thumb, \n.cm-s-twilight ::-webkit-scrollbar-thumb, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb {background-color:rgba(255,255,255,.5);}\n\n.cm-s-ambiance ::-webkit-scrollbar-thumb:hover, \n.cm-s-blackboard ::-webkit-scrollbar-thumb:hover, \n.cm-s-cobalt ::-webkit-scrollbar-thumb:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-midnight ::-webkit-scrollbar-thumb:hover, \n.cm-s-monokai ::-webkit-scrollbar-thumb:hover, \n.cm-s-night ::-webkit-scrollbar-thumb:hover, \n.cm-s-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-twilight ::-webkit-scrollbar-thumb:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb:hover {background-color:rgba(255,255,255,.7);}\n\n.cm-s-ambiance ::-webkit-scrollbar-track:hover, \n.cm-s-blackboard ::-webkit-scrollbar-track:hover, \n.cm-s-cobalt ::-webkit-scrollbar-track:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-track:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-track:hover, \n.cm-s-midnight ::-webkit-scrollbar-track:hover, \n.cm-s-monokai ::-webkit-scrollbar-track:hover, \n.cm-s-night ::-webkit-scrollbar-track:hover, \n.cm-s-dark ::-webkit-scrollbar-track:hover, \n.cm-s-twilight ::-webkit-scrollbar-track:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-track:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-track:hover {background-color:rgba(255,255,255,.15);}\n\n\n", ""]);
 
 	// exports
 
@@ -30438,6 +30438,29 @@
 	__webpack_require__(1);
 	__webpack_require__(181);
 	var React = __webpack_require__(13);
+	var BtnGroup = __webpack_require__(237);
+	var TABS = [{
+					name: 'Overview',
+					icon: 'eye-open'
+				}, {
+					name: 'Request',
+					icon: 'send'
+				}, {
+					name: 'Response',
+					icon: 'flash'
+				}, {
+					name: 'Timeline',
+					icon: 'align-justify'
+				}, {
+					name: 'Composer',
+					icon: 'edit'
+				}, {
+					name: 'Log',
+					icon: 'file'
+				}];
+
+	var REQ_BTNS = ['Headers', 'TextView', 'Cookies', 'WebForms', 'Raw'];
+	var RES_BTNS = ['Headers', 'TextView', 'Cookies', 'JSON', 'Raw'];
 
 	var ReqData = React.createClass({displayName: "ReqData",
 		componentDidMount: function() {
@@ -30447,14 +30470,7 @@
 			
 			return (
 					React.createElement("div", {className: "fill orient-vertical-box w-detail"}, 
-					React.createElement("div", {className: "btn-group btn-group-sm w-detail-tabs"}, 
-					  React.createElement("button", {type: "button", className: "btn btn-default"}, React.createElement("span", {className: "glyphicon glyphicon-eye-open"}), "Overview"), 
-					  React.createElement("button", {type: "button", className: "btn btn-default"}, React.createElement("span", {className: "glyphicon glyphicon-send"}), "Request"), 
-					  React.createElement("button", {type: "button", className: "btn btn-default"}, React.createElement("span", {className: "glyphicon glyphicon-flash"}), "Response"), 
-					  React.createElement("button", {type: "button", className: "btn btn-default"}, React.createElement("span", {className: "glyphicon glyphicon-align-justify"}), "Timeline"), 
-					  React.createElement("button", {type: "button", className: "btn btn-default"}, React.createElement("span", {className: "glyphicon glyphicon-edit"}), "Composer"), 
-					  React.createElement("button", {type: "button", className: "btn btn-default"}, React.createElement("span", {className: "glyphicon glyphicon-file"}), "Log")
-					), 
+					React.createElement(BtnGroup, {tabs: TABS}), 
 					React.createElement("div", {className: "w-detail-content fill"}, 
 						React.createElement("div", {className: "w-detail-divider"}), 
 						React.createElement("div", {className: "w-detail-overview", style: {display: 'none'}}, 
@@ -30490,22 +30506,10 @@
 							)
 						), 
 						React.createElement("div", {className: "w-detail-request"}, 
-							React.createElement("div", {className: "btn-group btn-group-sm w-sub-btn-group-sm"}, 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "Headers"), 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "TextView"), 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "Cookies"), 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "WebForms"), 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "Raw")
-							)
+							React.createElement(BtnGroup, {btns: REQ_BTNS})
 						), 
 						React.createElement("div", {className: "w-detail-response"}, 
-							React.createElement("div", {className: "btn-group btn-group-sm w-sub-btn-group-sm"}, 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "Headers"), 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "TextView"), 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "Cookies"), 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "JSON"), 
-							  React.createElement("button", {type: "button", className: "btn btn-default"}, "Raw")
-							)
+							React.createElement(BtnGroup, {btns: RES_BTNS})
 						), 
 						React.createElement("div", {className: "w-detail-Timeline"}
 							
@@ -30553,10 +30557,135 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto;}\n.w-detail-tabs {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; display: block;}\n.w-detail-tabs .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}\n.w-detail-tabs .btn:first-child {border-left: none;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}", ""]);
+	exports.push([module.id, ".w-detail {border-left: 1px solid #ccc; overflow-x: auto;}\n.w-detail-content {position: relative;}\n.w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}\n.w-detail-tabs, .w-detail-content {min-width: 550px;}\n\n.w-properties th {width: 120px; text-align: right; font-weight: normal;}\n.w-properties th , .w-properties td {border: none!important; font-size: 12px; padding: 5px!important;}\n.w-properties-separator {border-top: 1px solid #ccc;}", ""]);
 
 	// exports
 
+
+/***/ },
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(236);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./btn-group.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./btn-group.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".w-tabs-sm {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; display: block; width: 100%;}\n.w-tabs-sm .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}\n.w-tabs-sm .btn:first-child {border-left: none;}\n\n.w-btn-group-sm {border-bottom: 1px solid #ccc; width: 100%;}\n.w-btn-group-sm .btn {padding: 3px 10px 2px!important; border-radius: 0; border-top: none; border-bottom: none;}\n.w-btn-group-sm .btn:first-child {border-left: none;}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(235);
+	var React = __webpack_require__(13);
+	var util = __webpack_require__(173);
+
+	var BtnGroup = React.createClass({displayName: "BtnGroup",
+		render: function() {
+			var tabs = this.props.tabs;
+			var list = tabs || this.props.btns;
+			return (
+					React.createElement("div", {className: 'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}, 
+						list.map(function(btn) {
+							 if (typeof btn == 'string') {
+								 btn = {
+										key: btn,
+										name: btn
+								 };
+							 }
+							 var icon = btn.icon ? React.createElement("span", {className: 'glyphicon glyphicon-' + btn.icon}) : '';
+							 btn.key = btn.key || util.getKey();
+							 return React.createElement("button", {key: btn.key, type: "button", className: "btn btn-default"}, icon, btn.name);	
+						 })
+					)
+			);
+		}
+	});
+
+	module.exports = BtnGroup;
 
 /***/ }
 /******/ ]);

@@ -1,7 +1,4 @@
 .w-detail {border-left: 1px solid #ccc; overflow-x: auto;}
-.w-detail-tabs {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; display: block;}
-.w-detail-tabs .btn {border-radius: 0; border-bottom: none; border-top: none; padding: 4px 10px 3px; overflow: hidden; font-size: 14px;}
-.w-detail-tabs .btn:first-child {border-left: none;}
 .w-detail-content {position: relative;}
 .w-detail-divider {position: absolute; left: 0; top: 0; width: 5px; height: 100%; cursor: ew-resize;}
 .w-detail-tabs, .w-detail-content {min-width: 550px;}
