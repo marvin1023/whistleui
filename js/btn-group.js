@@ -12,22 +12,15 @@ var BtnGroup = React.createClass({
 		
 		return (
 				<div className={'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}>
-					{list.map(function(btn) {
-						var _btn = btn;
-						 if (typeof btn == 'string') {
-							 btn = {
-									key: btn,
-									name: btn
-							 };
-						 }
-						 
+					{list.map(function(btn, i) {
+						
 						 function onClick(first) {
 							 list.forEach(function(btn) {
 								 btn.active = false;
 							 });
 							 btn.active = true;
 							 btn.clicked = true;
-							 handleClick(_btn);
+							 handleClick(btn);
 							first !== true && self.forceUpdate();
 						 }
 						 

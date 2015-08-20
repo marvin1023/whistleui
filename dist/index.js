@@ -30648,22 +30648,15 @@
 			
 			return (
 					React.createElement("div", {className: 'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}, 
-						list.map(function(btn) {
-							var _btn = btn;
-							 if (typeof btn == 'string') {
-								 btn = {
-										key: btn,
-										name: btn
-								 };
-							 }
-							 
+						list.map(function(btn, i) {
+							
 							 function onClick(first) {
 								 list.forEach(function(btn) {
 									 btn.active = false;
 								 });
 								 btn.active = true;
 								 btn.clicked = true;
-								 handleClick(_btn);
+								 handleClick(btn);
 								first !== true && self.forceUpdate();
 							 }
 							 
@@ -30693,7 +30686,7 @@
 	__webpack_require__(242);
 	var React = __webpack_require__(13);
 	var BtnGroup = __webpack_require__(237);
-	var BTNS = [{name: 'Headers', active: true}, 'TextView', 'Cookies', 'WebForms', 'Raw'];
+	var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
 
 	var ReqDetail = React.createClass({displayName: "ReqDetail",
 		render: function() {
@@ -30718,7 +30711,7 @@
 	__webpack_require__(240);
 	var React = __webpack_require__(13);
 	var BtnGroup = __webpack_require__(237);
-	BTNS = [{name: 'Headers', active: true}, 'TextView', 'Cookies', 'JSON', 'Raw'];
+	BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
 
 	var ResDetail = React.createClass({displayName: "ResDetail",
 		render: function() {
