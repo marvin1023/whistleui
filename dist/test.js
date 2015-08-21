@@ -30282,6 +30282,7 @@
 	__webpack_require__(1);
 	__webpack_require__(175);
 	var React = __webpack_require__(13);
+	var MenuItem = __webpack_require__(263);
 
 	var Menu = React.createClass({displayName: "Menu",
 		render: function() {
@@ -30289,7 +30290,9 @@
 			var isNetwork = name === undefined || name == 'network';
 			var isRules = name == 'rules';
 			var isValues = name == 'values';
-			
+			var options = [{name: 'test1', icon: 'ok'}, {name: 'test2', icon: 'edit'}, {name: 'test1', icon: 'ok'}
+			, {name: 'test1', icon: 'ok'}, {name: 'test1'}, {name: 'test1', icon: 'plus'}];
+			options = options.concat(options.slice()).concat(options.slice());
 			return (
 					React.createElement("div", {className: "w-menu"}, 
 						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-align-justify"}), "Network"), 
@@ -30307,7 +30310,8 @@
 						React.createElement("a", {href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-download-alt"}), "RootCA"), 
 						React.createElement("a", {href: "https://github.com/avwo/whistle#whistle", target: "_blank"}, React.createElement("span", {className: "glyphicon glyphicon-question-sign"}), "Help"), 
 						React.createElement("a", {href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-info-sign"}), "About"), 
-						React.createElement("a", {href: "javascript:;", className: "w-online"}, React.createElement("span", {className: "glyphicon glyphicon-stats"}), "Online")
+						React.createElement("a", {href: "javascript:;", className: "w-online"}, React.createElement("span", {className: "glyphicon glyphicon-stats"}), "Online"), 
+						React.createElement(MenuItem, {ref: "menuItem", onClick: this.props.onClickItem, onClickOption: this.props._onClickOption, name: "open", options: options})
 					)
 			);
 		}
@@ -43446,6 +43450,129 @@
 					 }
 				};
 	});
+
+/***/ },
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(264);
+	var React = __webpack_require__(13);
+	var util = __webpack_require__(173);
+
+	var MenuItem = React.createClass({displayName: "MenuItem",
+		getInitialState: function() {
+			return {};
+		},
+		hide: function() {
+			this.setState({show: false});
+		},
+		show: function() {
+			this.setState({show: true});
+		},
+		render: function() {
+			var options = this.props.options;
+			if (options && !options.length) {
+				options = null;
+			}
+			var name = this.props.name;
+			var onClick = this.props.onClick || util.noop;
+			var onClickOption = this.props.onClickOption || util.noop;
+			return (
+				React.createElement("div", {style: {display: this.state.show ? 'block' : 'none'}, className: "w-menu-item"}, 
+					
+						options ? React.createElement("div", {className: "w-menu-options"}, options.map(function(option) {
+							
+							return (
+									React.createElement("a", {onClick: function() {
+										onClickOption(option);
+									}, href: "javascript:;"}, 
+										React.createElement("span", {className: 'glyphicon glyphicon-' + (option.icon || 'asterisk'), style: {visibility: option.icon ? '' : 'hidden'}}), 
+										option.name
+									)
+							);
+						})) : '', 
+					
+					
+						name ? React.createElement("a", {onClick: onClick, className: "w-menu-open", href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-folder-open"}), name) : ''
+					
+				)
+			);
+		}
+	});
+
+	module.exports = MenuItem;
+
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(265);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./menu-item.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./menu-item.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 265 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".w-menu-item {position: absolute; background: #ededed; border: 1px solid #ccc; z-index: 1; top: 30px;}\n.w-menu-item a {display: block; padding: 0 10px; font-weight: normal; white-space: nowrap; margin: 0!important;}\n.w-menu-item .w-menu-options {border-bottom: 1px dashed #ccc; max-height: 320px; overflow-x: hidden; overflow-y: auto;}\n.w-menu-item a .glyphicon {margin-right: 8px; font-size: 12px;}\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

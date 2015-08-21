@@ -1,0 +1,4 @@
+.w-menu-item {position: absolute; background: #ededed; border: 1px solid #ccc; z-index: 1; top: 30px;}
+.w-menu-item a {display: block; padding: 0 10px; font-weight: normal; white-space: nowrap; margin: 0!important;}
+.w-menu-item .w-menu-options {border-bottom: 1px dashed #ccc; max-height: 320px; overflow-x: hidden; overflow-y: auto;}
+.w-menu-item a .glyphicon {margin-right: 8px; font-size: 12px;}
