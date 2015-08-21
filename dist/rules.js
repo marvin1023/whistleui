@@ -30307,23 +30307,23 @@
 			
 			return (
 					React.createElement("div", {className: "w-menu"}, 
-						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-align-justify"}), "Network"), 
-						React.createElement("a", {style: {display: isRules ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-list"}), "Rules"), 
-						React.createElement("a", {style: {display: isValues ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-folder-open"}), "Values"), 
-						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-plus"}), "Create"), 
-						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-edit"}), "Edit"), 
-						React.createElement("a", {style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-repeat"}), "Replay"), 
-						React.createElement("a", {style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-edit"}), "Composer"), 
-						React.createElement("a", {style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-filter"}), "Filter"), 
-						React.createElement("a", {style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-remove"}), "Clear"), 
-						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-trash"}), "Delete"), 
-						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-cog"}), "Settings"), 
-						React.createElement("a", {href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-globe"}), "Weinre"), 
-						React.createElement("a", {href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-download-alt"}), "RootCA"), 
-						React.createElement("a", {href: "https://github.com/avwo/whistle#whistle", target: "_blank"}, React.createElement("span", {className: "glyphicon glyphicon-question-sign"}), "Help"), 
-						React.createElement("a", {href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-info-sign"}), "About"), 
-						React.createElement("a", {href: "javascript:;", className: "w-online"}, React.createElement("span", {className: "glyphicon glyphicon-stats"}), "Online"), 
-						React.createElement(MenuItem, {ref: "menuItem", onClick: this.props.onClickItem, onClickOption: this.props._onClickOption})
+						React.createElement("a", {onClick: this.props.onClick, className: "w-network-menu", style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-align-justify"}), "Network"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-rules-menu", style: {display: isRules ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-list"}), "Rules"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-values-menu", style: {display: isValues ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-folder-open"}), "Values"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-create-menu", style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-plus"}), "Create"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-edit-menu", style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-edit"}), "Edit"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-replay-menu", style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-repeat"}), "Replay"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-composer-menu", style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-edit"}), "Composer"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-filter-menu", style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-filter"}), "Filter"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-clear-menu", style: {display: isNetwork ? '' : 'none'}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-remove"}), "Clear"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-delete-menu", style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-trash"}), "Delete"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-settings-menu", style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-cog"}), "Settings"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-weinre-menu", href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-globe"}), "Weinre"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-rootca-menu", href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-download-alt"}), "RootCA"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-help-menu", href: "https://github.com/avwo/whistle#whistle", target: "_blank"}, React.createElement("span", {className: "glyphicon glyphicon-question-sign"}), "Help"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-about-menu", href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-info-sign"}), "About"), 
+						React.createElement("a", {onClick: this.props.onClick, className: "w-online-menu", href: "javascript:;", className: "w-online"}, React.createElement("span", {className: "glyphicon glyphicon-stats"}), "Online"), 
+						React.createElement(MenuItem, {onClick: this.props.onClickItem, onClickOption: this.props._onClickOption})
 					)
 			);
 		}
