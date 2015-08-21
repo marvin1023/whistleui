@@ -30742,7 +30742,7 @@
 	var React = __webpack_require__(13);
 	var Table = __webpack_require__(259);
 	var Divider = __webpack_require__(169);
-	var Properties = __webpack_require__(254)
+	var Properties = __webpack_require__(254);
 	var util = __webpack_require__(173);
 	var BtnGroup = __webpack_require__(237);
 	var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
@@ -30756,7 +30756,9 @@
 				React.createElement("div", {className: 'fill orient-vertical-box w-detail-request w-detail-show-request-' 
 						+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}, 
 					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
-					React.createElement("div", {className: "w-detail-request-headers"}), 
+					React.createElement("div", {className: "w-detail-request-headers"}, 
+						React.createElement(Properties, null)
+					), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-textview"}), 
 					React.createElement("div", {className: "w-detail-request-cookies"}, 
 						React.createElement(Properties, null)
@@ -30784,6 +30786,7 @@
 	__webpack_require__(240);
 	var React = __webpack_require__(13);
 	var Table = __webpack_require__(259);
+	var Properties = __webpack_require__(254);
 	var util = __webpack_require__(173);
 	var BtnGroup = __webpack_require__(237);
 	BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
@@ -30799,7 +30802,9 @@
 				React.createElement("div", {className: 'fill orient-vertical-box w-detail-response w-detail-show-response-' 
 					+ util.getProperty(this, 'state.btn.name', '').toLowerCase()}, 
 					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
-					React.createElement("div", {className: "w-detail-response-headers"}), 
+					React.createElement("div", {className: "w-detail-response-headers"}, 
+						React.createElement(Properties, null)
+					), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-textview"}), 
 					React.createElement("div", {className: "w-detail-response-cookies"}, 
 						React.createElement(Table, {head: COOKIE_HEADERS})
@@ -31140,7 +31145,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-timeline ul, .w-detail-timeline li {list-style: none; margin: 0; padding: 0; white-space: nowrap; font-size: 0; width: 100%; display: block;}\n.w-detail-timeline li {padding: 3px 0 0; position: relative;}\n.w-detail-timeline  span {display: inline-block; font-size: 12px; line-height: 20px; overflow: hidden; cursor: default;}\n.w-detail-timeline-dns {background: #8cd2c6;}\n.w-detail-timeline-request {background: #fdfdb2;}\n.w-detail-timeline-response {background: #fbb361;}\n.w-detail-timeline-time {position: absolute; top: 2px; right: 0; padding-right: 5px;}\n", ""]);
+	exports.push([module.id, ".w-detail-timeline ul, .w-detail-timeline li {list-style: none; margin: 0; padding: 0; white-space: nowrap; font-size: 0; width: 100%; display: block;}\n.w-detail-timeline li {padding: 4px 0 0; position: relative;}\n.w-detail-timeline  span {display: inline-block; font-size: 12px; line-height: 20px; overflow: hidden; cursor: default;}\n.w-detail-timeline-dns {background: #8cd2c6;}\n.w-detail-timeline-request {background: #fdfdb2;}\n.w-detail-timeline-response {background: #fbb361;}\n.w-detail-timeline-time {position: absolute; top: 2px; right: 0; padding-right: 5px;}\n", ""]);
 
 	// exports
 
