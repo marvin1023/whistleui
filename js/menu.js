@@ -9,9 +9,7 @@ var Menu = React.createClass({
 		var isNetwork = name === undefined || name == 'network';
 		var isRules = name == 'rules';
 		var isValues = name == 'values';
-		var options = [{name: 'test1', icon: 'ok'}, {name: 'test2', icon: 'edit'}, {name: 'test1', icon: 'ok'}
-		, {name: 'test1', icon: 'ok'}, {name: 'test1'}, {name: 'test1', icon: 'plus'}];
-		options = options.concat(options.slice()).concat(options.slice());
+		
 		return (
 				<div className="w-menu">
 					<a style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
@@ -30,7 +28,7 @@ var Menu = React.createClass({
 					<a href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<a href="javascript:;"><span className="glyphicon glyphicon-info-sign"></span>About</a>
 					<a href="javascript:;" className="w-online"><span className="glyphicon glyphicon-stats"></span>Online</a>
-					<MenuItem ref="menuItem" onClick={this.props.onClickItem} onClickOption={this.props._onClickOption} name="open" options={options} />
+					<MenuItem ref="menuItem" onClick={this.props.onClickItem} onClickOption={this.props._onClickOption} />
 				</div>
 		);
 	}

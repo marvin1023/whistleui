@@ -30294,9 +30294,7 @@
 			var isNetwork = name === undefined || name == 'network';
 			var isRules = name == 'rules';
 			var isValues = name == 'values';
-			var options = [{name: 'test1', icon: 'ok'}, {name: 'test2', icon: 'edit'}, {name: 'test1', icon: 'ok'}
-			, {name: 'test1', icon: 'ok'}, {name: 'test1'}, {name: 'test1', icon: 'plus'}];
-			options = options.concat(options.slice()).concat(options.slice());
+			
 			return (
 					React.createElement("div", {className: "w-menu"}, 
 						React.createElement("a", {style: {display: isNetwork ? 'none' : ''}, href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-align-justify"}), "Network"), 
@@ -30315,7 +30313,7 @@
 						React.createElement("a", {href: "https://github.com/avwo/whistle#whistle", target: "_blank"}, React.createElement("span", {className: "glyphicon glyphicon-question-sign"}), "Help"), 
 						React.createElement("a", {href: "javascript:;"}, React.createElement("span", {className: "glyphicon glyphicon-info-sign"}), "About"), 
 						React.createElement("a", {href: "javascript:;", className: "w-online"}, React.createElement("span", {className: "glyphicon glyphicon-stats"}), "Online"), 
-						React.createElement(MenuItem, {ref: "menuItem", onClick: this.props.onClickItem, onClickOption: this.props._onClickOption, name: "open", options: options})
+						React.createElement(MenuItem, {ref: "menuItem", onClick: this.props.onClickItem, onClickOption: this.props._onClickOption})
 					)
 			);
 		}
