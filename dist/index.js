@@ -30759,7 +30759,7 @@
 					React.createElement("div", {className: "w-detail-request-headers"}), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-textview"}), 
 					React.createElement("div", {className: "w-detail-request-cookies"}, 
-						React.createElement(Table, null)
+						React.createElement(Properties, null)
 					), 
 					React.createElement(Divider, {leftWidth: (Math.max(window.innerHeight, 360) - 120) / 2, vertical: "true", className: "w-detail-request-webforms"}, 
 						React.createElement(Properties, null), 
@@ -30787,6 +30787,7 @@
 	var util = __webpack_require__(173);
 	var BtnGroup = __webpack_require__(237);
 	BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
+	var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Http Only', 'Secure'];
 
 	var ResDetail = React.createClass({displayName: "ResDetail",
 		_onClickBtn: function(btn) {
@@ -30801,7 +30802,7 @@
 					React.createElement("div", {className: "w-detail-response-headers"}), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-textview"}), 
 					React.createElement("div", {className: "w-detail-response-cookies"}, 
-						React.createElement(Table, null)
+						React.createElement(Table, {head: COOKIE_HEADERS})
 					), 
 					React.createElement("div", {className: "w-detail-response-json"}), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-raw"})
@@ -31373,22 +31374,34 @@
 
 	var Table = React.createClass({displayName: "Table",
 		render: function() {
+			var head = this.props.head;
+			var hasHead = Array.isArray(head) && head.length;
 			
 			return (
 				React.createElement("table", {className: "table w-table"}, 
-					React.createElement("thead", null, 
-						React.createElement("th", null, "Test"), 
-						React.createElement("th", null, "Test"), 
-						React.createElement("th", null, "Test")
+					
+						hasHead ? (
+								React.createElement("thead", null, 
+								head.map(function(head) {
+									return React.createElement("th", null, head);
+								})
+								)
+						) : '', 
+					
+					React.createElement("tr", null, 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "√")
 					), 
 					React.createElement("tr", null, 
 						React.createElement("td", null, "test"), 
 						React.createElement("td", null, "test"), 
-						React.createElement("td", null, "test")
-					), 
-					React.createElement("tr", null, 
 						React.createElement("td", null, "test"), 
 						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "√"), 
 						React.createElement("td", null, "test")
 					)
 				)

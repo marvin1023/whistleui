@@ -5,6 +5,7 @@ var Table = require('./table');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
 BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
+var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Http Only', 'Secure'];
 
 var ResDetail = React.createClass({
 	_onClickBtn: function(btn) {
@@ -19,7 +20,7 @@ var ResDetail = React.createClass({
 				<div className="w-detail-response-headers"></div>
 				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-response-textview"></textarea>
 				<div className="w-detail-response-cookies">
-					<Table />
+					<Table head={COOKIE_HEADERS} />
 				</div>
 				<div className="w-detail-response-json"></div>
 				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-response-raw"></textarea>

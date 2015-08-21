@@ -20,7 +20,7 @@ var ReqDetail = React.createClass({
 				<div className="w-detail-request-headers"></div>
 				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-request-textview"></textarea>
 				<div className="w-detail-request-cookies">
-					<Table />
+					<Properties />
 				</div>
 				<Divider leftWidth={(Math.max(window.innerHeight, 360) - 120) / 2} vertical="true" className="w-detail-request-webforms">
 					<Properties />
