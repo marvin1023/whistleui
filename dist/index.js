@@ -31145,7 +31145,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-timeline ul, .w-detail-timeline li {list-style: none; margin: 0; padding: 0; white-space: nowrap; font-size: 0; width: 100%; display: block;}\n.w-detail-timeline li {padding: 4px 0 0; position: relative;}\n.w-detail-timeline  span {display: inline-block; font-size: 12px; line-height: 20px; overflow: hidden; cursor: default;}\n.w-detail-timeline-dns {background: #8cd2c6;}\n.w-detail-timeline-request {background: #fdfdb2;}\n.w-detail-timeline-response {background: #fbb361;}\n.w-detail-timeline-time {position: absolute; top: 2px; right: 0; padding-right: 5px;}\n", ""]);
+	exports.push([module.id, ".w-detail-timeline ul, .w-detail-timeline li {list-style: none; margin: 0; padding: 0; white-space: nowrap; font-size: 0; width: 100%; display: block;}\n.w-detail-timeline li {padding: 2px 0 2px; position: relative;}\n.w-detail-timeline  span {display: inline-block; font-size: 12px; line-height: 20px; overflow: hidden; cursor: default;}\n.w-detail-timeline-dns {background: #8cd2c6;}\n.w-detail-timeline-request {background: #fdfdb2;}\n.w-detail-timeline-response {background: #fbb361;}\n.w-detail-timeline-time {position: absolute; top: 2px; right: 0; padding-right: 5px;}\n", ""]);
 
 	// exports
 
