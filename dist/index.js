@@ -20884,7 +20884,7 @@
 			}
 			
 			return (
-					React.createElement("div", {ref: "divider", className: (vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con'}, 
+					React.createElement("div", {ref: "divider", className: (vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con ' + (this.props.className || '')}, 
 						React.createElement("div", {className: (leftWidth ? '' : 'fill ') + 'w-divider-left orient-vertical-box ' + (this.props.leftClassName || '')}, 
 							leftWidth ? divider : '', 
 							this.props.children[0]
@@ -30741,6 +30741,8 @@
 	__webpack_require__(242);
 	var React = __webpack_require__(13);
 	var Table = __webpack_require__(259);
+	var Divider = __webpack_require__(169);
+	var Properties = __webpack_require__(254)
 	var util = __webpack_require__(173);
 	var BtnGroup = __webpack_require__(237);
 	var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
@@ -30759,7 +30761,10 @@
 					React.createElement("div", {className: "w-detail-request-cookies"}, 
 						React.createElement(Table, null)
 					), 
-					React.createElement("div", {className: "w-detail-request-webforms"}), 
+					React.createElement(Divider, {leftWidth: (Math.max(window.innerHeight, 360) - 120) / 2, vertical: "true", className: "w-detail-request-webforms"}, 
+						React.createElement(Properties, null), 
+						React.createElement(Properties, null)
+					), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-raw"})
 				)
 			);
@@ -31134,7 +31139,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-timeline ul, .w-detail-timeline li {list-style: none; margin: 0; padding: 0; white-space: nowrap; font-size: 0; width: 100%; display: block;}\n.w-detail-timeline li {padding: 3px 0 0; position: relative;}\n.w-detail-timeline  span {display: inline-block; font-size: 12px; line-height: 20px; overflow: hidden; cursor: default;}\n.w-detail-timeline-dns {background: red;}\n.w-detail-timeline-request {background: #ccc;}\n.w-detail-timeline-response {background: #333;}\n.w-detail-timeline-time {position: absolute; top: 2px; right: 0; padding-right: 5px;}\n", ""]);
+	exports.push([module.id, ".w-detail-timeline ul, .w-detail-timeline li {list-style: none; margin: 0; padding: 0; white-space: nowrap; font-size: 0; width: 100%; display: block;}\n.w-detail-timeline li {padding: 3px 0 0; position: relative;}\n.w-detail-timeline  span {display: inline-block; font-size: 12px; line-height: 20px; overflow: hidden; cursor: default;}\n.w-detail-timeline-dns {background: #8cd2c6;}\n.w-detail-timeline-request {background: #fdfdb2;}\n.w-detail-timeline-response {background: #fbb361;}\n.w-detail-timeline-time {position: absolute; top: 2px; right: 0; padding-right: 5px;}\n", ""]);
 
 	// exports
 
@@ -31174,7 +31179,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-detail-composer {overflow-x: hidden; overflow-y: auto;}\n.w-detail-composer textarea {display: block; width: 100%; resize: none; border: none; padding: 5px;}\n.w-composer-url {padding: 5px 3px 5px 0; border-bottom: 1px solid #ccc;}\n.w-composer-input, .w-composer-method, .w-composer-execute {height: 26px;}\n.w-composer-input {padding: 0 5px; display: block; border: 1px solid #ccc; border-left: none;}\n.w-composer-method {display: block; width: 118px; margin: 0 3px;}\n.w-composer-execute {padding: 0 6px; line-height: 24px;}\n.w-composer-headers {}", ""]);
+	exports.push([module.id, ".w-detail-composer {overflow-x: hidden; overflow-y: auto;}\n.w-detail-composer textarea {display: block; width: 100%; resize: none; border: none; padding: 5px;}\n.w-composer-url {padding: 5px 3px 5px 0; border-bottom: 1px solid #ccc;}\n.w-composer-input, .w-composer-method, .w-composer-execute {height: 26px;}\n.w-composer-input {padding: 0 5px; display: block; border: 1px solid #ccc; margin-left: 2px;}\n.w-composer-method {display: block; width: 118px; margin: 0 2px;}\n.w-composer-execute {padding: 0 6px; line-height: 24px;}\n.w-composer-headers {}", ""]);
 
 	// exports
 

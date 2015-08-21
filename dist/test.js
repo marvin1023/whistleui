@@ -20880,7 +20880,7 @@
 			}
 			
 			return (
-					React.createElement("div", {ref: "divider", className: (vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con'}, 
+					React.createElement("div", {ref: "divider", className: (vertical ? 'orient-vertical-box' : 'box') + ' fill w-divider-con ' + (this.props.className || '')}, 
 						React.createElement("div", {className: (leftWidth ? '' : 'fill ') + 'w-divider-left orient-vertical-box ' + (this.props.leftClassName || '')}, 
 							leftWidth ? divider : '', 
 							this.props.children[0]
