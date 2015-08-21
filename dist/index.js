@@ -30740,6 +30740,7 @@
 	__webpack_require__(1);
 	__webpack_require__(242);
 	var React = __webpack_require__(13);
+	var Table = __webpack_require__(259);
 	var util = __webpack_require__(173);
 	var BtnGroup = __webpack_require__(237);
 	var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
@@ -30755,7 +30756,9 @@
 					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
 					React.createElement("div", {className: "w-detail-request-headers"}), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-textview"}), 
-					React.createElement("div", {className: "w-detail-request-cookies"}), 
+					React.createElement("div", {className: "w-detail-request-cookies"}, 
+						React.createElement(Table, null)
+					), 
 					React.createElement("div", {className: "w-detail-request-webforms"}), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-request-raw"})
 				)
@@ -30775,6 +30778,7 @@
 	__webpack_require__(1);
 	__webpack_require__(240);
 	var React = __webpack_require__(13);
+	var Table = __webpack_require__(259);
 	var util = __webpack_require__(173);
 	var BtnGroup = __webpack_require__(237);
 	BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
@@ -30791,7 +30795,9 @@
 					React.createElement(BtnGroup, {onClick: this._onClickBtn, btns: BTNS}), 
 					React.createElement("div", {className: "w-detail-response-headers"}), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-textview"}), 
-					React.createElement("div", {className: "w-detail-response-cookies"}), 
+					React.createElement("div", {className: "w-detail-response-cookies"}, 
+						React.createElement(Table, null)
+					), 
 					React.createElement("div", {className: "w-detail-response-json"}), 
 					React.createElement("textarea", {onKeyDown: util.preventDefault, readOnly: "readonly", className: "orient-vertical-box w-detail-response-raw"})
 				)
@@ -30894,9 +30900,31 @@
 		render: function() {
 			
 			return (
-				React.createElement("div", {className: "w-detail-timeline"}, 
-					React.createElement("div", {style: {height: '1000px'}})
-				)
+					React.createElement("div", {className: "w-detail-timeline"}, 
+						React.createElement("ul", null, 
+							React.createElement("li", null, 
+								React.createElement("span", {title: "Stalled: 0ms", className: "w-detail-timeline-stalled", style: {width: 0}}, "-1"), 
+								React.createElement("span", {title: "DNS: 10ms", className: "w-detail-timeline-dns"}, "1"), 
+								React.createElement("span", {title: "Request: 10ms", className: "w-detail-timeline-request"}, "2"), 
+								React.createElement("span", {title: "Response: 10ms", className: "w-detail-timeline-response"}, "3"), 
+								React.createElement("span", {title: 'Stalled: 0ms\nDNS: 10ms\nRequest: 10ms\nResponse: 10ms', className: "w-detail-timeline-time"}, "222ms")
+							), 
+							React.createElement("li", null, 
+							React.createElement("span", {className: "w-detail-timeline-stalled", style: {width: '10%'}}, "-1"), 
+								React.createElement("span", {className: "w-detail-timeline-dns"}, "1"), 
+								React.createElement("span", {className: "w-detail-timeline-request"}, "2"), 
+								React.createElement("span", {className: "w-detail-timeline-response"}, "3"), 
+								React.createElement("span", {className: "w-detail-timeline-time"}, "222ms")
+							), 
+							React.createElement("li", null, 
+							React.createElement("span", {className: "w-detail-timeline-stalled", style: {width: '20%'}}, "-1"), 
+								React.createElement("span", {className: "w-detail-timeline-dns"}, "1"), 
+								React.createElement("span", {className: "w-detail-timeline-request"}, "2"), 
+								React.createElement("span", {className: "w-detail-timeline-response"}, "3"), 
+								React.createElement("span", {className: "w-detail-timeline-time"}, "222ms")
+							)
+						)
+					)
 			);
 		}
 	});
@@ -31106,7 +31134,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, ".w-detail-timeline ul, .w-detail-timeline li {list-style: none; margin: 0; padding: 0; white-space: nowrap; font-size: 0; width: 100%; display: block;}\n.w-detail-timeline li {padding: 3px 0 0; position: relative;}\n.w-detail-timeline  span {display: inline-block; font-size: 12px; line-height: 20px; overflow: hidden; cursor: default;}\n.w-detail-timeline-dns {background: red;}\n.w-detail-timeline-request {background: #ccc;}\n.w-detail-timeline-response {background: #333;}\n.w-detail-timeline-time {position: absolute; top: 2px; right: 0; padding-right: 5px;}\n", ""]);
 
 	// exports
 
@@ -31326,6 +31354,81 @@
 
 	// module
 	exports.push([module.id, ".w-detail-log ul, .w-detail-log li {list-style: none; padding: 0; margin: 0; display: block; width: 100%; font-size: 12px;}\n.w-detail-log li {border-bottom: 1px solid #ccc; width: 100%; padding: 1px 0;}\n.w-detail-log h5 {padding-left: 10px; font-size: 12px}\n.w-detail-log pre {background: none; border: none; padding: 0 10px 0 20px; font-size: 12px}\n.w-detail-log li.fatal {background: #bbb;}\n.w-detail-log li.error {background: #f2dede;}\n.w-detail-log li.warn {background: #fee;}\n.w-detail-log li.info {background: #f5f5f5;}\n.w-detail-log li.debug {background: #fff;}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	__webpack_require__(260);
+	var React = __webpack_require__(13);
+
+	var Table = React.createClass({displayName: "Table",
+		render: function() {
+			
+			return (
+				React.createElement("table", {className: "table w-table"}, 
+					React.createElement("thead", null, 
+						React.createElement("th", null, "Test"), 
+						React.createElement("th", null, "Test"), 
+						React.createElement("th", null, "Test")
+					), 
+					React.createElement("tr", null, 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "test")
+					), 
+					React.createElement("tr", null, 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "test"), 
+						React.createElement("td", null, "test")
+					)
+				)
+			);
+		}
+	});
+
+	module.exports = Table;
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(261);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(10)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./table.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./table.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".w-table>thead>tr>th {background: #e1e3e6; font-weight: normal; border-bottom: 1px solid #ccc;}\n.w-table th, .w-table td {font-size: 12px; padding: 3px 8px!important; border-top: none; border-bottom: 1px solid #ccc;}", ""]);
 
 	// exports
 

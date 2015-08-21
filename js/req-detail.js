@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/req-detail.css');
 var React = require('react');
+var Table = require('./table');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
 var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
@@ -16,7 +17,9 @@ var ReqDetail = React.createClass({
 				<BtnGroup onClick={this._onClickBtn} btns={BTNS} />
 				<div className="w-detail-request-headers"></div>
 				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-request-textview"></textarea>
-				<div className="w-detail-request-cookies"></div>
+				<div className="w-detail-request-cookies">
+					<Table />
+				</div>
 				<div className="w-detail-request-webforms"></div>
 				<textarea onKeyDown={util.preventDefault} readOnly="readonly" className="orient-vertical-box w-detail-request-raw"></textarea>
 			</div>
