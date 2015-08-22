@@ -13,9 +13,7 @@ var Values = React.createClass({
 	render: function() {
 		
 		return (
-			<div className="main orient-vertical-box">
-				<div className="w-rules-con"></div>
-				<div className="w-network-con"></div>
+			<div className="main orient-vertical-box w-values-con">
 				<Menu name="values" />
 				<List modal={modal} className="w-values-list" />
 			</div>

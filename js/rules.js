@@ -17,9 +17,7 @@ var Rules = React.createClass({
 	render: function() {
 		
 		return (
-			<div className="main orient-vertical-box">
-				<div className="w-values-con"></div>
-				<div className="w-network-con"></div>
+			<div className="main orient-vertical-box w-rules-con">
 				<Menu name="rules" />
 				<List name="rules" onEnable={function(e) {
 					this.enable(e.data.name);

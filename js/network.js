@@ -20,9 +20,7 @@ var Network = React.createClass({
 	},
 	render: function() {
 		return (
-			<div className="main orient-vertical-box">
-				<div className="w-rules-con"></div>
-				<div className="w-values-con"></div>
+			<div className="main orient-vertical-box w-network-con">
 				<Menu />
 				<Divider rightWidth="560">
 					<ReqData />

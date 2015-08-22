@@ -12,7 +12,7 @@ textarea[readonly] {outline: none;}
 .orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}
 .fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}
 .table {table-layout: fixed; margin: 0!important;}
-.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}
+.w-rules-con, .w-values-con, .w-network-con {width: 100%; height: 100%; background: #fff;}
 
 .cm-header {text-decoration: line-through;}
 .cm-s-ambiance ::-webkit-scrollbar-thumb, 
