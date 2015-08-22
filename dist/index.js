@@ -31889,7 +31889,7 @@
 
 
 	// module
-	exports.push([module.id, ".w-divider-con .w-divider {border: none!important;}\n.w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow-x: hidden; overflow-y: auto;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72; display: none;}\n.w-list-content {border: 1px solid #ccc;} \n.w-list-data .w-changed:before {content: '*'; margin-right: 5px; color: red; margin-right: 5px;}\n.w-list-data .w-selected, .w-list-data .w-hover {background: #337AB7; color: #fff;}\n.w-list-data .w-active .glyphicon-ok {display: inline-block;}", ""]);
+	exports.push([module.id, ".w-divider-con .w-divider {border: none;}\n.w-list-data {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow-x: hidden; overflow-y: auto;}\n.w-list-data a {display: block; padding-left: 10px; line-height: 32px; position: relative; border-bottom: 1px solid #ccc; color: #000; \ntext-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}\n.w-list-data a .glyphicon-ok {position: absolute; top: 50%; right: 10px; margin-top: -8px; color: #5bbd72; display: none;}\n.w-list-content {border: 1px solid #ccc;} \n.w-list-data .w-changed:before {content: '*'; margin-right: 5px; color: red; margin-right: 5px;}\n.w-list-data .w-selected, .w-list-data .w-hover {background: #337AB7; color: #fff;}\n.w-list-data .w-active .glyphicon-ok {display: inline-block;}", ""]);
 
 	// exports
 
