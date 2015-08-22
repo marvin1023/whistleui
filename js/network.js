@@ -19,7 +19,7 @@ var Network = React.createClass({
 	},
 	render: function() {
 		return (
-			<Divider rightWidth="560">
+			<Divider hide={this.props.hide} rightWidth="560">
 				<ReqData />
 				<Detail />
 			</Divider>		

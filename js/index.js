@@ -21,13 +21,13 @@ var Index = React.createClass({
 		return state;
 	},
 	render: function() {
-		
+		var name = this.state.name;
 		return (
 			<div className="main orient-vertical-box">
-				<Menu name={this.state.name} />
-				{this.state.hasRules ? <Rules /> : ''}
-				{this.state.hasValues ? <Values /> : ''}
-				{this.state.hasNetwork ? <Network /> : ''}
+				<Menu name={name} />
+				{this.state.hasRules ? <Rules hide={name == 'rules' ? true : false} /> : ''}
+				{this.state.hasValues ? <Values hide={name == 'values' ? true : false} /> : ''}
+				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? true : false} /> : ''}
 			</div>
 		);
 	}
