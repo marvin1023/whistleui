@@ -13,16 +13,24 @@ var modal = {
 		}
 };
 
-React.render(
-		<div className="main orient-vertical-box">
-			<div className="w-values-con"></div>
-			<div className="w-network-con"></div>
-			<Menu name="rules" />
-			<List name="rules" onEnable={function(e) {
-				this.enable(e.data.name);
-				return false;
-			}} onDisable={function(e) {
-				this.disable(e.data.name);
-				return false;
-			}} modal={modal} />
-		</div>, document.body);
+var Rules = React.createClass({
+	render: function() {
+		
+		return (
+			<div className="main orient-vertical-box">
+				<div className="w-values-con"></div>
+				<div className="w-network-con"></div>
+				<Menu name="rules" />
+				<List name="rules" onEnable={function(e) {
+					this.enable(e.data.name);
+					return false;
+				}} onDisable={function(e) {
+					this.disable(e.data.name);
+					return false;
+				}} modal={modal} />
+			</div>
+		);
+	}
+});
+
+module.exports = Rules;
