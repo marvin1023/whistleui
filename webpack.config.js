@@ -6,7 +6,7 @@ module.exports = {
 		index : './js/index'
 	},
 	output : {
-		path : __dirname + '/dist/',
+		path : '../whistle/biz/webui/htdocs/js',
 		filename : '[name].js'
 	},
 	module : {
