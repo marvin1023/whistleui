@@ -10,7 +10,7 @@ var Properties = React.createClass({
 					{
 						Object.keys(modal).map(function(name) {
 							return (
-									<tr>
+									<tr key={name}>
 										<th>{name}</th>
 										<td>{modal[name]}</td>
 									</tr>	

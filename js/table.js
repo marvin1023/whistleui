@@ -13,7 +13,7 @@ var Table = React.createClass({
 					hasHead ? (
 							<thead>
 							{head.map(function(head) {
-								return <th>{head}</th>;
+								return <th key={head}>{head}</th>;
 							})}
 							</thead>
 					) : ''

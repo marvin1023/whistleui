@@ -27,7 +27,7 @@ var MenuItem = React.createClass({
 					options ? <div className="w-menu-options">{options.map(function(option) {
 						
 						return (
-								<a onClick={function() {
+								<a key={options.name} onClick={function() {
 									onClickOption(option);
 								}} href="javascript:;">
 									<span className={'glyphicon glyphicon-' + (option.icon || 'asterisk')} style={{visibility: option.icon ? '' : 'hidden'}}></span>

@@ -48,8 +48,12 @@
 	var Network = __webpack_require__(1);
 	var Rules = __webpack_require__(214);
 	var Values = __webpack_require__(265);
+	var filename = location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
 
-	React.render(React.createElement(Network, null), document.body);
+	var isRules = !filename || filename.indexOf('rules') != -1;
+	var isValues = !isRules && filename.indexOf('values') != -1;
+
+	React.render(isRules ? React.createElement(Rules, null) : (isValues ? React.createElement(Values, null) : React.createElement(Network, null)), document.body);
 
 
 /***/ },
@@ -487,7 +491,7 @@
 
 
 	// module
-	exports.push([module.id, "html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}\n.main {min-width: 960px; min-height: 280px;}\n::-webkit-scrollbar{ width:10px; height:10px; }\n::-webkit-scrollbar-button{ width:10px;height:1px; }\n::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}\n::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}\n::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}\n::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}\n\ntextarea[readonly] {outline: none;}\n.box {display:-webkit-box; display:-moz-box; display:box;}\n.orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}\n.fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}\n.table {table-layout: fixed; margin: 0!important;}\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n\n.cm-header {text-decoration: line-through;}\n.cm-s-ambiance ::-webkit-scrollbar-thumb, \n.cm-s-blackboard ::-webkit-scrollbar-thumb, \n.cm-s-cobalt ::-webkit-scrollbar-thumb, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb, \n.cm-s-midnight ::-webkit-scrollbar-thumb, \n.cm-s-monokai ::-webkit-scrollbar-thumb, \n.cm-s-night ::-webkit-scrollbar-thumb, \n.cm-s-dark ::-webkit-scrollbar-thumb, \n.cm-s-twilight ::-webkit-scrollbar-thumb, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb {background-color:rgba(255,255,255,.5);}\n\n.cm-s-ambiance ::-webkit-scrollbar-thumb:hover, \n.cm-s-blackboard ::-webkit-scrollbar-thumb:hover, \n.cm-s-cobalt ::-webkit-scrollbar-thumb:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-midnight ::-webkit-scrollbar-thumb:hover, \n.cm-s-monokai ::-webkit-scrollbar-thumb:hover, \n.cm-s-night ::-webkit-scrollbar-thumb:hover, \n.cm-s-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-twilight ::-webkit-scrollbar-thumb:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb:hover {background-color:rgba(255,255,255,.7);}\n\n.cm-s-ambiance ::-webkit-scrollbar-track:hover, \n.cm-s-blackboard ::-webkit-scrollbar-track:hover, \n.cm-s-cobalt ::-webkit-scrollbar-track:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-track:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-track:hover, \n.cm-s-midnight ::-webkit-scrollbar-track:hover, \n.cm-s-monokai ::-webkit-scrollbar-track:hover, \n.cm-s-night ::-webkit-scrollbar-track:hover, \n.cm-s-dark ::-webkit-scrollbar-track:hover, \n.cm-s-twilight ::-webkit-scrollbar-track:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-track:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-track:hover {background-color:rgba(255,255,255,.15);}\n\n\n", ""]);
+	exports.push([module.id, "html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}\n.main {min-width: 960px; min-height: 360px;}\n::-webkit-scrollbar{ width:10px; height:10px; }\n::-webkit-scrollbar-button{ width:10px;height:1px; }\n::-webkit-scrollbar-thumb{ background-clip:padding-box; background-color:rgba(0,0,0,.5); border-radius:8px; min-height: 30px;}\n::-webkit-scrollbar-thumb:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.7); border-radius:8px;}\n::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}\n::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}\n\ntextarea[readonly] {outline: none;}\n.box {display:-webkit-box; display:-moz-box; display:box;}\n.orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}\n.fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}\n.table {table-layout: fixed; margin: 0!important;}\n.w-rules-con, .w-values-con, .w-network-con {position: absolute; width: 100%; height: 100%; background: #fff; z-index: 10001; display: none;}\n\n.cm-header {text-decoration: line-through;}\n.cm-s-ambiance ::-webkit-scrollbar-thumb, \n.cm-s-blackboard ::-webkit-scrollbar-thumb, \n.cm-s-cobalt ::-webkit-scrollbar-thumb, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb, \n.cm-s-midnight ::-webkit-scrollbar-thumb, \n.cm-s-monokai ::-webkit-scrollbar-thumb, \n.cm-s-night ::-webkit-scrollbar-thumb, \n.cm-s-dark ::-webkit-scrollbar-thumb, \n.cm-s-twilight ::-webkit-scrollbar-thumb, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb {background-color:rgba(255,255,255,.5);}\n\n.cm-s-ambiance ::-webkit-scrollbar-thumb:hover, \n.cm-s-blackboard ::-webkit-scrollbar-thumb:hover, \n.cm-s-cobalt ::-webkit-scrollbar-thumb:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-midnight ::-webkit-scrollbar-thumb:hover, \n.cm-s-monokai ::-webkit-scrollbar-thumb:hover, \n.cm-s-night ::-webkit-scrollbar-thumb:hover, \n.cm-s-dark ::-webkit-scrollbar-thumb:hover, \n.cm-s-twilight ::-webkit-scrollbar-thumb:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-thumb:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-thumb:hover {background-color:rgba(255,255,255,.7);}\n\n.cm-s-ambiance ::-webkit-scrollbar-track:hover, \n.cm-s-blackboard ::-webkit-scrollbar-track:hover, \n.cm-s-cobalt ::-webkit-scrollbar-track:hover, \n.cm-s-erlang-dark ::-webkit-scrollbar-track:hover, \n.cm-s-lesser-dark ::-webkit-scrollbar-track:hover, \n.cm-s-midnight ::-webkit-scrollbar-track:hover, \n.cm-s-monokai ::-webkit-scrollbar-track:hover, \n.cm-s-night ::-webkit-scrollbar-track:hover, \n.cm-s-dark ::-webkit-scrollbar-track:hover, \n.cm-s-twilight ::-webkit-scrollbar-track:hover, \n.cm-s-vibrant-ink ::-webkit-scrollbar-track:hover, \n.cm-s-xq-dark ::-webkit-scrollbar-track:hover {background-color:rgba(255,255,255,.15);}\n\n\n", ""]);
 
 	// exports
 
@@ -30425,7 +30429,7 @@
 						options ? React.createElement("div", {className: "w-menu-options"}, options.map(function(option) {
 							
 							return (
-									React.createElement("a", {onClick: function() {
+									React.createElement("a", {key: options.name, onClick: function() {
 										onClickOption(option);
 									}, href: "javascript:;"}, 
 										React.createElement("span", {className: 'glyphicon glyphicon-' + (option.icon || 'asterisk'), style: {visibility: option.icon ? '' : 'hidden'}}), 
@@ -30892,7 +30896,7 @@
 						
 							Object.keys(modal).map(function(name) {
 								return (
-										React.createElement("tr", null, 
+										React.createElement("tr", {key: name}, 
 											React.createElement("th", null, name), 
 											React.createElement("td", null, modal[name])
 										)	
@@ -31050,7 +31054,7 @@
 						hasHead ? (
 								React.createElement("thead", null, 
 								head.map(function(head) {
-									return React.createElement("th", null, head);
+									return React.createElement("th", {key: head}, head);
 								})
 								)
 						) : '', 
