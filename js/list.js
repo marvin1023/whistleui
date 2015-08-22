@@ -246,7 +246,7 @@ var List = React.createClass({
 		
 		return (
 				<Divider leftWidth="200">
-					<div ref="list" className={'w-list-data fill ' + (this.props.className || '')}>
+					<div ref="list" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '')}>
 						{
 							list.map(function(name) {
 								var item = data[name];

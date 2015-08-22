@@ -1,7 +1,6 @@
 require('./base-css.js');
 var React = require('react');
 var List = require('./list');
-var Menu = require('./menu');
 
 var modal = {
 		list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
@@ -17,8 +16,6 @@ var Rules = React.createClass({
 	render: function() {
 		
 		return (
-			<div className="main orient-vertical-box w-rules-con">
-				<Menu name="rules" />
 				<List name="rules" onEnable={function(e) {
 					this.enable(e.data.name);
 					return false;
@@ -26,7 +23,6 @@ var Rules = React.createClass({
 					this.disable(e.data.name);
 					return false;
 				}} modal={modal} />
-			</div>
 		);
 	}
 });
