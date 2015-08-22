@@ -12,7 +12,7 @@ var Values = React.createClass({
 	render: function() {
 		
 		return (
-			<List modal={modal} className="w-values-list" />
+			<List hide={this.props.hide} modal={modal} className="w-values-list" />
 		);
 	}
 });

@@ -16,7 +16,7 @@ var Rules = React.createClass({
 	render: function() {
 		
 		return (
-				<List name="rules" onEnable={function(e) {
+				<List hide={this.props.hide} name="rules" onEnable={function(e) {
 					this.enable(e.data.name);
 					return false;
 				}} onDisable={function(e) {
