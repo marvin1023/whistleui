@@ -3,9 +3,20 @@ var createCgi = require('./cgi');
 var	MAX_COUNT = 1024;
 var TIMEOUT = 10000;
 var dataCallbacks = [];
+var serverInfoCallbacks = [];
 var dataList = [];
+var curServerInfo;
 
-var values = createCgi({
+var cgi = createCgi({
+	getData: '/cgi-bin/get-data',
+	getServerInfo: '/cgi-bin/server-info'
+}, {
+	mode: 'ignore', 
+	timeout: TIMEOUT,
+	cache: false
+});
+
+exports.values = createCgi({
 	remove: '/cgi-bin/values/remove',
 	rename: '/cgi-bin/values/rename',
 	setCurrent: '/cgi-bin/values/set-current',
@@ -19,7 +30,7 @@ var values = createCgi({
 	timeout: TIMEOUT
 });
 
-var rules = createCgi({
+exports.rules = createCgi({
 	get: {
 		type: 'get',
 		get: '/cgi-bin/rules/list'
@@ -41,22 +52,26 @@ var rules = createCgi({
 	timeout: TIMEOUT
 });
 
-var cgi = $.extend(createCgi({
-	getData: '/cgi-bin/get-data',
-	getInitaial: '/cgi-bin/init',
-	getServerInfo: '/cgi-bin/server-info',
-	getLog: '/cgi-bin/log/get',
+exports.log = createCgi({
+	get: '/cgi-bin/log/get',
+	set: {
+		type: 'post',
+		url: '/cgi-bin/log/set'
+	}
 }, {
 	mode: 'ignore', 
 	timeout: TIMEOUT,
 	cache: false
-}), createCgi({
-	composer: '/cgi-bin/composer',
-	setLog: '/cgi-bin/log/set'
-}, {
-	mode: 'ignore', 
-	type: 'post', 
-	timeout: TIMEOUT
+});
+
+$.extend(exports, createCgi({
+	composer: {
+		url: '/cgi-bin/composer',
+		mode: 'ignore', 
+		type: 'post', 
+		timeout: TIMEOUT
+	},
+	getInitaial: '/cgi-bin/init'
 }));
 
 function startLadData() {
@@ -64,16 +79,19 @@ function startLadData() {
 		return;
 	}
 	
-	var pendingIds = getPendingIds();
-	var startTime = getStartTime();
-	
-	function _load() {
+	function load() {
+		var pendingIds = getPendingIds();
+		var startTime = getStartTime();
+		if (startTime == -1 && !pendingIds.length) {
+			return setTimeout(load, 3000);
+		}
+		
 		cgi.getData({
 			ids: pendingIds.join(),
 			startTime: startTime,
 			count: 60
 		}, function(data) {
-			setTimeout(_load, 600);
+			setTimeout(load, 600);
 			if (!data || (!data.ids.length && !data.newIds.length)) {
 				return;
 			}
@@ -98,12 +116,7 @@ function startLadData() {
 			});
 		});
 	}
-	
-	if (startTime == -1 && !pendingIds.length) {
-		setTimeout(_load, 3000);
-	} else {
-		_load();
-	}
+	load();
 }
 
 function getPendingIds() {
@@ -122,16 +135,55 @@ function getStartTime() {
 	return len < MAX_COUNT ? dataList[len - 1] : -1;
 }
 
+function startLoadServerInfo() {
+	if (serverInfoCallbacks.length) {
+		return;
+	}
+	var errorCount = 0;
+	function load() {
+		cgi.getServerInfo(function(data) {
+			setTimeout(load, 6000);
+			if (!(data = data && data.server)) {
+				if (++errorCount > 1) {
+					errorCount = 0;
+					$.each(serverInfoCallbacks, function() {
+						this(false);
+					});
+				}
+				return;
+			}
+			errorCount = 0;
+			if (curServerInfo && curServerInfo.port == data.port && curServerInfo.host == data.host && 
+				curServerInfo.ipv4.sort().join() == data.ipv4.sort().join()
+				&& curServerInfo.ipv6.sort().join() == data.ipv6.sort().join()) {
+				return;
+			}
+			curServerInfo = data;
+			$.each(serverInfoCallbacks, function() {
+				this(data);
+			});
+		});
+	}
+	
+	load();
+}
+
 exports.on = function(type, callback) {
 	if (type == 'data') {
 		if (typeof callback == 'function') {
 			startLadData();
 			dataCallbacks.push(callback);
 		}
-		return;
+	} else if (type == 'serverInfo') {
+		if (typeof callback == 'function') {
+			startLoadServerInfo();
+			serverInfoCallbacks.push(callback);
+		}
 	}
 };
 
 
-
+exports.on('serverInfo', function(data) {
+	console.log(data)
+})
 
