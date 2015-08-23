@@ -6,7 +6,7 @@ var Rules = require('./rules');
 var Values = require('./values');
 var MenuItem = require('./menu-item');
 var dataCenter = require('./data-center');
-var filename = location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
+var filename = location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
 
 var Index = React.createClass({
 	getInitialState: function() {
@@ -22,23 +22,39 @@ var Index = React.createClass({
 		}
 		return state;
 	},
+	componentDidMount: function() {
+		var self = this;
+		$(window).on('hashchange', function() {
+			var hash = location.hash.substring(1);
+			if (hash.indexOf('rules') != -1) {
+				self.showRules();
+			} else if (hash.indexOf('values') != -1) {
+				self.showValues();
+			} else {
+				self.showNetwork();
+			}
+		});
+	},
 	showNetwork: function() {
 		this.setState({
 			hasNetwork: true,
 			name: 'network'
 		});
+		location.hash = 'network';
 	},
 	showRules: function() {
 		this.setState({
 			hasRules: true,
 			name: 'rules'
 		});
+		location.hash = 'rules';
 	},
 	showValues: function() {
 		this.setState({
 			hasValues: true,
 			name: 'values'
 		});
+		location.hash = 'values';
 	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
