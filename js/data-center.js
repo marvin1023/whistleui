@@ -5,37 +5,54 @@ var TIMEOUT = 10000;
 var dataCallbacks = [];
 var dataList = [];
 
+var values = createCgi({
+	remove: '/cgi-bin/values/remove',
+	rename: '/cgi-bin/values/rename',
+	setCurrent: '/cgi-bin/values/set-current',
+	setFontSize: '/cgi-bin/values/set-font-size',
+	setTheme: '/cgi-bin/values/set-theme',
+	showLineNumbers: '/cgi-bin/values/show-line-numbers',
+	set: '/cgi-bin/values/add'
+}, {
+	mode: 'ignore', 
+	type: 'post', 
+	timeout: TIMEOUT
+});
+
+var rules = createCgi({
+	get: {
+		type: 'get',
+		get: '/cgi-bin/rules/list'
+	},
+	add: '/cgi-bin/rules/add',
+	disableDefault: '/cgi-bin/rules/disable-default',
+	enableDefault: '/cgi-bin/rules/enable-default',
+	remove: '/cgi-bin/rules/remove',
+	rename: '/cgi-bin/rules/rename',
+	select: '/cgi-bin/rules/select',
+	setCurrent: '/cgi-bin/rules/set-current',
+	setFontSize: '/cgi-bin/rules/set-font-size',
+	setTheme: '/cgi-bin/rules/set-theme',
+	showLineNumbers: '/cgi-bin/rules/show-line-numbers',
+	unselect: '/cgi-bin/rules/unselect'
+}, {
+	mode: 'ignore', 
+	type: 'post', 
+	timeout: TIMEOUT
+});
+
 var cgi = $.extend(createCgi({
 	getData: '/cgi-bin/get-data',
 	getInitaial: '/cgi-bin/init',
 	getServerInfo: '/cgi-bin/server-info',
 	getLog: '/cgi-bin/log/get',
-	getRules: '/cgi-bin/rules/list'
 }, {
 	mode: 'ignore', 
 	timeout: TIMEOUT,
 	cache: false
 }), createCgi({
 	composer: '/cgi-bin/composer',
-	removeValues: '/cgi-bin/values/remove',
-	renameValues: '/cgi-bin/values/rename',
-	setCurrentValues: '/cgi-bin/values/set-current',
-	setValuesFontSize: '/cgi-bin/values/set-font-size',
-	setValuesTheme: '/cgi-bin/values/set-theme',
-	showValuesLineNumbers: '/cgi-bin/values/show-line-numbers',
-	setValues: '/cgi-bin/values/add',
-	setLog: '/cgi-bin/log/set',
-	addRules: '/cgi-bin/rules/add',
-	disableDefaultRules: '/cgi-bin/rules/disable-default',
-	enableDefaultRules: '/cgi-bin/rules/enable-default',
-	removeRules: '/cgi-bin/rules/remove',
-	renameRules: '/cgi-bin/rules/rename',
-	selectRules: '/cgi-bin/rules/select',
-	setCurrentRules: '/cgi-bin/rules/set-current',
-	setRulesFontSize: '/cgi-bin/rules/set-font-size',
-	setRulesTheme: '/cgi-bin/rules/set-theme',
-	showRulesLineNumbers: '/cgi-bin/rules/show-line-numbers',
-	unselectRules: '/cgi-bin/rules/unselect'
+	setLog: '/cgi-bin/log/set'
 }, {
 	mode: 'ignore', 
 	type: 'post', 
