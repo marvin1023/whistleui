@@ -6,18 +6,19 @@ var dataCallbacks = [];
 var serverInfoCallbacks = [];
 var dataList = [];
 var curServerInfo;
-
+var DEFAULT_CONF = {
+		mode: 'ignore', 
+		timeout: TIMEOUT,
+		xhrFields: {
+			withCredentials: true
+		}
+};
+var POST_CONF = $.extend({type: 'post'}, DEFAULT_CONF);
+var GET_CONF = $.extend({cache: false}, DEFAULT_CONF);
 var cgi = createCgi({
 	getData: '/cgi-bin/get-data',
 	getServerInfo: '/cgi-bin/server-info'
-}, {
-	mode: 'ignore', 
-	timeout: TIMEOUT,
-	xhrFields: {
-		withCredentials: true
-	},
-	cache: false
-});
+}, GET_CONF);
 
 exports.values = createCgi({
 	remove: '/cgi-bin/values/remove',
@@ -27,14 +28,7 @@ exports.values = createCgi({
 	setTheme: '/cgi-bin/values/set-theme',
 	showLineNumbers: '/cgi-bin/values/show-line-numbers',
 	set: '/cgi-bin/values/add'
-}, {
-	mode: 'ignore', 
-	type: 'post', 
-	xhrFields: {
-		withCredentials: true
-	},
-	timeout: TIMEOUT
-});
+}, POST_CONF);
 
 exports.rules = createCgi({
 	get: {
@@ -52,14 +46,7 @@ exports.rules = createCgi({
 	setTheme: '/cgi-bin/rules/set-theme',
 	showLineNumbers: '/cgi-bin/rules/show-line-numbers',
 	unselect: '/cgi-bin/rules/unselect'
-}, {
-	mode: 'ignore', 
-	type: 'post', 
-	xhrFields: {
-		withCredentials: true
-	},
-	timeout: TIMEOUT
-});
+}, POST_CONF);
 
 exports.log = createCgi({
 	get: '/cgi-bin/log/get',
@@ -67,28 +54,15 @@ exports.log = createCgi({
 		type: 'post',
 		url: '/cgi-bin/log/set'
 	}
-}, {
-	mode: 'ignore', 
-	timeout: TIMEOUT,
-	xhrFields: {
-		withCredentials: true
-	},
-	cache: false
-});
+}, GET_CONF);
 
 $.extend(exports, createCgi({
 	composer: {
 		url: '/cgi-bin/composer',
-		mode: 'ignore', 
-		type: 'post', 
-		timeout: TIMEOUT
+		type: 'post'
 	},
 	getInitaial: '/cgi-bin/init'
-}, {
-	xhrFields: {
-		withCredentials: true
-	},
-}));
+}, GET_CONF));
 
 function startLadData() {
 	if (dataList.length) {
