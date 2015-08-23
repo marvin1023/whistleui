@@ -4,6 +4,7 @@ var Menu = require('./menu');
 var Network = require('./network');
 var Rules = require('./rules');
 var Values = require('./values');
+var MenuItem = require('./menu-item');
 var dataCenter = require('./data-center');
 var filename = location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
 
@@ -54,7 +55,9 @@ var Index = React.createClass({
 		
 		return (
 			<div className="main orient-vertical-box">
-				<Menu name={name} onClick={this.onClickMenu} />
+				<Menu name={name} onClick={this.onClickMenu}>
+					<MenuItem onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+				</Menu>
 				{this.state.hasRules ? <Rules hide={name == 'rules' ? false : true} /> : ''}
 				{this.state.hasValues ? <Values hide={name == 'values' ? false : true} /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}

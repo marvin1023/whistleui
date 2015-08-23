@@ -1,7 +1,6 @@
 require('./base-css.js');
 require('../css/menu.css');
 var React = require('react');
-var MenuItem = require('./menu-item');
 var About = require('./about');
 var Online = require('./online');
 
@@ -30,7 +29,7 @@ var Menu = React.createClass({
 					<a onClick={this.props.onClick} className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem onClick={this.props.onClickItem} onClickOption={this.props._onClickOption} />
+					{this.props.children}
 				</div>
 		);
 	}
