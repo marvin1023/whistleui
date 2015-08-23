@@ -1,8 +1,10 @@
+var $ = require('jquery');
 var React = require('react');
 var Menu = require('./menu');
 var Network = require('./network');
 var Rules = require('./rules');
 var Values = require('./values');
+var dataCenter = require('./data-center');
 var filename = location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
 
 var Index = React.createClass({
@@ -37,12 +39,22 @@ var Index = React.createClass({
 			name: 'values'
 		});
 	},
+	onClickMenu: function(e) {
+		var target = $(e.target).closest('a');
+		if (target.hasClass('w-network-menu')) {
+			this.showNetwork();
+		} else if (target.hasClass('w-rules-menu')){
+			this.showRules();
+		} else if (target.hasClass('w-values-menu')) {
+			this.showValues();
+		}
+	},
 	render: function() {
 		var name = this.state.name;
 		
 		return (
 			<div className="main orient-vertical-box">
-				<Menu name={name} />
+				<Menu name={name} onClick={this.onClickMenu} />
 				{this.state.hasRules ? <Rules hide={name == 'rules' ? false : true} /> : ''}
 				{this.state.hasValues ? <Values hide={name == 'values' ? false : true} /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
@@ -50,5 +62,8 @@ var Index = React.createClass({
 		);
 	}
 });
+dataCenter.getInitialData(function(data) {
+	React.render(<Index />, document.body);	
+});
 
-React.render(<Index />, document.body);
+

@@ -159,7 +159,8 @@ function startLoadServerInfo() {
 				return;
 			}
 			
-			if (curServerInfo && curServerInfo.port == data.port && curServerInfo.host == data.host && 
+			if (curServerInfo && curServerInfo.version == data.version && 
+				curServerInfo.port == data.port && curServerInfo.host == data.host && 
 				curServerInfo.ipv4.sort().join() == data.ipv4.sort().join()
 				&& curServerInfo.ipv6.sort().join() == data.ipv6.sort().join()) {
 				return;
