@@ -15,7 +15,7 @@ function createDialog() {
 				      '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
 				        '<div class="w-online-dialog-ctn">One fine body&hellip;</div>' + 
 				        '<div class="w-switch-to-server"><h5>Switch to:</h5>' + 
-				        '<input class="w-ip" maxlength="256" type="text" placeholder="ip" /> : <input maxlength="5" class="w-port" type="text" placeholder="port" />' +
+				        '<input class="w-ip" maxlength="256" type="text" placeholder="whistle ip" /> : <input maxlength="5" class="w-port" type="text" placeholder="whistle port" />' +
 				        '</div>' +
 				      '</div>' + 
 				      '<div class="modal-footer">' + 
