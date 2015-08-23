@@ -3,6 +3,7 @@ var React = require('react');
 var Divider = require('./divider');
 var ReqData = require('./req-data');
 var Detail = require('./detail');
+var dataCenter = require('./data-center');
 
 var Network = React.createClass({
 	onClickMenu: function() {

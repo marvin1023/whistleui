@@ -1,6 +1,7 @@
 require('./base-css.js');
 var React = require('react');
 var List = require('./list');
+var dataCenter = require('./data-center');
 
 var modal = {
 		list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],

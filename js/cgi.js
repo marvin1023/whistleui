@@ -5,7 +5,7 @@ function createCgi(url, settings) {
 	if (typeof url == 'string') {
 		url = {url: url};
 	}
-	settings = $.extend({}, settings, url);
+	settings = $.extend({dataType: 'json'}, settings, url);
 	var queue = [];
 	var jqXhr;
 	
@@ -16,7 +16,7 @@ function createCgi(url, settings) {
 			data = null;
 		}
 		
-		var options = $.extend({}, settings, optons);
+		var options = $.extend({}, settings, options);
 		if (jqXhr) {
 			var mode = options.mode;
 			if (mode == 'ignore') {
