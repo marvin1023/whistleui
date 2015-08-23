@@ -2,6 +2,7 @@ require('./base-css.js');
 require('../css/menu.css');
 var React = require('react');
 var MenuItem = require('./menu-item');
+var About = require('./about');
 var Online = require('./online');
 
 var Menu = React.createClass({
@@ -27,7 +28,7 @@ var Menu = React.createClass({
 					<a onClick={this.props.onClick} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 					<a onClick={this.props.onClick} className="w-rootca-menu" href="javascript:;"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
 					<a onClick={this.props.onClick} className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
-					<a onClick={this.props.onClick} className="w-about-menu" href="javascript:;"><span className="glyphicon glyphicon-info-sign"></span>About</a>
+					<About />
 					<Online />
 					<MenuItem onClick={this.props.onClickItem} onClickOption={this.props._onClickOption} />
 				</div>

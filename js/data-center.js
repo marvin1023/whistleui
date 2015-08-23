@@ -6,6 +6,7 @@ var dataCallbacks = [];
 var serverInfoCallbacks = [];
 var dataList = [];
 var curServerInfo;
+var initialData;
 var DEFAULT_CONF = {
 		mode: 'ignore', 
 		timeout: TIMEOUT,
@@ -17,7 +18,8 @@ var POST_CONF = $.extend({type: 'post'}, DEFAULT_CONF);
 var GET_CONF = $.extend({cache: false}, DEFAULT_CONF);
 var cgi = createCgi({
 	getData: '/cgi-bin/get-data',
-	getServerInfo: '/cgi-bin/server-info'
+	getServerInfo: '/cgi-bin/server-info',
+	getInitaial: '/cgi-bin/init'
 }, GET_CONF);
 
 exports.values = createCgi({
@@ -60,9 +62,22 @@ $.extend(exports, createCgi({
 	composer: {
 		url: '/cgi-bin/composer',
 		type: 'post'
-	},
-	getInitaial: '/cgi-bin/init'
+	}
 }, GET_CONF));
+
+exports.getInitialData = function(callback) {
+	if (!initialData) {
+		initialData = $.Deferred();
+		function load() {
+			cgi.getInitaial(function(data) {
+				data ? initialData.resolve(data) : setTimeout(load, 1000);
+			});
+		}
+		load();
+	}
+	
+	initialData.done(callback);
+};
 
 function startLadData() {
 	if (dataList.length) {
