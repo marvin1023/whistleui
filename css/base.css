@@ -14,6 +14,9 @@ textarea[readonly] {outline: none;}
 .fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}
 .table {table-layout: fixed; margin: 0!important;}
 
+.modal-dialog .modal-body, .modal-dialog .modal-footer {padding: 10px;}
+.modal-dialog .btn {padding: 5px 10px;}
+
 .cm-header {text-decoration: line-through;}
 .cm-s-ambiance ::-webkit-scrollbar-thumb, 
 .cm-s-blackboard ::-webkit-scrollbar-thumb, 

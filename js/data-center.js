@@ -173,3 +173,23 @@ exports.on = function(type, callback) {
 	}
 };
 
+exports.checkExists = function(options, callback) {
+	if (typeof callback != 'function') {
+		return;
+	}
+	
+	$.ajax({
+		url: 'http://' + options.ip + ':' + options.port + '/cgi-bin/server-info?_=' + Date.now(),
+		xhrFields: {
+			withCredentials: true
+		},
+		dataType: 'json',
+		success: function(data) {
+			callback(!!data && data.ec === 0 && !!data.server);
+		},
+		error: function() {
+			callback(false);
+		}
+	});
+};
+

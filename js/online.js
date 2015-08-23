@@ -1,6 +1,57 @@
 require('./base-css.js');
+require('../css/online.css');
+var $ = window.jQuery = require('jquery'); //for bootstrap
+require('bootstrap/dist/js/bootstrap.js');
 var React = require('react');
 var dataCenter = require('./data-center');
+var dialog;
+
+function createDialog() {
+	if (!dialog) {
+		dialog = $('<div class="modal fade w-online-dialog">' + 
+				  '<div class="modal-dialog">' + 
+				    '<div class="modal-content">' + 
+				      '<div class="modal-body">' + 
+				      '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+				        '<div class="w-online-dialog-ctn">One fine body&hellip;</div>' + 
+				        '<div class="w-switch-to-server"><h5>Switch to:</h5>' + 
+				        '<input class="w-ip" maxlength="256" type="text" placeholder="ip" /> : <input maxlength="5" class="w-port" type="text" placeholder="port" />' +
+				        '</div>' +
+				      '</div>' + 
+				      '<div class="modal-footer">' + 
+				        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' + 
+				        '<button type="button" class="btn btn-primary w-switch-btn">Switch</button>' + 
+				      '</div>' + 
+				    '</div>' + 
+				  '</div>' + 
+				'</div>').appendTo(document.body);
+		dialog.on('click', '.w-switch-btn', function() {
+			var ip = $.trim(dialog.find('.w-ip').val());
+			if (!ip) {
+				alert('请输入正确的whistle服务器IP或域名');
+				return;
+			}
+			var port = $.trim(dialog.find('.w-port').val());
+			if (!/^\d+$/.test(port)) {
+				alert('请输入正确的whistle服务器端口号');
+				return;
+			}
+			dataCenter.checkExists({ip: ip, port: port}, function(exists) {
+				var host = ip + ':' + port;
+				if (!exists) {
+					alert('请检查whistle(' + host + ')是否启动');
+					return;
+				}
+				location.href = '//' + host + location.pathname + location.search + location.hash;
+			});
+		});
+		dialog.find('input').keydown(function(e) {
+			e.keyCode == 13 && dialog.find('.w-switch-btn').trigger('click');
+		});
+	}
+	
+	return dialog;
+}
 
 var Online = React.createClass({
 	getInitialState: function() {
@@ -17,12 +68,22 @@ var Online = React.createClass({
 		if (!server) {
 			return;
 		}
-		
-		if (!this._dialog) {
-			var dialog = <div ref="dialog"></div>;
-			this._dialog = dialog.refs.dialog.getDOMNode();
+		var info = [];
+		if (server.host) {
+			info.push('<h5>Host:</h5>');
+			info.push('<p>' + server.host + '</p>');
+		}
+		if (server.ipv4.length) {
+			info.push('<h5>IPv4:</h5>');
+			info.push('<p>' + server.ipv4.join('<br/>') + '</p>');
+		}
+		if (server.ipv4.length) {
+			info.push('<h5>IPv6:</h5>');
+			info.push('<p>' + server.ipv6.join('<br/>') + '</p>');
 		}
 		
+		createDialog().find('.w-online-dialog-ctn').html(info.join(''));
+		dialog.modal('show');
 	},
 	render: function() {
 		var info = [];
