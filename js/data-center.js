@@ -183,6 +183,7 @@ exports.checkExists = function(options, callback) {
 		xhrFields: {
 			withCredentials: true
 		},
+		timeout: 3000,
 		dataType: 'json',
 		success: function(data) {
 			callback(!!data && data.ec === 0 && !!data.server);
