@@ -74,8 +74,10 @@ var Online = React.createClass({
 		}
 		var info = [];
 		if (server.host) {
-			info.push('<h5>Host:</h5>');
-			info.push('<p>' + server.host + '</p>');
+			info.push('<h5>Host: ' + server.host + '</h5>');
+		}
+		if (server.port) {
+			info.push('<h5>Port: ' + server.port + '</h5>');
 		}
 		if (server.ipv4.length) {
 			info.push('<h5>IPv4:</h5>');
@@ -94,9 +96,13 @@ var Online = React.createClass({
 		var server = this.state.server;
 		if (server) {
 			if (server.host) {
-				info.push('Host:');
-				info.push(server.host);
+				info.push('Host: ' + server.host);
 			}
+			
+			if (server.port) {
+				info.push('Port: ' + server.port);
+			}
+			
 			if (server.ipv4.length) {
 				info.push('IPv4:');
 				info.push.apply(info, server.ipv4);

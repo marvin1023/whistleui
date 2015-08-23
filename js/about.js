@@ -15,7 +15,7 @@ function createDialog(version) {
 				      '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
 				        '<img alt="logo" src="/img/whistle.png">' + 
 			          '<span" class="w-about-dialog-ctn"><span class="w-about-dialog-title">Whistle for Web Developers.</span>' +
-					  'Version: <span id="aboutVersion">' + version + '</span><br>' + 
+					  'Version: ' + version + '<br>' + 
 					  'Visit <a id="aboutUrl" href="http://www.whistlejs.com#v=' + version + '" target="_blank">http://www.whistlejs.com</a></span>' +
 				      '</div>' + 
 				      '<div class="modal-footer">' + 
