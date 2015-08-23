@@ -139,20 +139,21 @@ function startLoadServerInfo() {
 	if (serverInfoCallbacks.length) {
 		return;
 	}
-	var errorCount = 0;
+	
 	function load() {
 		cgi.getServerInfo(function(data) {
 			setTimeout(load, 6000);
-			if (!(data = data && data.server)) {
-				if (++errorCount > 1) {
-					errorCount = 0;
-					$.each(serverInfoCallbacks, function() {
-						this(false);
-					});
-				}
+			if (data == curServerInfo) {
 				return;
 			}
-			errorCount = 0;
+			if (!(data = data && data.server)) {
+				curServerInfo = data;
+				$.each(serverInfoCallbacks, function() {
+					this(false);
+				});
+				return;
+			}
+			
 			if (curServerInfo && curServerInfo.port == data.port && curServerInfo.host == data.host && 
 				curServerInfo.ipv4.sort().join() == data.ipv4.sort().join()
 				&& curServerInfo.ipv6.sort().join() == data.ipv6.sort().join()) {
