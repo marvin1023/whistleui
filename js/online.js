@@ -1,9 +1,11 @@
 require('./base-css.js');
 var React = require('react');
 var dataCenter = require('./data-center');
-var util = require('./util');
 
 var Online = React.createClass({
+	getInitialState: function() {
+		return {};
+	},
 	componentWillMount: function() {
 		var self = this;
 		dataCenter.on('serverInfo', function(data) {
@@ -11,7 +13,7 @@ var Online = React.createClass({
 		});
 	},
 	showServerInfo: function() {
-		var server = util.getProperty(this, 'state.server');
+		var server = this.state.server;
 		if (!server) {
 			return;
 		}
@@ -19,7 +21,7 @@ var Online = React.createClass({
 	},
 	render: function() {
 		var info = [];
-		var server = util.getProperty(this, 'state.server');
+		var server = this.state.server;
 		if (server) {
 			if (server.host) {
 				info.push('Host:');
@@ -37,7 +39,7 @@ var Online = React.createClass({
 		return (
 				<a className="w-online-menu" title={info.join('\n')} href="javascript:;" 
 					className={'w-online' + (server ? '' : ' w-offline')} onClick={this.showServerInfo.bind(this)}>
-					<span className="glyphicon glyphicon-stats"></span>Online
+					<span className="glyphicon glyphicon-stats"></span>{server ? 'Online' : 'Offline'}
 				</a>
 		);
 	}
