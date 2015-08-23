@@ -18,6 +18,11 @@ var Online = React.createClass({
 			return;
 		}
 		
+		if (!this._dialog) {
+			var dialog = <div ref="dialog"></div>;
+			this._dialog = dialog.refs.dialog.getDOMNode();
+		}
+		
 	},
 	render: function() {
 		var info = [];
@@ -38,7 +43,7 @@ var Online = React.createClass({
 		}
 		return (
 				<a className="w-online-menu" title={info.join('\n')} href="javascript:;" 
-					className={'w-online' + (server ? '' : ' w-offline')} onClick={this.showServerInfo.bind(this)}>
+					className={'w-online' + (server ? '' : ' w-offline')} onClick={this.showServerInfo}>
 					<span className="glyphicon glyphicon-stats"></span>{server ? 'Online' : 'Offline'}
 				</a>
 		);

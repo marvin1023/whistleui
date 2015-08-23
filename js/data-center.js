@@ -13,6 +13,9 @@ var cgi = createCgi({
 }, {
 	mode: 'ignore', 
 	timeout: TIMEOUT,
+	xhrFields: {
+		withCredentials: true
+	},
 	cache: false
 });
 
@@ -27,6 +30,9 @@ exports.values = createCgi({
 }, {
 	mode: 'ignore', 
 	type: 'post', 
+	xhrFields: {
+		withCredentials: true
+	},
 	timeout: TIMEOUT
 });
 
@@ -49,6 +55,9 @@ exports.rules = createCgi({
 }, {
 	mode: 'ignore', 
 	type: 'post', 
+	xhrFields: {
+		withCredentials: true
+	},
 	timeout: TIMEOUT
 });
 
@@ -61,6 +70,9 @@ exports.log = createCgi({
 }, {
 	mode: 'ignore', 
 	timeout: TIMEOUT,
+	xhrFields: {
+		withCredentials: true
+	},
 	cache: false
 });
 
@@ -72,6 +84,10 @@ $.extend(exports, createCgi({
 		timeout: TIMEOUT
 	},
 	getInitaial: '/cgi-bin/init'
+}, {
+	xhrFields: {
+		withCredentials: true
+	},
 }));
 
 function startLadData() {
