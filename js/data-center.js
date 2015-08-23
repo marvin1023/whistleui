@@ -173,8 +173,3 @@ exports.on = function(type, callback) {
 	}
 };
 
-
-exports.on('serverInfo', function(data) {
-	console.log(data)
-})
-
