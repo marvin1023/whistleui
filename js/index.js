@@ -23,6 +23,50 @@ var Index = React.createClass({
 		} else {
 			state.hasNetwork = true;
 		}
+		var rulesList = [];
+		var rulesData = [];
+		var valuesList = [];
+		var valuesData = [];
+		
+		state.rules = {
+				list: rulesList,
+				data: rulesData
+			};
+		state.values = {
+				list: valuesList,
+				data: valuesData
+			};
+		var modal = this.props.modal;
+		var rules = modal.rules;
+		var values = modal.values;
+		if (rules) {
+			rulesList.push('Default');
+			valuesData.Default = {
+					name: 'Default',
+					value: rules.defaultRules,
+					active: !rules.defaultRulesIsDisabled
+			};
+			$.each(rules.list, function() {
+				rulesList.push(this.name);
+				rulesData[this.name] = {
+					name: this.name,
+					value: this.data,
+					active: this.selected
+				};
+			});
+		}
+		
+		if (values) {
+			$.each(values.list, function() {
+				valuesList.push(this.name);
+				valuesData[this.name] = {
+					name: this.name,
+					value: this.data,
+					active: this.selected
+				};
+			});
+		}
+		
 		return state;
 	},
 	componentDidMount: function() {
@@ -77,15 +121,15 @@ var Index = React.createClass({
 				<Menu name={name} onClick={this.onClickMenu}>
 					<MenuItem onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 				</Menu>
-				{this.state.hasRules ? <List hide={name == 'rules' ? false : true} name="rules" /> : ''}
-				{this.state.hasValues ? <List hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
+				{this.state.hasRules ? <List modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{this.state.hasValues ? <List modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
 			</div>
 		);
 	}
 });
 dataCenter.getInitialData(function(data) {
-	React.render(<Index />, document.body);	
+	React.render(<Index modal={data} />, document.body);	
 });
 
 
