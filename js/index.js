@@ -6,15 +6,19 @@ var Rules = require('./rules');
 var Values = require('./values');
 var MenuItem = require('./menu-item');
 var dataCenter = require('./data-center');
-var filename = location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
+var pageName = getPageName();
+
+function getPageName() {
+	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
+}
 
 var Index = React.createClass({
 	getInitialState: function() {
 		var state = {};
-		if (!filename || filename.indexOf('rules') != -1) {
+		if (!pageName || pageName.indexOf('rules') != -1) {
 			state.hasRules = true;
 			state.name = 'rules';
-		} else if (filename.indexOf('values') != -1) {
+		} else if (pageName.indexOf('values') != -1) {
 			state.hasValues = true;
 			state.name = 'values';
 		} else {
@@ -25,10 +29,10 @@ var Index = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		$(window).on('hashchange', function() {
-			var hash = location.hash.substring(1);
-			if (hash.indexOf('rules') != -1) {
+			var pageName = getPageName();
+			if (!pageName || pageName.indexOf('rules') != -1) {
 				self.showRules();
-			} else if (hash.indexOf('values') != -1) {
+			} else if (pageName.indexOf('values') != -1) {
 				self.showValues();
 			} else {
 				self.showNetwork();
