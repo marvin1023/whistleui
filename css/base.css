@@ -7,7 +7,9 @@ html, body, .main {margin: 0; padding: 0; width: 100%; height: 100%;}
 ::-webkit-scrollbar-track,::-webkit-scrollbar-thumb { border-left:2px solid transparent; border-right:2px solid transparent;}
 ::-webkit-scrollbar-track:hover{ background-clip:padding-box; background-color:rgba(0,0,0,.15);}
 
-.shadow {border: 1px solid rgba(0,0,0,.15)!important; -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175)!important; box-shadow: 0 6px 12px rgba(0,0,0,.175)!important;}
+.w-input-menu-item {width: 246px; height: 32px; border: none; display: block; padding: 0 5px;
+position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 2px; z-index: 101; top: 30px; display: none; 
+border: 1px solid rgba(0,0,0,.15)!important; -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175)!important; box-shadow: 0 6px 12px rgba(0,0,0,.175)!important;}
 textarea[readonly] {outline: none;}
 .hide {display: none!important;}
 .box {display:-webkit-box; display:-moz-box; display:box;}

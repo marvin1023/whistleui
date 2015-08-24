@@ -83,6 +83,10 @@ var Index = React.createClass({
 			} else {
 				self.showNetwork();
 			}
+		}).on('keyup', function(e) {
+			if (e.keyCode == 27) {
+				self.hideOnBlur();
+			}
 		});
 	},
 	showNetwork: function() {
@@ -109,8 +113,7 @@ var Index = React.createClass({
 	showCreateRules: function() {
 		var createRulesInput = this.refs.createRulesInput.getDOMNode();
 		this.setState({
-			showCreateRules: true,
-			showCreateValues: false
+			showCreateRules: true
 		}, function() {
 			createRulesInput.focus();
 		});
@@ -118,7 +121,6 @@ var Index = React.createClass({
 	showCreateValues: function() {
 		var createValuesInput = this.refs.createValuesInput.getDOMNode();
 		this.setState({
-			showCreateRules: false,
 			showCreateValues: true
 		}, function() {
 			createValuesInput.focus();
@@ -176,8 +178,40 @@ var Index = React.createClass({
 			}
 		});
 	},
+	showEditRules: function() {
+		var rulesList = this.refs.rules;
+		var selectedItem = rulesList.getSelectedItem();
+		if (!selectedItem || selectedItem.isDefault) {
+			return;
+		}
+		
+		var editRulesInput = this.refs.editRulesInput.getDOMNode();
+		this.setState({
+			showEditRules: true,
+			selectedRuleName: selectedItem.name,
+			selectedRule: selectedItem
+		}, function() {
+			editRulesInput.focus();
+		});	
+	},
+	showEditValues: function() {
+		var valuesList = this.refs.values;
+		var selectedItem = valuesList.getSelectedItem();
+		if (!selectedItem || selectedItem.isDefault) {
+			return;
+		}
+		
+		var editValuesInput = this.refs.editValuesInput.getDOMNode();
+		this.setState({
+			showEditValues: true,
+			selectedValueName: selectedItem.name,
+			selectedValue: selectedItem
+		}, function() {
+			editValuesInput.focus();
+		});	
+	},
 	editRules: function() {
-			
+		
 	},
 	editValues: function() {
 		
@@ -238,7 +272,9 @@ var Index = React.createClass({
 	hideOnBlur: function() {
 		this.setState({
 			showCreateRules: false,
-			showCreateValues: false
+			showCreateValues: false,
+			showEditRules: false,
+			showEditValues: false
 		});
 	},
 	onClickMenu: function(e) {
@@ -252,7 +288,7 @@ var Index = React.createClass({
 		} else if (target.hasClass('w-create-menu')) {
 			this.state.name == 'rules' ? this.showCreateRules() : this.showCreateValues();
 		} else if (target.hasClass('w-edit-menu')) {
-			this.state.name == 'rules' ? this.editRules() : this.editValues();
+			this.state.name == 'rules' ? this.showEditRules() : this.showEditValues();
 		} else if (target.hasClass('w-replay-menu')) {
 			this.replay();
 		} else if (target.hasClass('w-composer-menu')) {
@@ -278,8 +314,10 @@ var Index = React.createClass({
 					<MenuItem ref="rulesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="valuesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="weinreOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-create-rules-input" maxLength="64" placeholder="press 'enter' to save the rules name" />
-					<input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-create-values-input" maxLength="64" placeholder="press 'enter' to save the values name" />
+					<input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="w-input-menu-item w-create-rules-input" maxLength="64" placeholder="press 'enter' to save the rules name" />
+					<input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="w-input-menu-item w-create-values-input" maxLength="64" placeholder="press 'enter' to save the values name" />
+					<input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showEditRules ? 'block' : 'none'}} className="w-input-menu-item w-edit-rules-input" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedRuleName || '')} />
+					<input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showEditValues ? 'block' : 'none'}} className="w-input-menu-item w-edit-values-input" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedValueName || '')} />
 				</Menu>
 				{this.state.hasRules ? <List ref="rules" modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List ref="values" modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
