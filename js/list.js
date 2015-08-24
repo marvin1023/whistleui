@@ -30,6 +30,16 @@ var List = React.createClass({
 		
 		return items;
 	},
+	getSelectedItem: function() {
+		var selectedItem;
+		$.each(this._data, function(name, item) {
+			if (item.selected) {
+				selectedItem = item;
+				return false;
+			}
+		});
+		return selectedItem;
+	},
 	add: function(name, value) {
 		if (this.getItem(name)) {
 			return false;

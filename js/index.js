@@ -129,23 +129,18 @@ var Index = React.createClass({
 		
 	},
 	removeRules: function() {
-		var self = this;
-		var rules = self.state.rules;
-		$.each(rules.list, function(i, name) {
-			var item = rules.data[name];
-			if (item.selected) {
-				if (!item.isDefault && confirm('Confirm delete this rule `' + name + '`.')) {
-					dataCenter.rules.remove({name: name}, function(data) {
-						if (data && data.ec === 0) {
-							rules.list.splice(i, 1);
-							delete rules.data[name];
-							self.forceUpdate();
-						}
-					});
-				}
-				return false;
+		var rulesList = this.refs.rules;
+		var selectedItem = rulesList.getSelectedItem();
+		if (selectedItem && !selectedItem.isDefault) {
+			var name = selectedItem.name;
+			if (confirm('Confirm delete this rule `' + name + '`.')) {
+				dataCenter.rules.remove({name: name}, function(data) {
+					if (data && data.ec === 0) {
+						rulesList.remove(name);
+					}
+				});
 			}
-		});
+		}
 	},
 	removeValues: function() {
 		
@@ -195,8 +190,8 @@ var Index = React.createClass({
 				<Menu name={name} onClick={this.onClickMenu}>
 					<MenuItem onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 				</Menu>
-				{this.state.hasRules ? <List modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
-				{this.state.hasValues ? <List modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
+				{this.state.hasRules ? <List ref="rules" modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{this.state.hasValues ? <List ref="values" modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
 			</div>
 		);
