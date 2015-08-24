@@ -1,3 +1,14 @@
+.w-menu {height: 28px; border-top: 1px solid #fcfcfc; border-bottom: 1px solid #d3d3d3; padding: 0 5px; 
+background: -moz-linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213));
+background: -webkit-linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); 
+background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-right: 80px; position: relative;}
+.w-menu a {text-decoration: none; color: #000; padding: 0 5px; line-height: 26px; height: 26px; margin-right: 5px; display: inline-block;}
+.w-menu .glyphicon, .w-detail .glyphicon {margin-right: 3px;}
+.w-menu .glyphicon-folder-open {margin-right: 6px;}
+.w-menu .w-online {position: absolute; right: 0;}
+.w-menu .w-online, .w-menu a:hover {color: #337ab7;}
+.w-menu .w-offline {color: #ccc!important; cursor: default;}
+
 .w-create-rules-input {left: 170px;}
 .w-create-values-input {left: 160px;}
 .w-edit-rules-input {left: 242px;}

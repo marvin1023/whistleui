@@ -4,6 +4,8 @@ var React = require('react');
 var Menu = require('./menu');
 var List = require('./list');
 var Network = require('./network');
+var About = require('./about');
+var Online = require('./online');
 var MenuItem = require('./menu-item');
 var dataCenter = require('./data-center');
 var util = require('./util');
@@ -240,11 +242,11 @@ var Index = React.createClass({
 			}
 		});
 	},
-	editValues: function() {
+	editValues: function(e) {
 		if (e.keyCode != 13) {
 			return;
 		}
-		var selectedItem = this.state.selectedRule;
+		var selectedItem = this.state.selectedValue;
 		if (!selectedItem) {
 			return;
 		}
@@ -269,6 +271,21 @@ var Index = React.createClass({
 				util.showSystemError();
 			}
 		});
+	},
+	onEnableList: function() {
+		
+	},
+	onDisableList: function() {
+		
+	},
+	enableRules: function() {
+		
+	},
+	disableRules: function() {
+			
+	},
+	saveValues: function() {
+		
 	},
 	replay: function() {
 		
@@ -361,10 +378,29 @@ var Index = React.createClass({
 	},
 	render: function() {
 		var name = this.state.name;
+		var isNetwork = name === undefined || name == 'network';
+		var isRules = name == 'rules';
+		var isValues = name == 'values';
 		
 		return (
 			<div className="main orient-vertical-box">
-				<Menu name={name} onClick={this.onClickMenu}>
+				<div className="w-menu">
+					<a onClick={this.onClickMenu} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
+					<a onClick={this.onClickMenu} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
+					<a onClick={this.onClickMenu} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
+					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
+					<a onClick={this.onClickMenu} className="w-edit-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
+					<a onClick={this.onClickMenu} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
+					<a onClick={this.onClickMenu} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
+					<a onClick={this.onClickMenu} className="w-filter-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
+					<a onClick={this.onClickMenu} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-remove"></span>Clear</a>
+					<a onClick={this.onClickMenu} className="w-delete-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
+					<a onClick={this.onClickMenu} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
+					<a onClick={this.onClickMenu} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
+					<a onClick={this.onClickMenu} className="w-rootca-menu" href="javascript:;"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
+					<a onClick={this.onClickMenu} className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
+					<About />
+					<Online />
 					<MenuItem ref="rulesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="valuesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="weinreOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
@@ -372,7 +408,7 @@ var Index = React.createClass({
 					<input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="w-input-menu-item w-create-values-input" maxLength="64" placeholder="press 'enter' to save the values name" />
 					<input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showEditRules ? 'block' : 'none'}} className="w-input-menu-item w-edit-rules-input" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedRuleName || '')} />
 					<input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showEditValues ? 'block' : 'none'}} className="w-input-menu-item w-edit-values-input" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedValueName || '')} />
-				</Menu>
+				</div>
 				{this.state.hasRules ? <List ref="rules" modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List ref="values" modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
