@@ -210,11 +210,65 @@ var Index = React.createClass({
 			editValuesInput.focus();
 		});	
 	},
-	editRules: function() {
+	editRules: function(e) {
+		if (e.keyCode != 13) {
+			return;
+		}
+		var selectedItem = this.state.selectedRule;
+		if (!selectedItem) {
+			return;
+		}
+		var target = e.target;
+		var name = $.trim(target.value);
+		if (!name) {
+			alert('Rule name can not be empty.');
+			return;
+		}
 		
+		if (this.state.rules.list.indexOf(name) != -1) {
+			alert('Rule name  \'' + name + '\' already exists.');
+			return;
+		}
+		var rulesList = this.refs.rules;
+		dataCenter.rules.rename({name: selectedItem.name, newName: name}, function(data) {
+			if (data && data.ec === 0) {
+				target.value = '';
+				target.blur();
+				rulesList.rename(selectedItem.name, name);
+			} else {
+				util.showSystemError();
+			}
+		});
 	},
 	editValues: function() {
+		if (e.keyCode != 13) {
+			return;
+		}
+		var selectedItem = this.state.selectedRule;
+		if (!selectedItem) {
+			return;
+		}
+		var target = e.target;
+		var name = $.trim(target.value);
+		if (!name) {
+			alert('Rule name can not be empty.');
+			return;
+		}
 		
+		if (this.state.values.list.indexOf(name) != -1) {
+			alert('Rule name  \'' + name + '\' already exists.');
+			return;
+		}
+		var valuesList = this.refs.values;
+		dataCenter.values.rename({name: selectedItem.name, newName: name}, function(data) {
+			if (data && data.ec === 0) {
+				target.value = '';
+				target.blur();
+				valuesList.rename(selectedItem.name, name);
+			} else {
+				util.showSystemError();
+			}
+		});
 	},
 	replay: function() {
 		
