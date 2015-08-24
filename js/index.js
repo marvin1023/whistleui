@@ -1,9 +1,8 @@
 var $ = require('jquery');
 var React = require('react');
 var Menu = require('./menu');
+var List = require('./list');
 var Network = require('./network');
-var Rules = require('./rules');
-var Values = require('./values');
 var MenuItem = require('./menu-item');
 var dataCenter = require('./data-center');
 var pageName = getPageName();
@@ -78,8 +77,8 @@ var Index = React.createClass({
 				<Menu name={name} onClick={this.onClickMenu}>
 					<MenuItem onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 				</Menu>
-				{this.state.hasRules ? <Rules hide={name == 'rules' ? false : true} /> : ''}
-				{this.state.hasValues ? <Values hide={name == 'values' ? false : true} /> : ''}
+				{this.state.hasRules ? <List hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{this.state.hasValues ? <List hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
 			</div>
 		);
