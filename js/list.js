@@ -45,8 +45,8 @@ var List = React.createClass({
 			return false;
 		}
 		var list = this._list;
-		var data = this._data;
-		
+		var data =  this._data;
+		this._clearSelection();
 		list.push(name);
 		data[name] = {
 				selected: true,
@@ -54,12 +54,7 @@ var List = React.createClass({
 				name: name,
 				value: value
 		};
-		this.setProps({
-			modal: {
-				list: list,
-				data: data
-			}
-		});
+		this.forceUpdate();
 		return true;
 	},
 	remove: function(name) {
@@ -82,24 +77,31 @@ var List = React.createClass({
 	select: function(name) {
 		var item = this.getItem(name);
 		if (item) {
-			var data = this._data;
-			Object.keys(data).forEach(function(name) {
-				data[name].selected = false;
-			});
+			this._clearSelection();
 			item.selected = true;
 			this.forceUpdate();
 		}
 	},
 	unselect: function(name) {
 		if (!arguments.length) {
-			Object.keys(data).forEach(function(name) {
-				data[name].selected = false;
-			});
+			this._clearSelection();
 			this.forceUpdate();
 		}else if (name = this.getItem(name)) {
 			name.selected = false;
 			this.forceUpdate();
 		}
+	},
+	_clearSelection: function() {
+		var data = this._data;
+		Object.keys(data).forEach(function(name) {
+			data[name].selected = false;
+		});
+	},
+	_clearActive: function() {
+		var data = this._data;
+		Object.keys(data).forEach(function(name) {
+			data[name].active = false;
+		});
 	},
 	enable: function(name) {
 		if (name = this.getItem(name)) {
@@ -110,9 +112,7 @@ var List = React.createClass({
 	},
 	disable: function(name) {
 		if (!arguments.length) {
-			Object.keys(data).forEach(function(name) {
-				data[name].active = false;
-			});
+			this._clearActive();
 			this.forceUpdate();
 		} else if (name = this.getItem(name)) {
 			name.active = false;

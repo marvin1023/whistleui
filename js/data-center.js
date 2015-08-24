@@ -23,13 +23,17 @@ var cgi = createCgi({
 }, GET_CONF);
 
 exports.values = createCgi({
+	get: {
+		type: 'get',
+		get: '/cgi-bin/values/list'
+	},
+	add: '/cgi-bin/values/add',
 	remove: '/cgi-bin/values/remove',
 	rename: '/cgi-bin/values/rename',
 	setCurrent: '/cgi-bin/values/set-current',
 	setFontSize: '/cgi-bin/values/set-font-size',
 	setTheme: '/cgi-bin/values/set-theme',
-	showLineNumbers: '/cgi-bin/values/show-line-numbers',
-	set: '/cgi-bin/values/add'
+	showLineNumbers: '/cgi-bin/values/show-line-numbers'
 }, POST_CONF);
 
 exports.rules = createCgi({

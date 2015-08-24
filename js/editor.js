@@ -94,7 +94,7 @@ var Editor = React.createClass({
 		var elem = self.refs.editor.getDOMNode();
 		var editor = self._editor = CodeMirror(elem);
 		editor.on('change', function(e) {
-			if (typeof self.props.onChange == 'function') {
+			if (typeof self.props.onChange == 'function' && editor.getValue() !== (self.props.value || '')) {
 				self.props.onChange.call(self, e);
 			}
 		});

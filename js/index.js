@@ -1,3 +1,4 @@
+require('../css/index.css');
 var $ = require('jquery');
 var React = require('react');
 var Menu = require('./menu');
@@ -5,6 +6,7 @@ var List = require('./list');
 var Network = require('./network');
 var MenuItem = require('./menu-item');
 var dataCenter = require('./data-center');
+var util = require('./util');
 var pageName = getPageName();
 
 function getPageName() {
@@ -104,11 +106,75 @@ var Index = React.createClass({
 		});
 		location.hash = 'values';
 	},
-	createRules: function() {
-		
+	showCreateRules: function() {
+		var createRulesInput = this.refs.createRulesInput.getDOMNode();
+		this.setState({
+			showCreateRules: true,
+			showCreateValues: false
+		}, function() {
+			createRulesInput.focus();
+		});
 	},
-	createValues: function() {
-			
+	showCreateValues: function() {
+		var createValuesInput = this.refs.createValuesInput.getDOMNode();
+		this.setState({
+			showCreateRules: false,
+			showCreateValues: true
+		}, function() {
+			createValuesInput.focus();
+		});
+	},
+	createRules: function(e) {
+		if (e.keyCode != 13) {
+			return;
+		}
+		var target = e.target;
+		var name = $.trim(target.value);
+		if (!name) {
+			alert('Rule name can not be empty.');
+			return;
+		}
+		
+		if (this.state.rules.list.indexOf(name) != -1) {
+			alert('Rule name  \'' + name + '\' already exists.');
+			return;
+		}
+		var rulesList = this.refs.rules;
+		dataCenter.rules.add({name: name}, function(data) {
+			if (data && data.ec === 0) {
+				target.value = '';
+				target.blur();
+				rulesList.add(name);
+			} else {
+				util.showSystemError();
+			}
+		});
+	},
+	createValues: function(e) {
+		if (e.keyCode != 13) {
+			return;
+		}
+		var target = e.target;
+		var name = $.trim(target.value);
+		if (!name) {
+			alert('Value name can not be empty.');
+			return;
+		}
+		
+		if (this.state.values.list.indexOf(name) != -1) {
+			alert('Value name  \'' + name + '\' already exists.');
+			return;
+		}
+		var valuesList = this.refs.values;
+		dataCenter.values.add({name: name}, function(data) {
+			if (data && data.ec === 0) {
+				target.value = '';
+				target.blur();
+				valuesList.add(name);
+			} else {
+				util.showSystemError();
+			}
+		});
 	},
 	editRules: function() {
 			
@@ -133,17 +199,32 @@ var Index = React.createClass({
 		var selectedItem = rulesList.getSelectedItem();
 		if (selectedItem && !selectedItem.isDefault) {
 			var name = selectedItem.name;
-			if (confirm('Confirm delete this rule `' + name + '`.')) {
+			if (confirm('Confirm delete this Rule \'' + name + '\'.')) {
 				dataCenter.rules.remove({name: name}, function(data) {
 					if (data && data.ec === 0) {
 						rulesList.remove(name);
+					} else {
+						util.showSystemError();
 					}
 				});
 			}
 		}
 	},
 	removeValues: function() {
-		
+		var valuesList = this.refs.values;
+		var selectedItem = valuesList.getSelectedItem();
+		if (selectedItem && !selectedItem.isDefault) {
+			var name = selectedItem.name;
+			if (confirm('Confirm delete this Value \'' + name + '\'.')) {
+				dataCenter.values.remove({name: name}, function(data) {
+					if (data && data.ec === 0) {
+						valuesList.remove(name);
+					} else {
+						util.showSystemError();
+					}
+				});
+			}
+		}
 	},
 	setRulesSettings: function() {
 		
@@ -154,6 +235,12 @@ var Index = React.createClass({
 	showWeinre: function() {
 		
 	},
+	hideOnBlur: function() {
+		this.setState({
+			showCreateRules: false,
+			showCreateValues: false
+		});
+	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
 		if (target.hasClass('w-network-menu')) {
@@ -163,7 +250,7 @@ var Index = React.createClass({
 		} else if (target.hasClass('w-values-menu')) {
 			this.showValues();
 		} else if (target.hasClass('w-create-menu')) {
-			this.state.name == 'rules' ? this.createRules() : this.createValues();
+			this.state.name == 'rules' ? this.showCreateRules() : this.showCreateValues();
 		} else if (target.hasClass('w-edit-menu')) {
 			this.state.name == 'rules' ? this.editRules() : this.editValues();
 		} else if (target.hasClass('w-replay-menu')) {
@@ -188,7 +275,11 @@ var Index = React.createClass({
 		return (
 			<div className="main orient-vertical-box">
 				<Menu name={name} onClick={this.onClickMenu}>
-					<MenuItem onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="rulesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="valuesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="weinreOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-create-rules-input" maxLength="64" placeholder="press 'enter' to save the rules name" />
+					<input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-create-values-input" maxLength="64" placeholder="press 'enter' to save the values name" />
 				</Menu>
 				{this.state.hasRules ? <List ref="rules" modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List ref="values" modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}

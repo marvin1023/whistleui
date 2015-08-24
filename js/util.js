@@ -115,3 +115,9 @@ function getBoolean(val) {
 
 exports.getBoolean = getBoolean;
 
+exports.showSystemError = function showSystemError() {
+	alert('Please check if the whistle server is started.');
+};
+
+
+
