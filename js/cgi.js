@@ -6,17 +6,21 @@ function createCgi(url, settings) {
 		url = {url: url};
 	}
 	settings = $.extend({dataType: 'json'}, settings, url);
+	url = url.url;
 	var queue = [];
 	var jqXhr;
 	
 	function cgiFn(data, callback, options) {
+		var opts = {url: typeof url == 'function' ? url() : url};
 		if (typeof data == 'function') {
 			options = callback;
 			callback = data;
 			data = null;
+		} else {
+			opts.data = data;
 		}
 		
-		var options = $.extend({}, settings, options);
+		options = $.extend({}, settings, options, opts);
 		if (jqXhr) {
 			var mode = options.mode;
 			if (mode == 'ignore') {
