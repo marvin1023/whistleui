@@ -41,10 +41,11 @@ var Index = React.createClass({
 		var values = modal.values;
 		if (rules) {
 			rulesList.push('Default');
-			valuesData.Default = {
+			rulesData.Default = {
 					name: 'Default',
 					value: rules.defaultRules,
-					active: !rules.defaultRulesIsDisabled
+					active: !rules.defaultRulesIsDisabled,
+					isDefault: true
 			};
 			$.each(rules.list, function() {
 				rulesList.push(this.name);
@@ -103,6 +104,61 @@ var Index = React.createClass({
 		});
 		location.hash = 'values';
 	},
+	createRules: function() {
+		
+	},
+	createValues: function() {
+			
+	},
+	editRules: function() {
+			
+	},
+	editValues: function() {
+		
+	},
+	replay: function() {
+		
+	},
+	composer: function() {
+		
+	},
+	setFilter: function() {
+		
+	},
+	clear: function() {
+		
+	},
+	removeRules: function() {
+		var self = this;
+		var rules = self.state.rules;
+		$.each(rules.list, function(i, name) {
+			var item = rules.data[name];
+			if (item.selected) {
+				if (!item.isDefault && confirm('Confirm delete this rule `' + name + '`.')) {
+					dataCenter.rules.remove({name: name}, function(data) {
+						if (data && data.ec === 0) {
+							rules.list.splice(i, 1);
+							delete rules.data[name];
+							self.forceUpdate();
+						}
+					});
+				}
+				return false;
+			}
+		});
+	},
+	removeValues: function() {
+		
+	},
+	setRulesSettings: function() {
+		
+	},
+	setValuesSettings: function() {
+		
+	},
+	showWeinre: function() {
+		
+	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
 		if (target.hasClass('w-network-menu')) {
@@ -111,6 +167,24 @@ var Index = React.createClass({
 			this.showRules();
 		} else if (target.hasClass('w-values-menu')) {
 			this.showValues();
+		} else if (target.hasClass('w-create-menu')) {
+			this.state.name == 'rules' ? this.createRules() : this.createValues();
+		} else if (target.hasClass('w-edit-menu')) {
+			this.state.name == 'rules' ? this.editRules() : this.editValues();
+		} else if (target.hasClass('w-replay-menu')) {
+			this.replay();
+		} else if (target.hasClass('w-composer-menu')) {
+			this.composer();
+		} else if (target.hasClass('w-filter-menu')) {
+			this.setFilter();
+		} else if (target.hasClass('w-clear-menu')) {
+			this.clear();
+		} else if (target.hasClass('w-delete-menu')) {
+			this.state.name == 'rules' ? this.removeRules() : this.removeValues();
+		} else if (target.hasClass('w-settings-menu')) {
+			this.state.name == 'rules' ? this.setRulesSettings() : this.setValuesSettings();
+		} else if (target.hasClass('w-weinre-menu')) {
+			this.showWeinre();
 		}
 	},
 	render: function() {

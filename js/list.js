@@ -229,13 +229,13 @@ var List = React.createClass({
 			if (item) {
 				item.key = item.key || util.getKey();
 				item.name = name;
-				return;
+			} else {
+				data[name] = {
+					key: util.getKey(),
+					name: name,
+					value: ''
+				};
 			}
-			data[name] = {
-				key: util.getKey(),
-				name: name,
-				value: ''
-			};
 		});
 		
 		var selectedItem = self.getSelectedItem();
