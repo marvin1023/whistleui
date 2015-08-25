@@ -1,7 +1,6 @@
 require('../css/index.css');
 var $ = require('jquery');
 var React = require('react');
-var Menu = require('./menu');
 var List = require('./list');
 var Network = require('./network');
 var About = require('./about');
