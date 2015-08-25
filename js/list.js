@@ -179,7 +179,7 @@ var List = React.createClass({
 		var elem = $(e.target).closest('a');
 		var item = this._getItemByKey(elem.attr('data-key'));
 		if (!item || (typeof this.props.onSelect == 'function' && 
-				this.props.onSelect.call(this, {target: elem, data: item}) === false)) {
+				this.props.onSelect.call(this, item) === false)) {
 			return;
 		}
 		this.select(item.name);
@@ -249,10 +249,6 @@ var List = React.createClass({
 		});
 		
 		var selectedItem = self.getSelectedItem();
-		if (!selectedItem && list[0]) {
-			selectedItem = data[list[0]];
-			selectedItem.selected = true;
-		}
 		
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
