@@ -50,23 +50,27 @@ var Index = React.createClass({
 					active: !rules.defaultRulesIsDisabled,
 					isDefault: true
 			};
+			var selectedName = rules.current;
 			$.each(rules.list, function() {
 				rulesList.push(this.name);
+				
 				rulesData[this.name] = {
 					name: this.name,
 					value: this.data,
-					active: this.selected
+					active: this.selected,
+					selected: selectedName === this.name
 				};
 			});
 		}
 		
 		if (values) {
+			var selectedName = values.current;
 			$.each(values.list, function() {
 				valuesList.push(this.name);
 				valuesData[this.name] = {
 					name: this.name,
 					value: this.data,
-					active: this.selected
+					selected: selectedName === this.name
 				};
 			});
 		}
@@ -140,17 +144,18 @@ var Index = React.createClass({
 			alert('Rule name can not be empty.');
 			return;
 		}
-		
-		if (this.state.rules.list.indexOf(name) != -1) {
+		var self = this;
+		if (self.state.rules.list.indexOf(name) != -1) {
 			alert('Rule name  \'' + name + '\' already exists.');
 			return;
 		}
-		var rulesList = this.refs.rules;
+		var rulesList = self.refs.rules;
 		dataCenter.rules.add({name: name}, function(data) {
 			if (data && data.ec === 0) {
 				target.value = '';
 				target.blur();
 				rulesList.add(name);
+				self.forceUpdate();
 			} else {
 				util.showSystemError();
 			}
@@ -274,20 +279,38 @@ var Index = React.createClass({
 			}
 		});
 	},
-	onEnableList: function() {
-		
+	enableRules: function(item) {
+		var rulesList = this.refs.rules; 
+		dataCenter.rules[item.isDefault ? 'enableDefault' : 'select'](item, function(data) {
+			if (data && data.ec === 0) {
+				rulesList.enable(item.name);
+			} else {
+				util.showSystemError();
+			}
+		});
+		return false;
 	},
-	onDisableList: function() {
-		
+	disableRules: function(item) {
+		var rulesList = this.refs.rules; 
+		dataCenter.rules[item.isDefault ? 'disableDefault' : 'unselect'](item, function(data) {
+			if (data && data.ec === 0) {
+				rulesList.disable(item.name);
+			} else {
+				util.showSystemError();
+			}
+		});
+		return false;
 	},
-	enableRules: function() {
-		
-	},
-	disableRules: function() {
-			
-	},
-	saveValues: function() {
-		
+	saveValues: function(item) {
+		var valuesList = this.refs.values; 
+		dataCenter.values.add(item, function(data) {
+			if (data && data.ec === 0) {
+				valuesList.enable(item.name);
+			} else {
+				util.showSystemError();
+			}
+		});
+		return false;
 	},
 	replay: function() {
 		
@@ -302,7 +325,8 @@ var Index = React.createClass({
 		
 	},
 	removeRules: function() {
-		var rulesList = this.refs.rules;
+		var self = this;
+		var rulesList = self.refs.rules;
 		var selectedItem = rulesList.getSelectedItem();
 		if (selectedItem && !selectedItem.isDefault) {
 			var name = selectedItem.name;
@@ -310,6 +334,7 @@ var Index = React.createClass({
 				dataCenter.rules.remove({name: name}, function(data) {
 					if (data && data.ec === 0) {
 						rulesList.remove(name);
+						self.forceUpdate();
 					} else {
 						util.showSystemError();
 					}
@@ -378,7 +403,12 @@ var Index = React.createClass({
 			this.showWeinre();
 		}
 	},
-	onSelectItem: function(data) {
+	onSelectRules: function(item) {
+		dataCenter.rules.setCurrent({name: item.name});
+		this.forceUpdate();
+	},
+	onSelectValues: function(item) {
+		dataCenter.values.setCurrent({name: item.name});
 		this.forceUpdate();
 	},
 	render: function() {
@@ -386,7 +416,7 @@ var Index = React.createClass({
 		var isNetwork = name === undefined || name == 'network';
 		var isRules = name == 'rules';
 		var isValues = name == 'values';
-		var disabledCreateBtn, disabledEditBtn, disabledDeleteBtn;
+		var disabledEditBtn, disabledDeleteBtn;
 		if (isRules) {
 			var data = this.state.rules.data;
 			for (var i in data) {
@@ -403,7 +433,7 @@ var Index = React.createClass({
 					<a onClick={this.onClickMenu} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<a onClick={this.onClickMenu} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
 					<a onClick={this.onClickMenu} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
-					<a onClick={this.onClickMenu} className={'w-create-menu' + (disabledCreateBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
+					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
 					<a onClick={this.onClickMenu} className={'w-replay-menu' + (this.state.disabledReplayBtn ? ' w-disabled' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.onClickMenu} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
@@ -419,13 +449,13 @@ var Index = React.createClass({
 					<MenuItem ref="rulesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="valuesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="weinreOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="press 'enter' to save the rules name" /><button type="button" className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="press 'enter' to save the values name" /><button type="button" className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedValueName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
 				</div>
-				{this.state.hasRules ? <List ref="rules" onSelect={this.onSelectItem} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
-				{this.state.hasValues ? <List ref="values" onSelect={this.onSelectItem} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
+				{this.state.hasRules ? <List ref="rules" onEnable={this.enableRules} onDisable={this.disableRules} onSelect={this.onSelectRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{this.state.hasValues ? <List ref="values" onEnable={this.saveValues} onSelect={this.onSelectValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
 			</div>
 		);

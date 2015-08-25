@@ -62,6 +62,10 @@ var List = React.createClass({
 		var index = this._list.indexOf(name);
 		if (index != -1) {
 			this._list.splice(index, 1);
+			var nextItem = this._data[this._list[index] || this._list[index - 1] || ''];
+			if (nextItem) {
+				nextItem.selected = true;
+			}
 			this.forceUpdate();
 		}
 	},
@@ -189,23 +193,19 @@ var List = React.createClass({
 		var elem = target.closest('a');
 		var item = this._getItemByKey(elem.attr('data-key'));
 		var okIcon = target.hasClass('glyphicon-ok');
-		var data = {
-				target: elem,
-				data: item
-		};
-		item.active && !item.changed || okIcon ? this._onDisable(data) : this._onEnable(data);
+		item.active && !item.changed || okIcon ? this._onDisable(item) : this._onEnable(item);
 		okIcon && e.stopPropagation();
 	},
-	_onEnable: function(e) {
+	_onEnable: function(data) {
 		if (typeof this.props.onEnable != 'function' || 
-				this.props.onEnable.call(this, e) !== false) {
-			this.enable(e.data.name);
+				this.props.onEnable.call(this, data) !== false) {
+			this.enable(data.name);
 		}
 	},
-	_onDisable: function(e) {
+	_onDisable: function(data) {
 		if (typeof this.props.onDisable != 'function' || 
-				this.props.onDisable.call(this, e) !== false) {
-			this.disable(e.data.name);
+				this.props.onDisable.call(this, data) !== false) {
+			this.disable(data.name);
 		}
 	},
 	_onChange: function(e) {
