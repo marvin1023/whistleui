@@ -143,25 +143,20 @@ var List = React.createClass({
 		var list = $(self.refs.list.getDOMNode());
 		$(window).keydown(function(e) {
 			if (isSaveFile(e)) {
-				list.find('.w-changed').filter(':not(.w-selected)').each(trigger);
-				triggerSelectedElement();
+				list.find('.w-changed').each(trigger);
 				return false;
 			}
 		});
 		
 		var editor = $(this.refs.editor.getDOMNode()).keydown(function(e) {
 			if (isSaveFile(e)) {
-				triggerSelectedElement();
+				var selectedElem = list.find('.w-selected');
+				if (selectedElem.hasClass('w-changed') || !selectedElem.hasClass('w-active')) {
+					selectedElem.each(trigger);
+				}
 				return false;
 			}
 		});
-		
-		function triggerSelectedElement() {
-			var selectedElem = list.find('.w-selected');
-			if (selectedElem.hasClass('w-changed') || !selectedElem.hasClass('w-active')) {
-				selectedElem.each(trigger);
-			}
-		}
 		
 		function trigger() {
 			self._onDoubleClick({target: this});

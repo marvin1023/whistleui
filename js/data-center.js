@@ -8,7 +8,6 @@ var dataList = [];
 var curServerInfo;
 var initialData;
 var DEFAULT_CONF = {
-		mode: 'ignore', 
 		timeout: TIMEOUT,
 		xhrFields: {
 			withCredentials: true
