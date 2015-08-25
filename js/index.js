@@ -90,6 +90,9 @@ var Index = React.createClass({
 			}
 		});
 	},
+	preventBlur: function(e) {
+		e.target.nodeName != 'INPUT' && e.preventDefault();
+	},
 	showNetwork: function() {
 		this.setState({
 			hasNetwork: true,
@@ -387,13 +390,13 @@ var Index = React.createClass({
 					<a onClick={this.onClickMenu} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<a onClick={this.onClickMenu} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
 					<a onClick={this.onClickMenu} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
-					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
-					<a onClick={this.onClickMenu} className="w-edit-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
-					<a onClick={this.onClickMenu} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
+					<a onClick={this.onClickMenu} className={'w-create-menu' + (this.state.disabledCreateBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
+					<a onClick={this.onClickMenu} className={'w-edit-menu' + (this.state.disabledEditBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
+					<a onClick={this.onClickMenu} className={'w-replay-menu' + (this.state.disabledReplayBtn ? ' w-disabled' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.onClickMenu} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
-					<a onClick={this.onClickMenu} className="w-filter-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
+					<a onClick={this.onClickMenu} className={'w-filter-menu' + (this.state.hasFilterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
 					<a onClick={this.onClickMenu} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-remove"></span>Clear</a>
-					<a onClick={this.onClickMenu} className="w-delete-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
+					<a onClick={this.onClickMenu} className={'w-delete-menu' + (this.state.disabledDeleteBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.onClickMenu} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<a onClick={this.onClickMenu} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 					<a onClick={this.onClickMenu} className="w-rootca-menu" href="javascript:;"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
@@ -403,10 +406,10 @@ var Index = React.createClass({
 					<MenuItem ref="rulesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="valuesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="weinreOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="w-input-menu-item w-create-rules-input" maxLength="64" placeholder="press 'enter' to save the rules name" />
-					<input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="w-input-menu-item w-create-values-input" maxLength="64" placeholder="press 'enter' to save the values name" />
-					<input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showEditRules ? 'block' : 'none'}} className="w-input-menu-item w-edit-rules-input" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedRuleName || '')} />
-					<input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" style={{display: this.state.showEditValues ? 'block' : 'none'}} className="w-input-menu-item w-edit-values-input" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedValueName || '')} />
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="press 'enter' to save the rules name" /><button type="button" className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="press 'enter' to save the values name" /><button type="button" className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'press \'enter\' to rename ' + (this.state.selectedValueName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
 				</div>
 				{this.state.hasRules ? <List ref="rules" modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List ref="values" modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
