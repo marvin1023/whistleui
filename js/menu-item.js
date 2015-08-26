@@ -4,15 +4,6 @@ var React = require('react');
 var util = require('./util');
 
 var MenuItem = React.createClass({
-	getInitialState: function() {
-		return {};
-	},
-	hide: function() {
-		this.setState({show: false});
-	},
-	show: function() {
-		this.setState({show: true});
-	},
 	render: function() {
 		var options = this.props.options;
 		if (options && !options.length) {
@@ -22,7 +13,7 @@ var MenuItem = React.createClass({
 		var onClick = this.props.onClick || util.noop;
 		var onClickOption = this.props.onClickOption || util.noop;
 		return (
-			<div style={{display: this.state.show ? 'block' : 'none'}} className="w-menu-item">
+			<div style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className="w-menu-item">
 				{
 					options ? <div className="w-menu-options">{options.map(function(option) {
 						

@@ -359,13 +359,25 @@ var Index = React.createClass({
 		}
 	},
 	setRulesSettings: function() {
-		
+		this.setState({
+			showRulesOptions: true,
+			showValuesOptions: false,
+			showWeinreOptions: false
+		});
 	},
 	setValuesSettings: function() {
-		
+		this.setState({
+			showRulesOptions: false,
+			showValuesOptions: true,
+			showWeinreOptions: false
+		});
 	},
 	showWeinre: function() {
-		
+		this.setState({
+			showRulesOptions: false,
+			showValuesOptions: false,
+			showWeinreOptions: true
+		});
 	},
 	hideOnBlur: function() {
 		this.setState({
@@ -377,30 +389,14 @@ var Index = React.createClass({
 	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
-		if (target.hasClass('w-network-menu')) {
-			this.showNetwork();
-		} else if (target.hasClass('w-rules-menu')){
-			this.showRules();
-		} else if (target.hasClass('w-values-menu')) {
-			this.showValues();
-		} else if (target.hasClass('w-create-menu')) {
+		if (target.hasClass('w-create-menu')) {
 			this.state.name == 'rules' ? this.showCreateRules() : this.showCreateValues();
 		} else if (target.hasClass('w-edit-menu')) {
 			this.state.name == 'rules' ? this.showEditRules() : this.showEditValues();
-		} else if (target.hasClass('w-replay-menu')) {
-			this.replay();
-		} else if (target.hasClass('w-composer-menu')) {
-			this.composer();
-		} else if (target.hasClass('w-filter-menu')) {
-			this.setFilter();
-		} else if (target.hasClass('w-clear-menu')) {
-			this.clear();
 		} else if (target.hasClass('w-delete-menu')) {
 			this.state.name == 'rules' ? this.removeRules() : this.removeValues();
 		} else if (target.hasClass('w-settings-menu')) {
 			this.state.name == 'rules' ? this.setRulesSettings() : this.setValuesSettings();
-		} else if (target.hasClass('w-weinre-menu')) {
-			this.showWeinre();
 		}
 	},
 	onSelectRules: function(item) {
@@ -430,25 +426,25 @@ var Index = React.createClass({
 		return (
 			<div className="main orient-vertical-box">
 				<div className="w-menu">
-					<a onClick={this.onClickMenu} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
-					<a onClick={this.onClickMenu} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
-					<a onClick={this.onClickMenu} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
+					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
+					<a onClick={this.showRules} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
+					<a onClick={this.showValues} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
-					<a onClick={this.onClickMenu} className={'w-replay-menu' + (this.state.disabledReplayBtn ? ' w-disabled' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
-					<a onClick={this.onClickMenu} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
-					<a onClick={this.onClickMenu} className={'w-filter-menu' + (this.state.hasFilterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
-					<a onClick={this.onClickMenu} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-remove"></span>Clear</a>
+					<a onClick={this.replay} className={'w-replay-menu' + (this.state.disabledReplayBtn ? ' w-disabled' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
+					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
+					<a onClick={this.setFilter} className={'w-filter-menu' + (this.state.hasFilterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
+					<a onClick={this.clear} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-remove"></span>Clear</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.onClickMenu} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
-					<a onClick={this.onClickMenu} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
+					<a onClick={this.showWeinre} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 					<a onClick={this.onClickMenu} className="w-rootca-menu" href="javascript:;"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
 					<a onClick={this.onClickMenu} className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem ref="rulesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<MenuItem ref="valuesOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<MenuItem ref="weinreOptions" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem hide={!this.state.showRulesOptions} onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem hide={!this.state.showValuessOptions}  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem hide={!this.state.showWeinreOptions}  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
