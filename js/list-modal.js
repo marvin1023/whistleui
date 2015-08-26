@@ -1,4 +1,3 @@
-var $ = require('jquery');
 var util = require('./util');
 
 function ListModal(list, data) {
