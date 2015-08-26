@@ -412,12 +412,23 @@ var Index = React.createClass({
 		var isNetwork = name === undefined || name == 'network';
 		var isRules = name == 'rules';
 		var isValues = name == 'values';
-		var disabledEditBtn, disabledDeleteBtn;
+		var disabledEditBtn = true;
+		var disabledDeleteBtn = true;
 		if (isRules) {
 			var data = this.state.rules.data;
 			for (var i in data) {
 				if (data[i].selected) {
-					disabledCreateBtn = disabledEditBtn = disabledDeleteBtn = data[i].isDefault;
+					disabledEditBtn = disabledDeleteBtn = data[i].isDefault;
+					break;
+				}
+			}
+		}
+		
+		if (isValues) {
+			var data = this.state.values.data;
+			for (var i in data) {
+				if (data[i].selected) {
+					disabledEditBtn = disabledDeleteBtn = false;
 					break;
 				}
 			}
