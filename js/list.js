@@ -67,6 +67,7 @@ var List = React.createClass({
 				nextItem.selected = true;
 			}
 			this.forceUpdate();
+			return nextItem;
 		}
 	},
 	rename: function(name, newName) {

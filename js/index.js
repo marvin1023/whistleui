@@ -246,6 +246,7 @@ var Index = React.createClass({
 				target.value = '';
 				target.blur();
 				rulesList.rename(selectedItem.name, name);
+				dataCenter.rules.setCurrent({name: name});
 			} else {
 				util.showSystemError();
 			}
@@ -276,6 +277,7 @@ var Index = React.createClass({
 				target.value = '';
 				target.blur();
 				valuesList.rename(selectedItem.name, name);
+				dataCenter.values.setCurrent({name: name});
 			} else {
 				util.showSystemError();
 			}
@@ -335,7 +337,10 @@ var Index = React.createClass({
 			if (confirm('Confirm delete this Rule \'' + name + '\'.')) {
 				dataCenter.rules.remove({name: name}, function(data) {
 					if (data && data.ec === 0) {
-						rulesList.remove(name);
+						var nextItem = rulesList.remove(name);
+						if (nextItem) {
+							dataCenter.rules.setCurrent({name: nextItem.name});
+						}
 						self.forceUpdate();
 					} else {
 						util.showSystemError();
@@ -352,7 +357,10 @@ var Index = React.createClass({
 			if (confirm('Confirm delete this Value \'' + name + '\'.')) {
 				dataCenter.values.remove({name: name}, function(data) {
 					if (data && data.ec === 0) {
-						valuesList.remove(name);
+						var nextItem = valuesList.remove(name);
+						if (nextItem) {
+							dataCenter.values.setCurrent({name: nextItem.name});
+						}
 					} else {
 						util.showSystemError();
 					}
