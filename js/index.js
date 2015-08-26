@@ -43,14 +43,16 @@ var Index = React.createClass({
 		var rules = modal.rules;
 		var values = modal.values;
 		if (rules) {
+			var selectedName = rules.current;
 			rulesList.push('Default');
 			rulesData.Default = {
 					name: 'Default',
 					value: rules.defaultRules,
 					active: !rules.defaultRulesIsDisabled,
-					isDefault: true
+					isDefault: true,
+					selected: selectedName === 'Default'
 			};
-			var selectedName = rules.current;
+			
 			$.each(rules.list, function() {
 				rulesList.push(this.name);
 				
