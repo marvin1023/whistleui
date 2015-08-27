@@ -409,11 +409,11 @@ var Index = React.createClass({
 			this.state.name == 'rules' ? this.setRulesSettings() : this.setValuesSettings();
 		}
 	},
-	onSelectRules: function(item) {
+	activeRules: function(item) {
 		dataCenter.rules.setCurrent({name: item.name});
 		this.forceUpdate();
 	},
-	onSelectValues: function(item) {
+	activeValues: function(item) {
 		dataCenter.values.setCurrent({name: item.name});
 		this.forceUpdate();
 	},
@@ -471,8 +471,8 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
 				</div>
-				{this.state.hasRules ? <List ref="rules" onEnable={this.enableRules} onDisable={this.disableRules} onSelect={this.onSelectRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
-				{this.state.hasValues ? <List ref="values" onEnable={this.saveValues} onSelect={this.onSelectValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
+				{this.state.hasRules ? <List ref="rules" onEnable={this.enableRules} onDisable={this.disableRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{this.state.hasValues ? <List ref="values" onEnable={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
 			</div>
 		);

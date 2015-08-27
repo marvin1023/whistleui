@@ -178,8 +178,8 @@ var List = React.createClass({
 	_onClick: function(e) {
 		var elem = $(e.target).closest('a');
 		var item = this._getItemByKey(elem.attr('data-key'));
-		if (!item || (typeof this.props.onSelect == 'function' && 
-				this.props.onSelect.call(this, item) === false)) {
+		if (!item || (typeof this.props.onActive == 'function' && 
+				this.props.onActive(item) === false)) {
 			return;
 		}
 		this.select(item.name);
