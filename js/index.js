@@ -50,7 +50,7 @@ var Index = React.createClass({
 					value: rules.defaultRules,
 					active: !rules.defaultRulesIsDisabled,
 					isDefault: true,
-					selected: selectedName === 'Default'
+					active: selectedName === 'Default'
 			};
 			
 			$.each(rules.list, function() {
@@ -59,8 +59,8 @@ var Index = React.createClass({
 				rulesData[this.name] = {
 					name: this.name,
 					value: this.data,
-					active: this.selected,
-					selected: selectedName === this.name
+					selected: this.selected,
+					active: selectedName === this.name
 				};
 			});
 		}
@@ -72,7 +72,7 @@ var Index = React.createClass({
 				valuesData[this.name] = {
 					name: this.name,
 					value: this.data,
-					selected: selectedName === this.name
+					active: selectedName === this.name
 				};
 			});
 		}
@@ -427,7 +427,7 @@ var Index = React.createClass({
 		if (isRules) {
 			var data = this.state.rules.data;
 			for (var i in data) {
-				if (data[i].selected) {
+				if (data[i].active) {
 					disabledEditBtn = disabledDeleteBtn = data[i].isDefault;
 					break;
 				}
@@ -437,7 +437,7 @@ var Index = React.createClass({
 		if (isValues) {
 			var data = this.state.values.data;
 			for (var i in data) {
-				if (data[i].selected) {
+				if (data[i].active) {
 					disabledEditBtn = disabledDeleteBtn = false;
 					break;
 				}

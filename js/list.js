@@ -19,27 +19,6 @@ var List = React.createClass({
 		this._data = {};
 		this._list = [];
 	},
-	getEnableItems: function() {
-		var items = [];
-		for (var i in this._data) {
-			var item = this._data[i];
-			if (item.active) {
-				items.push(item);
-			}
-		}
-		
-		return items;
-	},
-	getSelectedItem: function() {
-		var selectedItem;
-		$.each(this._data, function(name, item) {
-			if (item.selected) {
-				selectedItem = item;
-				return false;
-			}
-		});
-		return selectedItem;
-	},
 	add: function(name, value) {
 		if (this.getItem(name)) {
 			return false;
@@ -49,7 +28,7 @@ var List = React.createClass({
 		this._clearSelection();
 		list.push(name);
 		data[name] = {
-				selected: true,
+				active: true,
 				key: util.getKey(),
 				name: name,
 				value: value
@@ -64,7 +43,7 @@ var List = React.createClass({
 			this._list.splice(index, 1);
 			var nextItem = this._data[this._list[index] || this._list[index - 1] || ''];
 			if (nextItem) {
-				nextItem.selected = true;
+				nextItem.active = true;
 			}
 			this.forceUpdate();
 			return nextItem;
@@ -79,38 +58,29 @@ var List = React.createClass({
 			this.forceUpdate();
 		}
 	},
-	select: function(name) {
+	active: function(name) {
 		var item = this.getItem(name);
 		if (item) {
 			this._clearSelection();
-			item.selected = true;
-			this.forceUpdate();
-		}
-	},
-	unselect: function(name) {
-		if (!arguments.length) {
-			this._clearSelection();
-			this.forceUpdate();
-		}else if (name = this.getItem(name)) {
-			name.selected = false;
+			item.active = true;
 			this.forceUpdate();
 		}
 	},
 	_clearSelection: function() {
 		var data = this._data;
 		Object.keys(data).forEach(function(name) {
-			data[name].selected = false;
+			data[name].active = false;
 		});
 	},
 	_clearActive: function() {
 		var data = this._data;
 		Object.keys(data).forEach(function(name) {
-			data[name].active = false;
+			data[name].selected = false;
 		});
 	},
 	enable: function(name) {
 		if (name = this.getItem(name)) {
-			name.active = true;
+			name.selected = true;
 			name.changed = false;
 			this.forceUpdate();
 		}
@@ -120,22 +90,21 @@ var List = React.createClass({
 			this._clearActive();
 			this.forceUpdate();
 		} else if (name = this.getItem(name)) {
-			name.active = false;
+			name.selected = false;
 			this.forceUpdate();
 		}
 	},
-	getSelectedItem: function() {
-		var selectedItem;
-		for (var i in this._data) {
-			var item = this._data[i];
-			if (!selectedItem && item.selected) {
-				selectedItem = item;
-			} else {
-				item.selected = false;
+	getActiveItem: function() {
+		var activeItem;
+		$.each(this._data, function(name, item) {
+			if (item.active) {
+				activeItem = item;
+				return false;
 			}
-		}
-		return selectedItem;
+		});
+		return activeItem;
 	},
+
 	getItem: function(name) {
 		return this._data[name];
 	},
@@ -151,8 +120,8 @@ var List = React.createClass({
 		
 		var editor = $(this.refs.editor.getDOMNode()).keydown(function(e) {
 			if (isSaveFile(e)) {
-				var selectedElem = list.find('.w-selected');
-				if (selectedElem.hasClass('w-changed') || !selectedElem.hasClass('w-active')) {
+				var selectedElem = list.find('.w-active');
+				if (selectedElem.hasClass('w-changed') || !selectedElem.hasClass('w-selected')) {
 					selectedElem.each(trigger);
 				}
 				return false;
@@ -182,14 +151,14 @@ var List = React.createClass({
 				this.props.onActive(item) === false)) {
 			return;
 		}
-		this.select(item.name);
+		this.active(item.name);
 	},
 	_onDoubleClick: function(e) {
 		var target = $(e.target);
 		var elem = target.closest('a');
 		var item = this._getItemByKey(elem.attr('data-key'));
 		var okIcon = target.hasClass('glyphicon-ok');
-		item.active && !item.changed || okIcon ? this._onDisable(item) : this._onEnable(item);
+		item.selected && !item.changed || okIcon ? this._onDisable(item) : this._onEnable(item);
 		okIcon && e.stopPropagation();
 	},
 	_onEnable: function(data) {
@@ -205,7 +174,7 @@ var List = React.createClass({
 		}
 	},
 	_onChange: function(e) {
-		var item = this.getSelectedItem();
+		var item = this.getActiveItem();
 		if (!item) {
 			return;
 		}
@@ -244,7 +213,7 @@ var List = React.createClass({
 			}
 		});
 		
-		var selectedItem = self.getSelectedItem();
+		var activeItem = self.getActiveItem();
 		
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
@@ -258,15 +227,15 @@ var List = React.createClass({
 											onClick={self._onClick} 
 											onDoubleClick={self._onDoubleClick} 
 											className={(item.hover ? 'w-hover' : '') 
-											+ (item.selected ? ' w-selected' : '') 
+											+ (item.active ? ' w-active' : '') 
 											+ (item.changed ? ' w-changed' : '')
-											+ (item.active ? ' w-active' : '')} 
+											+ (item.selected ? ' w-selected' : '')} 
 											href="javascript:;">{name}<span onClick={self._onDoubleClick} className="glyphicon glyphicon-ok"></span></a>;
 							})
 						}
 					</div>
-					<Editor {...self.props} ref="editor" onChange={self._onChange} readOnly={!selectedItem} value={selectedItem && selectedItem.value} 
-					mode={self.props.name == 'rules' ? 'rules' : getSuffix(selectedItem && selectedItem.name)} />
+					<Editor {...self.props} ref="editor" onChange={self._onChange} readOnly={!activeItem} value={activeItem && activeItem.value} 
+					mode={self.props.name == 'rules' ? 'rules' : getSuffix(activeItem && activeItem.name)} />
 				</Divider>
 		);
 	}
