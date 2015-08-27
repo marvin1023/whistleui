@@ -67,29 +67,29 @@ proto.getSelected = function() {
 	}
 };
 
-proto.enable = function(name) {
+proto.unactive = function(name) {
 	var item = this.get(name);
 	if (item) {
-		item.disabled = false;
+		item.active = false;
 	}
 };
 
-proto.disable = function(name) {
+proto.active = function(name) {
 	var item = this.get(name);
 	if (item) {
-		item.disabled = true;
+		item.avtive = true;
 	}
 };
 
-proto.getEnabled = function() {
-	var enabled = [];
+proto.getActiveList = function() {
+	var activeList = [];
 	for (var i in this.data) {
 		var item = this.data[i];
-		if (!item.disabled) {
-			enabled.push(item);
+		if (!item.active) {
+			activeList.push(item);
 		}
 	}
-	return enabled;
+	return activeList;
 };
 
 proto.remove = function(name) {

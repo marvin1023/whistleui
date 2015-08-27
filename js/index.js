@@ -27,9 +27,9 @@ var Index = React.createClass({
 			state.hasNetwork = true;
 		}
 		var rulesList = [];
-		var rulesData = [];
+		var rulesData = {};
 		var valuesList = [];
-		var valuesData = [];
+		var valuesData = {};
 		
 		state.rules = {
 				list: rulesList,
