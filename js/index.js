@@ -187,32 +187,32 @@ var Index = React.createClass({
 	},
 	showEditRules: function() {
 		var rulesList = this.refs.rules;
-		var selectedItem = rulesList.getActiveItem();
-		if (!selectedItem || selectedItem.isDefault) {
+		var activeItem = rulesList.getActiveItem();
+		if (!activeItem || activeItem.isDefault) {
 			return;
 		}
 		
 		var editRulesInput = this.refs.editRulesInput.getDOMNode();
 		this.setState({
 			showEditRules: true,
-			selectedRuleName: selectedItem.name,
-			selectedRule: selectedItem
+			selectedRuleName: activeItem.name,
+			selectedRule: activeItem
 		}, function() {
 			editRulesInput.focus();
 		});	
 	},
 	showEditValues: function() {
 		var valuesList = this.refs.values;
-		var selectedItem = valuesList.getActiveItem();
-		if (!selectedItem || selectedItem.isDefault) {
+		var activeItem = valuesList.getActiveItem();
+		if (!activeItem || activeItem.isDefault) {
 			return;
 		}
 		
 		var editValuesInput = this.refs.editValuesInput.getDOMNode();
 		this.setState({
 			showEditValues: true,
-			selectedValueName: selectedItem.name,
-			selectedValue: selectedItem
+			selectedValueName: activeItem.name,
+			selectedValue: activeItem
 		}, function() {
 			editValuesInput.focus();
 		});	
@@ -221,8 +221,10 @@ var Index = React.createClass({
 		if (e.keyCode != 13) {
 			return;
 		}
-		var selectedItem = this.state.selectedRule;
-		if (!selectedItem) {
+		var self = this;
+		var modal = self.state.rules;
+		var activeItem = modal.getActive();
+		if (!activeItem) {
 			return;
 		}
 		var target = e.target;
@@ -232,17 +234,18 @@ var Index = React.createClass({
 			return;
 		}
 		
-		if (this.state.rules.list.indexOf(name) != -1) {
+		if (modal.getIndex(name) != -1) {
 			alert('Rule name  \'' + name + '\' already exists.');
 			return;
 		}
-		var rulesList = this.refs.rules;
-		dataCenter.rules.rename({name: selectedItem.name, newName: name}, function(data) {
+		
+		dataCenter.rules.rename({name: activeItem.name, newName: name}, function(data) {
 			if (data && data.ec === 0) {
 				target.value = '';
 				target.blur();
-				rulesList.rename(selectedItem.name, name);
+				modal.rename(activeItem.name, name);
 				dataCenter.rules.setCurrent({name: name});
+				self.forceUpdate();
 			} else {
 				util.showSystemError();
 			}
@@ -252,8 +255,10 @@ var Index = React.createClass({
 		if (e.keyCode != 13) {
 			return;
 		}
-		var selectedItem = this.state.selectedValue;
-		if (!selectedItem) {
+		var self = this;
+		var modal = self.state.values;
+		var activeItem = modal.getActive();
+		if (!activeItem) {
 			return;
 		}
 		var target = e.target;
@@ -263,17 +268,18 @@ var Index = React.createClass({
 			return;
 		}
 		
-		if (this.state.values.list.indexOf(name) != -1) {
+		if (modal.getIndex(name) != -1) {
 			alert('Rule name  \'' + name + '\' already exists.');
 			return;
 		}
-		var valuesList = this.refs.values;
-		dataCenter.values.rename({name: selectedItem.name, newName: name}, function(data) {
+		
+		dataCenter.values.rename({name: activeItem.name, newName: name}, function(data) {
 			if (data && data.ec === 0) {
 				target.value = '';
 				target.blur();
-				valuesList.rename(selectedItem.name, name);
+				modal.rename(activeItem.name, name);
 				dataCenter.values.setCurrent({name: name});
+				self.forceUpdate();
 			} else {
 				util.showSystemError();
 			}
@@ -327,9 +333,9 @@ var Index = React.createClass({
 	removeRules: function() {
 		var self = this;
 		var rulesList = self.refs.rules;
-		var selectedItem = rulesList.getActiveItem();
-		if (selectedItem && !selectedItem.isDefault) {
-			var name = selectedItem.name;
+		var activeItem = rulesList.getActiveItem();
+		if (activeItem && !activeItem.isDefault) {
+			var name = activeItem.name;
 			if (confirm('Confirm delete this Rule \'' + name + '\'.')) {
 				dataCenter.rules.remove({name: name}, function(data) {
 					if (data && data.ec === 0) {
@@ -347,9 +353,9 @@ var Index = React.createClass({
 	},
 	removeValues: function() {
 		var valuesList = this.refs.values;
-		var selectedItem = valuesList.getActiveItem();
-		if (selectedItem && !selectedItem.isDefault) {
-			var name = selectedItem.name;
+		var activeItem = valuesList.getActiveItem();
+		if (activeItem && !activeItem.isDefault) {
+			var name = activeItem.name;
 			if (confirm('Confirm delete this Value \'' + name + '\'.')) {
 				dataCenter.values.remove({name: name}, function(data) {
 					if (data && data.ec === 0) {
