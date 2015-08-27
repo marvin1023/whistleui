@@ -191,7 +191,7 @@ var Index = React.createClass({
 	},
 	showEditRules: function() {
 		var rulesList = this.refs.rules;
-		var selectedItem = rulesList.getSelectedItem();
+		var selectedItem = rulesList.getActiveItem();
 		if (!selectedItem || selectedItem.isDefault) {
 			return;
 		}
@@ -207,7 +207,7 @@ var Index = React.createClass({
 	},
 	showEditValues: function() {
 		var valuesList = this.refs.values;
-		var selectedItem = valuesList.getSelectedItem();
+		var selectedItem = valuesList.getActiveItem();
 		if (!selectedItem || selectedItem.isDefault) {
 			return;
 		}
@@ -331,7 +331,7 @@ var Index = React.createClass({
 	removeRules: function() {
 		var self = this;
 		var rulesList = self.refs.rules;
-		var selectedItem = rulesList.getSelectedItem();
+		var selectedItem = rulesList.getActiveItem();
 		if (selectedItem && !selectedItem.isDefault) {
 			var name = selectedItem.name;
 			if (confirm('Confirm delete this Rule \'' + name + '\'.')) {
@@ -351,7 +351,7 @@ var Index = React.createClass({
 	},
 	removeValues: function() {
 		var valuesList = this.refs.values;
-		var selectedItem = valuesList.getSelectedItem();
+		var selectedItem = valuesList.getActiveItem();
 		if (selectedItem && !selectedItem.isDefault) {
 			var name = selectedItem.name;
 			if (confirm('Confirm delete this Value \'' + name + '\'.')) {
