@@ -1,3 +1,4 @@
+var $ = require('jquery');
 var util = require('./util');
 
 function ListModal(list, data) {
@@ -21,14 +22,18 @@ proto.add = function(name, value) {
 	this.list.push(name);
 	this.data[name] = {
 		name: name,
-		value: value
+		value: value || ''
 	};
 };
 
 proto.set = function(name, value) {
 	var item = this.get(name);
 	if (item) {
-		item.value = value;
+		if (typeof value == 'string') {
+			item.value = value;
+		} else {
+			$.extend(item, value);
+		}
 	}
 };
 
@@ -37,28 +42,20 @@ proto.get = function(name) {
 	return this.data[name];
 };
 
-proto.select = function(name) {
+proto.setSelected = function(name, selected) {
 	var item = this.get(name);
 	if (item) {
-		this.clearSelection();
-		item.selected = true;
+		item.selected = selected !== false;
 	}
 };
 
-proto.unselect = function() {
-	var item = this.get(name);
-	if (item) {
-		item.selected = false;
-	}
-};
-
-proto.clearSelection = function() {
+proto.clearAllActive = function() {
 	for (var i in this.data) {
 		this.data[i].selected = false;
 	}
 };
 
-proto.getSelected = function() {
+proto.getAllSelected = function() {
 	for (var i in this.data) {
 		var item = this.data[i];
 		if (item.selected) {
@@ -67,17 +64,12 @@ proto.getSelected = function() {
 	}
 };
 
-proto.unactive = function(name) {
+proto.setActive = function(name, active) {
 	var item = this.get(name);
 	if (item) {
-		item.active = false;
-	}
-};
-
-proto.active = function(name) {
-	var item = this.get(name);
-	if (item) {
-		item.avtive = true;
+		active = active !== false;
+		active && this.clearAllActive();
+		item.active = active;
 	}
 };
 
@@ -85,7 +77,7 @@ proto.getActiveList = function() {
 	var activeList = [];
 	for (var i in this.data) {
 		var item = this.data[i];
-		if (!item.active) {
+		if (item.active) {
 			activeList.push(item);
 		}
 	}
