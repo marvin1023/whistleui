@@ -2,6 +2,7 @@ require('../css/index.css');
 var $ = require('jquery');
 var React = require('react');
 var List = require('./list');
+var ListModal = require('./list-modal');
 var Network = require('./network');
 var About = require('./about');
 var Online = require('./online');
@@ -31,14 +32,6 @@ var Index = React.createClass({
 		var valuesList = [];
 		var valuesData = {};
 		
-		state.rules = {
-				list: rulesList,
-				data: rulesData
-			};
-		state.values = {
-				list: valuesList,
-				data: valuesData
-			};
 		var modal = this.props.modal;
 		var rules = modal.rules;
 		var values = modal.values;
@@ -76,6 +69,9 @@ var Index = React.createClass({
 				};
 			});
 		}
+		
+		state.rules = new ListModal(rulesList, rulesData);
+		state.values = new ListModal(valuesList, valuesData);
 		
 		return state;
 	},

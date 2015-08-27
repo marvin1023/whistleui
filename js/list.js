@@ -20,89 +20,45 @@ var List = React.createClass({
 		this._list = [];
 	},
 	add: function(name, value) {
-		if (this.getItem(name)) {
-			return false;
+		var modal = this.props.modal;
+		if (modal.add(name, value)) {
+			modal.setActive(name);
+			this.forceUpdate();
+			return true;
 		}
-		var list = this._list;
-		var data =  this._data;
-		this._clearSelection();
-		list.push(name);
-		data[name] = {
-				active: true,
-				key: util.getKey(),
-				name: name,
-				value: value
-		};
-		this.forceUpdate();
-		return true;
+		return false;
 	},
 	remove: function(name) {
-		delete this._data[name];
-		var index = this._list.indexOf(name);
-		if (index != -1) {
-			this._list.splice(index, 1);
-			var nextItem = this._data[this._list[index] || this._list[index - 1] || ''];
-			if (nextItem) {
-				nextItem.active = true;
-			}
+		var modal = this.props.modal;
+		var index = modal.getIndex(name);
+		if (modal.remove(name) && (name = modal.list[index] 
+					|| modal.list[index - 1])) {
+			modal.setActive(name);
 			this.forceUpdate();
-			return nextItem;
 		}
 	},
 	rename: function(name, newName) {
-		var item = this.getItem(name);
-		if (item) {
-			delete this._data[name];
-			this._data[newName] = item;
-			this._list[this._list.indexOf(name)] = item.name = newName;
+		if (this.props.modal.rename(name, newName)) {
 			this.forceUpdate();
 		}
-	},
-	active: function(name) {
-		var item = this.getItem(name);
-		if (item) {
-			this._clearSelection();
-			item.active = true;
-			this.forceUpdate();
-		}
-	},
-	_clearSelection: function() {
-		var data = this._data;
-		Object.keys(data).forEach(function(name) {
-			data[name].active = false;
-		});
-	},
-	_clearActive: function() {
-		var data = this._data;
-		Object.keys(data).forEach(function(name) {
-			data[name].selected = false;
-		});
 	},
 	enable: function(name) {
-		if (name = this.getItem(name)) {
-			name.selected = true;
-			name.changed = false;
+		var modal = this.props.modal;
+		if (modal.setSelected(name)) {
+			modal.setChanged(name, false);
 			this.forceUpdate();
 		}
 	},
 	disable: function(name) {
-		if (!arguments.length) {
-			this._clearActive();
+		if (this.props.modal.setSelected(name, false)) {
 			this.forceUpdate();
-		} else if (name = this.getItem(name)) {
-			name.selected = false;
-			this.forceUpdate();
+			return true;
 		}
+		return false;
 	},
 	getActiveItem: function() {
-		var activeItem;
-		$.each(this._data, function(name, item) {
-			if (item.active) {
-				activeItem = item;
-				return false;
-			}
-		});
-		return activeItem;
+		
+		return this.props.modal.getActive();
 	},
 
 	getItem: function(name) {
@@ -151,7 +107,7 @@ var List = React.createClass({
 				this.props.onActive(item) === false)) {
 			return;
 		}
-		this.active(item.name);
+		this.props.modal.setActive(item.name);
 	},
 	_onDoubleClick: function(e) {
 		var target = $(e.target);
@@ -174,7 +130,7 @@ var List = React.createClass({
 		}
 	},
 	_onChange: function(e) {
-		var item = this.getActiveItem();
+		var item = this.props.modal.getActive();
 		if (!item) {
 			return;
 		}
@@ -187,33 +143,14 @@ var List = React.createClass({
 		}
 	},
 	_getItemByKey: function(key) {
-		for (var i in this._data) {
-			var item = this._data[i];
-			if (item.key == key) {
-				return item;
-			}
-		}
+		return this.props.modal.getByKey(key);
 	},
 	render: function() {
 		var self = this;
-		var modal = self.props.modal || {};
-		var list = self._list = modal.list = modal.list || [];
-		var data = self._data = modal.data = modal.data || {};
-		list.forEach(function(name) {
-			var item = data[name];
-			if (item) {
-				item.key = item.key || util.getKey();
-				item.name = name;
-			} else {
-				data[name] = {
-					key: util.getKey(),
-					name: name,
-					value: ''
-				};
-			}
-		});
-		
-		var activeItem = self.getActiveItem();
+		var modal = self.props.modal;
+		var list = self._list = modal.list;
+		var data = self._data = modal.data;
+		var activeItem = modal.getActive();
 		
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">

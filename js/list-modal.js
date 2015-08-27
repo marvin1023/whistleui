@@ -4,10 +4,10 @@ var util = require('./util');
 function ListModal(list, data) {
 	var self = this;
 	self.list = Array.isArray(list) ? list : [];
-	data = self.data || {};
+	data = data || {};
 	self.data = {};
 	self.list.forEach(function(name) {
-		var item = self.data = data[name] || {};
+		var item = self.data[name] = data[name] || {};
 		item.key = item.key || util.getKey();
 		item.name = name;
 	});
@@ -15,15 +15,38 @@ function ListModal(list, data) {
 
 var proto = ListModal.prototype;
 
+proto._getList = function(prop) {
+	var list = [];
+	var data = this.data;
+	Object.keys(data)
+			.forEach(function(name) {
+				var item = data[name];
+				if (item && item[prop]) {
+					list.push(item);
+				}
+			});
+	return list;
+};
+
+proto._setBoolProp = function(name, prop, bool) {
+	var item = this.get(name);
+	if (item) {
+		item[prop] = bool !== false;
+	}
+	return item;
+};
+
 proto.add = function(name, value) {
 	if (!name || this.get(name)) {
 		return false;
 	}
 	this.list.push(name);
 	this.data[name] = {
+		key: util.getKey(),
 		name: name,
 		value: value || ''
 	};
+	return true;
 };
 
 proto.set = function(name, value) {
@@ -42,26 +65,40 @@ proto.get = function(name) {
 	return this.data[name];
 };
 
-proto.setSelected = function(name, selected) {
-	var item = this.get(name);
-	if (item) {
-		item.selected = selected !== false;
-	}
-};
-
-proto.clearAllActive = function() {
-	for (var i in this.data) {
-		this.data[i].selected = false;
-	}
-};
-
-proto.getAllSelected = function() {
+proto.getByKey = function(key) {
 	for (var i in this.data) {
 		var item = this.data[i];
-		if (item.selected) {
+		if (item.key == key) {
 			return item;
 		}
 	}
+};
+
+proto.setSelected = function(name, selected) {
+	
+	return this._setBoolProp(name, 'selected', selected);
+};
+
+proto.getSelectedList = function() {
+	
+	return this._getList('selected');
+};
+
+proto.setChanged = function(name, changed) {
+
+	return this._setBoolProp(name, 'changed', changed);
+};
+
+proto.getChangedList = function() {
+	
+	return this._getList('changed');
+};
+
+proto.clearAllActive = function() {
+	var data = this.data;
+	Object.keys(data).forEach(function(name) {
+		data[name].active = false;
+	});
 };
 
 proto.setActive = function(name, active) {
@@ -73,22 +110,21 @@ proto.setActive = function(name, active) {
 	}
 };
 
-proto.getActiveList = function() {
-	var activeList = [];
+proto.getActive = function() {
 	for (var i in this.data) {
 		var item = this.data[i];
 		if (item.active) {
-			activeList.push(item);
+			return item;
 		}
 	}
-	return activeList;
 };
 
 proto.remove = function(name) {
-	var index = this.list.indexOf(name);
+	var index = this.getIndex(name);
 	if (index != -1) {
-		this.list.splice(i, 1);
+		this.list.splice(index, 1);
 		delete this.data[name];
+		return true;
 	}
 };
 
@@ -97,12 +133,17 @@ proto.rename = function(name, newName) {
 		return;
 	}
 	
-	var index = this.list.indexOf(name);
+	var index = this.getIndex(name);
 	if (index != -1) {
 		this.list[index] = newName;
 		this.data[newName] = this.data[name];
 		delete this.data[name];
+		return true;
 	}
+};
+
+proto.getIndex = function(name) {
+	return this.list.indexOf(name);
 };
 
 module.exports = ListModal;
