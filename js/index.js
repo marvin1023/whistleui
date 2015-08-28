@@ -144,7 +144,7 @@ var Index = React.createClass({
 		}
 		var self = this;
 		if (self.state.rules.list.indexOf(name) != -1) {
-			alert('Rule name  \'' + name + '\' already exists.');
+			alert('Rule name \'' + name + '\' already exists.');
 			return;
 		}
 		var rulesList = self.refs.rules;
@@ -171,7 +171,7 @@ var Index = React.createClass({
 		}
 		
 		if (this.state.values.list.indexOf(name) != -1) {
-			alert('Value name  \'' + name + '\' already exists.');
+			alert('Value name \'' + name + '\' already exists.');
 			return;
 		}
 		var valuesList = this.refs.values;
@@ -235,7 +235,7 @@ var Index = React.createClass({
 		}
 		
 		if (modal.getIndex(name) != -1) {
-			alert('Rule name  \'' + name + '\' already exists.');
+			alert('Rule name \'' + name + '\' already exists.');
 			return;
 		}
 		
@@ -269,7 +269,7 @@ var Index = React.createClass({
 		}
 		
 		if (modal.getIndex(name) != -1) {
-			alert('Rule name  \'' + name + '\' already exists.');
+			alert('Rule name \'' + name + '\' already exists.');
 			return;
 		}
 		
