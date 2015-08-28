@@ -29,6 +29,7 @@ var Overview = React.createClass({
 		return (
 			<div className="w-detail-overview orient-vertical-box">
 				<Properties modal={overviewModal} />
+				<p className="w-detail-overview-title">All rules:</p>
 				<Properties modal={rulesModal} />
 			</div>		
 		);
