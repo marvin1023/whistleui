@@ -36,6 +36,10 @@ proto._setBoolProp = function(name, prop, bool) {
 	return item;
 };
 
+proto.exists = function(name) {
+	return this.list.indexOf(name) != -1;
+};
+
 proto.add = function(name, value) {
 	if (!name || this.get(name)) {
 		return false;
@@ -144,6 +148,12 @@ proto.rename = function(name, newName) {
 
 proto.getIndex = function(name) {
 	return this.list.indexOf(name);
+};
+
+proto.getSibling = function(name) {
+	var index = this.getIndex(name);
+	name = this.list[index + 1] || this.list[index - 1];
+	return name && this.data[name];
 };
 
 module.exports = ListModal;

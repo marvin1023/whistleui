@@ -37,25 +37,6 @@ var List = React.createClass({
 			this.forceUpdate();
 		}
 	},
-	rename: function(name, newName) {
-		if (this.props.modal.rename(name, newName)) {
-			this.forceUpdate();
-		}
-	},
-	enable: function(name) {
-		var modal = this.props.modal;
-		if (modal.setSelected(name)) {
-			modal.setChanged(name, false);
-			this.forceUpdate();
-		}
-	},
-	disable: function(name) {
-		if (this.props.modal.setSelected(name, false)) {
-			this.forceUpdate();
-			return true;
-		}
-		return false;
-	},
 	getActiveItem: function() {
 		
 		return this.props.modal.getActive();

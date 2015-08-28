@@ -143,16 +143,18 @@ var Index = React.createClass({
 			return;
 		}
 		var self = this;
-		if (self.state.rules.list.indexOf(name) != -1) {
+		var modal = this.state.rules;
+		if (modal.exists(name)) {
 			alert('Rule name \'' + name + '\' already exists.');
 			return;
 		}
-		var rulesList = self.refs.rules;
+		
 		dataCenter.rules.add({name: name}, function(data) {
 			if (data && data.ec === 0) {
+				modal.add(name);
+				self.setRulesActive(name);
 				target.value = '';
 				target.blur();
-				rulesList.add(name);
 				self.forceUpdate();
 			} else {
 				util.showSystemError();
@@ -169,29 +171,31 @@ var Index = React.createClass({
 			alert('Value name can not be empty.');
 			return;
 		}
-		
-		if (this.state.values.list.indexOf(name) != -1) {
+		var self = this;
+		var modal = this.state.values;
+		if (modal.exists(name)) {
 			alert('Value name \'' + name + '\' already exists.');
 			return;
 		}
-		var valuesList = this.refs.values;
+		
 		dataCenter.values.add({name: name}, function(data) {
 			if (data && data.ec === 0) {
+				modal.add(name);
+				self.setValuesActive(name);
 				target.value = '';
 				target.blur();
-				valuesList.add(name);
+				self.forceUpdate();
 			} else {
 				util.showSystemError();
 			}
 		});
 	},
 	showEditRules: function() {
-		var rulesList = this.refs.rules;
-		var activeItem = rulesList.getActiveItem();
+		var modal = this.state.rules;
+		var activeItem = modal.getActive();
 		if (!activeItem || activeItem.isDefault) {
 			return;
 		}
-		
 		var editRulesInput = this.refs.editRulesInput.getDOMNode();
 		this.setState({
 			showEditRules: true,
@@ -202,8 +206,8 @@ var Index = React.createClass({
 		});	
 	},
 	showEditValues: function() {
-		var valuesList = this.refs.values;
-		var activeItem = valuesList.getActiveItem();
+		var modal = this.state.values;
+		var activeItem = modal.getActive();
 		if (!activeItem || activeItem.isDefault) {
 			return;
 		}
@@ -234,17 +238,17 @@ var Index = React.createClass({
 			return;
 		}
 		
-		if (modal.getIndex(name) != -1) {
+		if (modal.exists(name)) {
 			alert('Rule name \'' + name + '\' already exists.');
 			return;
 		}
 		
 		dataCenter.rules.rename({name: activeItem.name, newName: name}, function(data) {
 			if (data && data.ec === 0) {
+				modal.rename(activeItem.name, name);
+				self.setRulesActive(name);
 				target.value = '';
 				target.blur();
-				modal.rename(activeItem.name, name);
-				dataCenter.rules.setCurrent({name: name});
 				self.forceUpdate();
 			} else {
 				util.showSystemError();
@@ -268,17 +272,17 @@ var Index = React.createClass({
 			return;
 		}
 		
-		if (modal.getIndex(name) != -1) {
+		if (modal.exists(name)) {
 			alert('Rule name \'' + name + '\' already exists.');
 			return;
 		}
 		
 		dataCenter.values.rename({name: activeItem.name, newName: name}, function(data) {
 			if (data && data.ec === 0) {
+				modal.rename(activeItem.name, name);
+				self.setValuesActive(name);
 				target.value = '';
 				target.blur();
-				modal.rename(activeItem.name, name);
-				dataCenter.values.setCurrent({name: name});
 				self.forceUpdate();
 			} else {
 				util.showSystemError();
@@ -286,10 +290,10 @@ var Index = React.createClass({
 		});
 	},
 	enableRules: function(item) {
-		var rulesList = this.refs.rules; 
+		var self = this;
 		dataCenter.rules[item.isDefault ? 'enableDefault' : 'select'](item, function(data) {
 			if (data && data.ec === 0) {
-				rulesList.enable(item.name);
+				self.setSelected(self.state.rules, item.name);
 			} else {
 				util.showSystemError();
 			}
@@ -297,10 +301,10 @@ var Index = React.createClass({
 		return false;
 	},
 	disableRules: function(item) {
-		var rulesList = this.refs.rules; 
+		var self = this; 
 		dataCenter.rules[item.isDefault ? 'disableDefault' : 'unselect'](item, function(data) {
 			if (data && data.ec === 0) {
-				rulesList.disable(item.name);
+				self.setSelected(self.state.rules, item.name, false);
 			} else {
 				util.showSystemError();
 			}
@@ -308,15 +312,21 @@ var Index = React.createClass({
 		return false;
 	},
 	saveValues: function(item) {
-		var valuesList = this.refs.values; 
+		var self = this;
 		dataCenter.values.add(item, function(data) {
 			if (data && data.ec === 0) {
-				valuesList.enable(item.name);
+				self.setSelected(self.state.values, item.name);
 			} else {
 				util.showSystemError();
 			}
 		});
 		return false;
+	},
+	setSelected: function(modal, name, selected) {
+		if (modal.setSelected(name, selected)) {
+			modal.setChanged(name, false);
+			this.forceUpdate();
+		}
 	},
 	replay: function() {
 		
@@ -332,17 +342,16 @@ var Index = React.createClass({
 	},
 	removeRules: function() {
 		var self = this;
-		var rulesList = self.refs.rules;
-		var activeItem = rulesList.getActiveItem();
+		var modal = this.state.rules;
+		var activeItem = modal.getActive();
 		if (activeItem && !activeItem.isDefault) {
 			var name = activeItem.name;
-			if (confirm('Confirm delete this Rule \'' + name + '\'.')) {
+			if (confirm('Confirm delete this Rule \'' + name + '\'.')) { 
 				dataCenter.rules.remove({name: name}, function(data) {
 					if (data && data.ec === 0) {
-						var nextItem = rulesList.remove(name);
-						if (nextItem) {
-							dataCenter.rules.setCurrent({name: nextItem.name});
-						}
+						var nextItem = modal.getSibling(name);
+						nextItem && self.setRulesActive(nextItem.name);
+						modal.remove(name);
 						self.forceUpdate();
 					} else {
 						util.showSystemError();
@@ -352,23 +361,32 @@ var Index = React.createClass({
 		}
 	},
 	removeValues: function() {
-		var valuesList = this.refs.values;
-		var activeItem = valuesList.getActiveItem();
+		var self = this;
+		var modal = this.state.values;
+		var activeItem = modal.getActive();
 		if (activeItem && !activeItem.isDefault) {
 			var name = activeItem.name;
 			if (confirm('Confirm delete this Value \'' + name + '\'.')) {
 				dataCenter.values.remove({name: name}, function(data) {
 					if (data && data.ec === 0) {
-						var nextItem = valuesList.remove(name);
-						if (nextItem) {
-							dataCenter.values.setCurrent({name: nextItem.name});
-						}
+						var nextItem = modal.getSibling(name);
+						nextItem && self.setValuesActive(nextItem.name);
+						modal.remove(name);
+						self.forceUpdate();
 					} else {
 						util.showSystemError();
 					}
 				});
 			}
 		}
+	},
+	setRulesActive: function(name) {
+		dataCenter.rules.setCurrent({name: name});
+		this.state.rules.setActive(name);
+	},
+	setValuesActive: function(name) {
+		dataCenter.values.setCurrent({name: name});
+		this.state.values.setActive(name);
 	},
 	setRulesSettings: function() {
 		this.setState({
@@ -401,14 +419,15 @@ var Index = React.createClass({
 	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
+		var isRules = this.state.name == 'rules';
 		if (target.hasClass('w-create-menu')) {
-			this.state.name == 'rules' ? this.showCreateRules() : this.showCreateValues();
+			isRules ? this.showCreateRules() : this.showCreateValues();
 		} else if (target.hasClass('w-edit-menu')) {
-			this.state.name == 'rules' ? this.showEditRules() : this.showEditValues();
+			isRules ? this.showEditRules() : this.showEditValues();
 		} else if (target.hasClass('w-delete-menu')) {
-			this.state.name == 'rules' ? this.removeRules() : this.removeValues();
+			isRules ? this.removeRules() : this.removeValues();
 		} else if (target.hasClass('w-settings-menu')) {
-			this.state.name == 'rules' ? this.setRulesSettings() : this.setValuesSettings();
+			isRules ? this.setRulesSettings() : this.setValuesSettings();
 		}
 	},
 	activeRules: function(item) {
@@ -473,8 +492,8 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
 				</div>
-				{this.state.hasRules ? <List ref="rules" onEnable={this.enableRules} onDisable={this.disableRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
-				{this.state.hasValues ? <List ref="values" onEnable={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
+				{this.state.hasRules ? <List onEnable={this.enableRules} onDisable={this.disableRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{this.state.hasValues ? <List onEnable={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
 			</div>
 		);
