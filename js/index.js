@@ -462,7 +462,7 @@ var Index = React.createClass({
 					<a onClick={this.onClickMenu} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<a onClick={this.showWeinre} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 					<a onClick={this.onClickMenu} className="w-rootca-menu" href="javascript:;"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
-					<a onClick={this.onClickMenu} className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
+					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
 					<MenuItem hide={!this.state.showRulesOptions} onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />

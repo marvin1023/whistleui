@@ -9,7 +9,7 @@ var OVERVIEW = ['Url', 'Method', 'Status Code', 'Host IP', 'Client IP', 'Request
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 
  * cache://xxxs[no], params://json|string(放在url)
  */
-var RULES = ['Host', 'Req', 'Rule', 'Res', 'Weinre', 'Filter', 'Log', 'params', 'delayReq', 'reqSpeed', 'reqHeaders',
+var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'log', 'params', 'delayReq', 'reqSpeed', 'reqHeaders',
              'method', 'reqType', 'reqBody', 'prependReq', 'appendReq', 'resHeaders', 'statusCode', 'redirect', 'delayRes', 
              'resSpeed', 'resType', 'cache', 'resBody', 'prependRes', 'appendRes'];
 
@@ -29,7 +29,7 @@ var Overview = React.createClass({
 		return (
 			<div className="w-detail-overview orient-vertical-box">
 				<Properties modal={overviewModal} />
-				<p className="w-detail-overview-title">All rules:</p>
+				<p className="w-detail-overview-title"><a href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span></a>All rules:</p>
 				<Properties modal={rulesModal} />
 			</div>		
 		);
