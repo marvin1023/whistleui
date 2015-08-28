@@ -289,7 +289,7 @@ var Index = React.createClass({
 			}
 		});
 	},
-	enableRules: function(item) {
+	selectRules: function(item) {
 		var self = this;
 		dataCenter.rules[item.isDefault ? 'enableDefault' : 'select'](item, function(data) {
 			if (data && data.ec === 0) {
@@ -300,7 +300,7 @@ var Index = React.createClass({
 		});
 		return false;
 	},
-	disableRules: function(item) {
+	unselectRules: function(item) {
 		var self = this; 
 		dataCenter.rules[item.isDefault ? 'disableDefault' : 'unselect'](item, function(data) {
 			if (data && data.ec === 0) {
@@ -453,9 +453,7 @@ var Index = React.createClass({
 					break;
 				}
 			}
-		}
-		
-		if (isValues) {
+		} else if (isValues) {
 			var data = this.state.values.data;
 			for (var i in data) {
 				if (data[i].active) {
@@ -492,8 +490,8 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
 				</div>
-				{this.state.hasRules ? <List onEnable={this.enableRules} onDisable={this.disableRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
-				{this.state.hasValues ? <List onEnable={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
+				{this.state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{this.state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
 			</div>
 		);

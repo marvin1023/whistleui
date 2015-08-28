@@ -52,18 +52,18 @@ var List = React.createClass({
 		var elem = target.closest('a');
 		var item = this.getItemByKey(elem.attr('data-key'));
 		var okIcon = target.hasClass('glyphicon-ok');
-		item.selected && !item.changed || okIcon ? this.onDisable(item) : this.onEnable(item);
+		item.selected && !item.changed || okIcon ? this.onUnselect(item) : this.onSelect(item);
 		okIcon && e.stopPropagation();
 	},
-	onEnable: function(data) {
-		if (typeof this.props.onEnable != 'function' || 
-				this.props.onEnable.call(this, data) !== false) {
+	onSelect: function(data) {
+		if (typeof this.props.onSelect != 'function' || 
+				this.props.onSelect.call(this, data) !== false) {
 			this.enable(data.name);
 		}
 	},
-	onDisable: function(data) {
-		if (typeof this.props.onDisable != 'function' || 
-				this.props.onDisable.call(this, data) !== false) {
+	onUnselect: function(data) {
+		if (typeof this.props.onUnselect != 'function' || 
+				this.props.onUnselect.call(this, data) !== false) {
 			this.disable(data.name);
 		}
 	},
