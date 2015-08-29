@@ -18,16 +18,18 @@ var List = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		var visible = !self.props.hide;
-		var list = $(self.refs.list.getDOMNode());
 		$(window).keydown(function(e) {
 			if (visible && (e.ctrlKey || e.metaKey) && e.keyCode == 83) {
-				list.find('.w-changed,.w-active').each(trigger);
+				var modal = self.props.modal;
+				modal.getChangedList().forEach(trigger);
+				var activeItem = modal.getActive();
+				activeItem && trigger(activeItem);
 				return false;
 			}
 		});
 		
-		function trigger() {
-			self.onDoubleClick({target: this});
+		function trigger(item) {
+			self.onDoubleClick(item);
 		}
 	},
 	onMouseEnter: function(e) {
@@ -47,25 +49,16 @@ var List = React.createClass({
 		}
 		this.props.modal.setActive(item.name);
 	},
-	onDoubleClick: function(e) {
-		var target = $(e.target);
-		var elem = target.closest('a');
-		var item = this.getItemByKey(elem.attr('data-key'));
-		var okIcon = target.hasClass('glyphicon-ok');
+	onDoubleClick: function(item, okIcon) {
 		item.selected && !item.changed || okIcon ? this.onUnselect(item) : this.onSelect(item);
-		okIcon && e.stopPropagation();
 	},
 	onSelect: function(data) {
-		if (typeof this.props.onSelect != 'function' || 
-				this.props.onSelect.call(this, data) !== false) {
-			this.enable(data.name);
-		}
+		var onSelect = this.props.onSelect;
+		typeof  onSelect == 'function' && onSelect(data);
 	},
 	onUnselect: function(data) {
-		if (typeof this.props.onUnselect != 'function' || 
-				this.props.onUnselect.call(this, data) !== false) {
-			this.disable(data.name);
-		}
+		var onUnselect = this.props.onUnselect;
+		typeof onUnselect == 'function' && onUnselect(data);
 	},
 	onChange: function(e) {
 		var item = this.props.modal.getActive();
@@ -96,16 +89,24 @@ var List = React.createClass({
 						{
 							list.map(function(name) {
 								var item = data[name];
+								function handleDoubleClick() {
+									
+								}
 								return <a key={item.key} data-key={item.key}
 											onMouseEnter={self.onMouseEnter}
 											onMouseLeave={self.onMouseLeave}
 											onClick={self.onClick} 
-											onDoubleClick={self.onDoubleClick} 
+											onDoubleClick={function() {
+												self.onDoubleClick(item);
+											}} 
 											className={(item.hover ? 'w-hover' : '') 
 											+ (item.active ? ' w-active' : '') 
 											+ (item.changed ? ' w-changed' : '')
 											+ (item.selected ? ' w-selected' : '')} 
-											href="javascript:;">{name}<span onClick={self.onDoubleClick} className="glyphicon glyphicon-ok"></span></a>;
+											href="javascript:;">{name}<span onClick={function(e) {
+												self.onDoubleClick(item, true);
+												e.stopPropagation();
+											}} className="glyphicon glyphicon-ok"></span></a>;
 							})
 						}
 					</div>

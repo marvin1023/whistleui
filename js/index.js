@@ -301,7 +301,7 @@ var Index = React.createClass({
 		return false;
 	},
 	unselectRules: function(item) {
-		var self = this; 
+		var self = this;
 		dataCenter.rules[item.isDefault ? 'disableDefault' : 'unselect'](item, function(data) {
 			if (data && data.ec === 0) {
 				self.setSelected(self.state.rules, item.name, false);
