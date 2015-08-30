@@ -13,6 +13,8 @@ textarea[readonly] {outline: none;}
 .box {display:-webkit-box; display:-moz-box; display:box;}
 .orient-vertical-box {-moz-box-orient:vertical; -webkit-box-orient:vertical; box-orient:vertical; display:-moz-box; display:-webkit-box; display: box;}
 .fill {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;}
+.box>.fill {width: 0;}
+.orient-vertical-box>.fill {height: 0;} /**不加这个滚动会有问题**/
 .table {table-layout: fixed; margin: 0!important;}
 
 .modal-dialog .modal-body, .modal-dialog .modal-footer {padding: 10px;}
