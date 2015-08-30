@@ -110,6 +110,11 @@ var Index = React.createClass({
 				self.hideOnBlur();
 			}
 		});
+		$(self.refs.valuesMenuItem.getDOMNode()).on('blur', function() {
+			self.setState({
+				showValuesOptions: false
+			});
+		});
 	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();
@@ -129,22 +134,29 @@ var Index = React.createClass({
 		location.hash = 'rules';
 	},
 	showValues: function() {
-		this.showMenuOptions('showValuesOptions');
-		return;
 		this.setState({
 			hasValues: true,
-			name: 'values'
+			name: 'values',
+			showValuesOptions: false
 		});
 		location.hash = 'values';
 	},
-	showMenuOptions: function(name) {
+	showValuesOptions: function() {
+		var self = this;
+		self.showMenuOptions('showValuesOptions', function() {
+			self.refs.valuesMenuItem.getDOMNode().focus();
+		});
+	},
+	showMenuOptions: function(name, callback) {
 		var state = {
 				showRulesOptions: false,
 				showValuesOptions: false,
 				showWeinreOptions: false
 		};
-		state[name] = true;
-		this.setState(state);
+		if (name) {
+			state[name] = true;
+		}
+		this.setState(state, callback);
 	},
 	showCreateRules: function() {
 		var createRulesInput = this.refs.createRulesInput.getDOMNode();
@@ -499,8 +511,8 @@ var Index = React.createClass({
 			<div className="main orient-vertical-box">
 				<div className={'w-menu w-' + name + '-menu'}>
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
-					<a onClick={this.showRules} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
-					<a onClick={this.showValues} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
+					<a onClick={this.showRules}  onMouseDown={this.preventBlur}className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
+					<a onClick={this.showValuesOptions} onMouseDown={this.preventBlur} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
 					<a onClick={this.replay} className={'w-replay-menu' + (this.state.disabledReplayBtn ? ' w-disabled' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
@@ -509,13 +521,13 @@ var Index = React.createClass({
 					<a onClick={this.clear} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-remove"></span>Clear</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.onClickMenu} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
-					<a onClick={this.showWeinre} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
+					<a onClick={this.showWeinre} onMouseDown={this.preventBlur} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 					<a onClick={this.onClickMenu} className="w-rootca-menu" href="javascript:;"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} className="w-rules-menu-item" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<MenuItem name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions} className="w-values-menu-item"  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="valuesMenuItem" name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions} className="w-values-menu-item"  onClick={this.showValues} onClickOption={this.props.onClickOption} />
 					<MenuItem name="Default" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions} className="w-weinre-menu-item"  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>

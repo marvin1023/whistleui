@@ -4,6 +4,9 @@ var React = require('react');
 var util = require('./util');
 
 var MenuItem = React.createClass({
+	preventBlur: function(e) {
+		e.preventDefault();
+	},
 	render: function() {
 		var options = this.props.options;
 		if (options && !options.length) {
@@ -13,7 +16,7 @@ var MenuItem = React.createClass({
 		var onClick = this.props.onClick || util.noop;
 		var onClickOption = this.props.onClickOption || util.noop;
 		return (
-			<div tabIndex="1" style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (this.props.className || '')}>
+			<div tabIndex="1" onMouseDown={this.preventBlur} style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (this.props.className || '')}>
 				{
 					options ? <div className="w-menu-options">{options.map(function(option) {
 						
