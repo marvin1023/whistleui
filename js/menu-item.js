@@ -17,7 +17,10 @@ var MenuItem = React.createClass({
 		var onClickOption = this.props.onClickOption || util.noop;
 		return (
 			<div onBlur={this.props.onBlur} tabIndex="1" onMouseDown={this.preventBlur} style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (this.props.className || '')}>
-				{
+			{
+				name ? <a onClick={onClick} className="w-menu-open" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>{name}</a> : ''
+			}	
+			{
 					options ? <div className="w-menu-options">{options.map(function(option) {
 						
 						return (
@@ -29,9 +32,6 @@ var MenuItem = React.createClass({
 								</a>
 						);
 					})}</div> : ''
-				}
-				{
-					name ? <a onClick={onClick} className="w-menu-open" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>{name}</a> : ''
 				}
 			</div>
 		);

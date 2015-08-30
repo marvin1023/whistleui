@@ -15,7 +15,7 @@ function createDialog() {
 				      '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
 				        '<div class="w-online-dialog-ctn"></div>' + 
 				        '<div class="w-switch-to-server"><h5>Switch to:</h5>' + 
-				        '<input class="w-ip" maxlength="256" type="text" placeholder="whistle ip" /> : <input maxlength="5" class="w-port" type="text" placeholder="whistle port" />' +
+				        '<input class="w-ip" maxlength="256" type="text" placeholder="127.0.0.1" /> : <input maxlength="5" class="w-port" type="text" placeholder="8899" />' +
 				        '</div>' +
 				      '</div>' + 
 				      '<div class="modal-footer">' + 
@@ -27,14 +27,9 @@ function createDialog() {
 				'</div>').appendTo(document.body);
 		dialog.on('click', '.w-switch-btn', function() {
 			var ipInput = dialog.find('.w-ip');
-			var ip = $.trim(ipInput.val());
-			if (!ip) {
-				alert('Please enter the IP or domain name of the whistle server.');
-				ipInput.focus();
-				return;
-			}
+			var ip = $.trim(ipInput.val()) || '127.0.0.1';
 			var portInput = dialog.find('.w-port');
-			var port = $.trim(portInput.val());
+			var port = $.trim(portInput.val()) || '8899';
 			if (!/^\d+$/.test(port)) {
 				alert('Please enter the port number of the whistle server.');
 				portInput.focus();
@@ -46,7 +41,12 @@ function createDialog() {
 					alert('Please check if the whistle server(' + host + ') is started.');
 					return;
 				}
-				location.href = '//' + host + location.pathname + location.search + location.hash;
+				host = 'http://' + host + location.pathname + location.search + location.hash;
+				if (location.href != host) {
+					location.href = host;
+				} else {
+					dialog.modal('hide');
+				}
 			});
 		});
 		dialog.find('input').keydown(function(e) {
