@@ -142,6 +142,9 @@ var Index = React.createClass({
 			self.refs.valuesMenuItem.getDOMNode().focus();
 		});
 	},
+	hideValuesOptions: function() {
+		this.showMenuOptions();
+	},
 	showMenuOptions: function(name, callback) {
 		var state = {
 				showRulesOptions: false,
@@ -351,6 +354,9 @@ var Index = React.createClass({
 		return false;
 	},
 	saveValues: function(item) {
+		if (!item.changed) {
+			return;
+		}
 		var self = this;
 		dataCenter.values.add(item, function(data) {
 			if (data && data.ec === 0) {
@@ -521,9 +527,9 @@ var Index = React.createClass({
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.props.onClickOption} />
-					<MenuItem ref="valuesMenuItem" name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions} className="w-values-menu-item"  onClick={this.showValues} onClickOption={this.props.onClickOption} />
-					<MenuItem name="Default" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions} className="w-weinre-menu-item"  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideRulesOptions} onClick={this.showRules} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="valuesMenuItem" name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideValuesOptions} onClick={this.showValues} onClickOption={this.props.onClickOption} />
+					<MenuItem name="Default" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideWeinreOptions} onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
