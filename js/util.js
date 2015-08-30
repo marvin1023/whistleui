@@ -119,5 +119,12 @@ exports.showSystemError = function showSystemError() {
 	alert('Please check if the whistle server is started.');
 };
 
+exports.getClasses = function getClasses(obj) {
+	var classes = [];
+	for (var i in obj) {
+		obj[i] && classes.push(i);
+	}
+	return classes.join(' ');
+};
 
 

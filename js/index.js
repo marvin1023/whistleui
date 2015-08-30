@@ -26,6 +26,7 @@ var Index = React.createClass({
 			state.name = 'values';
 		} else {
 			state.hasNetwork = true;
+			state.name = 'network';
 		}
 		var rulesList = [];
 		var rulesOptions = [];
@@ -80,7 +81,8 @@ var Index = React.createClass({
 					active: selectedName === this.name
 				};
 				valuesOptions.push({
-					name: this.name
+					name: this.name,
+					icon: 'edit'
 				});
 			});
 		}
@@ -127,6 +129,8 @@ var Index = React.createClass({
 		location.hash = 'rules';
 	},
 	showValues: function() {
+		this.showMenuOptions('showValuesOptions');
+		return;
 		this.setState({
 			hasValues: true,
 			name: 'values'
@@ -136,7 +140,7 @@ var Index = React.createClass({
 	showMenuOptions: function(name) {
 		var state = {
 				showRulesOptions: false,
-				showvaluesOptions: false,
+				showValuesOptions: false,
 				showWeinreOptions: false
 		};
 		state[name] = true;
@@ -159,17 +163,18 @@ var Index = React.createClass({
 		});
 	},
 	createRules: function(e) {
-		if (e.keyCode != 13) {
+		if (e.keyCode != 13 && e.type != 'click') {
 			return;
 		}
-		var target = e.target;
+		var self = this;
+		var target = self.refs.createRulesInput.getDOMNode();
 		var name = $.trim(target.value);
 		if (!name) {
 			alert('Rule name can not be empty.');
 			return;
 		}
-		var self = this;
-		var modal = this.state.rules;
+		
+		var modal = self.state.rules;
 		if (modal.exists(name)) {
 			alert('Rule name \'' + name + '\' already exists.');
 			return;
@@ -188,17 +193,18 @@ var Index = React.createClass({
 		});
 	},
 	createValues: function(e) {
-		if (e.keyCode != 13) {
+		if (e.keyCode != 13 && e.type != 'click') {
 			return;
 		}
-		var target = e.target;
+		var self = this;
+		var target = self.refs.createValuesInput.getDOMNode();
 		var name = $.trim(target.value);
 		if (!name) {
 			alert('Value name can not be empty.');
 			return;
 		}
-		var self = this;
-		var modal = this.state.values;
+		
+		var modal = self.state.values;
 		if (modal.exists(name)) {
 			alert('Value name \'' + name + '\' already exists.');
 			return;
@@ -248,7 +254,7 @@ var Index = React.createClass({
 		});	
 	},
 	editRules: function(e) {
-		if (e.keyCode != 13) {
+		if (e.keyCode != 13 && e.type != 'click') {
 			return;
 		}
 		var self = this;
@@ -257,7 +263,7 @@ var Index = React.createClass({
 		if (!activeItem) {
 			return;
 		}
-		var target = e.target;
+		var target = self.refs.editRulesInput.getDOMNode();
 		var name = $.trim(target.value);
 		if (!name) {
 			alert('Rule name can not be empty.');
@@ -282,11 +288,11 @@ var Index = React.createClass({
 		});
 	},
 	editValues: function(e) {
-		if (e.keyCode != 13) {
+		if (e.keyCode != 13 && e.type != 'click') {
 			return;
 		}
 		var self = this;
-		var modal = self.state.values;
+		var modal = self.refs.editValuesInput.getDOMNode();
 		var activeItem = modal.getActive();
 		if (!activeItem) {
 			return;
@@ -491,7 +497,7 @@ var Index = React.createClass({
 		
 		return (
 			<div className="main orient-vertical-box">
-				<div className="w-menu">
+				<div className={'w-menu w-' + name + '-menu'}>
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<a onClick={this.showRules} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
 					<a onClick={this.showValues} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
@@ -508,13 +514,13 @@ var Index = React.createClass({
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<MenuItem name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions}  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<MenuItem name="Default" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions}  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" className="btn btn-primary">OK</button></div>
+					<MenuItem name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} className="w-rules-menu-item" onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions} className="w-values-menu-item"  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem name="Default" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions} className="w-weinre-menu-item"  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 				</div>
 				{this.state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}

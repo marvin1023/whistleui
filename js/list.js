@@ -95,9 +95,11 @@ var List = React.createClass({
 											onDoubleClick={function() {
 												self.onDoubleClick(item);
 											}} 
-											className={(item.active ? ' w-active' : '') 
-											+ (item.changed ? ' w-changed' : '')
-											+ (item.selected ? ' w-selected' : '')} 
+											className={util.getClasses({
+												'w-active': item.active,
+												'w-changed': item.changed,
+												'w-selected': item.selected
+											})} 
 											href="javascript:;">{name}<span onClick={function(e) {
 												self.onDoubleClick(item, true);
 												e.stopPropagation();

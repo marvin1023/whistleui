@@ -13,7 +13,7 @@ var MenuItem = React.createClass({
 		var onClick = this.props.onClick || util.noop;
 		var onClickOption = this.props.onClickOption || util.noop;
 		return (
-			<div style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className="w-menu-item">
+			<div tabIndex="1" style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (this.props.className || '')}>
 				{
 					options ? <div className="w-menu-options">{options.map(function(option) {
 						
