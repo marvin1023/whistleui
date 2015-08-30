@@ -82,10 +82,10 @@ var List = React.createClass({
 		var list = modal.list;
 		var data = modal.data;
 		var activeItem = modal.getActive();
-		
+		//不设置height为0，滚动会有问题
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
-					<div ref="list" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '')}>
+					<div style={{height: 0}} ref="list" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '')}>
 						{
 							list.map(function(name) {
 								var item = data[name];
