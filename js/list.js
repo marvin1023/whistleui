@@ -90,7 +90,7 @@ var List = React.createClass({
 							list.map(function(name) {
 								var item = data[name];
 								
-								return <a key={item.key} data-key={item.key}
+								return <a key={item.key} data-key={item.key} href="javascript:;"
 											onClick={self.onClick} 
 											onDoubleClick={function() {
 												self.onDoubleClick(item);
