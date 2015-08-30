@@ -110,11 +110,6 @@ var Index = React.createClass({
 				self.hideOnBlur();
 			}
 		});
-		$(self.refs.valuesMenuItem.getDOMNode()).on('blur', function() {
-			self.setState({
-				showValuesOptions: false
-			});
-		});
 	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();
