@@ -28,8 +28,10 @@ var Index = React.createClass({
 			state.hasNetwork = true;
 		}
 		var rulesList = [];
+		var rulesOptions = [];
 		var rulesData = {};
 		var valuesList = [];
+		var valuesOptions = [];
 		var valuesData = {};
 		
 		var modal = this.props.modal;
@@ -37,13 +39,19 @@ var Index = React.createClass({
 		var values = modal.values;
 		if (rules) {
 			var selectedName = rules.current;
-			rulesList.push('Default');
+			var DEFAULT = 'Default';
+			var selected = !rules.defaultRulesIsDisabled;
+			rulesOptions.push({
+				name: DEFAULT,
+				icon: selected ? 'ok' : ''
+			});
+			rulesList.push(DEFAULT);
 			rulesData.Default = {
-					name: 'Default',
+					name: DEFAULT,
 					value: rules.defaultRules,
-					active: !rules.defaultRulesIsDisabled,
+					selected: selected,
 					isDefault: true,
-					active: selectedName === 'Default'
+					active: selectedName === DEFAULT
 			};
 			
 			$.each(rules.list, function() {
@@ -55,6 +63,10 @@ var Index = React.createClass({
 					selected: this.selected,
 					active: selectedName === this.name
 				};
+				rulesOptions.push({
+					name: this.name,
+					icon: this.selected ? 'ok' : ''
+				});
 			});
 		}
 		
@@ -67,11 +79,16 @@ var Index = React.createClass({
 					value: this.data,
 					active: selectedName === this.name
 				};
+				valuesOptions.push({
+					name: this.name
+				});
 			});
 		}
 		
 		state.rules = new ListModal(rulesList, rulesData);
+		state.rulesOptions = rulesOptions;
 		state.values = new ListModal(valuesList, valuesData);
+		state.valuesOptions = valuesOptions;
 		
 		return state;
 	},
@@ -115,6 +132,15 @@ var Index = React.createClass({
 			name: 'values'
 		});
 		location.hash = 'values';
+	},
+	showMenuOptions: function(name) {
+		var state = {
+				showRulesOptions: false,
+				showvaluesOptions: false,
+				showWeinreOptions: false
+		};
+		state[name] = true;
+		this.setState(state);
 	},
 	showCreateRules: function() {
 		var createRulesInput = this.refs.createRulesInput.getDOMNode();
@@ -482,9 +508,9 @@ var Index = React.createClass({
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem hide={!this.state.showRulesOptions} onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<MenuItem hide={!this.state.showValuessOptions}  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
-					<MenuItem hide={!this.state.showWeinreOptions}  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions}  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem name="Default" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions}  onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" className="btn btn-primary">OK</button></div>

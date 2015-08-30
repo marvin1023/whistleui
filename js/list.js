@@ -89,18 +89,13 @@ var List = React.createClass({
 						{
 							list.map(function(name) {
 								var item = data[name];
-								function handleDoubleClick() {
-									
-								}
+								
 								return <a key={item.key} data-key={item.key}
-											onMouseEnter={self.onMouseEnter}
-											onMouseLeave={self.onMouseLeave}
 											onClick={self.onClick} 
 											onDoubleClick={function() {
 												self.onDoubleClick(item);
 											}} 
-											className={(item.hover ? 'w-hover' : '') 
-											+ (item.active ? ' w-active' : '') 
+											className={(item.active ? ' w-active' : '') 
 											+ (item.changed ? ' w-changed' : '')
 											+ (item.selected ? ' w-selected' : '')} 
 											href="javascript:;">{name}<span onClick={function(e) {
