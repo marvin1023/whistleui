@@ -299,12 +299,12 @@ var Index = React.createClass({
 			return;
 		}
 		var self = this;
-		var modal = self.refs.editValuesInput.getDOMNode();
+		var modal = self.state.values;
 		var activeItem = modal.getActive();
 		if (!activeItem) {
 			return;
 		}
-		var target = e.target;
+		var target = self.refs.editValuesInput.getDOMNode();
 		var name = $.trim(target.value);
 		if (!name) {
 			alert('Rule name can not be empty.');
