@@ -25,3 +25,5 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 
 .w-rules-menu .w-values-menu-item {left: 92px;}
 .w-network-menu .w-values-menu-item {left: 75px;}
+.w-network-menu .w-rules-menu-item {left: 8px;}
+.w-values-menu .w-rules-menu-item {left: 92px;}
