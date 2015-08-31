@@ -1,6 +1,6 @@
 var $ = require('jquery');
 var createCgi = require('./cgi');
-var	MAX_COUNT = 1024;
+var	MAX_COUNT = 2000;
 var TIMEOUT = 10000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
@@ -137,7 +137,8 @@ function getPendingIds() {
 
 function getStartTime() {
 	var len = dataList.length - 1;
-	return len > MAX_COUNT || len < 0 ? dataList[len - 1] : -1;
+	var item = dataList[len];
+	return len <= MAX_COUNT ? (item ? item.id : 0) : -1;
 }
 
 function startLoadServerInfo() {
