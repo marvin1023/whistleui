@@ -110,12 +110,22 @@ var Index = React.createClass({
 				self.hideOnBlur();
 			}
 		});
+		if (self.state.name == 'network') {
+			self.startLoadData();
+		}
 	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();
 	},
+	startLoadData: function() {
+		!this._startLoadData && dataCenter.on('data', function(data) {
+			console.log(data);
+		});
+		this._startLoadData = true;
+	},
 	showNetwork: function() {
 		this.setMenuOptionsState();
+		this.startLoadData();
 		this.setState({
 			hasNetwork: true,
 			name: 'network'

@@ -82,7 +82,7 @@ exports.getInitialData = function(callback) {
 	initialData.done(callback);
 };
 
-function startLadData() {
+function startLoadData() {
 	if (dataList.length) {
 		return;
 	}
@@ -181,7 +181,7 @@ function startLoadServerInfo() {
 exports.on = function(type, callback) {
 	if (type == 'data') {
 		if (typeof callback == 'function') {
-			startLadData();
+			startLoadData();
 			dataCallbacks.push(callback);
 		}
 	} else if (type == 'serverInfo') {
