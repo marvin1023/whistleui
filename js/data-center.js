@@ -136,8 +136,8 @@ function getPendingIds() {
 }
 
 function getStartTime() {
-	var len = dataList.length;
-	return len < MAX_COUNT ? dataList[len - 1] : -1;
+	var len = dataList.length - 1;
+	return len > MAX_COUNT || len < 0 ? dataList[len - 1] : -1;
 }
 
 function startLoadServerInfo() {
