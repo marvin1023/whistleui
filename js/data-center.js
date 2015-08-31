@@ -90,20 +90,17 @@ function startLoadData() {
 	function load() {
 		var pendingIds = getPendingIds();
 		var startTime = getStartTime();
-		if (startTime == -1 && !pendingIds.length) {
-			return setTimeout(load, 3000);
-		}
 		
 		cgi.getData({
 			ids: pendingIds.join(),
 			startTime: startTime,
 			count: 60
 		}, function(data) {
-			setTimeout(load, 600);
+			setTimeout(load, 800);
 			if (!data || (!data.ids.length && !data.newIds.length)) {
 				return;
 			}
-			var ids = data.ids;
+			var ids = data.newIds;
 			var data = data.data;
 			$.each(dataList, function(i) {
 				var item = this;
@@ -132,7 +129,7 @@ function getPendingIds() {
 	$.each(dataList, function() {
 		var item = this;
 		if (!item.endTime && !item.lost) {
-			pendingIds.push(id);
+			pendingIds.push(item.id);
 		}
 	});
 	return pendingIds;
@@ -181,8 +178,8 @@ function startLoadServerInfo() {
 exports.on = function(type, callback) {
 	if (type == 'data') {
 		if (typeof callback == 'function') {
-			startLoadData();
 			dataCallbacks.push(callback);
+			startLoadData();
 		}
 	} else if (type == 'serverInfo') {
 		if (typeof callback == 'function') {
