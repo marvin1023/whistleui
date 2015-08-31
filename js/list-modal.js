@@ -140,8 +140,10 @@ proto.rename = function(name, newName) {
 	var index = this.getIndex(name);
 	if (index != -1) {
 		this.list[index] = newName;
-		this.data[newName] = this.data[name];
+		var item = this.data[name];
 		delete this.data[name];
+		this.data[newName] = item;
+		item.name = newName;
 		return true;
 	}
 };

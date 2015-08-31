@@ -2,3 +2,4 @@
 .w-menu-item a {display: block; max-width: 160px; text-overflow: ellipsis; overflow: hidden; padding: 0 6px; font-weight: normal; white-space: nowrap; margin: 0!important;}
 .w-menu-item .w-menu-options {border-top: 1px dashed #ccc; max-height: 320px; overflow-x: hidden; overflow-y: auto;}
 .w-menu-item a .glyphicon {margin-right: 8px; font-size: 12px;}
+.w-menu-item a .glyphicon-ok {color: #5bbd72;}
