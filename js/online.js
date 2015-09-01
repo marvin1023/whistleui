@@ -27,9 +27,9 @@ function createDialog() {
 				'</div>').appendTo(document.body);
 		dialog.on('click', '.w-switch-btn', function() {
 			var ipInput = dialog.find('.w-ip');
-			var ip = $.trim(ipInput.val()) || '127.0.0.1';
+			var ip = $.trim(ipInput.val()) || ipInput.prop('placeholder');
 			var portInput = dialog.find('.w-port');
-			var port = $.trim(portInput.val()) || '8899';
+			var port = $.trim(portInput.val()) || portInput.prop('placeholder');
 			if (!/^\d+$/.test(port)) {
 				alert('Please enter the port number of the whistle server.');
 				portInput.focus();
@@ -89,6 +89,8 @@ var Online = React.createClass({
 		}
 		
 		createDialog().find('.w-online-dialog-ctn').html(info.join(''));
+		dialog.find('.w-ip').prop('placeholder', server.ipv4[0] || '127.0.0.1');
+		dialog.find('.w-port').prop('placeholder', server.port || '8899');
 		dialog.modal('show');
 	},
 	render: function() {
