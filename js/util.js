@@ -127,4 +127,39 @@ exports.getClasses = function getClasses(obj) {
 	return classes.join(' ');
 };
 
+exports.getContentType = function getContentType(contentType) {
+	if (contentType && typeof contentType != 'string') {
+		contentType = contentType['content-type'] || contentType.contentType;
+	}
+	
+	if (typeof contentType == 'string') {
+		contentType = contentType.toLowerCase();
+		if (contentType.indexOf('javascript') != -1) {
+	        return 'JS';
+	    }
+		
+		if (contentType.indexOf('css') != -1) {
+	        return 'CSS';
+	    }
+		
+		if (contentType.indexOf('html') != -1) {
+	        return 'HTML';
+	    }
+		
+		if (contentType.indexOf('json') != -1) {
+	        return 'JSON';
+	    }
+		
+		if (contentType.indexOf('text/') != -1) {
+	        return 'TEXT';
+	    }
+		
+		if (contentType.indexOf('image') != -1) {
+	        return 'IMG';
+	    } 
+	}
+	
+	return null;
+};
+
 

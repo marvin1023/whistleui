@@ -1,6 +1,35 @@
 require('./base-css.js');
 require('../css/req-data.css');
 var React = require('react');
+var util = require('./util');
+
+function getClassName(data) {
+	if (data.reqError || data.resError) {
+		return 'danger w-error-status';
+	}
+	
+	if (data.res.statusCode == 403) {
+		return 'w-forbidden';
+	}
+	
+	if (data.res.statusCode >= 400) {
+		return 'w-error-status';
+	}
+	
+	var headers = data.res.headers;
+	switch(util.getContentType(headers)) {
+		case 'JS':
+			return 'warning';
+		case 'CSS':
+			return 'info';
+		case 'HTML':
+			return 'success';
+		case 'IMG':
+			return 'active';
+	}
+	
+	return '';
+}
 
 var ReqData = React.createClass({
 	getInitialState: function() {
@@ -52,17 +81,19 @@ var ReqData = React.createClass({
 						    	  list.map(function(item, i) {
 						    		  var end = item.endTime;
 						    		  var defaultValue = end ? '' : '-';
-						    		  var type;
-						    		  return (<tr key={item.id} className="success">
+						    		  var res = item.res;
+						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
+						    		  
+						    		  return (<tr key={item.id} className={getClassName(item)}>
 						    		  				<th className="order" scope="row">{i + 1}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">HTTP</td>			        
 						    		  				<td className="method">GET</td>			        
 						    		  				<td className="host">api.cupid.iqiyi.com</td>			        
-						    		  				<td className="host-ip">101.227.14.80</td>			        
+						    		  				<td className="host-ip">{res.ip || defalutValue}</td>			        
 						    		  				<td className="url" title={item.url}>{item.url}</td>			        
-						    		  				<td className="type" title="text/html;&nbsp;charset=utf-8">text/html</td>			        
-						    		  				<td className="time">18ms</td>			     
+						    		  				<td className="type" title={type}>{type}</td>			        
+						    		  				<td className="time">{end ? end - item.startTime + 'ms' : defaultValue}</td>			     
 						    		  			</tr>);
 						    	  })
 						      }	
