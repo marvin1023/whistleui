@@ -22,8 +22,6 @@ var List = React.createClass({
 			if (visible && (e.ctrlKey || e.metaKey) && e.keyCode == 83) {
 				var modal = self.props.modal;
 				modal.getChangedList().forEach(trigger);
-				var activeItem = modal.getActive();
-				activeItem && trigger(activeItem);
 				return false;
 			}
 		});

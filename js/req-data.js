@@ -89,7 +89,7 @@ var ReqData = React.createClass({
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">HTTP</td>			        
 						    		  				<td className="method">GET</td>			        
-						    		  				<td className="host">api.cupid.iqiyi.com</td>			        
+						    		  				<td className="host">{util.getHostname(item.url)}</td>			        
 						    		  				<td className="host-ip">{res.ip || defaultValue}</td>			        
 						    		  				<td className="url" title={item.url}>{item.url}</td>			        
 						    		  				<td className="type" title={type}>{type}</td>			        

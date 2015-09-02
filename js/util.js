@@ -162,4 +162,13 @@ exports.getContentType = function getContentType(contentType) {
 	return null;
 };
 
+exports.getHostname = function getHostname(url) {
+	var start = url.indexOf(':\/\/');
+	if (start == -1) {
+		return 'Tunnel to';
+	}
+	var end = url.indexOf('\/', start += 3);
+	return end == -1 ? url.substring(start) : url.substring(start, end);
+};
+
 
