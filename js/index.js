@@ -3,6 +3,7 @@ var $ = require('jquery');
 var React = require('react');
 var List = require('./list');
 var ListModal = require('./list-modal');
+var NetworkModal = require('./network-modal');
 var Network = require('./network');
 var About = require('./about');
 var Online = require('./online');
@@ -109,7 +110,12 @@ var Index = React.createClass({
 			if (e.keyCode == 27) {
 				self.hideOnBlur();
 			}
+		}).on('keydown', function(e) {
+			if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) {
+				self.clear();
+			}
 		});
+		
 		if (self.state.name == 'network') {
 			self.startLoadData();
 		}
@@ -118,10 +124,32 @@ var Index = React.createClass({
 		e.target.nodeName != 'INPUT' && e.preventDefault();
 	},
 	startLoadData: function() {
-		!this._startLoadData && dataCenter.on('data', function(data) {
-			console.log(data);
+		var self = this;
+		if (self._startLoadData) {
+			return;
+		}
+		
+		var con = $(self.refs.network.getDOMNode()).find('.w-req-data-list');
+		var body = con.children('table')[0];
+		con = con[0];
+		dataCenter.on('data', function(data) {
+			if (!self._networkModal) {
+				self._networkModal = new NetworkModal(data);
+			}
+			
+			if (self.state.name != 'network') {
+				return;
+			}
+			var atBottom = con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
+			self.setState({
+				network: self._networkModal
+			}, function() {
+				if (atBottom) {
+					con.scrollTop = body.offsetHeight;
+				}
+			});
 		});
-		this._startLoadData = true;
+		self._startLoadData = true;
 	},
 	showNetwork: function() {
 		this.setMenuOptionsState();
@@ -401,7 +429,10 @@ var Index = React.createClass({
 		
 	},
 	clear: function() {
-		
+		var modal = this.state.network;
+		this.setState({
+			network: modal.clear()
+		});
 	},
 	removeRules: function() {
 		var self = this;
@@ -555,7 +586,7 @@ var Index = React.createClass({
 				</div>
 				{this.state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
-				{this.state.hasNetwork ? <Network hide={name != 'rules' && name != 'values' ? false : true} /> : ''}
+				{this.state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' ? false : true} modal={this.state.network} /> : ''}
 			</div>
 		);
 	}
