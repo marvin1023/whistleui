@@ -153,10 +153,11 @@ var Index = React.createClass({
 	},
 	showNetwork: function() {
 		this.setMenuOptionsState();
-		this.startLoadData();
 		this.setState({
 			hasNetwork: true,
 			name: 'network'
+		}, function() {
+			this.startLoadData();
 		});
 		location.hash = 'network';
 	},
