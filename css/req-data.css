@@ -16,7 +16,7 @@
 .w-req-data-bar, .w-req-data-content {min-width: 720px;}
 .w-req-data-bar {position: relative;}
 .w-req-data-bar .close {position: absolute; right: 5px; top: 5px; color: #fff; line-height: 16px; display: none;}
-.w-req-data-list .w-error-status {color: #ff3a90;}
-.w-req-data-list .w-forbidden {color: #808000;}
-.w-req-data-list .w-tunnel {color: #808080;}
-.w-req-data-list .w-has-rules {font-weight: bold;}
+.w-req-data-list .w-error-status td {color: #ff3a90;}
+.w-req-data-list .w-forbidden td {color: #808000;}
+.w-req-data-list .w-tunnel td {color: #808080;}
+.w-req-data-list .w-has-rules td {font-weight: bold;}

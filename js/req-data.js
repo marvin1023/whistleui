@@ -4,7 +4,16 @@ var React = require('react');
 var util = require('./util');
 
 function getClassName(data) {
-	return getStatusClass(data) + (data.isHttps ? ' w-tunnel' : '');
+	return getStatusClass(data) 
+		+ (data.isHttps ? ' w-tunnel' : '') 
+			+ (hasRules(data) ? ' w-has-rules' : '');
+}
+
+function hasRules(data) {
+	for (var i in data.rules) {
+		return true;
+	}
+	return false;
 }
 
 function getStatusClass(data) {
