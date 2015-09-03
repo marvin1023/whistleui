@@ -3,8 +3,8 @@
 .w-req-data-content {overflow-x: auto; overflow-y: hidden;}
 .w-req-data-content .order {width: 50px;}
 .w-req-data-content .result {width: 60px;}
-.w-req-data-content .protocol {width: 70px;}
-.w-req-data-content .method, .w-req-data-content .time {width: 65px;}
+.w-req-data-content .protocol, .w-req-data-content .method {width: 70px;}
+.w-req-data-content .time {width: 65px;}
 .w-req-data-content .host-ip, .w-req-data-content .type {width: 100px;}
 .w-req-data-content .host {width: 136px;}
 
