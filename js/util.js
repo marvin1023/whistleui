@@ -164,11 +164,16 @@ exports.getContentType = function getContentType(contentType) {
 
 exports.getHostname = function getHostname(url) {
 	var start = url.indexOf(':\/\/');
-	if (start == -1) {
-		return 'Tunnel to';
-	}
-	var end = url.indexOf('\/', start += 3);
-	return end == -1 ? url.substring(start) : url.substring(start, end);
+	start = start == -1 ? 0 : start + 3;
+	var end = url.indexOf('\/', start);
+	url = end == -1 ? url.substring(start) : url.substring(start, end);
+	end = url.indexOf(':', start);
+	return end == -1 ? url : url.substring(0, end);
+};
+
+exports.getProtocol = function getProtocol(url) {
+	var index = url.indexOf(':\/\/');
+	return index == -1 ? 'TUNNEL' : url.substring(0, index).toUpperCase();
 };
 
 

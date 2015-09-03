@@ -4,6 +4,10 @@ var React = require('react');
 var util = require('./util');
 
 function getClassName(data) {
+	return getStatusClass(data) + (data.isHttps ? ' w-tunnel' : '');
+}
+
+function getStatusClass(data) {
 	if (data.reqError || data.resError) {
 		return 'danger w-error-status';
 	}
@@ -81,14 +85,15 @@ var ReqData = React.createClass({
 						    	  list.map(function(item, i) {
 						    		  var end = item.endTime;
 						    		  var defaultValue = end ? '' : '-';
+						    		  var req = item.req;
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
 						    		  
 						    		  return (<tr key={item.id} className={getClassName(item)}>
 						    		  				<th className="order" scope="row">{i + 1}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
-						    		  				<td className="protocol">HTTP</td>			        
-						    		  				<td className="method">GET</td>			        
+						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        
+						    		  				<td className="method">{req.method}</td>			        
 						    		  				<td className="host">{util.getHostname(item.url)}</td>			        
 						    		  				<td className="host-ip">{res.ip || defaultValue}</td>			        
 						    		  				<td className="url" title={item.url}>{item.url}</td>			        
