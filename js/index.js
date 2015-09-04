@@ -125,8 +125,7 @@ var Index = React.createClass({
 	startLoadData: function() {
 		var self = this;
 		if (self._startLoadData) {
-			var modal = self.state.network;
-			modal && self.updateNetwork_(modal);
+			setTimeout(self.updateNetwork_, 30);
 			return;
 		}
 		self._startLoadData = true;
@@ -143,7 +142,8 @@ var Index = React.createClass({
 		dataCenter.on('data', update);
 		
 		function update(modal, _atBottom) {
-			if (self.state.name != 'network') {
+			modal = modal || self.state.network;
+			if (self.state.name != 'network' || !modal) {
 				return;
 			}
 			_atBottom = _atBottom || atBottom();
