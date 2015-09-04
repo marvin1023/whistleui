@@ -11,8 +11,8 @@ NetworkModal.MAX_COUNT = MAX_COUNT;
 var proto = NetworkModal.prototype;
 
 proto.clear = function clear() {
-	this.list = [];
-	this._list.splice(0, this._list.length);
+	this._list.splice(0, this.list.length);
+	this.update();
 	return this;
 };
 
