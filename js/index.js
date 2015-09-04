@@ -131,7 +131,7 @@ var Index = React.createClass({
 		var con = $(self.refs.network.getDOMNode())
 			.find('.w-req-data-list').scroll(function() {
 				var modal = self.state.network;
-				modal && atBottom() && modal.update();
+				modal && atBottom() && modal.update(true);
 			});
 		var body = con.children('table')[0];
 		con = con[0];
