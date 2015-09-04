@@ -124,11 +124,10 @@ var Index = React.createClass({
 	},
 	startLoadData: function() {
 		var self = this;
-		if (self._startLoadData) {
+		if (self.updateNetwork_) {
 			setTimeout(self.updateNetwork_, 30);
 			return;
 		}
-		self._startLoadData = true;
 		
 		var con = $(self.refs.network.getDOMNode())
 			.find('.w-req-data-list').scroll(function() {
