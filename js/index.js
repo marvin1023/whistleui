@@ -145,10 +145,6 @@ var Index = React.createClass({
 		con = con[0];
 		
 		dataCenter.on('data', function(modal) {
-			if (self.state.name != 'network') {
-				return;
-			}
-			
 			var _atBottom = atBottom();
 			modal.update(_atBottom);
 			self.setState({
