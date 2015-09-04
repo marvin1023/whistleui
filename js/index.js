@@ -128,18 +128,26 @@ var Index = React.createClass({
 			return;
 		}
 		
-		var con = $(self.refs.network.getDOMNode()).find('.w-req-data-list');
+		var con = $(self.refs.network.getDOMNode())
+			.find('.w-req-data-list').scroll(function() {
+				var modal = this.state.network;
+				modal && atBottom() && modal.remove();
+			});
 		var body = con.children('table')[0];
 		con = con[0];
+		function atBottom() {
+			return con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
+		}
+		
 		dataCenter.on('data', function(modal) {
 			if (self.state.name != 'network') {
 				return;
 			}
-			var atBottom = con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
+			var _atBottom = atBottom();
 			self.setState({
 				network: modal
 			}, function() {
-				if (!atBottom) {
+				if (!_atBottom) {
 					return;
 				}
 				modal.remove();

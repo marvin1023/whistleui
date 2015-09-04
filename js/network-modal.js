@@ -1,4 +1,4 @@
-var MAX_COUNT = 1200;
+var MAX_COUNT = 720;
 function NetworkModal(list) {
 	this.list = list || [];
 }
@@ -15,7 +15,7 @@ proto.clear = function clear() {
 proto.remove = function() {
 	var exceed = this.list.length - MAX_COUNT;
 	if (exceed > 0) {
-		this.list.splice(0, exceed + 30);
+		this.list.splice(0, exceed + 6);
 	}
 };
 
