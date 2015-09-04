@@ -137,16 +137,21 @@ var Index = React.createClass({
 				}
 			});
 		var body = con.children('table')[0];
+		var timeout;
 		con = con[0];
 		dataCenter.on('data', update);
 		
 		function update(modal, _atBottom) {
 			modal = modal || self.state.network;
+			clearTimeout(timeout);
+			timeout = null;
 			if (self.state.name != 'network' || !modal) {
 				return;
 			}
 			_atBottom = _atBottom || atBottom();
-			modal.update(_atBottom);
+			if (modal.update(_atBottom) && _atBottom) {
+				timeout = setTimeout(update, 3000);
+			}
 			self.setState({
 				network: modal
 			}, function() {

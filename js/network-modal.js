@@ -25,6 +25,7 @@ proto.update = function(scrollAtBottom) {
 	}
 	
 	this.list = this._list.slice(0, MAX_LENGTH);
+	return this._list.length > MAX_LENGTH;
 };
 
 module.exports = NetworkModal;
