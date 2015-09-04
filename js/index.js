@@ -150,13 +150,16 @@ var Index = React.createClass({
 			self.setState({
 				network: modal
 			}, function() {
-				if (_atBottom) {
-					con.scrollTop = body.offsetHeight;
-				}
+				_atBottom && scrollToBottom();
 			});
 		}
 		
+		function scrollToBottom() {
+			con.scrollTop = body.offsetHeight;
+		}
+		
 		self._updateNetwork = update;
+		self.autoScroll = scrollToBottom;
 		
 		function atBottom() {
 			return con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
@@ -577,6 +580,7 @@ var Index = React.createClass({
 					<a onClick={this.showValuesOptions} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
+					<a onClick={this.autoScroll} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-play"></span>Scroll</a>
 					<a onClick={this.replay} className={'w-replay-menu' + (this.state.disabledReplayBtn ? ' w-disabled' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
 					<a onClick={this.setFilter} className={'w-filter-menu' + (this.state.hasFilterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
