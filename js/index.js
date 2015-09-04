@@ -124,8 +124,8 @@ var Index = React.createClass({
 	},
 	startLoadData: function() {
 		var self = this;
-		if (self.updateNetwork_) {
-			setTimeout(self.updateNetwork_, 30);
+		if (self._updateNetwork) {
+			self._updateNetwork;
 			return;
 		}
 		
@@ -156,7 +156,7 @@ var Index = React.createClass({
 			});
 		}
 		
-		self.updateNetwork_ = update;
+		self._updateNetwork = update;
 		
 		function atBottom() {
 			return con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
