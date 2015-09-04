@@ -125,6 +125,8 @@ var Index = React.createClass({
 	startLoadData: function() {
 		var self = this;
 		if (self._startLoadData) {
+			var modal = self.state.network;
+			modal && self.updateNetwork_(modal);
 			return;
 		}
 		self._startLoadData = true;
@@ -133,19 +135,18 @@ var Index = React.createClass({
 			.find('.w-req-data-list').scroll(function() {
 				var modal = self.state.network;
 				if (modal && atBottom()) {
-					modal.update(true);
-					self.setState({
-						network: modal
-					}, function() {
-						con.scrollTop = body.offsetHeight;
-					});
+					update(modal, true);
 				}
 			});
 		var body = con.children('table')[0];
 		con = con[0];
+		dataCenter.on('data', update);
 		
-		dataCenter.on('data', function(modal) {
-			var _atBottom = atBottom();
+		function update(modal, _atBottom) {
+			if (self.state.name != 'network') {
+				return;
+			}
+			_atBottom = _atBottom || atBottom();
 			modal.update(_atBottom);
 			self.setState({
 				network: modal
@@ -154,7 +155,9 @@ var Index = React.createClass({
 					con.scrollTop = body.offsetHeight;
 				}
 			});
-		});
+		}
+		
+		self.updateNetwork_ = update;
 		
 		function atBottom() {
 			return con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
