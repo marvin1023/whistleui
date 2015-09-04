@@ -1,10 +1,12 @@
 var $ = require('jquery');
 var createCgi = require('./cgi');
-var	MAX_COUNT = 1200;
+var NetworkModal = require('./network-modal');
+var	MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 10000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
 var dataList = [];
+var networkModal = new NetworkModal(dataList);
 var curServerInfo;
 var initialData;
 var DEFAULT_CONF = {
@@ -117,7 +119,7 @@ function startLoadData() {
 				item && dataList.push(item);
 			});
 			$.each(dataCallbacks, function() {
-				this(dataList);
+				this(networkModal);
 			});
 		});
 	}

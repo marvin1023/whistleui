@@ -3,7 +3,6 @@ var $ = require('jquery');
 var React = require('react');
 var List = require('./list');
 var ListModal = require('./list-modal');
-var NetworkModal = require('./network-modal');
 var Network = require('./network');
 var About = require('./about');
 var Online = require('./online');
@@ -132,26 +131,20 @@ var Index = React.createClass({
 		var con = $(self.refs.network.getDOMNode()).find('.w-req-data-list');
 		var body = con.children('table')[0];
 		con = con[0];
-		dataCenter.on('data', function(data) {
-			if (!self._networkModal) {
-				self._networkModal = new NetworkModal(data);
-			}
-			
+		dataCenter.on('data', function(modal) {
 			if (self.state.name != 'network') {
 				return;
 			}
 			var atBottom = con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
 			self.setState({
-				network: self._networkModal
+				network: modal
 			}, function() {
-				if (atBottom) {
-					var exceedCount = data.length > 1200;
-					if (exceedCount > 0) {
-						data.splice(0, exceedCount + 100);
-					}
-					con.scrollTop = body.offsetHeight;
-					self.forceUpdate();
+				if (!atBottom) {
+					return;
 				}
+				modal.remove();
+				con.scrollTop = body.offsetHeight;
+				self.forceUpdate();
 			});
 		});
 		self._startLoadData = true;
