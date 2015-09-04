@@ -19,6 +19,7 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-create-values-input {left: 160px;}
 .w-edit-rules-input {left: 242px;}
 .w-edit-values-input {left: 232px;}
+.w-edit-filter-input {left: 425px;}
 
 .w-values-list .glyphicon {display: none!important;}
 .w-values-list a {font-weight: normal!important;}

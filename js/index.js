@@ -329,6 +329,14 @@ var Index = React.createClass({
 			editValuesInput.focus();
 		});	
 	},
+	showEditFilter: function() {
+		var editFilterInput = this.refs.editFilterInput.getDOMNode();
+		this.setState({
+			showEditFilter: true
+		}, function() {
+			editFilterInput.focus();
+		});
+	},
 	editRules: function(e) {
 		if (e.keyCode != 13 && e.type != 'click') {
 			return;
@@ -445,8 +453,11 @@ var Index = React.createClass({
 	composer: function() {
 		
 	},
-	setFilter: function() {
-		
+	setFilter: function(e) {
+		if (e.keyCode != 13 && e.type != 'click') {
+			return;
+		}
+		alert(2)
 	},
 	clear: function() {
 		var modal = this.state.network;
@@ -528,7 +539,8 @@ var Index = React.createClass({
 			showCreateRules: false,
 			showCreateValues: false,
 			showEditRules: false,
-			showEditValues: false
+			showEditValues: false,
+			showEditFilter: false
 		});
 	},
 	onClickMenu: function(e) {
@@ -588,7 +600,7 @@ var Index = React.createClass({
 					<a onClick={this.autoScroll} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-play"></span>AutoScroll</a>
 					<a onClick={this.replay} className={'w-replay-menu' + (this.state.disabledReplayBtn ? ' w-disabled' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
-					<a onClick={this.setFilter} className={'w-filter-menu' + (this.state.hasFilterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
+					<a onClick={this.showEditFilter} className={'w-filter-menu' + (this.state.hasFilterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
 					<a onClick={this.clear} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-remove"></span>Clear</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.onClickMenu} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
@@ -604,6 +616,7 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="string or regular" /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
 				{this.state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
