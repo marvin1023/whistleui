@@ -67,6 +67,9 @@ var ReqData = React.createClass({
 	render: function() {
 		var modal = this.props.modal;
 		var list = modal ? modal.list : [];
+		var first = list[0];
+		var index = first && first.order || 1;
+		
 		return (
 				<div className="fill w-req-data-con orient-vertical-box">
 					<div className="w-req-data-content fill orient-vertical-box">
@@ -97,9 +100,9 @@ var ReqData = React.createClass({
 						    		  var req = item.req;
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
-						    		  
+						    		  item.order = index + i;
 						    		  return (<tr key={item.id} className={getClassName(item)}>
-						    		  				<th className="order" scope="row">{i + 1}</th>			        
+						    		  				<th className="order" scope="row">{item.order}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        
 						    		  				<td className="method">{req.method}</td>			        

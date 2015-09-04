@@ -1,6 +1,6 @@
 var $ = require('jquery');
 var createCgi = require('./cgi');
-var	MAX_COUNT = 2000;
+var	MAX_COUNT = 1200;
 var TIMEOUT = 10000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];

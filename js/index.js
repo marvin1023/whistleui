@@ -145,7 +145,12 @@ var Index = React.createClass({
 				network: self._networkModal
 			}, function() {
 				if (atBottom) {
+					var exceedCount = data.length > 1200;
+					if (exceedCount > 0) {
+						data.splice(0, exceedCount + 100);
+					}
 					con.scrollTop = body.offsetHeight;
+					self.forceUpdate();
 				}
 			});
 		});
