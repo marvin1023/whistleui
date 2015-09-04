@@ -130,7 +130,7 @@ var Index = React.createClass({
 		
 		var con = $(self.refs.network.getDOMNode())
 			.find('.w-req-data-list').scroll(function() {
-				var modal = this.state.network;
+				var modal = self.state.network;
 				modal && atBottom() && modal.remove();
 			});
 		var body = con.children('table')[0];
