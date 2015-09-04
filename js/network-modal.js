@@ -1,5 +1,5 @@
 var MAX_LENGTH = 720;
-var MAX_COUNT = MAX_LENGTH * 2 - 1;
+var MAX_COUNT = 1280;
 
 function NetworkModal(list) {
 	this._list = list;
@@ -20,7 +20,7 @@ proto.update = function(scrollAtBottom) {
 	if (scrollAtBottom) {
 		var exceed = this._list.length - MAX_LENGTH;
 		if (exceed > 0) {
-			this._list.splice(0, exceed);
+			this._list.splice(0, Math.min(exceed, MAX_LENGTH - 1));
 		}
 	}
 	
