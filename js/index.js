@@ -131,7 +131,7 @@ var Index = React.createClass({
 		var con = $(self.refs.network.getDOMNode())
 			.find('.w-req-data-list').scroll(function() {
 				var modal = self.state.network;
-				modal && atBottom() && modal.remove();
+				modal && atBottom() && modal.update();
 			});
 		var body = con.children('table')[0];
 		con = con[0];
@@ -143,16 +143,15 @@ var Index = React.createClass({
 			if (self.state.name != 'network') {
 				return;
 			}
+			
 			var _atBottom = atBottom();
+			modal.update(_atBottom);
 			self.setState({
 				network: modal
 			}, function() {
-				if (!_atBottom) {
-					return;
+				if (_atBottom) {
+					con.scrollTop = body.offsetHeight;
 				}
-				modal.remove();
-				con.scrollTop = body.offsetHeight;
-				self.forceUpdate();
 			});
 		});
 		self._startLoadData = true;
