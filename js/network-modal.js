@@ -1,5 +1,5 @@
 var MAX_LENGTH = 360;
-var MAX_COUNT = 2000;//不能超过MAX_LENGTH * 2，否则order衔接会有问题
+var MAX_COUNT = 2560;//不能超过MAX_LENGTH * 2，否则order衔接会有问题
 
 function NetworkModal(list) {
 	this._list = list;
