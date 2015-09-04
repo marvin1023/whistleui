@@ -10,7 +10,6 @@ var Online = require('./online');
 var MenuItem = require('./menu-item');
 var dataCenter = require('./data-center');
 var util = require('./util');
-var pageName = getPageName();
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -19,6 +18,7 @@ function getPageName() {
 var Index = React.createClass({
 	getInitialState: function() {
 		var state = {};
+		var pageName = getPageName();
 		if (!pageName || pageName.indexOf('rules') != -1) {
 			state.hasRules = true;
 			state.name = 'rules';
