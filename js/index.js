@@ -127,17 +127,22 @@ var Index = React.createClass({
 		if (self._startLoadData) {
 			return;
 		}
+		self._startLoadData = true;
 		
 		var con = $(self.refs.network.getDOMNode())
 			.find('.w-req-data-list').scroll(function() {
 				var modal = self.state.network;
-				modal && atBottom() && modal.update(true);
+				if (modal && atBottom()) {
+					modal.update(true);
+					self.setState({
+						network: modal
+					}, function() {
+						con.scrollTop = body.offsetHeight;
+					});
+				}
 			});
 		var body = con.children('table')[0];
 		con = con[0];
-		function atBottom() {
-			return con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
-		}
 		
 		dataCenter.on('data', function(modal) {
 			if (self.state.name != 'network') {
@@ -154,7 +159,10 @@ var Index = React.createClass({
 				}
 			});
 		});
-		self._startLoadData = true;
+		
+		function atBottom() {
+			return con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
+		}
 	},
 	showNetwork: function() {
 		this.setMenuOptionsState();
