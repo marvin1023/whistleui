@@ -1,10 +1,11 @@
 require('./base-css.js');
 require('../css/req-data.css');
 var React = require('react');
+var $ = require('jquery');
 var util = require('./util');
 
 function getClassName(data) {
-	return getStatusClass(data) 
+	return getStatusClass(data) + ' w-req-data-item'
 		+ (data.isHttps ? ' w-tunnel' : '') 
 			+ (hasRules(data) ? ' w-has-rules' : '')
 				+ (data.selected ? ' w-selected' : '');
@@ -45,6 +46,30 @@ function getStatusClass(data) {
 	return '';
 }
 
+function getSelectedRows() {
+	var range = getSelection();
+	if (!range) {
+		return;
+	}
+	range = range.getRangeAt(0);
+	var startElem = $(range.startContainer).closest('.w-req-data-item');
+	if (!startElem.length) {
+		return null;
+	}
+	var endElem = $(range.endContainer).closest('.w-req-data-item');
+	if (!startElem.length) {
+		return null;
+	}
+	return [startElem, endElem];
+}
+
+function getSelection() {
+	if (window.getSelection) {
+		return window.getSelection();
+	}
+	return document.getSelection();
+}
+
 var ReqData = React.createClass({
 	getInitialState: function() {
 		return {};
@@ -53,9 +78,28 @@ var ReqData = React.createClass({
 		
 	},
 	onClick: function(e, item) {
-		if (!e.ctrlKey && !e.metaKey) {
+		var modal = this.props.modal;
+		if (!e.ctrlKey && !e.metaKey || !modal) {
 			this.clearSelection();
 		}
+		var rows;
+		var selected;
+		if (e.shiftKey && (rows = getSelectedRows())) {
+			var start = rows[0].attr('data-id');
+			var end = rows[1].attr('data-id');
+			for (var i = 0, len = modal.list.length; i < len; i++) {
+				var item = modal.list[i];
+				if (item.id == start || item.id == end) {
+					item.selected = true;
+					selected = !selected;
+					if (!selected) {
+						break;
+					}
+				} else {
+					item.selected = selected;
+				}
+			}
+		} 
 		item.selected = true;
 		this.forceUpdate();
 	},
@@ -118,7 +162,7 @@ var ReqData = React.createClass({
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
 						    		  item.order = index + i;
-						    		  return (<tr key={item.id} className={getClassName(item)} onClick={function(e) {self.onClick(e, item);}}>
+						    		  return (<tr data-id={item.id} key={item.id} className={getClassName(item)} onClick={function(e) {self.onClick(e, item);}}>
 						    		  				<th className="order" scope="row">{item.order}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        
