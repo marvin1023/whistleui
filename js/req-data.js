@@ -52,8 +52,10 @@ var ReqData = React.createClass({
 	componentDidMount: function() {
 		
 	},
-	select: function(item) {
-		this.clearSelection();
+	onClick: function(e, item) {
+		if (!e.ctrlKey && !e.metaKey) {
+			this.clearSelection();
+		}
 		item.selected = true;
 		this.forceUpdate();
 	},
@@ -116,7 +118,7 @@ var ReqData = React.createClass({
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
 						    		  item.order = index + i;
-						    		  return (<tr key={item.id} className={getClassName(item)} onClick={function() {self.select(item);}}>
+						    		  return (<tr key={item.id} className={getClassName(item)} onClick={function(e) {self.onClick(e, item);}}>
 						    		  				<th className="order" scope="row">{item.order}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        
