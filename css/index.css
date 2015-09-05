@@ -24,7 +24,10 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-values-list .glyphicon {display: none!important;}
 .w-values-list a {font-weight: normal!important;}
 
-.w-rules-menu .w-values-menu-item {left: 92px;}
-.w-network-menu .w-values-menu-item {left: 75px;}
-.w-network-menu .w-rules-menu-item {left: 8px;}
-.w-values-menu .w-rules-menu-item {left: 92px;}
+.w-rules-menu-list .w-values-menu-item {left: 92px;}
+.w-network-menu-list .w-values-menu-item {left: 75px;}
+.w-network-menu-list .w-rules-menu-item {left: 8px;}
+.w-values-menu-list .w-rules-menu-item {left: 92px;}
+.w-rules-menu-list .w-weinre-menu-item {left: 457px;}
+.w-network-menu-list .w-weinre-menu-item {left: 550px;}
+.w-values-menu-list .w-weinre-menu-item {left: 447px;}
