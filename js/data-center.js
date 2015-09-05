@@ -64,11 +64,9 @@ exports.log = createCgi({
 }, GET_CONF);
 
 $.extend(exports, createCgi({
-	composer: {
-		url: '/cgi-bin/composer',
-		type: 'post'
-	}
-}, GET_CONF));
+	composer: '/cgi-bin/composer',
+	setFilter: '/cgi-bin/set-filter'
+}, POST_CONF));
 
 exports.getInitialData = function(callback) {
 	if (!initialData) {
