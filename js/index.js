@@ -119,6 +119,10 @@ var Index = React.createClass({
 		if (self.state.name == 'network') {
 			self.startLoadData();
 		}
+		
+		dataCenter.on('serverInfo', function(data) {
+			self.serverInfo = data;
+		});
 	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();
@@ -412,6 +416,19 @@ var Index = React.createClass({
 			}
 		});
 	},
+	showAnonymousWeinre: function() {
+		this.openWeinre();
+	},
+	showWeinre: function(options) {
+		this.openWeinre(options.name);
+	},
+	openWeinre: function(name) {
+		var hostname = location.hostname;
+		hostname = /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname) && this.serverInfo ? 
+				hostname + ':' + this.serverInfo.weinrePort : 'weinre.local.whistlejs.com';
+		window.open('http://' + hostname + '/client/#' + (name || 'anonymous'));
+		this.hideOptions();
+	},
 	selectRules: function(item) {
 		var self = this;
 		dataCenter.rules[item.isDefault ? 'enableDefault' : 'select'](item, function(data) {
@@ -624,7 +641,7 @@ var Index = React.createClass({
 					<Online />
 					<MenuItem ref="rulesMenuItem" name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="valuesMenuItem" name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.props.onClickOption} />
-					<MenuItem ref="weinreMenuItem" name="Default" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.props.onClickItem} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="weinreMenuItem" name="Anonymous" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
