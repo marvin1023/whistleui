@@ -6,7 +6,8 @@ var util = require('./util');
 function getClassName(data) {
 	return getStatusClass(data) 
 		+ (data.isHttps ? ' w-tunnel' : '') 
-			+ (hasRules(data) ? ' w-has-rules' : '');
+			+ (hasRules(data) ? ' w-has-rules' : '')
+				+ (data.selected ? ' w-selected' : '');
 }
 
 function hasRules(data) {
@@ -51,6 +52,19 @@ var ReqData = React.createClass({
 	componentDidMount: function() {
 		
 	},
+	select: function(item) {
+		this.clearSelection();
+		item.selected = true;
+		this.forceUpdate();
+	},
+	clearSelection: function() {
+		var modal = this.props.modal;
+		if (modal) {
+			modal.list.forEach(function(item) {
+				item.selected = false;
+			});
+		}
+	},
 	_onFilterChange: function(e) {
 		this.setState({filterText: e.target.value});
 	},
@@ -65,7 +79,8 @@ var ReqData = React.createClass({
 		this.setState({filterText: ''});
 	},
 	render: function() {
-		var modal = this.props.modal;
+		var self = this;
+		var modal = self.props.modal;
 		var list = modal ? modal.list : [];
 		var first = list[0];
 		var index = first && first.order || 1;
@@ -101,7 +116,7 @@ var ReqData = React.createClass({
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
 						    		  item.order = index + i;
-						    		  return (<tr key={item.id} className={getClassName(item)}>
+						    		  return (<tr key={item.id} className={getClassName(item)} onClick={function() {self.select(item);}}>
 						    		  				<th className="order" scope="row">{item.order}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        

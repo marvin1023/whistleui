@@ -20,3 +20,5 @@
 .w-req-data-list .w-forbidden td {color: #808000;}
 .w-req-data-list .w-tunnel td {color: #808080;}
 .w-req-data-list .w-has-rules td {font-weight: bold;}
+.w-req-data-list tr {cursor: default;}
+.w-req-data-list tr.w-selected th, .w-req-data-list tr.w-selected td {background-color: #337ab7!important; color: #fff;}

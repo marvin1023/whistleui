@@ -106,7 +106,7 @@ function startLoadData() {
 				var item = this;
 				var newItem = data[item.id];
 				if (newItem) {
-					dataList[i] = newItem;
+					$.extend(dataList[i], newItem);
 				} else {
 					item.lost = true;
 				}
