@@ -108,7 +108,7 @@ var Index = React.createClass({
 			}
 		}).on('keyup', function(e) {
 			if (e.keyCode == 27) {
-				self.hideOnBlur();
+				self.hideOptions();
 			}
 		}).on('keydown', function(e) {
 			if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) {
@@ -226,7 +226,15 @@ var Index = React.createClass({
 		var state = {
 				showRulesOptions: false,
 				showValuesOptions: false,
-				showWeinreOptions: false
+				showWeinreOptions: false,
+				showCreateRules: false,
+				showCreateValues: false,
+				showEditRules: false,
+				showEditValues: false,
+				showEditFilter: false,
+				showValuesSettings: false,
+				showRulesSettings: false
+			
 		};
 		if (name) {
 			state[name] = true;
@@ -550,19 +558,16 @@ var Index = React.createClass({
 		dataCenter.values.setCurrent({name: name});
 		this.state.values.setActive(name);
 	},
-	setRulesSettings: function() {
-		
+	showRulesSettings: function() {
+		var self = this;
+		self.setMenuOptionsState('showRulesSettings', function() {
+			self.refs.rulesSettings.getDOMNode().focus();
+		});
 	},
-	setValuesSettings: function() {
-		
-	},
-	hideOnBlur: function() {
-		this.setState({
-			showCreateRules: false,
-			showCreateValues: false,
-			showEditRules: false,
-			showEditValues: false,
-			showEditFilter: false
+	showValuesSettings: function() {
+		var self = this;
+		self.setMenuOptionsState('showValuesSettings', function() {
+			self.refs.valuesSettings.getDOMNode().focus();
 		});
 	},
 	onClickMenu: function(e) {
@@ -577,7 +582,7 @@ var Index = React.createClass({
 		}
 	},
 	showSettings: function(e) {
-		this.state.name == 'rules' ? this.setRulesSettings() : this.setValuesSettings();
+		this.state.name == 'rules' ? this.showRulesSettings() : this.showValuesSettings();
 	},
 	activeRules: function(item) {
 		dataCenter.rules.setCurrent({name: item.name});
@@ -635,11 +640,21 @@ var Index = React.createClass({
 					<MenuItem ref="rulesMenuItem" name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="valuesMenuItem" name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.props.onClickOption} />
 					<MenuItem ref="weinreMenuItem" name="Anonymous" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOnBlur} type="text" maxLength="64" placeholder={this.state.filterText || 'string or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={this.state.filterText || 'string or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
+					<div tabIndex="1" ref="valuesSettings" onMouseDown={this.preventBlur} onBlur={this.hideOptions} style={{display: this.state.showValuesSettings ? 'block' : 'none'}} className="shadow w-input-menu-item w-values-settings-dialog">
+						<p><label>Theme:</label></p>
+						<p><label>Font size:</label></p>
+						<p><label><input type="checkbox" /> Show line number</label></p>
+					</div>
+					<div tabIndex="1" ref="rulesSettings" onMouseDown={this.preventBlur} onBlur={this.hideOptions} style={{display: this.state.showRulesSettings ? 'block' : 'none'}} className="shadow w-input-menu-item w-values-settings-dialog">
+						<p><label>Theme:</label></p>
+						<p><label>Font size:</label></p>
+						<p><label><input type="checkbox" /> Show line number</label></p>
+					</div>
 				</div>
 				{this.state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
