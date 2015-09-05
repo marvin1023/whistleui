@@ -551,18 +551,10 @@ var Index = React.createClass({
 		this.state.values.setActive(name);
 	},
 	setRulesSettings: function() {
-		this.setState({
-			showRulesOptions: true,
-			showValuesOptions: false,
-			showWeinreOptions: false
-		});
+		
 	},
 	setValuesSettings: function() {
-		this.setState({
-			showRulesOptions: false,
-			showValuesOptions: true,
-			showWeinreOptions: false
-		});
+		
 	},
 	hideOnBlur: function() {
 		this.setState({
@@ -582,9 +574,10 @@ var Index = React.createClass({
 			isRules ? this.showEditRules() : this.showEditValues();
 		} else if (target.hasClass('w-delete-menu')) {
 			isRules ? this.removeRules() : this.removeValues();
-		} else if (target.hasClass('w-settings-menu')) {
-			isRules ? this.setRulesSettings() : this.setValuesSettings();
 		}
+	},
+	showSettings: function(e) {
+		this.state.name == 'rules' ? this.setRulesSettings() : this.setValuesSettings();
 	},
 	activeRules: function(item) {
 		dataCenter.rules.setCurrent({name: item.name});
@@ -633,7 +626,7 @@ var Index = React.createClass({
 					<a onClick={this.showEditFilter} className={'w-filter-menu' + (this.state.filterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
 					<a onClick={this.clear} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-remove"></span>Clear</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
-					<a onClick={this.onClickMenu} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
+					<a onClick={this.showSettings} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<a onClick={this.showWeinreOptions} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 					<a onClick={this.onClickMenu} className="w-rootca-menu" href="javascript:;"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
