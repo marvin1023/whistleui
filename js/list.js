@@ -30,6 +30,9 @@ var List = React.createClass({
 			self.onDoubleClick(item);
 		}
 	},
+	shouldComponentUpdate: function() {
+		return !this.props.hide;
+	},
 	onClick: function(e) {
 		var elem = $(e.target).closest('a');
 		var item = this.getItemByKey(elem.attr('data-key'));
