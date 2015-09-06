@@ -85,7 +85,8 @@ proto.show = function(item) {
 };
 
 function updateOrder(list) {
-	if (list.length) {
+	var len = list.length;
+	if (len && !list[len - 1].order) {
 		var order = list[0].order || 1;
 		list.forEach(function(item, i) {
 			item.order = order + i;
