@@ -118,7 +118,6 @@ var ReqData = React.createClass({
 		var self = this;
 		var modal = self.props.modal;
 		var list = modal ? modal.list : [];
-		var index = modal ? modal.order : 1;
 		
 		return (
 				<div className="fill w-req-data-con orient-vertical-box">
