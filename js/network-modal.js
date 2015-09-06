@@ -170,14 +170,6 @@ proto.clearSelection = function() {
 	});
 };
 
-proto.hide = function(item) {
-	item.hide = true;
-};
-
-proto.show = function(item) {
-	item.hide = false;
-};
-
 function updateOrder(list) {
 	var len = list.length;
 	if (len && !list[len - 1].order) {

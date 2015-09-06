@@ -6,17 +6,8 @@ var Detail = require('./detail');
 var dataCenter = require('./data-center');
 
 var Network = React.createClass({
-	onClickMenu: function() {
-		
-	},
-	onClickMenuItem: function() {
-		
-	},
-	onClickMenuOption: function() {
-		
-	},
-	componentDidMount: function() {
-		
+	shouldComponentUpdate: function() {
+		return !this.props.hide;
 	},
 	render: function() {
 		var modal = this.props.modal;
