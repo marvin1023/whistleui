@@ -57,7 +57,7 @@ function getSelectedRows() {
 		return null;
 	}
 	var endElem = $(range.endContainer).closest('.w-req-data-item');
-	if (!startElem.length) {
+	if (!startElem.length || !endElem.length) {
 		return null;
 	}
 	return [startElem, endElem];
