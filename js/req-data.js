@@ -95,18 +95,13 @@ var ReqData = React.createClass({
 	},
 	clearSelection: function() {
 		var modal = this.props.modal;
-		if (modal) {
-			modal.list.forEach(function(item) {
-				item.selected = false;
-			});
-		}
+		modal && modal.clearSelection();
 	},
 	onFilterChange: function(e) {
 		var modal = this.props.modal;
-		if (modal) {
-			modal.search(e.target.value);
-		}
-		this.setState({filterText: e.target.value});
+		var value = e.target.value;
+		modal && modal.search(value);
+		this.setState({filterText: value});
 	},
 	onFilterKeyDown: function(e) {
 		if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
@@ -116,6 +111,8 @@ var ReqData = React.createClass({
 		}
 	},
 	clearFilterText: function() {
+		var modal = this.props.modal;
+		modal && modal.search();
 		this.setState({filterText: ''});
 	},
 	render: function() {

@@ -20,11 +20,8 @@ var proto = NetworkModal.prototype;
  * protocol[p]: 搜索协议
  */
 proto.search = function(keyword) {
-	if (typeof keyword != 'string') {
-		keyword += ''
-	}
 	this._type = 'url';
-	this._keyword = keyword.trim();
+	this._keyword = typeof keyword != 'string' ? '' : keyword.trim();
 	if (this._keyword && /^(url|u|content|c|headers|h|ip|i|status|result|s|r|protocol|p):(.*)$/.test(keyword)) {
 		this._type = RegExp.$1;
 		this._keyword = RegExp.$2.trim();
