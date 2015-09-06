@@ -37,6 +37,9 @@ var ReqData = React.createClass({
 		
 	},
 	render: function() {
+		var modal = this.props.modal;
+		var selectedList = modal && modal.getSelectedList();
+		
 		return (
 				<div className="fill orient-vertical-box w-detail">
 				<BtnGroup onClick={this.toggleTab} tabs={TABS} />

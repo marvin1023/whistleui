@@ -23,7 +23,7 @@ var Network = React.createClass({
 		return (
 			<Divider hide={this.props.hide} rightWidth="560">
 				<ReqData modal={modal} />
-				<Detail modal={null} />
+				<Detail modal={modal} />
 			</Divider>		
 		);
 	}
