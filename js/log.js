@@ -4,8 +4,9 @@ var React = require('react');
 var util = require('./util');
 
 var Log = React.createClass({
-	shouldComponentUpdate: function() {
-		return !util.getBoolean(this.props.hide);
+	shouldComponentUpdate: function(nextProps) {
+		var hide = util.getBoolean(this.props.hide);
+		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	render: function() {
 		

@@ -9,8 +9,9 @@ var BtnGroup = require('./btn-group');
 var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
 
 var ReqDetail = React.createClass({
-	shouldComponentUpdate: function() {
-		return !util.getBoolean(this.props.hide);
+	shouldComponentUpdate: function(nextProps) {
+		var hide = util.getBoolean(this.props.hide);
+		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	onClickBtn: function(btn) {
 		this.setState({btn: btn});

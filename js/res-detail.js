@@ -9,8 +9,9 @@ BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, 
 var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Http Only', 'Secure'];
 
 var ResDetail = React.createClass({
-	shouldComponentUpdate: function() {
-		return !util.getBoolean(this.props.hide);
+	shouldComponentUpdate: function(nextProps) {
+		var hide = util.getBoolean(this.props.hide);
+		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	onClickBtn: function(btn) {
 		this.setState({btn: btn});

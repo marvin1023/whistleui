@@ -30,8 +30,9 @@ var List = React.createClass({
 			self.onDoubleClick(item);
 		}
 	},
-	shouldComponentUpdate: function() {
-		return !util.getBoolean(this.props.hide);
+	shouldComponentUpdate: function(nextProps) {
+		var hide = util.getBoolean(this.props.hide);
+		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	onClick: function(e) {
 		var elem = $(e.target).closest('a');
