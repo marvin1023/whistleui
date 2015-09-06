@@ -10,6 +10,10 @@ NetworkModal.MAX_COUNT = MAX_COUNT;
 
 var proto = NetworkModal.prototype;
 
+proto.search = function(keywork) {
+	
+};
+
 proto.clear = function clear() {
 	this._list.splice(0, this.list.length);
 	this.update();
@@ -26,6 +30,53 @@ proto.update = function(scrollAtBottom) {
 	
 	this.list = this._list.slice(0, MAX_LENGTH);
 	return this._list.length > MAX_LENGTH;
+};
+
+proto.getSelected = function() {
+	
+	return this.getSelectedList()[0];
+};
+
+proto.setSelected = function(item, selected) {
+	item.selected = selected !== false;
+};
+
+proto.getSelectedList = function() {
+	
+	return this.list.filter(function(item) {
+		return item.selected;
+	});
+};
+
+proto.setSelectedList = function(startId, endId) {
+	if (!startId || !endId) {
+		return;
+	}
+	
+	var selected, item;
+	for (var i = 0, len = this.list.length; i < len; i++) {
+		item = this.list[i];
+		if (item.id == startId || item.id == endId) {
+			selected = !selected;
+			item.selected = true;
+		} else {
+			item.selected = selected;
+		}
+	}
+};
+
+proto.clearSelection = function() {
+	this.list.forEach(function(item) {
+		item.selected = false;
+	});
+};
+
+proto.hide = function(item) {
+	item.hide = true;
+};
+
+proto.show = function(item) {
+	item.hide = false;
 };
 
 module.exports = NetworkModal;
