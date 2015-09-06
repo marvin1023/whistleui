@@ -1,12 +1,16 @@
 require('./base-css.js');
 require('../css/log.css');
 var React = require('react');
+var util = require('./util');
 
 var Log = React.createClass({
+	shouldComponentUpdate: function() {
+		return !this.props.hide;
+	},
 	render: function() {
 		
 		return (
-				<div  className="w-detail-log">
+				<div  className={'w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<ul>
 						<li className="fatal">
 							<h5>Level: FATAL</h5>

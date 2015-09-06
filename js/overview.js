@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/overview.css');
 var React = require('react');
+var util = require('./util');
 var Properties = require('./properties');
 var OVERVIEW = ['Url', 'Method', 'Status Code', 'Host IP', 'Client IP', 'Request Length', 'Content Length'
                       , 'Start Date', 'DNS Lookup', 'Request Sent', 'Content Download'];
@@ -14,6 +15,9 @@ var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'log', 'params', 
              'resSpeed', 'resType', 'cache', 'resBody', 'prependRes', 'appendRes'];
 
 var Overview = React.createClass({
+	shouldComponentUpdate: function() {
+		return !this.props.hide;
+	},
 	render: function() {
 		var overviewModal = {};
 		var rulesModal = {};
@@ -27,7 +31,7 @@ var Overview = React.createClass({
 			rulesModal[name] = _rulesModal[name];
 		});
 		return (
-			<div className="w-detail-overview orient-vertical-box">
+			<div className={'w-detail-overview orient-vertical-box' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<Properties modal={overviewModal} />
 				<p className="w-detail-overview-title"><a href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span></a>All rules:</p>
 				<Properties modal={rulesModal} />

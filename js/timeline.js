@@ -1,12 +1,16 @@
 require('./base-css.js');
 require('../css/timeline.css');
 var React = require('react');
+var util = require('./util');
 
 var Timeline = React.createClass({
+	shouldComponentUpdate: function() {
+		return !this.props.hide;
+	},
 	render: function() {
 		
 		return (
-				<div className="w-detail-timeline">
+				<div className={'w-detail-timeline' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<ul>
 						<li>
 							<span title="Stalled: 0ms" className="w-detail-timeline-stalled" style={{width: 0}}>-1</span>

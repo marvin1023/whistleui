@@ -1,12 +1,16 @@
 require('./base-css.js');
 require('../css/composer.css');
 var React = require('react');
+var util = require('./util');
 var Divider = require('./divider');
 
 var Composer = React.createClass({
+	shouldComponentUpdate: function() {
+		return !this.props.hide;
+	},
 	render: function() {
 		return (
-			<div className="fill orient-vertical-box w-detail-composer">
+			<div className={'fill orient-vertical-box w-detail-composer' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<div className="w-composer-url box">
 					<input type="text" maxLength="8192" placeholder="url" className="fill w-composer-input" />
 					<select className="form-control w-composer-method">
