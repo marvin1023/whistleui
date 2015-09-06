@@ -479,8 +479,22 @@ var Index = React.createClass({
 			this.forceUpdate();
 		}
 	},
-	replay: function() {
+	replay: function() { 
+		var modal = this.state.network;
+		if (!modal) {
+			return;
+		}
+		var item = modal.getSelected();
+		if (!item || item.isHttps) {
+			return;
+		}
 		
+		dataCenter.composer({
+			url: item.url,
+			headers: item.req.headers,
+			method: item.req.method,
+			body: item.reqError ? '' : item.req.body
+		});
 	},
 	composer: function() {
 		
@@ -506,7 +520,7 @@ var Index = React.createClass({
 	},
 	clear: function() {
 		var modal = this.state.network;
-		this.setState({
+		modal && this.setState({
 			network: modal.clear()
 		});
 	},
