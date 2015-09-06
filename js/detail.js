@@ -30,8 +30,21 @@ var TABS = [{
 			}];
 
 var ReqData = React.createClass({
+	getInitialState: function() {
+		
+		return {
+			showOverview: false,
+			showRequest: false,
+			showResponse: false,
+			showTimeline: false,
+			showComposer: false,
+			showLog: false
+		};
+	},
 	toggleTab: function(tab) {
-		this.setState({tab: tab});
+		var state = {tab: tab};
+		state['show' + tab.name] = true;
+		this.setState(state);
 	}, 
 	render: function() {
 		var modal = this.props.modal;
@@ -41,12 +54,12 @@ var ReqData = React.createClass({
 				<div className="fill orient-vertical-box w-detail">
 				<BtnGroup onClick={this.toggleTab} tabs={TABS} />
 				<div className={'fill orient-vertical-box w-detail-content w-show-detail-' + util.getProperty(this, 'state.tab.name', '').toLowerCase()}>
-					<Overview />
-					<ReqDetail />
-					<ResDetail />
-					<Timeline />
-					<Composer />
-					<Log />
+					{this.state.showOverview ? <Overview /> : ''}
+					{this.state.showRequest ? <ReqDetail /> : ''}
+					{this.state.showResponse ? <ResDetail /> : ''}
+					{this.state.showTimeline ? <Timeline /> : ''}
+					{this.state.showComposer ? <Composer /> : ''}
+					{this.state.showLog ? <Log /> : ''}
 				</div>
 			</div>
 		);
