@@ -495,6 +495,7 @@ var Index = React.createClass({
 			method: item.req.method,
 			body: item.reqError ? '' : item.req.body
 		});
+		this.autoScroll && this.autoScroll();
 	},
 	composer: function() {
 		
