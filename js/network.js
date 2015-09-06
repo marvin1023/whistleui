@@ -1,5 +1,6 @@
 require('./base-css.js');
 var React = require('react');
+var util = require('./util');
 var Divider = require('./divider');
 var ReqData = require('./req-data');
 var Detail = require('./detail');
