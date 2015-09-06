@@ -75,7 +75,8 @@ var ReqData = React.createClass({
 		return {};
 	},
 	componentDidMount: function() {
-		
+		this.container = this.refs.container.getDOMNode();
+		this.content = this.refs.content.getDOMNode();
 	},
 	onClick: function(e, item) {
 		var modal = this.props.modal;
@@ -98,10 +99,13 @@ var ReqData = React.createClass({
 		modal && modal.clearSelection();
 	},
 	onFilterChange: function(e) {
-		var modal = this.props.modal;
+		var self = this;
+		var modal = self.props.modal;
 		var value = e.target.value;
-		modal && modal.search(value);
-		this.setState({filterText: value});
+		var autoScroll = modal && modal.search(value);
+		this.setState({filterText: value}, function() {
+			autoScroll && self.autoScroll()
+		});
 	},
 	onFilterKeyDown: function(e) {
 		if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
@@ -113,7 +117,12 @@ var ReqData = React.createClass({
 	clearFilterText: function() {
 		var modal = this.props.modal;
 		modal && modal.search();
-		this.setState({filterText: ''});
+		this.setState({filterText: ''}, this.autoScroll.bind(this));
+	},
+	autoScroll: function() {
+		if (this.container) {
+			this.container.scrollTop = this.content.offsetHeight;
+		}
 	},
 	render: function() {
 		var self = this;
@@ -140,8 +149,8 @@ var ReqData = React.createClass({
 						      </thead>
 						    </table>
 						</div>
-						<div className="w-req-data-list fill">
-							<table className="table">
+						<div ref="container" className="w-req-data-list fill">
+							<table ref="content" className="table">
 						      <tbody>
 						      {
 						    	  list.map(function(item, i) {

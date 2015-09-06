@@ -27,6 +27,7 @@ proto.search = function(keyword) {
 		this._keyword = RegExp.$2.trim();
 	}
 	this.filter();
+	return !this._keyword;
 };
 
 proto.filter = function() {
@@ -87,7 +88,7 @@ function inObject(obj, keyword) {
 		if (i.indexOf(keyword) != -1) {
 			return true;
 		}
-		var value = headers[i];
+		var value = obj[i];
 		if (typeof value == 'string' 
 				&& value.indexOf(keyword) != -1) {
 			return true;
