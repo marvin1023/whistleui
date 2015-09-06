@@ -2,6 +2,7 @@ var MAX_LENGTH = 360;
 var MAX_COUNT = 2560;//不能超过MAX_LENGTH * 2，否则order衔接会有问题
 
 function NetworkModal(list) {
+	this.order = 1;
 	this._list = list;
 	this.list = list.slice(0, MAX_LENGTH);
 }
@@ -15,6 +16,7 @@ proto.search = function(keywork) {
 };
 
 proto.clear = function clear() {
+	this.order = 1;
 	this._list.splice(0, this.list.length);
 	this.update();
 	return this;
@@ -24,7 +26,8 @@ proto.update = function(scrollAtBottom) {
 	if (scrollAtBottom) {
 		var exceed = this._list.length - MAX_LENGTH;
 		if (exceed > 0) {
-			this._list.splice(0, Math.min(exceed, MAX_LENGTH - 1));
+			this.order += Math.min(exceed, MAX_LENGTH - 1);
+			this._list.splice(0, this.order);
 		}
 	}
 	

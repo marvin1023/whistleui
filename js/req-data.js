@@ -128,8 +128,7 @@ var ReqData = React.createClass({
 		var self = this;
 		var modal = self.props.modal;
 		var list = modal ? modal.list : [];
-		var first = list[0];
-		var index = first && first.order || 1;
+		var index = modal ? modal.order : 1;
 		
 		return (
 				<div className="fill w-req-data-con orient-vertical-box">
@@ -161,7 +160,6 @@ var ReqData = React.createClass({
 						    		  var req = item.req;
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
-						    		  item.order = index + i;
 						    		  return (<tr data-id={item.id} key={item.id} className={getClassName(item)} onClick={function(e) {self.onClick(e, item);}}>
 						    		  				<th className="order" scope="row">{item.order}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
