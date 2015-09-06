@@ -33,7 +33,7 @@ var Composer = React.createClass({
 		          	</select>
 					<button className="btn btn-primary w-composer-execute">Execute</button>
 				</div>
-				<Divider leftWidth={(Math.max(window.innerHeight, 360) - 120) / 2} vertical="true">
+				<Divider vertical="true">
 					<textarea className="fill w-composer-headers" placeholder="headers"></textarea>
 					<textarea className="fill w-composer-body" placeholder="body"></textarea>
 				</Divider>

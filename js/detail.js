@@ -33,33 +33,35 @@ var ReqData = React.createClass({
 	getInitialState: function() {
 		
 		return {
-			showOverview: false,
-			showRequest: false,
-			showResponse: false,
-			showTimeline: false,
-			showComposer: false,
-			showLog: false
+			initedOverview: false,
+			initedRequest: false,
+			initedResponse: false,
+			initedTimeline: false,
+			initedComposer: false,
+			initedLog: false
 		};
 	},
 	toggleTab: function(tab) {
 		var state = {tab: tab};
-		state['show' + tab.name] = true;
+		state['inited' + tab.name] = true;
 		this.setState(state);
 	}, 
 	render: function() {
 		var modal = this.props.modal;
 		var selectedList = modal && modal.getSelectedList();
+		var curTab = this.state.tab;
+		var name = curTab && curTab.name;
 		
 		return (
 				<div className="fill orient-vertical-box w-detail">
 				<BtnGroup onClick={this.toggleTab} tabs={TABS} />
-				<div className={'fill orient-vertical-box w-detail-content w-show-detail-' + util.getProperty(this, 'state.tab.name', '').toLowerCase()}>
-					{this.state.showOverview ? <Overview /> : ''}
-					{this.state.showRequest ? <ReqDetail /> : ''}
-					{this.state.showResponse ? <ResDetail /> : ''}
-					{this.state.showTimeline ? <Timeline /> : ''}
-					{this.state.showComposer ? <Composer /> : ''}
-					{this.state.showLog ? <Log /> : ''}
+				<div className="fill orient-vertical-box w-detail-content">
+					{this.state.initedOverview ? <Overview hide={name != TABS[0].name} /> : ''}
+					{this.state.initedRequest ? <ReqDetail hide={name != TABS[1].name} /> : ''}
+					{this.state.initedResponse ? <ResDetail hide={name != TABS[2].name} /> : ''}
+					{this.state.initedTimeline ? <Timeline hide={name != TABS[3].name} /> : ''}
+					{this.state.initedComposer ? <Composer hide={name != TABS[4].name} /> : ''}
+					{this.state.initedLog ? <Log hide={name != TABS[5].name} /> : ''}
 				</div>
 			</div>
 		);
