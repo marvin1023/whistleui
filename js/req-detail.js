@@ -36,7 +36,7 @@ var ReqDetail = React.createClass({
 				{this.state.initedHeaders ? <div className={'w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties /></div> : ''}
 				{this.state.initedTextView ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'orient-vertical-box w-detail-request-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
 				{this.state.initedCookies ? <div className={'w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties /></div> : ''}
-				{this.state.initedWebForms ? <Divider leftWidth={(Math.max(window.innerHeight, 360) - 120) / 2} vertical="true" className={'w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
+				{this.state.initedWebForms ? <Divider vertical="true" className={'w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
 					<Properties />
 					<Properties />
 				</Divider> : ''}
