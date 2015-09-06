@@ -89,7 +89,7 @@ var ReqData = React.createClass({
 			modal.setSelectedList(rows[0].attr('data-id'), 
 					rows[1].attr('data-id'));
 		} else {
-			modal.setSelectedList(item.id, item.id);
+			modal.setSelected(item);
 		}
 		
 		this.forceUpdate();
