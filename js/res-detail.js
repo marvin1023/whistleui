@@ -10,7 +10,7 @@ var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Http Only', 'Secure'];
 
 var ResDetail = React.createClass({
 	shouldComponentUpdate: function() {
-		return !this.props.hide;
+		return !util.getBoolean(this.props.hide);
 	},
 	onClickBtn: function(btn) {
 		this.setState({btn: btn});
