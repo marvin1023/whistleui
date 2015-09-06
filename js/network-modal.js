@@ -139,7 +139,7 @@ proto.setSelected = function(item, selected) {
 proto.getSelectedList = function() {
 	
 	return this.list.filter(function(item) {
-		return item.selected;
+		return !item.hide && item.selected;
 	});
 };
 

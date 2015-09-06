@@ -30,7 +30,7 @@ var TABS = [{
 			}];
 
 var ReqData = React.createClass({
-	_handleTab: function(tab) {
+	toggleTab: function(tab) {
 		this.setState({tab: tab});
 	}, 
 	componentDidMount: function() {
@@ -39,7 +39,7 @@ var ReqData = React.createClass({
 	render: function() {
 		return (
 				<div className="fill orient-vertical-box w-detail">
-				<BtnGroup onClick={this._handleTab} tabs={TABS} />
+				<BtnGroup onClick={this.toggleTab} tabs={TABS} />
 				<div className={'fill orient-vertical-box w-detail-content w-show-detail-' + util.getProperty(this, 'state.tab.name', '').toLowerCase()}>
 					<Overview />
 					<ReqDetail />
