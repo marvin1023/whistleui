@@ -38,8 +38,8 @@ var ResDetail = React.createClass({
 				{this.state.initedHeaders ? <div className={'w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties /></div> : ''}
 				{this.state.initedTextView ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'orient-vertical-box w-detail-response-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
 				{this.state.initedCookies ? <div className={'w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} /></div> : ''}
-				{this.state.initedJSON ? <textarea onKeyDown={util.preventDefault} className={'w-detail-response-json' + (name == BTNS[3].name ? '' : ' hide')}></textarea> : ''}
-				{this.state.initedRaw ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'orient-vertical-box w-detail-response-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedJSON ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-json' + (name == BTNS[3].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedRaw ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
 			</div>
 		);
 	}

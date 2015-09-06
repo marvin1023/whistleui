@@ -40,7 +40,7 @@ var ReqDetail = React.createClass({
 					<Properties />
 					<Properties />
 				</Divider> : ''}
-				{this.state.initedRaw ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'orient-vertical-box w-detail-request-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedRaw ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-request-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
 			</div>
 		);
 	}
