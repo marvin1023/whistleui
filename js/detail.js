@@ -33,9 +33,6 @@ var ReqData = React.createClass({
 	toggleTab: function(tab) {
 		this.setState({tab: tab});
 	}, 
-	componentDidMount: function() {
-		
-	},
 	render: function() {
 		var modal = this.props.modal;
 		var selectedList = modal && modal.getSelectedList();

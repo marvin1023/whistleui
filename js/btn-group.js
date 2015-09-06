@@ -4,51 +4,36 @@ var React = require('react');
 var util = require('./util');
 
 var BtnGroup = React.createClass({
-	clearSelection: function() {
-		this._clearSelection();
-		this.forceUpdate();
-	},
-	_clearSelection: function() {
-		var list = this.props.tabs || this.props.btns;
-		list.forEach(function(btn) {
+	handleClick: function(btn) {
+		 if (btn.active || btn.disabled) {
+			 return;
+		 }
+		 var list = this.props.tabs || this.props.btns;
+		 list.forEach(function(btn) {
 			 btn.active = false;
 		 });
-	},
-	componentDidMount: function() {
-		this._handleInitClick && this._handleInitClick();
+		 btn.active = true;
+		 if (this.props.onClick) {
+			 this.props.onClick(btn);
+		 }
+		 this.forceUpdate();
 	},
 	render: function() {
 		var self = this;
 		var tabs = self.props.tabs;
 		var list = tabs || self.props.btns;
-		var handleClick = self.props.onClick || util.noop;
+		var disabled = util.getBoolean(self.props.disabled);
 		
 		return (
 				<div className={'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}>
 					{list.map(function(btn, i) {
-						var disabled = util.getBoolean(self.props.disabled);
-						 function onClick() {
-							 if (btn.active || disabled) {
-								 return;
-							 }
-							 self._clearSelection();
-							 btn.active = true;
-							 handleClick(btn);
-							 self.forceUpdate();
-						 }
-						 
-						 if (btn.active) {
-							 self._handleInitClick = function() {
-								 self._handleInitClick = null;
-								 btn.active = false;
-								 onClick();
-							 };
-						 }
-						 
+						 btn.disabled = disabled;
 						 var icon = btn.icon ? <span className={'glyphicon glyphicon-' + btn.icon}></span> : '';
 						 btn.key = btn.key || util.getKey();
 						 
-						 return <button onClick={onClick} key={btn.key} type="button" 
+						 return <button onClick={function() {
+							 self.handleClick(btn);
+						 }} key={btn.key} type="button" 
 							 	className={'btn btn-default' + (btn.active && !disabled ? ' active' : '')}>
 								 {icon}{btn.name}
 								</button>;	
