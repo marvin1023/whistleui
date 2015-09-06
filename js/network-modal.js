@@ -59,11 +59,15 @@ proto.setSelectedList = function(startId, endId) {
 	var selected, item;
 	for (var i = 0, len = this.list.length; i < len; i++) {
 		item = this.list[i];
-		if (item.id == startId || item.id == endId) {
+		if (item.id == startId) {
 			selected = !selected;
 			item.selected = true;
 		} else {
 			item.selected = selected;
+		}
+		
+		if (item.id == endId) {
+			selected = !selected;
 		}
 	}
 };

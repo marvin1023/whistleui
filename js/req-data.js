@@ -82,25 +82,15 @@ var ReqData = React.createClass({
 		if (!e.ctrlKey && !e.metaKey || !modal) {
 			this.clearSelection();
 		}
+		
 		var rows;
-		var selected;
 		if (e.shiftKey && (rows = getSelectedRows())) {
-			var start = rows[0].attr('data-id');
-			var end = rows[1].attr('data-id');
-			for (var i = 0, len = modal.list.length; i < len; i++) {
-				var item = modal.list[i];
-				if (item.id == start || item.id == end) {
-					item.selected = true;
-					selected = !selected;
-					if (!selected) {
-						break;
-					}
-				} else {
-					item.selected = selected;
-				}
-			}
-		} 
-		item.selected = true;
+			modal.setSelectedList(rows[0].attr('data-id'), 
+					rows[1].attr('data-id'));
+		} else {
+			modal.setSelectedList(item.id, item.id);
+		}
+		
 		this.forceUpdate();
 	},
 	clearSelection: function() {
