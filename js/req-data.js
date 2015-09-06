@@ -101,17 +101,21 @@ var ReqData = React.createClass({
 			});
 		}
 	},
-	_onFilterChange: function(e) {
+	onFilterChange: function(e) {
+		var modal = this.props.modal;
+		if (modal) {
+			modal.search(e.target.value);
+		}
 		this.setState({filterText: e.target.value});
 	},
-	_onFilterKeyDown: function(e) {
+	onFilterKeyDown: function(e) {
 		if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
-			this._clearFilterText();
+			this.clearFilterText();
 			e.preventDefault();
 			e.stopPropagation();
 		}
 	},
-	_clearFilterText: function() {
+	clearFilterText: function() {
 		this.setState({filterText: ''});
 	},
 	render: function() {
@@ -149,7 +153,7 @@ var ReqData = React.createClass({
 						    		  var req = item.req;
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
-						    		  return (<tr data-id={item.id} key={item.id} className={getClassName(item)} onClick={function(e) {self.onClick(e, item);}}>
+						    		  return (<tr data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} className={getClassName(item)} onClick={function(e) {self.onClick(e, item);}}>
 						    		  				<th className="order" scope="row">{item.order}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        
@@ -168,11 +172,11 @@ var ReqData = React.createClass({
 					</div>
 					<div className="w-req-data-bar">
 						<input type="text" value={this.state.filterText} 
-						onChange={this._onFilterChange} 
-						onKeyDown={this._onFilterKeyDown}
+						onChange={this.onFilterChange} 
+						onKeyDown={this.onFilterKeyDown}
 						className="w-req-data-filter" maxLength="128" placeholder="type filter text" />
 						<button
-						onClick={this._clearFilterText}
+						onClick={this.clearFilterText}
 						style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl+D"><span aria-hidden="true">&times;</span></button>
 					</div>
 			</div>

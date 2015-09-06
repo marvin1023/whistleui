@@ -10,9 +10,95 @@ NetworkModal.MAX_COUNT = MAX_COUNT;
 
 var proto = NetworkModal.prototype;
 
-proto.search = function(keywork) {
-	
+/**
+ * 默认搜索url
+ * url[u]:搜索url
+ * content[c]: 搜索请求或响应内容
+ * headers[h]: 搜索头部内容
+ * ip: 搜索ip
+ * status[result]: 搜索响应状态码
+ * protocol[p]: 搜索协议
+ */
+proto.search = function(keyword) {
+	if (typeof keyword != 'string') {
+		keyword += ''
+	}
+	this._type = 'url';
+	this._keyword = keyword.trim();
+	if (this._keyword && /^(url|u|content|c|headers|h|ip|i|status|result|s|r|protocol|p):(.*)$/.test(keyword)) {
+		this._type = RegExp.$1;
+		this._keyword = RegExp.$2.trim();
+	}
+	this.filter();
 };
+
+proto.filter = function() {
+	var keyword = this._keyword;
+	var list = this.list;
+	if (!keyword) {
+		list.forEach(function(item) {
+			item.hide = false;
+		});
+		return;
+	}
+	
+	switch(this._type) {
+		case 'c':
+		case 'content':
+			list.forEach(function(item) {
+				var reqBody = item.req.body;
+				var resBody = item.res.body;
+				item.hide = (!reqBody || reqBody.indexOf(keyword) == -1) && 
+				 			(!resBody || resBody.indexOf(keyword) == -1);
+			});
+			break;
+		case 'headers':
+		case 'h':
+			list.forEach(function(item) {
+				item.hide = !inObject(item.req.headers, keyword) 
+							&& !inObject(item.res.headers, keyword);
+			});
+			break;
+		case 'ip':
+		case 'i':
+			list.forEach(function(item) {
+				var ip = item.req.ip || '';
+				var host = item.res.ip || '';
+				item.hide = ip.indexOf(keyword) == -1 
+							&& host.indexOf(keyword) == -1;
+			});
+			break;
+		case 'status':
+		case 's':
+		case 'result':
+		case 'r':
+			list.forEach(function(item) {
+				item.hide = item.res.statusCode == null ? true : 
+					(item.res.statusCode + '').indexOf(keyword) == -1;
+			});
+			break;
+		default:
+			list.forEach(function(item) {
+				item.hide = item.url.indexOf(keyword) == -1;
+			});
+	}
+	return list;
+}
+
+function inObject(obj, keyword) {
+	for (var i in obj) {
+		if (i.indexOf(keyword) != -1) {
+			return true;
+		}
+		var value = headers[i];
+		if (typeof value == 'string' 
+				&& value.indexOf(keyword) != -1) {
+			return true;
+		}
+	}
+	
+	return false;
+}
 
 proto.clear = function clear() {
 	this._list.splice(0, this.list.length);
@@ -30,6 +116,7 @@ proto.update = function(scrollAtBottom) {
 	}
 	
 	this.list = this._list.slice(0, MAX_LENGTH);
+	this.filter();
 	return this._list.length > MAX_LENGTH;
 };
 
