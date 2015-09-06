@@ -277,11 +277,13 @@ var Index = React.createClass({
 		
 		dataCenter.rules.add({name: name}, function(data) {
 			if (data && data.ec === 0) {
-				modal.add(name);
+				var item = modal.add(name);
 				self.setRulesActive(name);
 				target.value = '';
 				target.blur();
-				self.forceUpdate();
+				self.setState({
+					activeRules: item
+				});
 			} else {
 				util.showSystemError();
 			}
@@ -311,7 +313,9 @@ var Index = React.createClass({
 				self.setValuesActive(name);
 				target.value = '';
 				target.blur();
-				self.forceUpdate();
+				self.setState({
+					activeValues: item
+				});
 			} else {
 				util.showSystemError();
 			}
@@ -384,7 +388,9 @@ var Index = React.createClass({
 				self.setRulesActive(name);
 				target.value = '';
 				target.blur();
-				self.forceUpdate();
+				self.setState({
+					activeValues: activeItem
+				});
 			} else {
 				util.showSystemError();
 			}
@@ -418,7 +424,9 @@ var Index = React.createClass({
 				self.setValuesActive(name);
 				target.value = '';
 				target.blur();
-				self.forceUpdate();
+				self.setState({
+					activeValues: activeItem
+				});
 			} else {
 				util.showSystemError();
 			}
@@ -476,7 +484,9 @@ var Index = React.createClass({
 	setSelected: function(modal, name, selected) {
 		if (modal.setSelected(name, selected)) {
 			modal.setChanged(name, false);
-			this.forceUpdate();
+			self.setState({
+				curSelectedName: name
+			});
 		}
 	},
 	replay: function() { 
@@ -537,7 +547,9 @@ var Index = React.createClass({
 						var nextItem = modal.getSibling(name);
 						nextItem && self.setRulesActive(nextItem.name);
 						modal.remove(name);
-						self.forceUpdate();
+						self.setState({
+							activeRules: nextItem
+						});
 					} else {
 						util.showSystemError();
 					}
@@ -557,7 +569,9 @@ var Index = React.createClass({
 						var nextItem = modal.getSibling(name);
 						nextItem && self.setValuesActive(nextItem.name);
 						modal.remove(name);
-						self.forceUpdate();
+						self.setState({
+							activeValues: nextItem
+						});
 					} else {
 						util.showSystemError();
 					}
@@ -601,11 +615,15 @@ var Index = React.createClass({
 	},
 	activeRules: function(item) {
 		dataCenter.rules.setCurrent({name: item.name});
-		this.forceUpdate();
+		this.setState({
+			activeRules: item
+		});
 	},
 	activeValues: function(item) {
 		dataCenter.values.setCurrent({name: item.name});
-		this.forceUpdate();
+		this.setState({
+			activeValues: item
+		});
 	},
 	render: function() {
 		var name = this.state.name;

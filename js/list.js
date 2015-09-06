@@ -30,14 +30,6 @@ var List = React.createClass({
 			self.onDoubleClick(item);
 		}
 	},
-	onMouseEnter: function(e) {
-		this.getItemByKey($(e.target).closest('a').attr('data-key')).hover = true;
-		this.forceUpdate();
-	},
-	onMouseLeave: function(e) {
-		this.getItemByKey($(e.target).closest('a').attr('data-key')).hover = false;
-		this.forceUpdate();
-	},
 	onClick: function(e) {
 		var elem = $(e.target).closest('a');
 		var item = this.getItemByKey(elem.attr('data-key'));
@@ -68,7 +60,9 @@ var List = React.createClass({
 		if (value != item.value && value != item.value) {
 			item.changed = true;
 			item.value = value;
-			this.forceUpdate();
+			this.setState({
+				selectedItem: item
+			});
 		}
 	},
 	getItemByKey: function(key) {

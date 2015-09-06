@@ -45,12 +45,12 @@ proto.add = function(name, value) {
 		return false;
 	}
 	this.list.push(name);
-	this.data[name] = {
+	var item = this.data[name] = {
 		key: util.getKey(),
 		name: name,
 		value: value || ''
 	};
-	return true;
+	return item;
 };
 
 proto.set = function(name, value) {

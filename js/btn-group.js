@@ -16,7 +16,9 @@ var BtnGroup = React.createClass({
 		 if (this.props.onClick) {
 			 this.props.onClick(btn);
 		 }
-		 this.forceUpdate();
+		 this.setState({
+			 curBtn: btn
+		 });
 	},
 	render: function() {
 		var self = this;
