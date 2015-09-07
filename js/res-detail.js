@@ -5,7 +5,7 @@ var Table = require('./table');
 var Properties = require('./properties');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
-BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
+BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
 var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Http Only', 'Secure'];
 
 var ResDetail = React.createClass({
@@ -23,12 +23,20 @@ var ResDetail = React.createClass({
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	onClickBtn: function(btn) {
-		var state = {btn: btn};
-		state['inited' + btn.name] = true;
-		this.setState(state);
+		this.selectBtn(btn);
+		this.setState({});
+	},
+	selectBtn: function(btn) {
+		btn.active = true;
+		this.state.btn = btn;
+		this.state['inited' + btn.name] = true;
 	},
 	render: function() {
 		var btn = this.state.btn;
+		if (!btn) {
+			btn = BTNS[0];
+			this.selectBtn(btn);
+		}
 		var name = btn && btn.name;
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-response w-detail-show-response-' 

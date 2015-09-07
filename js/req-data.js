@@ -161,7 +161,10 @@ var ReqData = React.createClass({
 						    		  var req = item.req;
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
-						    		  return (<tr data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} className={getClassName(item)} onClick={function(e) {self.onClick(e, item);}}>
+						    		  return (<tr data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
+						    		  				className={getClassName(item)} 
+						    		  				onClick={function(e) {self.onClick(e, item);}}
+						    		  				onDoubleClick={self.props.onDoubleClick}>
 						    		  				<th className="order" scope="row">{item.order}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        

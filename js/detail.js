@@ -55,8 +55,11 @@ var ReqData = React.createClass({
 		var selectedList = modal && modal.getSelectedList();
 		var activeItem = modal && modal.getActive();
 		var curTab = this.state.tab;
-		if (!curTab && activeItem) {
+		if (!curTab && activeItem || this.props.showFirstTab) {
 			curTab = TABS[0];
+			TABS.forEach(function(tab) {
+				tab.active = false;
+			});
 			this.selectTab(curTab);
 		}
 		var name = curTab && curTab.name;

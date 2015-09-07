@@ -6,7 +6,7 @@ var Divider = require('./divider');
 var Properties = require('./properties');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
-var BTNS = [{name: 'Headers', active: true}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
+var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
 
 var ReqDetail = React.createClass({
 	getInitialState: function() {
@@ -23,12 +23,20 @@ var ReqDetail = React.createClass({
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	onClickBtn: function(btn) {
-		var state = {btn: btn};
-		state['inited' + btn.name] = true;
-		this.setState(state);
+		this.selectBtn(btn);
+		this.setState({});
+	},
+	selectBtn: function(btn) {
+		btn.active = true;
+		this.state.btn = btn;
+		this.state['inited' + btn.name] = true;
 	},
 	render: function() {
 		var btn = this.state.btn;
+		if (!btn) {
+			btn = BTNS[0];
+			this.selectBtn(btn);
+		}
 		var name = btn && btn.name;
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>

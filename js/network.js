@@ -14,12 +14,20 @@ var Network = React.createClass({
 	onClick: function(item) {
 		this.setState({activeItem: item});
 	},
+	onDoubleClick: function() {
+		this.setState({showFirstTab: true});
+	},
 	render: function() {
 		var modal = this.props.modal;
+		var showFirstTab = false;
+		if (this.state && this.state.showFirstTab) {
+			this.state.showFirstTab = false;
+			showFirstTab = true;
+		}
 		return (
 			<Divider hide={this.props.hide} rightWidth="560">
-				<ReqData modal={modal} onClick={this.onClick} />
-				<Detail modal={modal} />
+				<ReqData modal={modal} onClick={this.onClick} onDoubleClick={this.onDoubleClick} />
+				<Detail showFirstTab={showFirstTab} modal={modal} />
 			</Divider>		
 		);
 	}
