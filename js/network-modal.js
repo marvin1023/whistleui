@@ -17,13 +17,12 @@ var proto = NetworkModal.prototype;
  * headers[h]: 根据headers过滤
  * ip[i]: 根据ip过滤
  * status[result]: 根据status过滤
- * protocol[p]: 根据protocol过滤
  * method[m]: 根据method过滤
  */
 proto.search = function(keyword) {
 	this._type = 'url';
 	this._keyword = typeof keyword != 'string' ? '' : keyword.trim();
-	if (this._keyword && /^(url|u|content|c|headers|h|ip|i|status|result|s|r|protocol|p|method|m):(.*)$/.test(keyword)) {
+	if (this._keyword && /^(url|u|content|c|headers|h|ip|i|status|result|s|r|method|m):(.*)$/.test(keyword)) {
 		this._type = RegExp.$1;
 		this._keyword = RegExp.$2.trim();
 	}
