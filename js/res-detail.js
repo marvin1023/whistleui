@@ -24,7 +24,7 @@ var ResDetail = React.createClass({
 	},
 	onClickBtn: function(btn) {
 		this.selectBtn(btn);
-		this.setState({});
+		this.setState({btn: btn});
 	},
 	selectBtn: function(btn) {
 		btn.active = true;

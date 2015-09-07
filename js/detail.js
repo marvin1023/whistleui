@@ -43,7 +43,7 @@ var ReqData = React.createClass({
 	},
 	toggleTab: function(tab) {
 		this.selectTab(tab);
-		this.setState({});
+		this.setState({tab: tab});
 	}, 
 	selectTab: function(tab) {
 		tab.active = true;
