@@ -176,6 +176,9 @@ var Index = React.createClass({
 		}
 	},
 	showNetwork: function() {
+		if (this.state.name == 'network') {
+			return;
+		}
 		this.setMenuOptionsState();
 		this.setState({
 			hasNetwork: true,
@@ -186,6 +189,9 @@ var Index = React.createClass({
 		location.hash = 'network';
 	},
 	showRules: function() {
+		if (this.state.name == 'rules') {
+			return;
+		}
 		this.setMenuOptionsState();
 		this.setState({
 			hasRules: true,
@@ -194,6 +200,9 @@ var Index = React.createClass({
 		location.hash = 'rules';
 	},
 	showValues: function() {
+		if (this.state.name == 'values') {
+			return;
+		}
 		this.setMenuOptionsState();
 		this.setState({
 			hasValues: true,
