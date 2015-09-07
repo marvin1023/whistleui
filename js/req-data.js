@@ -181,11 +181,11 @@ var ReqData = React.createClass({
 						    </table>	
 						</div>
 					</div>
-					<div className="w-req-data-bar">
+					<div className="w-filter-con w-req-data-bar">
 						<input type="text" value={this.state.filterText} 
 						onChange={this.onFilterChange} 
 						onKeyDown={this.onFilterKeyDown}
-						className="w-req-data-filter" maxLength="128" placeholder="type filter text" />
+						className="w-filter-input" maxLength="128" placeholder="type filter text" />
 						<button
 						onClick={this.clearFilterText}
 						style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl+D"><span aria-hidden="true">&times;</span></button>

@@ -15,6 +15,9 @@ function getSuffix(name) {
 }
 
 var List = React.createClass({
+	getInitialState: function() {
+		return {};
+	},
 	componentDidMount: function() {
 		var self = this;
 		var visible = !self.props.hide;
@@ -81,27 +84,38 @@ var List = React.createClass({
 		//不设置height为0，滚动会有问题
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
+				<div className="fill orient-vertical-box w-list-left">	
 					<div ref="list" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '')}>
-						{
-							list.map(function(name) {
-								var item = data[name];
-								
-								return <a key={item.key} data-key={item.key} href="javascript:;"
-											onClick={self.onClick} 
-											onDoubleClick={function() {
-												self.onDoubleClick(item);
-											}} 
-											className={util.getClasses({
-												'w-active': item.active,
-												'w-changed': item.changed,
-												'w-selected': item.selected
-											})} 
-											href="javascript:;">{name}<span onClick={function(e) {
-												self.onDoubleClick(item, true);
-												e.stopPropagation();
-											}} className="glyphicon glyphicon-ok"></span></a>;
-							})
-						}
+							{
+								list.map(function(name) {
+									var item = data[name];
+									
+									return <a key={item.key} data-key={item.key} href="javascript:;"
+												onClick={self.onClick} 
+												onDoubleClick={function() {
+													self.onDoubleClick(item);
+												}} 
+												className={util.getClasses({
+													'w-active': item.active,
+													'w-changed': item.changed,
+													'w-selected': item.selected
+												})} 
+												href="javascript:;">{name}<span onClick={function(e) {
+													self.onDoubleClick(item, true);
+													e.stopPropagation();
+												}} className="glyphicon glyphicon-ok"></span></a>;
+								})
+							}
+						</div>
+						<div className="w-filter-con">
+							<input type="text" value={this.state.filterText} 
+							onChange={this.onFilterChange} 
+							onKeyDown={this.onFilterKeyDown}
+							className="w-filter-input" maxLength="128" placeholder="type filter text" />
+							<button
+							onClick={this.clearFilterText}
+							style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl+D"><span aria-hidden="true">&times;</span></button>
+						</div>
 					</div>
 					<Editor {...self.props} onChange={self.onChange} readOnly={!activeItem} value={activeItem ? activeItem.value : ''} 
 					mode={self.props.name == 'rules' ? 'rules' : getSuffix(activeItem && activeItem.name)} />

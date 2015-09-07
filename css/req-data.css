@@ -1,5 +1,4 @@
 .w-req-data-con {overflow-x: auto;}
-.w-req-data-filter {width: 100%; background: rgba(0, 0, 0, 0.8); height: 30px; color: #fff; padding: 2px 5px; border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}
 .w-req-data-content {overflow-x: auto; overflow-y: hidden;}
 .w-req-data-content .order {width: 50px;}
 .w-req-data-content .result {width: 60px;}
@@ -15,7 +14,6 @@
 .w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .w-req-data-bar, .w-req-data-content {min-width: 720px;}
 .w-req-data-bar {position: relative;}
-.w-req-data-bar .close {position: absolute; right: 5px; top: 5px; color: #fff; line-height: 16px; display: none;}
 .w-req-data-list .w-error-status th, .w-req-data-list .w-error-status td {color: #ff3a90;}
 .w-req-data-list .w-forbidden th, .w-req-data-list .w-forbidden td {color: #808000;}
 .w-req-data-list .w-tunnel th, .w-req-data-list .w-tunnel td {color: #808080;}
