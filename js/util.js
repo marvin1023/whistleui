@@ -198,7 +198,7 @@ exports.ensureVisible = function(elem, container) {
 	}
 };
 
-exports.parseQueryString = function(str, delimiter, seperator, encode) {
+exports.parseQueryString = function(str, delimiter, seperator, decode) {
 	var result = {};
 	if (!str || !(str = str.trim())) {
 		return result;
@@ -207,7 +207,7 @@ exports.parseQueryString = function(str, delimiter, seperator, encode) {
 	seperator = seperator || '=';
 	str.split(delimiter).forEach(function(sep) {
 		sep = sep.split(seperator);
-		result[sep[0]] = encode ? encode(sep[1] || '') : sep[1];
+		result[sep[0]] = decode ? decode(sep[1] || '') : sep[1];
 	});
 	return result;
 }

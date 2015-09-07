@@ -45,6 +45,10 @@ var ReqDetail = React.createClass({
 			body = req.body;
 			headers = req.headers;
 			cookies = util.parseQueryString(headers.cookie, /;\s*/g);
+			query = util.parseQueryString(modal.url.split('#')[0].split('?')[1], null, null, decodeURIComponent);
+			if (headers['content-type'] == 'application/x-www-form-urlencoded') {
+				form = util.parseQueryString(req.body);
+			}
 		}
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
@@ -52,7 +56,8 @@ var ReqDetail = React.createClass({
 				{this.state.initedHeaders ? <div className={'fill w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={headers} /></div> : ''}
 				{this.state.initedTextView ? <textarea value={body} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-request-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
 				{this.state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties modal={cookies} /></div> : ''}
-				{this.state.initedWebForms ? <Divider vertical="true" className={'fill w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
+				{this.state.initedWebForms ? <Divider vertical="true" leftClassName="w-detail-request-query" 
+					rightClassName="w-detail-request-form" className={'fill w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
 					<Properties modal={query} />
 					<Properties modal={form} />
 				</Divider> : ''}
