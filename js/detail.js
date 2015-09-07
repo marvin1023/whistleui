@@ -60,6 +60,7 @@ var ReqData = React.createClass({
 			TABS.forEach(function(tab) {
 				tab.active = false;
 			});
+			this.props.showFirstTab = false;
 			this.selectTab(curTab);
 		}
 		var name = curTab && curTab.name;
