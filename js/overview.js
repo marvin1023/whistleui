@@ -35,6 +35,7 @@ var Overview = React.createClass({
 		var modal = this.props.modal;
 		
 		if (modal) {
+			overviewModal = {};
 			OVERVIEW.forEach(function(name, i) {
 				var prop = OVERVIEW_PROPS[i];
 				if (prop) {
@@ -71,6 +72,7 @@ var Overview = React.createClass({
 			});
 			var rules = modal.rules;
 			if (rules) {
+				rulesModal = {};
 				RULES.forEach(function(name) {
 					var rule = rules[name];
 					rulesModal[name] = rule && rule.raw;

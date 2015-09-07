@@ -112,6 +112,20 @@ proto.clear = function clear() {
 	return this;
 };
 
+proto.prev = function() {
+	var activeItem = this.getActive();
+	if (!activeItem) {
+		return;
+	}
+};
+
+proto.next = function() {
+	var activeItem = this.getActive();
+	if (!activeItem) {
+		return;
+	}
+};
+
 proto.update = function(scrollAtBottom) {
 	updateOrder(this._list);
 	if (scrollAtBottom) {

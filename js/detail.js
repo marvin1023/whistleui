@@ -42,15 +42,23 @@ var ReqData = React.createClass({
 		};
 	},
 	toggleTab: function(tab) {
-		var state = {tab: tab};
-		state['inited' + tab.name] = true;
-		this.setState(state);
+		this.selectTab(tab);
+		this.setState({});
 	}, 
+	selectTab: function(tab) {
+		tab.active = true;
+		this.state.tab = tab;
+		this.state['inited' + tab.name] = true;
+	},
 	render: function() {
 		var modal = this.props.modal;
 		var selectedList = modal && modal.getSelectedList();
 		var activeItem = modal && modal.getActive();
 		var curTab = this.state.tab;
+		if (!curTab && activeItem) {
+			curTab = TABS[0];
+			this.selectTab(curTab);
+		}
 		var name = curTab && curTab.name;
 		
 		return (

@@ -1,5 +1,4 @@
 var $ = require('jquery');
-
 var dragCallbacks = {};
 var dragTarget, dragOffset, dragCallback;
 
@@ -178,6 +177,25 @@ exports.getHostname = function getHostname(url) {
 exports.getProtocol = function getProtocol(url) {
 	var index = url.indexOf(':\/\/');
 	return index == -1 ? 'TUNNEL' : url.substring(0, index).toUpperCase();
+};
+
+exports.ensureVisible = function(elem, container) {
+	elem = $(elem);
+	container = $(container);
+	var top = elem.offset().top - container.offset().top;
+	if (!top) {
+		return;
+	}
+	
+	if (top < 0) {
+		container.scrollTop(container.scrollTop() + top - 2);
+		return;
+	}
+	
+	top += elem[0].offsetHeight - container[0].offsetHeight;
+	if (top > 0) {
+		container.scrollTop(container.scrollTop() + top + 2);
+	}
 };
 
 

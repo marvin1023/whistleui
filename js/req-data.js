@@ -76,6 +76,16 @@ var ReqData = React.createClass({
 	componentDidMount: function() {
 		this.container = this.refs.container.getDOMNode();
 		this.content = this.refs.content.getDOMNode();
+		$(this.container).on('keydown', function(e) {
+			if (e.keyCode == 38) { //up
+				
+				return;
+			}
+			
+			if (e.keyCode == 40) {//down
+				
+			}
+		});
 	},
 	onClick: function(e, item) {
 		var modal = this.props.modal;
@@ -141,7 +151,7 @@ var ReqData = React.createClass({
 						      </thead>
 						    </table>
 						</div>
-						<div ref="container" className="w-req-data-list fill">
+						<div ref="container" tabIndex="0" className="w-req-data-list fill">
 							<table ref="content" className="table">
 						      <tbody>
 						      {

@@ -687,12 +687,12 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={this.state.filterText || 'string or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
-					<div tabIndex="1" ref="valuesSettings" onMouseDown={this.preventBlur} onBlur={this.hideOptions} style={{display: this.state.showValuesSettings ? 'block' : 'none'}} className="shadow w-input-menu-item w-values-settings-dialog">
+					<div tabIndex="0" ref="valuesSettings" onMouseDown={this.preventBlur} onBlur={this.hideOptions} style={{display: this.state.showValuesSettings ? 'block' : 'none'}} className="shadow w-input-menu-item w-values-settings-dialog">
 						<p><label>Theme:</label></p>
 						<p><label>Font size:</label></p>
 						<p><label><input type="checkbox" /> Show line number</label></p>
 					</div>
-					<div tabIndex="1" ref="rulesSettings" onMouseDown={this.preventBlur} onBlur={this.hideOptions} style={{display: this.state.showRulesSettings ? 'block' : 'none'}} className="shadow w-input-menu-item w-values-settings-dialog">
+					<div tabIndex="0" ref="rulesSettings" onMouseDown={this.preventBlur} onBlur={this.hideOptions} style={{display: this.state.showRulesSettings ? 'block' : 'none'}} className="shadow w-input-menu-item w-values-settings-dialog">
 						<p><label>Theme:</label></p>
 						<p><label>Font size:</label></p>
 						<p><label><input type="checkbox" /> Show line number</label></p>

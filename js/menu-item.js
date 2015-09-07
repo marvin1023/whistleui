@@ -16,7 +16,7 @@ var MenuItem = React.createClass({
 		var onClick = this.props.onClick || util.noop;
 		var onClickOption = this.props.onClickOption || util.noop;
 		return (
-			<div onBlur={this.props.onBlur} tabIndex="1" onMouseDown={this.preventBlur} style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (this.props.className || '')}>
+			<div onBlur={this.props.onBlur} tabIndex="0" onMouseDown={this.preventBlur} style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (this.props.className || '')}>
 			{
 				name ? <a onClick={onClick} className="w-menu-open" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>{name}</a> : ''
 			}	
