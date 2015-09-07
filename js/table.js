@@ -18,22 +18,24 @@ var Table = React.createClass({
 							</thead>
 					) : ''
 				}
-				<tr>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>√</td>
-				</tr>
-				<tr>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>√</td>
-					<td>test</td>
-				</tr>
+				<tbody>
+					<tr>
+						<td>test</td>
+						<td>test</td>
+						<td>test</td>
+						<td>test</td>
+						<td>test</td>
+						<td>√</td>
+					</tr>
+					<tr>
+						<td>test</td>
+						<td>test</td>
+						<td>test</td>
+						<td>test</td>
+						<td>√</td>
+						<td>test</td>
+					</tr>
+				</tbody>
 			</table>
 		);
 	}

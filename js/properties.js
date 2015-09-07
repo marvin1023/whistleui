@@ -7,16 +7,18 @@ var Properties = React.createClass({
 		var modal = this.props.modal || {};
 		return (
 				<table className="table w-properties">
-					{
-						Object.keys(modal).map(function(name) {
-							return (
-									<tr key={name}>
-										<th>{name}</th>
-										<td>{modal[name]}</td>
-									</tr>	
-							);
-						})
-					}
+					<tbody>
+						{
+							Object.keys(modal).map(function(name) {
+								return (
+										<tr key={name}>
+											<th>{name}</th>
+											<td>{modal[name]}</td>
+										</tr>	
+								);
+							})
+						}
+					</tbody>
 				</table>
 		);
 	}
