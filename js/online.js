@@ -69,33 +69,31 @@ var Online = React.createClass({
 		});
 	},
 	showServerInfo: function() {
-		var server = this.state.server;
-		if (!server) {
-			return;
-		}
-		this.updateServerInfo(server);
+		this.updateServerInfo(this.state.server);
 		dialog.modal('show');
 	},
 	updateServerInfo: function(server) {
 		var info = [];
-		if (server.host) {
-			info.push('<h5>Host: ' + server.host + '</h5>');
-		}
-		if (server.port) {
-			info.push('<h5>Port: ' + server.port + '</h5>');
-		}
-		if (server.ipv4.length) {
-			info.push('<h5>IPv4:</h5>');
-			info.push('<p>' + server.ipv4.join('<br/>') + '</p>');
-		}
-		if (server.ipv4.length) {
-			info.push('<h5>IPv6:</h5>');
-			info.push('<p>' + server.ipv6.join('<br/>') + '</p>');
+		if (server) {
+			if (server.host) {
+				info.push('<h5>Host: ' + server.host + '</h5>');
+			}
+			if (server.port) {
+				info.push('<h5>Port: ' + server.port + '</h5>');
+			}
+			if (server.ipv4.length) {
+				info.push('<h5>IPv4:</h5>');
+				info.push('<p>' + server.ipv4.join('<br/>') + '</p>');
+			}
+			if (server.ipv6.length) {
+				info.push('<h5>IPv6:</h5>');
+				info.push('<p>' + server.ipv6.join('<br/>') + '</p>');
+			}
 		}
 		
 		createDialog().find('.w-online-dialog-ctn').html(info.join(''));
-		dialog.find('.w-ip').prop('placeholder', server.ipv4[0] || '127.0.0.1');
-		dialog.find('.w-port').prop('placeholder', server.port || '8899');
+		dialog.find('.w-ip').prop('placeholder', server && server.ipv4[0] || '127.0.0.1');
+		dialog.find('.w-port').prop('placeholder', server && server.port || '8899');
 	},
 	render: function() {
 		var info = [];
