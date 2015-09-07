@@ -42,13 +42,16 @@ var ReqDetail = React.createClass({
 		var req, headers, cookies, body, raw, query, form;
 		if (modal) {
 			req = modal.req
-			body = req.body;
+			body = req.body || '';
 			headers = req.headers;
 			cookies = util.parseQueryString(headers.cookie, /;\s*/g);
 			query = util.parseQueryString(modal.url.split('#')[0].split('?')[1], null, null, decodeURIComponent);
 			if (headers['content-type'] == 'application/x-www-form-urlencoded') {
 				form = util.parseQueryString(req.body);
 			}
+			
+			raw = [req.method, util.getPath(modal.url), 'HTTP/' + (req.httpVersion || '1.1')].join(' ');
+			raw += '\r\n' + util.objectToString(headers) + '\r\n\r\n' + body;
 		}
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
@@ -61,7 +64,7 @@ var ReqDetail = React.createClass({
 					<Properties modal={query} />
 					<Properties modal={form} />
 				</Divider> : ''}
-				{this.state.initedRaw ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-request-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedRaw ? <textarea value={raw} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-request-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
 			</div>
 		);
 	}

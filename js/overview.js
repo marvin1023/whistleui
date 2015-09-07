@@ -3,9 +3,9 @@ require('../css/overview.css');
 var React = require('react');
 var util = require('./util');
 var Properties = require('./properties');
-var OVERVIEW = ['Url', 'Method', 'Status Code', 'Host IP', 'Client IP', 'Request Length', 'Content Length'
+var OVERVIEW = ['Url', 'Method', 'Http Version', 'Status Code', 'Host IP', 'Client IP', 'Request Length', 'Content Length'
                       , 'Start Date', 'DNS Lookup', 'Request Sent', 'Content Download'];
-var OVERVIEW_PROPS = ['url', 'req.method', 'res.statusCode', 'res.ip', 'req.ip', 'req.size', 'res.size'];
+var OVERVIEW_PROPS = ['url', 'req.method', 'req.httpVersion', 'res.statusCode', 'res.ip', 'req.ip', 'req.size', 'res.size'];
 /**
  * statusCode://, redirect://[statusCode:]url, [req, res]speed://, 
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 

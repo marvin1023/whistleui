@@ -212,4 +212,21 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 	return result;
 }
 
+exports.objectToString = function(obj) {
+	var result = [];
+	for (var i in obj) {
+		result.push(i + ': ' + (obj[i] || ''))
+	}
+	return result.join('\r\n');
+};
+
+exports.getPath = function(url) {
+	var index = url.indexOf('://');
+	if (index != -1) {
+		url = url.substring(index + 3);
+	}
+	index = url.indexOf('/');
+	return index == -1 ? '/' : url.substring(index);
+};
+
 
