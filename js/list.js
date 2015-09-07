@@ -5,6 +5,7 @@ var util = require('./util');
 var React = require('react');
 var Divider = require('./divider');
 var Editor = require('./editor');
+var FilterInput = require('./filter-input');
 
 function getSuffix(name) {
 	if (typeof name != 'string') {
@@ -15,9 +16,6 @@ function getSuffix(name) {
 }
 
 var List = React.createClass({
-	getInitialState: function() {
-		return {};
-	},
 	componentDidMount: function() {
 		var self = this;
 		var visible = !self.props.hide;
@@ -72,21 +70,9 @@ var List = React.createClass({
 			});
 		}
 	},
-	onFilterChange: function(e) {
-		var value = e.target.value;
-		this.props.modal.search(value, this.props.name != 'rules');
-		this.setState({filterText: value});
-	},
-	onFilterKeyDown: function(e) {
-		if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
-			this.clearFilterText();
-			e.preventDefault();
-			e.stopPropagation();
-		}
-	},
-	clearFilterText: function() {
-		this.props.modal.search();
-		this.setState({filterText: ''});
+	onFilterChange: function(keyword) {
+		this.props.modal.search(keyword, this.props.name != 'rules');
+		this.setState({filterText: keyword});
 	},
 	getItemByKey: function(key) {
 		return this.props.modal.getByKey(key);
@@ -123,15 +109,7 @@ var List = React.createClass({
 								})
 							}
 						</div>
-						<div className="w-filter-con">
-							<input type="text" value={this.state.filterText} 
-							onChange={this.onFilterChange} 
-							onKeyDown={this.onFilterKeyDown}
-							className="w-filter-input" maxLength="128" placeholder="type filter text" />
-							<button onMouseDown={util.preventBlur}
-							onClick={this.clearFilterText}
-							style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl[Command]+D"><span aria-hidden="true">&times;</span></button>
-						</div>
+						<FilterInput onChange={this.onFilterChange} />
 					</div>
 					<Editor {...self.props} onChange={self.onChange} readOnly={!activeItem} value={activeItem ? activeItem.value : ''} 
 					mode={self.props.name == 'rules' ? 'rules' : getSuffix(activeItem && activeItem.name)} />

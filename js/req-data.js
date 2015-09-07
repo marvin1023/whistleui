@@ -3,6 +3,7 @@ require('../css/req-data.css');
 var React = require('react');
 var $ = require('jquery');
 var util = require('./util');
+var FilterInput = require('./filter-input');
 
 function getClassName(data) {
 	return getStatusClass(data) + ' w-req-data-item'
@@ -72,9 +73,6 @@ function getSelection() {
 }
 
 var ReqData = React.createClass({
-	getInitialState: function() {
-		return {};
-	},
 	componentDidMount: function() {
 		this.container = this.refs.container.getDOMNode();
 		this.content = this.refs.content.getDOMNode();
@@ -103,28 +101,12 @@ var ReqData = React.createClass({
 		var modal = this.props.modal;
 		modal && modal.clearSelection();
 	},
-	onFilterChange: function(e) {
+	onFilterChange: function(keyword) {
 		var self = this;
 		var modal = self.props.modal;
-		var value = e.target.value;
-		var autoScroll = modal && modal.search(value);
-		self.setState({filterText: value}, function() {
+		var autoScroll = modal && modal.search(keyword);
+		self.setState({filterText: keyword}, function() {
 			autoScroll && self.autoScroll()
-		});
-	},
-	onFilterKeyDown: function(e) {
-		if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
-			this.clearFilterText();
-			e.preventDefault();
-			e.stopPropagation();
-		}
-	},
-	clearFilterText: function() {
-		var self = this;
-		var modal = self.props.modal;
-		modal && modal.search();
-		self.setState({filterText: ''}, function() {
-			self.autoScroll();
 		});
 	},
 	autoScroll: function() {
@@ -184,15 +166,7 @@ var ReqData = React.createClass({
 						    </table>	
 						</div>
 					</div>
-					<div className="w-filter-con w-req-data-bar">
-						<input type="text" value={this.state.filterText} 
-						onChange={this.onFilterChange} 
-						onKeyDown={this.onFilterKeyDown}
-						className="w-filter-input" maxLength="128" placeholder="type filter text" />
-						<button onMouseDown={util.preventBlur}
-						onClick={this.clearFilterText}
-						style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl[Command]+D"><span aria-hidden="true">&times;</span></button>
-					</div>
+					<FilterInput onChange={this.onFilterChange} />
 			</div>
 		);
 	}

@@ -12,8 +12,7 @@
 .w-req-data-headers .table th {border: none!important; padding: 4px 0 4px 6px; font-weight: normal; color: #000;}
 .w-req-data-list {overflow-y: auto; overflow-x: hidden;}
 .w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
-.w-req-data-bar, .w-req-data-content {min-width: 720px;}
-.w-req-data-bar {position: relative;}
+.w-req-data-con .w-filter-con, .w-req-data-content {min-width: 720px;}
 .w-req-data-list .w-error-status th, .w-req-data-list .w-error-status td {color: #ff3a90;}
 .w-req-data-list .w-forbidden th, .w-req-data-list .w-forbidden td {color: #808000;}
 .w-req-data-list .w-tunnel th, .w-req-data-list .w-tunnel td {color: #808080;}
