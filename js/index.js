@@ -503,16 +503,20 @@ var Index = React.createClass({
 		if (!modal) {
 			return;
 		}
-		var item = modal.getSelected();
-		if (!item || item.isHttps) {
+		var list = modal.getSelectedList();
+		if (!list.length) {
 			return;
 		}
 		
-		dataCenter.composer({
-			url: item.url,
-			headers: item.req.headers,
-			method: item.req.method,
-			body: item.reqError ? '' : item.req.body
+		list.forEach(function(item) {
+			if (!item.isHttps) {
+				dataCenter.composer({
+					url: item.url,
+					headers: item.req.headers,
+					method: item.req.method,
+					body: item.reqError ? '' : item.req.body
+				});
+			}
 		});
 		this.autoScroll && this.autoScroll();
 	},
