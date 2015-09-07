@@ -74,7 +74,7 @@ var List = React.createClass({
 	},
 	onFilterChange: function(e) {
 		var value = e.target.value;
-		this.props.modal.search(value, this.state.name != 'rules');
+		this.props.modal.search(value, this.props.name != 'rules');
 		this.setState({filterText: value});
 	},
 	onFilterKeyDown: function(e) {

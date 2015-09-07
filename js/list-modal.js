@@ -33,6 +33,7 @@ proto._setBoolProp = function(name, prop, bool) {
 	if (item) {
 		item[prop] = bool !== false;
 	}
+	this.filter();
 	return item;
 };
 
@@ -50,6 +51,7 @@ proto.add = function(name, value) {
 		name: name,
 		value: value || ''
 	};
+	this.filter();
 	return item;
 };
 
@@ -146,6 +148,7 @@ proto.rename = function(name, newName) {
 		item.name = newName;
 		return true;
 	}
+	this.filter();
 };
 
 proto.getIndex = function(name) {
@@ -176,18 +179,20 @@ proto.search = function(keyword, disabledType) {
 proto.filter = function() {
 	var keyword = this._keyword;
 	var list = this.list;
+	var hasFilterType = !!this._type;
+	var data = this.data;
+	
 	if (!keyword) {
-		list.forEach(function(item) {
-			item.hide = false;
+		list.forEach(function(name) {
+			var item = data[name];
+			item.hide = hasFilterType && !item.selected;
 		});
 		return;
 	}
 	
-	var type = this._type;
-	var data = this.data;
 	list.forEach(function(name) {
 		var item = data[name];
-		item.hide = !!type && !item.selected || (item.name || '').indexOf(keyword) == -1;
+		item.hide = hasFilterType && !item.selected || (name || '').indexOf(keyword) == -1;
 	});
 	return list;
 }
