@@ -104,11 +104,35 @@ var ResDetail = React.createClass({
 			body = res.body || '';
 			headers = res.headers;
 			json = util.stringify(body);
-			if (headers['set-cookie']) {
-				cookies = [];
-				headers['set-cookie'].forEach(function(cookie) {
+			if (headers && headers['set-cookie']) {
+				cookies = headers['set-cookie'].map(function(cookie) {
 							cookie = util.parseQueryString(cookie, /;\s*/, null, decodeURIComponent);
+							var row = ['', '', '', '', '', '', ''];
+							for (var i in cookie) {
+								switch(i.toLowerCase()) {
+									case 'domain':
+										row[2] = cookie[i];
+										break;
+									case 'path':
+										row[3] = cookie[i];
+										break;
+									case 'expires':
+									case 'max-age':
+										row[4] = cookie[i];
+										break;
+									case 'httponly':
+										row[5] = '√';
+										break;
+									case 'secure':
+										row[6] = '√';
+										break;
+									default:
+										row[0] = i;
+										row[1] = cookie[i];
+								}
+							}
 							
+							return row;
 						});
 			}
 			if (res.statusCode != null) {
