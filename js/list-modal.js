@@ -146,9 +146,9 @@ proto.rename = function(name, newName) {
 		delete this.data[name];
 		this.data[newName] = item;
 		item.name = newName;
+		this.filter();
 		return true;
 	}
-	this.filter();
 };
 
 proto.getIndex = function(name) {
