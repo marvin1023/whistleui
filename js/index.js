@@ -130,7 +130,7 @@ var Index = React.createClass({
 	startLoadData: function() {
 		var self = this;
 		if (self._updateNetwork) {
-			self._updateNetwork;
+			self._updateNetwork();
 			return;
 		}
 		
