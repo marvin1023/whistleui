@@ -103,6 +103,7 @@ var ResDetail = React.createClass({
 			res = modal.res
 			body = res.body || '';
 			headers = res.headers;
+			json = util.stringify(body);
 			cookies = util.parseQueryString(headers.cookie, /;\s*/g);
 			if (res.statusCode != null) {
 				raw = ['HTTP/' + (modal.req.httpVersion || '1.1'), res.statusCode, STATUS_CODES[res.statusCode] || ''].join(' ')
@@ -117,7 +118,7 @@ var ResDetail = React.createClass({
 				{this.state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={headers} /></div> : ''}
 				{this.state.initedTextView ? <textarea value={body} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
 				{this.state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} /></div> : ''}
-				{this.state.initedJSON ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-json' + (name == BTNS[3].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedJSON ? <textarea value={json} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-json' + (name == BTNS[3].name ? '' : ' hide')}></textarea> : ''}
 				{this.state.initedRaw ? <textarea value={raw} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
 			</div>
 		);

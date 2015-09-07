@@ -229,4 +229,26 @@ exports.getPath = function(url) {
 	return index == -1 ? '/' : url.substring(index);
 };
 
+exports.stringify = function(str) {
+	if (!str || !(str = str.trim())) {
+		return '';
+	}
+	if (!/^[\{\[]/.test(str)) {
+		var index = str.indexOf('(');
+		if (index != -1) {
+			str = str.substring(index + 1);
+			index = str.lastIndexOf(')');
+			str = index == -1 ? '' : str.substring(0, index);
+		}
+	}
+	if (str) {
+		try {
+			str = JSON.parse(str);
+			return str ? JSON.stringify(str, null, '    ') : '';
+		} catch(e) {}
+	}
+	
+	return '';
+};
+
 
