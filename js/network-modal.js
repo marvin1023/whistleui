@@ -132,8 +132,9 @@ proto.getSelected = function() {
 };
 
 proto.getActive = function() {
-	for (var i = 0, len = this.list; i < len; i++) {
-		var item = this.list[i];
+	var list = this.list;
+	for (var i = 0, len = list.length; i < len; i++) {
+		var item = list[i];
 		if (item.active) {
 			return item;
 		}
