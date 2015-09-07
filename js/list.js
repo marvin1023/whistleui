@@ -72,6 +72,22 @@ var List = React.createClass({
 			});
 		}
 	},
+	onFilterChange: function(e) {
+		var value = e.target.value;
+		this.props.modal.search(value, this.state.name != 'rules');
+		this.setState({filterText: value});
+	},
+	onFilterKeyDown: function(e) {
+		if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
+			this.clearFilterText();
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	},
+	clearFilterText: function() {
+		this.props.modal.search();
+		this.setState({filterText: ''});
+	},
 	getItemByKey: function(key) {
 		return this.props.modal.getByKey(key);
 	},
@@ -90,7 +106,7 @@ var List = React.createClass({
 								list.map(function(name) {
 									var item = data[name];
 									
-									return <a key={item.key} data-key={item.key} href="javascript:;"
+									return <a style={{display: item.hide ? 'none' : null}} key={item.key} data-key={item.key} href="javascript:;"
 												onClick={self.onClick} 
 												onDoubleClick={function() {
 													self.onDoubleClick(item);
@@ -112,7 +128,7 @@ var List = React.createClass({
 							onChange={this.onFilterChange} 
 							onKeyDown={this.onFilterKeyDown}
 							className="w-filter-input" maxLength="128" placeholder="type filter text" />
-							<button
+							<button onMouseDown={util.preventBlur}
 							onClick={this.clearFilterText}
 							style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl+D"><span aria-hidden="true">&times;</span></button>
 						</div>

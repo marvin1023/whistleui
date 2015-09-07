@@ -158,4 +158,38 @@ proto.getSibling = function(name) {
 	return name && this.data[name];
 };
 
+/**
+ * 默认根据name过滤
+ * selected[s, active, a]: 根据激活的过滤
+ */
+proto.search = function(keyword, disabledType) {
+	this._type = '';
+	this._keyword = typeof keyword != 'string' ? '' : keyword.trim();
+	if (!disabledType && this._keyword && /^(selected|s|active|a):(.*)$/.test(keyword)) {
+		this._type = RegExp.$1;
+		this._keyword = RegExp.$2.trim();
+	}
+	this.filter();
+	return !this._keyword;
+};
+
+proto.filter = function() {
+	var keyword = this._keyword;
+	var list = this.list;
+	if (!keyword) {
+		list.forEach(function(item) {
+			item.hide = false;
+		});
+		return;
+	}
+	
+	var type = this._type;
+	var data = this.data;
+	list.forEach(function(name) {
+		var item = data[name];
+		item.hide = !!type && !item.selected || (item.name || '').indexOf(keyword) == -1;
+	});
+	return list;
+}
+
 module.exports = ListModal;

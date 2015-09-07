@@ -108,7 +108,7 @@ var ReqData = React.createClass({
 		var modal = self.props.modal;
 		var value = e.target.value;
 		var autoScroll = modal && modal.search(value);
-		this.setState({filterText: value}, function() {
+		self.setState({filterText: value}, function() {
 			autoScroll && self.autoScroll()
 		});
 	},
@@ -120,9 +120,12 @@ var ReqData = React.createClass({
 		}
 	},
 	clearFilterText: function() {
-		var modal = this.props.modal;
+		var self = this;
+		var modal = self.props.modal;
 		modal && modal.search();
-		this.setState({filterText: ''}, this.autoScroll.bind(this));
+		self.setState({filterText: ''}, function() {
+			self.autoScroll();
+		});
 	},
 	autoScroll: function() {
 		if (this.container) {
@@ -186,7 +189,7 @@ var ReqData = React.createClass({
 						onChange={this.onFilterChange} 
 						onKeyDown={this.onFilterKeyDown}
 						className="w-filter-input" maxLength="128" placeholder="type filter text" />
-						<button
+						<button onMouseDown={util.preventBlur}
 						onClick={this.clearFilterText}
 						style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl+D"><span aria-hidden="true">&times;</span></button>
 					</div>

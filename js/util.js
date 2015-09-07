@@ -11,6 +11,10 @@ exports.preventDefault = function preventDefault(e) {
 	e.keyCode == 8 && e.preventDefault();
 };
 
+exports.preventBlur = function preventDefault(e) {
+	e.preventDefault();
+};
+
 $(document).on('mousedown', function(e) {
 	stopDrag();
 	var target = $(e.target);
