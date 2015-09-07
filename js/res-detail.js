@@ -46,7 +46,7 @@ var ResDetail = React.createClass({
 			headers = res.headers;
 			cookies = util.parseQueryString(headers.cookie, /;\s*/g);
 			if (res.statusCode != null) {
-				raw = ['HTTP/' + (res.httpVersion || '1.1'), modal.statusCode, 'OK'].join(' ');
+				raw = ['HTTP/' + (modal.req.httpVersion || '1.1'), res.statusCode, 'OK'].join(' ')
 					  + '\r\n' + util.objectToString(headers) + '\r\n\r\n' + body;
 			}
 		}

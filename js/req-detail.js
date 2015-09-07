@@ -50,7 +50,7 @@ var ReqDetail = React.createClass({
 				form = util.parseQueryString(req.body);
 			}
 			
-			raw = [req.method, util.getPath(modal.url), 'HTTP/' + (req.httpVersion || '1.1')].join(' ');
+			raw = [req.method, util.getPath(modal.url), 'HTTP/' + (req.httpVersion || '1.1')].join(' ')
 					+ '\r\n' + util.objectToString(headers) + '\r\n\r\n' + body;
 		}
 		return (
