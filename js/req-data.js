@@ -93,9 +93,11 @@ var ReqData = React.createClass({
 		}
 		modal.clearActive();
 		item.active = true;
-		this.setState({
-			activeItem: item
-		});
+		if (this.props.onClick && this.props.onClick(item)) {
+			this.setState({
+				activeItem: item
+			});
+		}
 	},
 	clearSelection: function() {
 		var modal = this.props.modal;

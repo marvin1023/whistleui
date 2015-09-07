@@ -11,11 +11,14 @@ var Network = React.createClass({
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
+	onClick: function(item) {
+		this.setState({activeItem: item});
+	},
 	render: function() {
 		var modal = this.props.modal;
 		return (
 			<Divider hide={this.props.hide} rightWidth="560">
-				<ReqData modal={modal} />
+				<ReqData modal={modal} onClick={this.onClick} />
 				<Detail modal={modal} />
 			</Divider>		
 		);
