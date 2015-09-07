@@ -39,8 +39,7 @@ var ResDetail = React.createClass({
 		}
 		var name = btn && btn.name;
 		return (
-			<div className={'fill orient-vertical-box w-detail-content w-detail-response w-detail-show-response-' 
-				+ util.getProperty(this, 'state.btn.name', '').toLowerCase() 
+			<div className={'fill orient-vertical-box w-detail-content w-detail-response' 
 				+ (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
 				{this.state.initedHeaders ? <div className={'w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties /></div> : ''}
