@@ -19,31 +19,32 @@ function hasRules(data) {
 }
 
 function getStatusClass(data) {
-	if (data.reqError || data.resError) {
-		return 'danger w-error-status';
-	}
-	
-	if (data.res.statusCode == 403) {
-		return 'w-forbidden';
-	}
-	
-	if (data.res.statusCode >= 400) {
-		return 'w-error-status';
-	}
-	
+	var type = '';
 	var headers = data.res.headers;
 	switch(util.getContentType(headers)) {
 		case 'JS':
-			return 'warning';
+			type = 'warning';
+			break;
 		case 'CSS':
-			return 'info';
+			type = 'info';
+			break;
 		case 'HTML':
-			return 'success';
+			type = 'success';
+			break;
 		case 'IMG':
-			return 'active';
+			type = 'active';
+			break;
 	}
 	
-	return '';
+	if (data.reqError || data.resError) {
+		type += ' danger w-error-status';
+	} else if (data.res.statusCode == 403) {
+		type += ' w-forbidden';
+	} else if (data.res.statusCode >= 400) {
+		type += ' w-error-status';
+	}
+	
+	return type;
 }
 
 function getSelectedRows() {
