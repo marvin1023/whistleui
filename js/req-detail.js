@@ -44,7 +44,7 @@ var ReqDetail = React.createClass({
 			req = modal.req
 			body = req.body || '';
 			headers = req.headers;
-			cookies = util.parseQueryString(headers.cookie, /;\s*/g);
+			cookies = util.parseQueryString(headers.cookie, /;\s*/g, null, decodeURIComponent);
 			query = util.parseQueryString(modal.url.split('#')[0].split('?')[1], null, null, decodeURIComponent);
 			if (headers['content-type'] == 'application/x-www-form-urlencoded') {
 				form = util.parseQueryString(req.body);

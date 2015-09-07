@@ -6,7 +6,7 @@ var Properties = require('./properties');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
 BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
-var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Http Only', 'Secure'];
+var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires/Max-Age', 'Http Only', 'Secure'];
 var STATUS_CODES = {
 		  100 : 'Continue',
 		  101 : 'Switching Protocols',
@@ -106,9 +106,9 @@ var ResDetail = React.createClass({
 			json = util.stringify(body);
 			if (headers['set-cookie']) {
 				cookies = [];
-				headers['set-cookie'].split(/;\s*/g)
-						.forEach(function(cookie) {
-							cookie = util.parseQueryString(cookie, /,\s*/);
+				headers['set-cookie'].forEach(function(cookie) {
+							cookie = util.parseQueryString(cookie, /;\s*/, null, decodeURIComponent);
+							
 						});
 			}
 			if (res.statusCode != null) {
