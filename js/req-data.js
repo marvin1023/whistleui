@@ -130,6 +130,8 @@ var ReqData = React.createClass({
 		var self = this;
 		var modal = self.props.modal;
 		var list = modal ? modal.list : [];
+		var hasKeyword = modal && modal.hasKeyword();
+		var order = 0;
 		
 		return (
 				<div className="fill w-req-data-con orient-vertical-box">
@@ -165,7 +167,7 @@ var ReqData = React.createClass({
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
-						    		  				<th className="order" scope="row">{item.order}</th>			        
+						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++order : item.order}</th>			        
 						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        
 						    		  				<td className="method">{req.method}</td>			        
