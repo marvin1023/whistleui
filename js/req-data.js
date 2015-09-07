@@ -191,7 +191,7 @@ var ReqData = React.createClass({
 						className="w-filter-input" maxLength="128" placeholder="type filter text" />
 						<button onMouseDown={util.preventBlur}
 						onClick={this.clearFilterText}
-						style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl+D"><span aria-hidden="true">&times;</span></button>
+						style={{display: this.state.filterText ? 'block' :  'none'}} type="button" className="close" title="Ctrl[Command]+D"><span aria-hidden="true">&times;</span></button>
 					</div>
 			</div>
 		);
