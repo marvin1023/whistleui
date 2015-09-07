@@ -493,7 +493,7 @@ var Index = React.createClass({
 	setSelected: function(modal, name, selected) {
 		if (modal.setSelected(name, selected)) {
 			modal.setChanged(name, false);
-			self.setState({
+			this.setState({
 				curSelectedName: name
 			});
 		}
