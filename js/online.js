@@ -64,6 +64,7 @@ var Online = React.createClass({
 	componentWillMount: function() {
 		var self = this;
 		dataCenter.on('serverInfo', function(data) {
+			self.updateServerInfo(data);
 			self.setState({server: data});
 		});
 	},
@@ -72,6 +73,10 @@ var Online = React.createClass({
 		if (!server) {
 			return;
 		}
+		this.updateServerInfo(server);
+		dialog.modal('show');
+	},
+	updateServerInfo: function(server) {
 		var info = [];
 		if (server.host) {
 			info.push('<h5>Host: ' + server.host + '</h5>');
@@ -91,7 +96,6 @@ var Online = React.createClass({
 		createDialog().find('.w-online-dialog-ctn').html(info.join(''));
 		dialog.find('.w-ip').prop('placeholder', server.ipv4[0] || '127.0.0.1');
 		dialog.find('.w-port').prop('placeholder', server.port || '8899');
-		dialog.modal('show');
 	},
 	render: function() {
 		var info = [];
