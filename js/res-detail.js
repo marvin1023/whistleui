@@ -104,7 +104,13 @@ var ResDetail = React.createClass({
 			body = res.body || '';
 			headers = res.headers;
 			json = util.stringify(body);
-			cookies = util.parseQueryString(headers.cookie, /;\s*/g);
+			if (headers['set-cookie']) {
+				cookies = [];
+				headers['set-cookie'].split(/;\s*/g)
+						.forEach(function(cookie) {
+							cookie = util.parseQueryString(cookie, /,\s*/);
+						});
+			}
 			if (res.statusCode != null) {
 				raw = ['HTTP/' + (modal.req.httpVersion || '1.1'), res.statusCode, STATUS_CODES[res.statusCode] || ''].join(' ')
 					  + '\r\n' + util.objectToString(headers) + '\r\n\r\n' + body;
@@ -117,7 +123,7 @@ var ResDetail = React.createClass({
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
 				{this.state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={headers} /></div> : ''}
 				{this.state.initedTextView ? <textarea value={body} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
-				{this.state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} /></div> : ''}
+				{this.state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} modal={cookies} /></div> : ''}
 				{this.state.initedJSON ? <textarea value={json} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-json' + (name == BTNS[3].name ? '' : ' hide')}></textarea> : ''}
 				{this.state.initedRaw ? <textarea value={raw} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
 			</div>
