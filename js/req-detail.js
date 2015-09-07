@@ -51,7 +51,7 @@ var ReqDetail = React.createClass({
 			}
 			
 			raw = [req.method, util.getPath(modal.url), 'HTTP/' + (req.httpVersion || '1.1')].join(' ');
-			raw += '\r\n' + util.objectToString(headers) + '\r\n\r\n' + body;
+					+ '\r\n' + util.objectToString(headers) + '\r\n\r\n' + body;
 		}
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>

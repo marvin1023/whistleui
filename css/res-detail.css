@@ -1,1 +1,2 @@
 .w-detail-response textarea {padding: 5px; border: none;}
+.w-detail-response-headers, .w-detail-response-cookies {overflow: auto;}

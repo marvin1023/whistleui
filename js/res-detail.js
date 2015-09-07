@@ -38,15 +38,28 @@ var ResDetail = React.createClass({
 			this.selectBtn(btn);
 		}
 		var name = btn && btn.name;
+		var modal = this.props.modal;
+		var res, headers, cookies, body, raw, json;
+		if (modal) {
+			res = modal.res
+			body = res.body || '';
+			headers = res.headers;
+			cookies = util.parseQueryString(headers.cookie, /;\s*/g);
+			if (res.statusCode != null) {
+				raw = ['HTTP/' + (res.httpVersion || '1.1'), modal.statusCode, 'OK'].join(' ');
+					  + '\r\n' + util.objectToString(headers) + '\r\n\r\n' + body;
+			}
+		}
+		
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-response' 
 				+ (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
-				{this.state.initedHeaders ? <div className={'w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties /></div> : ''}
-				{this.state.initedTextView ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'orient-vertical-box w-detail-response-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
-				{this.state.initedCookies ? <div className={'w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} /></div> : ''}
+				{this.state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={headers} /></div> : ''}
+				{this.state.initedTextView ? <textarea value={body} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} /></div> : ''}
 				{this.state.initedJSON ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-json' + (name == BTNS[3].name ? '' : ' hide')}></textarea> : ''}
-				{this.state.initedRaw ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedRaw ? <textarea value={raw} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
 			</div>
 		);
 	}
