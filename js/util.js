@@ -198,4 +198,18 @@ exports.ensureVisible = function(elem, container) {
 	}
 };
 
+exports.parseQueryString = function(str, delimiter, seperator, encode) {
+	var result = {};
+	if (!str || !(str = str.trim())) {
+		return result;
+	}
+	delimiter = delimiter || '&';
+	seperator = seperator || '=';
+	str.split(delimiter).forEach(function(sep) {
+		sep = sep.split(seperator);
+		result[sep[0]] = encode ? encode(sep[1] || '') : sep[1];
+	});
+	return result;
+}
+
 

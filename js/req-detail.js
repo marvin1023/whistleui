@@ -39,19 +39,12 @@ var ReqDetail = React.createClass({
 		}
 		var name = btn && btn.name;
 		var modal = this.props.modal;
-		var req, headers, cookies, body;
+		var req, headers, cookies, body, raw, query, form;
 		if (modal) {
 			req = modal.req
 			body = req.body;
 			headers = req.headers;
-			if (cookies = headers.cookie) {
-				var list = cookies.split(/;\s*/g);
-				cookies = {};
-				list.forEach(function(cookie) {
-					cookie = cookie.split('=');
-					cookies[cookie[0]] = cookie[1];
-				});
-			}
+			cookies = util.parseQueryString(headers.cookie, /;\s*/g);
 		}
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
@@ -60,8 +53,8 @@ var ReqDetail = React.createClass({
 				{this.state.initedTextView ? <textarea value={body} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-request-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
 				{this.state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties modal={cookies} /></div> : ''}
 				{this.state.initedWebForms ? <Divider vertical="true" className={'fill w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
-					<Properties />
-					<Properties />
+					<Properties modal={query} />
+					<Properties modal={form} />
 				</Divider> : ''}
 				{this.state.initedRaw ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-request-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
 			</div>
