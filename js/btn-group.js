@@ -13,12 +13,11 @@ var BtnGroup = React.createClass({
 			 btn.active = false;
 		 });
 		 btn.active = true;
-		 if (this.props.onClick) {
-			 this.props.onClick(btn);
+		 if (!this.props.onClick || this.props.onClick(btn)) {
+			 this.setState({
+				 curBtn: btn
+			 });
 		 }
-		 this.setState({
-			 curBtn: btn
-		 });
 	},
 	render: function() {
 		var self = this;
