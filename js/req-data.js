@@ -82,7 +82,7 @@ var ReqData = React.createClass({
 	onClick: function(e, item) {
 		var modal = this.props.modal;
 		var allowMultiSelect = e.ctrlKey || e.metaKey;
-		if (!allowMultiSelect || !modal) {
+		if (!allowMultiSelect) {
 			this.clearSelection();
 		}
 		
@@ -93,9 +93,10 @@ var ReqData = React.createClass({
 		} else {
 			item.selected = !allowMultiSelect || !item.selected;
 		}
-		
+		modal.clearActive();
+		item.active = true;
 		this.setState({
-			selectedItem: item
+			activeItem: item
 		});
 	},
 	clearSelection: function() {

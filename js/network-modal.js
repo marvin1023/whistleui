@@ -129,6 +129,17 @@ proto.update = function(scrollAtBottom) {
 
 proto.getSelected = function() {
 	
+	return this.getActive();
+};
+
+proto.getActive = function() {
+	for (var i = 0, len = this.list; i < len; i++) {
+		var item = this.list[i];
+		if (item.active) {
+			return item;
+		}
+	}
+	
 	return this.getSelectedList()[0];
 };
 
@@ -167,6 +178,12 @@ proto.setSelectedList = function(startId, endId) {
 proto.clearSelection = function() {
 	this.list.forEach(function(item) {
 		item.selected = false;
+	});
+};
+
+proto.clearActive = function() {
+	this.list.forEach(function(item) {
+		item.active = false;
 	});
 };
 
