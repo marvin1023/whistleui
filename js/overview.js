@@ -32,7 +32,7 @@ var Overview = React.createClass({
 			rulesModal[name] = _rulesModal[name];
 		});
 		return (
-			<div className={'w-detail-overview orient-vertical-box' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+			<div className={'fill orient-vertical-box w-detail-content w-detail-overview' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<Properties modal={overviewModal} />
 				<p className="w-detail-overview-title"><a href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span></a>All rules:</p>
 				<Properties modal={rulesModal} />

@@ -11,7 +11,7 @@ var Timeline = React.createClass({
 	render: function() {
 		
 		return (
-				<div className={'w-detail-timeline' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+				<div className={'fill orient-vertical-box w-detail-content w-detail-timeline' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<ul>
 						<li>
 							<span title="Stalled: 0ms" className="w-detail-timeline-stalled" style={{width: 0}}>-1</span>

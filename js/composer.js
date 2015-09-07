@@ -11,7 +11,7 @@ var Composer = React.createClass({
 	},
 	render: function() {
 		return (
-			<div className={'fill orient-vertical-box w-detail-composer' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+			<div className={'fill orient-vertical-box w-detail-content w-detail-composer' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<div className="w-composer-url box">
 					<input type="text" maxLength="8192" placeholder="url" className="fill w-composer-input" />
 					<select className="form-control w-composer-method">

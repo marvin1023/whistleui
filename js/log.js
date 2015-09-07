@@ -11,7 +11,7 @@ var Log = React.createClass({
 	render: function() {
 		
 		return (
-				<div  className={'w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+				<div  className={'fill orient-vertical-box w-detail-content w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<ul>
 						<li className="fatal">
 							<h5>Level: FATAL</h5>

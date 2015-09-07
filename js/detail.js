@@ -55,14 +55,12 @@ var ReqData = React.createClass({
 		return (
 				<div className="fill orient-vertical-box w-detail">
 				<BtnGroup onClick={this.toggleTab} tabs={TABS} />
-				<div className="fill orient-vertical-box w-detail-content">
-					{this.state.initedOverview ? <Overview hide={name != TABS[0].name} /> : ''}
-					{this.state.initedRequest ? <ReqDetail hide={name != TABS[1].name} /> : ''}
-					{this.state.initedResponse ? <ResDetail hide={name != TABS[2].name} /> : ''}
-					{this.state.initedTimeline ? <Timeline hide={name != TABS[3].name} /> : ''}
-					{this.state.initedComposer ? <Composer hide={name != TABS[4].name} /> : ''}
-					{this.state.initedLog ? <Log hide={name != TABS[5].name} /> : ''}
-				</div>
+				{this.state.initedOverview ? <Overview hide={name != TABS[0].name} /> : ''}
+				{this.state.initedRequest ? <ReqDetail hide={name != TABS[1].name} /> : ''}
+				{this.state.initedResponse ? <ResDetail hide={name != TABS[2].name} /> : ''}
+				{this.state.initedTimeline ? <Timeline hide={name != TABS[3].name} /> : ''}
+				{this.state.initedComposer ? <Composer hide={name != TABS[4].name} /> : ''}
+				{this.state.initedLog ? <Log hide={name != TABS[5].name} /> : ''}
 			</div>
 		);
 	}

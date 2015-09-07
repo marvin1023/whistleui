@@ -31,7 +31,7 @@ var ReqDetail = React.createClass({
 		var btn = this.state.btn;
 		var name = btn && btn.name;
 		return (
-			<div className={'fill orient-vertical-box w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
 				{this.state.initedHeaders ? <div className={'w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties /></div> : ''}
 				{this.state.initedTextView ? <textarea onKeyDown={util.preventDefault} readOnly="readonly" className={'orient-vertical-box w-detail-request-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
