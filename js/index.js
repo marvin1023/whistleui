@@ -124,6 +124,10 @@ var Index = React.createClass({
 		dataCenter.on('serverInfo', function(data) {
 			self.serverInfo = data;
 		});
+		
+		events.on('executeComposer', function() {
+			self.autoScroll && self.autoScroll();
+		});
 	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();

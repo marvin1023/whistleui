@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/composer.css');
 var React = require('react');
+var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
 var Divider = require('./divider');
@@ -33,6 +34,22 @@ var Composer = React.createClass({
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
+	execute: function() {
+		var refs = this.refs;
+		var url = refs.url.getDOMNode().value.trim();
+		if (!url) {
+			alert('Please input the url.');
+			return;
+		}
+		
+		dataCenter.composer({
+			url: url,
+			headers: refs.headers.getDOMNode().value,
+			method: refs.method.getDOMNode().value || 'GET',
+			body: refs.body.getDOMNode().value
+		});
+		events.trigger('executeComposer');
+	},
 	render: function() {
 		
 		return (
@@ -57,7 +74,7 @@ var Composer = React.createClass({
 		          		<option value="UNLOCK">UNLOCK</option>
 		          		<option value="OPTIONS">OPTIONS</option>
 		          	</select>
-					<button className="btn btn-primary w-composer-execute">Execute</button>
+					<button onClick={this.execute} className="btn btn-primary w-composer-execute">Execute</button>
 				</div>
 				<Divider vertical="true">
 					<textarea ref="headers" className="fill w-composer-headers" placeholder="headers"></textarea>
