@@ -1,2 +1,2 @@
 .w-detail-request textarea {padding: 5px; border: none;}
-.w-detail-request-headers, .w-detail-request-cookies, .w-detail-request-query, .w-detail-request-form {overflow: auto;}
+.w-detail-request-headers, .w-detail-request-cookies, .w-detail-request-query, w-detail-request-form, .w-detail-request-form {overflow: auto;}
