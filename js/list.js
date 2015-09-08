@@ -40,7 +40,7 @@ var List = React.createClass({
 			}
 			
 			if (item) {
-				self.onClick(item);
+				self.onClick(item, true);
 				e.preventDefault();
 			}
 		});
@@ -54,15 +54,14 @@ var List = React.createClass({
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
-	onClick: function(item) {
+	onClick: function(item, hm) {
 		var self = this;
 		if (typeof self.props.onActive != 'function' ||
 				self.props.onActive(item) !== false) {
 			self.props.modal.setActive(item.name);
-			self.setState({}, function() {
-				util.ensureVisible(self.refs[item.name].getDOMNode(), self.refs.list.getDOMNode());
-			});
+			self.setState({activeItem: item});
 		}
+		hm && util.ensureVisible(self.refs[item.name].getDOMNode(), self.refs.list.getDOMNode());
 	},
 	onDoubleClick: function(item, okIcon) {
 		item.selected && !item.changed || okIcon ? this.onUnselect(item) : this.onSelect(item);

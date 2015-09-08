@@ -116,12 +116,12 @@ var ReqData = React.createClass({
 		
 		modal.clearActive();
 		item.active = true;
-		self.props.onClick && self.props.onClick(item);
-		self.setState({
-			activeItem: item
-		}, function() {
-			util.ensureVisible(self.refs[item.id].getDOMNode(), self.container);
-		});
+		if (self.props.onClick && self.props.onClick(item)) {
+			self.setState({
+				activeItem: item
+			});
+		}
+		hm && util.ensureVisible(self.refs[item.id].getDOMNode(), self.container);
 	},
 	clearSelection: function() {
 		var modal = this.props.modal;
