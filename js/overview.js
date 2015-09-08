@@ -3,9 +3,9 @@ require('../css/overview.css');
 var React = require('react');
 var util = require('./util');
 var Properties = require('./properties');
-var OVERVIEW = ['Url', 'Method', 'Http Version', 'Status Code', 'Host IP', 'Client IP', 'Request Length', 'Content Length'
+var OVERVIEW = ['Url', 'Method', 'Http Version', 'Status Code', 'Status Message', 'Host IP', 'Client IP', 'Request Length', 'Content Length'
                       , 'Start Date', 'DNS Lookup', 'Request Sent', 'Response Headers', 'Content Download'];
-var OVERVIEW_PROPS = ['url', 'req.method', 'req.httpVersion', 'res.statusCode', 'res.ip', 'req.ip', 'req.size', 'res.size'];
+var OVERVIEW_PROPS = ['url', 'req.method', 'req.httpVersion', 'res.statusCode', 'res.statusMessage', 'res.ip', 'req.ip', 'req.size', 'res.size'];
 /**
  * statusCode://, redirect://[statusCode:]url, [req, res]speed://, 
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 
@@ -40,8 +40,12 @@ var Overview = React.createClass({
 				var prop = OVERVIEW_PROPS[i];
 				if (prop) {
 					var value = util.getProperty(modal, prop);
-					if (value && (prop == 'req.size' || prop == 'res.size') && value > 1024) {
-						value += '(' + Number(value / 1024).toFixed(2) + 'k)'
+					if (value) {
+						if ((prop == 'req.size' || prop == 'res.size') && value > 1024) {
+							value += '(' + Number(value / 1024).toFixed(2) + 'k)'
+						}
+					} else if (prop == 'res.statusMessage') {
+						value = util.getStatusMessage(modal.res);
 					}
 					overviewModal[name] = value;
 				} else {
