@@ -6,7 +6,7 @@ var Properties = require('./properties');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
 BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
-var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires/Max-Age', 'Http Only', 'Secure'];
+var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires', 'Http Only', 'Secure'];
 
 var ResDetail = React.createClass({
 	getInitialState: function() {
