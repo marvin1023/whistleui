@@ -2,6 +2,7 @@ require('./base-css.js');
 require('../css/detail.css');
 var React = require('react');
 var util = require('./util');
+var events = require('./events');
 var BtnGroup = require('./btn-group');
 var Overview = require('./overview');
 var ReqDetail = require('./req-detail');
@@ -41,6 +42,14 @@ var ReqData = React.createClass({
 			initedLog: false
 		};
 	},
+	componentDidMount: function() {
+		var self = this;
+		events.on('showOverview', function() {
+			self.toggleTab(TABS[0]);
+		}).on('composer', function() {
+			self.toggleTab(TABS[4]);
+		});
+	},
 	toggleTab: function(tab) {
 		this.selectTab(tab);
 		this.setState({tab: tab});
@@ -55,12 +64,11 @@ var ReqData = React.createClass({
 		var selectedList = modal && modal.getSelectedList();
 		var activeItem = modal && modal.getActive();
 		var curTab = this.state.tab;
-		if (!curTab && activeItem || this.props.showFirstTab) {
+		if (!curTab && activeItem) {
 			curTab = TABS[0];
 			TABS.forEach(function(tab) {
 				tab.active = false;
 			});
-			this.props.showFirstTab = false;
 			this.selectTab(curTab);
 		}
 		var name = curTab && curTab.name;

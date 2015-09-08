@@ -1,6 +1,7 @@
 require('./base-css.js');
 var React = require('react');
 var util = require('./util');
+var events = require('./events');
 var Divider = require('./divider');
 var ReqData = require('./req-data');
 var Detail = require('./detail');
@@ -15,19 +16,15 @@ var Network = React.createClass({
 		this.setState({activeItem: item});
 	},
 	onDoubleClick: function() {
-		this.setState({showFirstTab: true});
+		events.trigger('showOverview');
 	},
 	render: function() {
 		var modal = this.props.modal;
-		var showFirstTab = false;
-		if (this.state && this.state.showFirstTab) {
-			this.state.showFirstTab = false;
-			showFirstTab = true;
-		}
+		
 		return (
 			<Divider hide={this.props.hide} rightWidth="560">
 				<ReqData modal={modal} onClick={this.onClick} onDoubleClick={this.onDoubleClick} />
-				<Detail showFirstTab={showFirstTab} modal={modal} />
+				<Detail modal={modal} />
 			</Divider>		
 		);
 	}

@@ -9,6 +9,7 @@ var Online = require('./online');
 var MenuItem = require('./menu-item');
 var dataCenter = require('./data-center');
 var util = require('./util');
+var events = require('./events');
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -521,7 +522,7 @@ var Index = React.createClass({
 		this.autoScroll && this.autoScroll();
 	},
 	composer: function() {
-		
+		events.trigger('composer');
 	},
 	setFilter: function(e) {
 		if (e.keyCode != 13 && e.type != 'click') {

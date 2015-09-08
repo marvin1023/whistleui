@@ -2,14 +2,26 @@ require('./base-css.js');
 require('../css/composer.css');
 var React = require('react');
 var util = require('./util');
+var events = require('./events');
 var Divider = require('./divider');
 
 var Composer = React.createClass({
+	componentDidMount: function() {
+		var self = this;
+		var activeItem = self.props.modal;
+		events.on('composer', function() {
+			activeItem && self.setState({
+				data: activeItem
+			});
+		});
+	},
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	render: function() {
+		var data = this.props.modal || {};
+		
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-composer' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<div className="w-composer-url box">
