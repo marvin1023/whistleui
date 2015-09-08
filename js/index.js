@@ -512,7 +512,7 @@ var Index = React.createClass({
 			if (!item.isHttps) {
 				dataCenter.composer({
 					url: item.url,
-					headers: item.req.headers,
+					headers: JSON.stringify(item.req.headers),
 					method: item.req.method,
 					body: item.reqError ? '' : item.req.body
 				});
