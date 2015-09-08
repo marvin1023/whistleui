@@ -87,11 +87,11 @@ var Timeline = React.createClass({
 							return (
 									<li key={item.id} title={title}>
 										<span title={item.url} className="w-detail-timeline-url">{util.getFilename(item.url)}</span>	
-										<span style={{width: stalledRate}} title={'Stalled: ' + stalled} className="w-detail-timeline-stalled">{stalled}</span>
-										<span style={{width: dnsRate}} title={'DNS: ' + dns} className="w-detail-timeline-dns">{dns}</span>
-										<span style={{width: requestRate}} title={'Request: ' + request} className="w-detail-timeline-request">{request}</span>
-										<span style={{width: responseRate}} title={'Response: ' + response} className="w-detail-timeline-response">{response}</span>
-										<span style={{width: loadRate}} title={'Load: ' + load} className="w-detail-timeline-load">{load}</span>
+										<span style={{width: stalledRate}} className="w-detail-timeline-stalled"></span>
+										<span style={{width: dnsRate}} className="w-detail-timeline-dns"></span>
+										<span style={{width: requestRate}} className="w-detail-timeline-request"> </span>
+										<span style={{width: responseRate}} className="w-detail-timeline-response"> </span>
+										<span style={{width: loadRate}} className="w-detail-timeline-load"> </span>
 										<span title= {title} className="w-detail-timeline-time">{total}</span>
 									</li>		
 							);
