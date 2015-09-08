@@ -207,7 +207,10 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 	seperator = seperator || '=';
 	str.split(delimiter).forEach(function(sep) {
 		sep = sep.split(seperator);
-		result[sep[0]] = decode ? decode(sep[1] || '') : sep[1];
+		try {
+			sep[1] = decode ? decode(sep[1] || '') : sep[1];
+		} catch(e) {}
+		result[sep[0]] =  sep[1];
 	});
 	return result;
 }
