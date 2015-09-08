@@ -240,23 +240,15 @@ exports.getPath = function(url) {
 };
 
 exports.stringify = function(str) {
-	if (!str || !(str = str.trim())) {
+	if (!str || !(str = str.trim()) || !/({[\w\W]+}|\[[\w\W]+\])/.test(str)) {
 		return '';
 	}
-	if (!/^[\{\[]/.test(str)) {
-		var index = str.indexOf('(');
-		if (index != -1) {
-			str = str.substring(index + 1);
-			index = str.lastIndexOf(')');
-			str = index == -1 ? '' : str.substring(0, index);
-		}
-	}
-	if (str) {
-		try {
-			str = JSON.parse(str);
-			return str ? JSON.stringify(str, null, '    ') : '';
-		} catch(e) {}
-	}
+	
+	str = RegExp.$1;
+	try {
+		str = JSON.parse(str);
+		return str ? JSON.stringify(str, null, '    ') : '';
+	} catch(e) {}
 	
 	return '';
 };
