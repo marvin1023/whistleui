@@ -10,10 +10,21 @@ var Properties = React.createClass({
 					<tbody>
 						{
 							Object.keys(modal).map(function(name) {
-								return (
+								var value = modal[name];
+								
+								return (Array.isArray(value) ?
+										value.map(function(val, i) {
+											return (
+												<tr key={i}>
+													<th>{name}</th>
+													<td>{val}</td>
+												</tr>		
+											);
+										})
+										: 
 										<tr key={name}>
 											<th>{name}</th>
-											<td>{modal[name]}</td>
+											<td>{value}</td>
 										</tr>	
 								);
 							})
