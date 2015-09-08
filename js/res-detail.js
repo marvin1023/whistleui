@@ -127,8 +127,10 @@ var ResDetail = React.createClass({
 										row[6] = '√';
 										break;
 									default:
-										row[0] = i;
-										row[1] = cookie[i];
+										if (!row[0]) {
+											row[0] = i;
+											row[1] = cookie[i];
+										}
 								}
 							}
 							

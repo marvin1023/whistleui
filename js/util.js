@@ -205,12 +205,15 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 	}
 	delimiter = delimiter || '&';
 	seperator = seperator || '=';
-	str.split(delimiter).forEach(function(sep) {
-		sep = sep.split(seperator);
+	str.split(delimiter).forEach(function(pair) {
+		pair = pair.split(seperator);
+		var key = pair[0];
+		var value = pair.slice(1).join('=');
 		try {
-			sep[1] = decode ? decode(sep[1] || '') : sep[1];
+			value = decode ? decode(value) : value;
 		} catch(e) {}
-		result[sep[0]] =  sep[1];
+		
+		result[key] = value;
 	});
 	return result;
 }
