@@ -55,6 +55,9 @@ var ReqData = React.createClass({
 		this.setState({tab: tab});
 	}, 
 	selectTab: function(tab) {
+		TABS.forEach(function(tab) {
+			tab.active = false;
+		});
 		tab.active = true;
 		this.state.tab = tab;
 		this.state['inited' + tab.name] = true;
