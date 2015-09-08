@@ -4,4 +4,5 @@
 .w-detail-timeline-dns {background: #8cd2c6;}
 .w-detail-timeline-request {background: #fdfdb2;}
 .w-detail-timeline-response {background: #fbb361;}
+.w-detail-timeline-load {background: #7eabe1;}
 .w-detail-timeline-time {position: absolute; top: 2px; right: 0; padding-right: 5px;}

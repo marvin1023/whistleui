@@ -18,13 +18,14 @@ var Timeline = React.createClass({
 							<span title="DNS: 10ms" className="w-detail-timeline-dns">1</span>
 							<span title="Request: 10ms" className="w-detail-timeline-request">2</span>
 							<span title="Response: 10ms" className="w-detail-timeline-response">3</span>
-							<span title= {'Stalled: 0ms\nDNS: 10ms\nRequest: 10ms\nResponse: 10ms'} className="w-detail-timeline-time">222ms</span>
+							<span className="w-detail-timeline-load">4</span>
+							<span title= {'Stalled: 0ms\nDNS: 10ms\nRequest: 10ms\nResponse: 10ms\nLoad: 10ms'} className="w-detail-timeline-time">222ms</span>
 						</li>
 						<li>
 						<span className="w-detail-timeline-stalled" style={{width: '10%'}}>-1</span>
 							<span className="w-detail-timeline-dns">1</span>
 							<span className="w-detail-timeline-request">2</span>
-							<span className="w-detail-timeline-response">3</span>
+							<span className="w-detail-timeline-load">4</span>
 							<span className="w-detail-timeline-time">222ms</span>
 						</li>
 						<li>
@@ -32,6 +33,7 @@ var Timeline = React.createClass({
 							<span className="w-detail-timeline-dns">1</span>
 							<span className="w-detail-timeline-request">2</span>
 							<span className="w-detail-timeline-response">3</span>
+							<span className="w-detail-timeline-load">4</span>
 							<span className="w-detail-timeline-time">222ms</span>
 						</li>
 					</ul>
