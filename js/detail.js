@@ -71,7 +71,7 @@ var ReqData = React.createClass({
 				{this.state.initedOverview ? <Overview modal={activeItem} hide={name != TABS[0].name} /> : ''}
 				{this.state.initedRequest ? <ReqDetail modal={activeItem} hide={name != TABS[1].name} /> : ''}
 				{this.state.initedResponse ? <ResDetail modal={activeItem} hide={name != TABS[2].name} /> : ''}
-				{this.state.initedTimeline ? <Timeline hide={name != TABS[3].name} /> : ''}
+				{this.state.initedTimeline ? <Timeline modal={modal} hide={name != TABS[3].name} /> : ''}
 				{this.state.initedComposer ? <Composer hide={name != TABS[4].name} /> : ''}
 				{this.state.initedLog ? <Log hide={name != TABS[5].name} /> : ''}
 			</div>

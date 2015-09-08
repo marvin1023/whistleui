@@ -228,12 +228,14 @@ exports.objectToString = function(obj) {
 	return result.join('\r\n');
 };
 
-exports.getPath = function(url) {
+function removeProtocol(url) {
 	var index = url.indexOf('://');
-	if (index != -1) {
-		url = url.substring(index + 3);
-	}
-	index = url.indexOf('/');
+	return index == -1 ? url : url.substring(index + 3);
+}
+
+exports.getPath = function(url) {
+	url = removeProtocol(url);
+	var index = url.indexOf('/');
 	return index == -1 ? '/' : url.substring(index);
 };
 
@@ -257,6 +259,12 @@ exports.stringify = function(str) {
 	}
 	
 	return '';
+};
+
+exports.getFilename = function(url) {
+	url = removeProtocol(url.replace(/[?#].*/, ''));
+	var index = url.lastIndexOf('/');
+	return index != -1 && url.substring(index + 1) || '/';
 };
 
 
