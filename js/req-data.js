@@ -96,10 +96,11 @@ var ReqData = React.createClass({
 		});
 	},
 	onClick: function(e, item, hm) {
-		var modal = this.props.modal;
+		var self = this;
+		var modal = self.props.modal;
 		var allowMultiSelect = e.ctrlKey || e.metaKey;
 		if (hm || !allowMultiSelect) {
-			this.clearSelection();
+			self.clearSelection();
 		}
 		if (hm) {
 			item.selected = true;
@@ -115,11 +116,12 @@ var ReqData = React.createClass({
 		
 		modal.clearActive();
 		item.active = true;
-		if (this.props.onClick && this.props.onClick(item)) {
-			this.setState({
-				activeItem: item
-			});
-		}
+		self.props.onClick && self.props.onClick(item);
+		self.setState({
+			activeItem: item
+		}, function() {
+			util.ensureVisible(self.refs[item.id].getDOMNode(), self.container);
+		});
 	},
 	clearSelection: function() {
 		var modal = this.props.modal;
