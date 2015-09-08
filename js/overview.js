@@ -4,7 +4,7 @@ var React = require('react');
 var util = require('./util');
 var Properties = require('./properties');
 var OVERVIEW = ['Url', 'Method', 'Http Version', 'Status Code', 'Host IP', 'Client IP', 'Request Length', 'Content Length'
-                      , 'Start Date', 'DNS Lookup', 'Request Sent', 'Content Download'];
+                      , 'Start Date', 'DNS Lookup', 'Request Sent', 'Response Headers', 'Content Download'];
 var OVERVIEW_PROPS = ['url', 'req.method', 'req.httpVersion', 'res.statusCode', 'res.ip', 'req.ip', 'req.size', 'res.size'];
 /**
  * statusCode://, redirect://[statusCode:]url, [req, res]speed://, 
@@ -48,17 +48,22 @@ var Overview = React.createClass({
 					var lastIndex = OVERVIEW.length - 1;
 					var time;
 					switch(name) {
-						case OVERVIEW[lastIndex - 3]:
+						case OVERVIEW[lastIndex - 4]:
 							time = new Date(modal.startTime).toLocaleString();
 							break;
-						case OVERVIEW[lastIndex - 2]:
+						case OVERVIEW[lastIndex - 3]:
 							if (modal.dnsTime) {
 								time = modal.dnsTime - modal.startTime + 'ms'
 							}
 							break;
-						case OVERVIEW[lastIndex - 1]:
+						case OVERVIEW[lastIndex - 2]:
 							if (modal.requestTime) {
 								time = modal.requestTime - modal.startTime + 'ms'
+							}
+							break;
+						case OVERVIEW[lastIndex - 1]:
+							if (modal.responseTime) {
+								time = modal.responseTime - modal.startTime + 'ms'
 							}
 							break;
 						case OVERVIEW[lastIndex]:
