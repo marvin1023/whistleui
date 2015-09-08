@@ -175,7 +175,7 @@ var ReqData = React.createClass({
 						    		  var req = item.req;
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
-						    		  return (<tr data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
+						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
