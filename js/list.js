@@ -30,19 +30,39 @@ var List = React.createClass({
 		function trigger(item) {
 			self.onDoubleClick(item);
 		}
+		var modal = self.props.modal;
+		var listCon = $(self.refs.list.getDOMNode()).focus().on('keydown', function(e) {
+			var item;
+			if (e.keyCode == 38) { //up
+				item = modal.prev();
+			} else if (e.keyCode == 40) {//down
+				item = modal.next();
+			}
+			
+			if (item) {
+				self.onClick(item);
+				e.preventDefault();
+			}
+		});
+		
+		var activeItem = modal.getActive();
+		if (activeItem) {
+			util.ensureVisible(self.refs[activeItem.name].getDOMNode(), listCon);
+		}
 	},
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
-	onClick: function(e) {
-		var elem = $(e.target).closest('a');
-		var item = this.getItemByKey(elem.attr('data-key'));
-		if (!item || (typeof this.props.onActive == 'function' && 
-				this.props.onActive(item) === false)) {
-			return;
+	onClick: function(item) {
+		var self = this;
+		if (typeof self.props.onActive != 'function' ||
+				self.props.onActive(item) !== false) {
+			self.props.modal.setActive(item.name);
+			self.setState({}, function() {
+				util.ensureVisible(self.refs[item.name].getDOMNode(), self.refs.list.getDOMNode());
+			});
 		}
-		this.props.modal.setActive(item.name);
 	},
 	onDoubleClick: function(item, okIcon) {
 		item.selected && !item.changed || okIcon ? this.onUnselect(item) : this.onSelect(item);
@@ -87,13 +107,15 @@ var List = React.createClass({
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
 				<div className="fill orient-vertical-box w-list-left">	
-					<div ref="list" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '')}>
+					<div ref="list" tabIndex="0" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '')}>
 							{
 								list.map(function(name) {
 									var item = data[name];
 									
-									return <a style={{display: item.hide ? 'none' : null}} key={item.key} data-key={item.key} href="javascript:;"
-												onClick={self.onClick} 
+									return <a ref={name} style={{display: item.hide ? 'none' : null}} key={item.key} data-key={item.key} href="javascript:;"
+												onClick={function() {
+													self.onClick(item);
+												}} 
 												onDoubleClick={function() {
 													self.onDoubleClick(item);
 												}} 

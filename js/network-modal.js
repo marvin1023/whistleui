@@ -117,16 +117,48 @@ proto.clear = function clear() {
 };
 
 proto.prev = function() {
-	var activeItem = this.getActive();
-	if (!activeItem) {
+	var list = this.list;
+	var len = list.length;
+	if (!len) {
 		return;
+	}
+	var activeItem = this.getActive();
+	var index = activeItem ? list.indexOf(activeItem) : len - 1;
+	for (var i = index - 1; i >= 0; i--) {
+		var item = list[i];
+		if (!item.hide) {
+			return item;
+		}
+	}
+	
+	for (var i = len - 1; i > index; i--) {
+		var item = list[i];
+		if (!item.hide) {
+			return item;
+		}
 	}
 };
 
 proto.next = function() {
-	var activeItem = this.getActive();
-	if (!activeItem) {
+	var list = this.list;
+	var len = list.length;
+	if (!len) {
 		return;
+	}
+	var activeItem = this.getActive();
+	var index = activeItem ? list.indexOf(activeItem) : 0;
+	for (var i = index + 1; i < len; i++) {
+		var item = list[i];
+		if (!item.hide) {
+			return item;
+		}
+	}
+	
+	for (var i = 0; i < index; i++) {
+		var item = list[i];
+		if (!item.hide) {
+			return item;
+		}
 	}
 };
 

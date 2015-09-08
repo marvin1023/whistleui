@@ -74,33 +74,45 @@ function getSelection() {
 
 var ReqData = React.createClass({
 	componentDidMount: function() {
-		this.container = this.refs.container.getDOMNode();
-		this.content = this.refs.content.getDOMNode();
-		$(this.container).on('keydown', function(e) {
-			if (e.keyCode == 38) { //up
-				
+		var self = this;
+		self.container = self.refs.container.getDOMNode();
+		self.content = self.refs.content.getDOMNode();
+		$(self.container).on('keydown', function(e) {
+			var modal = self.props.modal;
+			if (!modal) {
 				return;
 			}
+			var item;
+			if (e.keyCode == 38) { //up
+				item = modal.prev();
+			} else if (e.keyCode == 40) {//down
+				item = modal.next();
+			}
 			
-			if (e.keyCode == 40) {//down
-				
+			if (item) {
+				self.onClick(e, item, true);
+				e.preventDefault();
 			}
 		});
 	},
-	onClick: function(e, item) {
+	onClick: function(e, item, hm) {
 		var modal = this.props.modal;
 		var allowMultiSelect = e.ctrlKey || e.metaKey;
-		if (!allowMultiSelect) {
+		if (hm || !allowMultiSelect) {
 			this.clearSelection();
 		}
-		
-		var rows;
-		if (e.shiftKey && (rows = getSelectedRows())) {
-			modal.setSelectedList(rows[0].attr('data-id'), 
-					rows[1].attr('data-id'));
+		if (hm) {
+			item.selected = true;
 		} else {
-			item.selected = !allowMultiSelect || !item.selected;
+			var rows;
+			if (e.shiftKey && (rows = getSelectedRows())) {
+				modal.setSelectedList(rows[0].attr('data-id'), 
+						rows[1].attr('data-id'));
+			} else {
+				item.selected = !allowMultiSelect || !item.selected;
+			}
 		}
+		
 		modal.clearActive();
 		item.active = true;
 		if (this.props.onClick && this.props.onClick(item)) {

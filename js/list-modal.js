@@ -197,4 +197,52 @@ proto.filter = function() {
 	return list;
 }
 
+proto.prev = function() {
+	var list = this.list;
+	var len = list.length;
+	if (!len) {
+		return;
+	}
+	var activeItem = this.getActive();
+	var index = activeItem ? list.indexOf(activeItem.name) : len - 1;
+	var data = this.data;
+	for (var i = index - 1; i >= 0; i--) {
+		var item = data[list[i]];
+		if (!item.hide) {
+			return item;
+		}
+	}
+	
+	for (var i = len - 1; i > index; i--) {
+		var item = data[list[i]];
+		if (!item.hide) {
+			return item;
+		}
+	}
+};
+
+proto.next = function() {
+	var list = this.list;
+	var len = list.length;
+	if (!len) {
+		return;
+	}
+	var activeItem = this.getActive();
+	var index = activeItem ? list.indexOf(activeItem.name) : 0;
+	var data = this.data;
+	for (var i = index + 1; i < len; i++) {
+		var item = data[list[i]];
+		if (!item.hide) {
+			return item;
+		}
+	}
+	
+	for (var i = 0; i < index; i++) {
+		var item = data[list[i]];
+		if (!item.hide) {
+			return item;
+		}
+	}
+};
+
 module.exports = ListModal;
