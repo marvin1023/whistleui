@@ -209,11 +209,13 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 		pair = pair.split(seperator);
 		var key = pair[0];
 		var value = pair.slice(1).join('=');
-		try {
-			value = decode ? decode(value) : value;
-		} catch(e) {}
-		
-		result[key] = value;
+		if (key || value) {
+			try {
+				value = decode ? decode(value) : value;
+			} catch(e) {}
+			
+			result[key] = value;
+		}
 	});
 	return result;
 }
