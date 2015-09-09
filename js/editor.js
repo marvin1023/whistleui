@@ -112,7 +112,7 @@ var Editor = React.createClass({
 	_init: function() {
 		this.setMode(this.props.mode);
 		this.setValue(this.props.value);
-		this.setTheme(this.props.mode);
+		this.setTheme(this.props.theme);
 		this.setFontSize(this.props.fontSize);
 		this.setTheme(this.props.theme);
 		this.showLineNumber(this.props.lineNumbers || false);

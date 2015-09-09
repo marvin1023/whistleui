@@ -44,6 +44,9 @@ var Index = React.createClass({
 			var selectedName = rules.current;
 			var DEFAULT = 'Default';
 			var selected = !rules.defaultRulesIsDisabled;
+			state.rulesTheme = rules.theme;
+			state.rulesFontSize = rules.fontSize;
+			state.showRulesLineNumbers = rules.showLineNumbers;
 			rulesOptions.push({
 				name: DEFAULT,
 				icon: selected ? 'ok' : ''
@@ -75,6 +78,9 @@ var Index = React.createClass({
 		
 		if (values) {
 			var selectedName = values.current;
+			state.valuesTheme = values.theme;
+			state.valuesFontSize = values.fontSize;
+			state.showValuesLineNumbers = values.showLineNumbers;
 			$.each(values.list, function() {
 				valuesList.push(this.name);
 				valuesData[this.name] = {
@@ -640,38 +646,44 @@ var Index = React.createClass({
 	},
 	onRulesThemeChange: function(e) {
 		var theme = e.target.value;
+		dataCenter.rules.setTheme({theme: theme});
 		this.setState({
 			rulesTheme: theme
 		});
 	},
 	onValuesThemeChange: function(e) {
 		var theme = e.target.value;
+		dataCenter.values.setTheme({theme: theme});
 		this.setState({
 			valuesTheme: theme
 		});
 	},
 	onRulesFontSizeChange: function(e) {
 		var fontSize = e.target.value;
+		dataCenter.rules.setFontSize({fontSize: fontSize});
 		this.setState({
 			rulesFontSize: fontSize
 		});
 	},
 	onValuesFontSizeChange: function(e) {
 		var fontSize = e.target.value;
+		dataCenter.values.setFontSize({fontSize: fontSize});
 		this.setState({
 			valuesFontSize: fontSize
 		});
 	},
 	onRulesLineNumberChange: function(e) {
 		var checked = e.target.checked;
+		dataCenter.rules.showLineNumbers({showLineNumbers: checked ? 1 : 0});
 		this.setState({
-			showRulesLineNumber: checked
+			showRulesLineNumbers: checked
 		});
 	},
 	onValuesLineNumberChange: function(e) {
 		var checked = e.target.checked;
+		dataCenter.values.showLineNumbers({showLineNumbers: checked ? 1 : 0});
 		this.setState({
-			showValuesLineNumber: checked
+			showValuesLineNumbers: checked
 		});
 	},
 	render: function() {
@@ -686,8 +698,8 @@ var Index = React.createClass({
 		var valuesTheme = 'cobalt';
 		var rulesFontSize = '14px';
 		var valuesFontSize = '14px';
-		var showRulesLineNumber = false;
-		var showValuesLineNumber = false;
+		var showRulesLineNumbers = false;
+		var showValuesLineNumbers = false;
 		
 		if (isRules) {
 			var data = state.rules.data;
@@ -705,8 +717,8 @@ var Index = React.createClass({
 				rulesFontSize = state.rulesFontSize;
 			}
 			
-			if (state.showRulesLineNumber) {
-				showRulesLineNumber = state.showRulesLineNumber;
+			if (state.showRulesLineNumbers) {
+				showRulesLineNumbers = state.showRulesLineNumbers;
 			}
 			
 		} else if (isValues) {
@@ -725,8 +737,8 @@ var Index = React.createClass({
 				valuesFontSize = state.valuesFontSize;
 			}
 			
-			if (state.showValuesLineNumber) {
-				showValuesLineNumber = state.showValuesLineNumber;
+			if (state.showValuesLineNumbers) {
+				showValuesLineNumbers = state.showValuesLineNumbers;
 			}
 		}
 		
@@ -759,14 +771,14 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={state.filterText || 'string or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
-				{state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
-				{state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
+				{state.hasRules ? <List theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' ? false : true} modal={state.network} /> : ''}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">
 					      <div className="modal-body">
-					      	<EditorSettings theme={rulesTheme} fontSize={rulesFontSize} showLineNumber={showRulesLineNumber}
+					      	<EditorSettings theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers}
 						      	onThemeChange={this.onRulesThemeChange} 
 						      	onFontSizeChange={this.onRulesFontSizeChange} 
 						      	onLineNumberChange={this.onRulesLineNumberChange} />
@@ -784,7 +796,7 @@ var Index = React.createClass({
 					<div className="modal-dialog"> 
 				  		<div className="modal-content">
 					      <div className="modal-body">
-						      <EditorSettings theme={valuesTheme} fontSize={valuesFontSize} showLineNumber={showValuesLineNumber} 
+						      <EditorSettings theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} 
 							      onThemeChange={this.onValuesThemeChange} 
 							      onFontSizeChange={this.onValuesFontSizeChange} 
 							      onLineNumberChange={this.onValuesLineNumberChange} />
