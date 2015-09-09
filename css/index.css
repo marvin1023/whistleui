@@ -31,3 +31,6 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-rules-menu-list .w-weinre-menu-item {left: 457px;}
 .w-network-menu-list .w-weinre-menu-item {left: 550px;}
 .w-values-menu-list .w-weinre-menu-item {left: 447px;}
+
+.w-rules-settings-dialog .modal-content {width: 336px;}
+.w-values-settings-dialog .modal-content {width: 282px;}

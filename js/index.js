@@ -7,6 +7,7 @@ var Network = require('./network');
 var About = require('./about');
 var Online = require('./online');
 var MenuItem = require('./menu-item');
+var EditorSettings = require('./editor-settings');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
@@ -606,16 +607,10 @@ var Index = React.createClass({
 		this.state.values.setActive(name);
 	},
 	showRulesSettings: function() {
-		var self = this;
-		self.setMenuOptionsState('showRulesSettings', function() {
-			self.refs.rulesSettings.getDOMNode().focus();
-		});
+		$(this.refs.rulesSettingsDialog.getDOMNode()).modal('show');
 	},
 	showValuesSettings: function() {
-		var self = this;
-		self.setMenuOptionsState('showValuesSettings', function() {
-			self.refs.valuesSettings.getDOMNode().focus();
-		});
+		$(this.refs.valuesSettingsDialog.getDOMNode()).modal('show');
 	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
@@ -696,20 +691,37 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={this.state.filterText || 'string or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
-					<div tabIndex="0" ref="valuesSettings" onMouseDown={this.preventBlur} onBlur={this.hideOptions} style={{display: this.state.showValuesSettings ? 'block' : 'none'}} className="shadow w-input-menu-item w-values-settings-dialog">
-						<p><label>Theme:</label></p>
-						<p><label>Font size:</label></p>
-						<p><label><input type="checkbox" /> Show line number</label></p>
-					</div>
-					<div tabIndex="0" ref="rulesSettings" onMouseDown={this.preventBlur} onBlur={this.hideOptions} style={{display: this.state.showRulesSettings ? 'block' : 'none'}} className="shadow w-input-menu-item w-values-settings-dialog">
-						<p><label>Theme:</label></p>
-						<p><label>Font size:</label></p>
-						<p><label><input type="checkbox" /> Show line number</label></p>
-					</div>
 				</div>
 				{this.state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{this.state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{this.state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' ? false : true} modal={this.state.network} /> : ''}
+				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
+					<div className="modal-dialog">
+					  	<div className="modal-content">
+					      <div className="modal-body">
+					      	<EditorSettings />
+					      	<p className="w-editor-settings-box"><label><input type="checkbox" /> Allow multiple choice</label></p>
+					      	<p className="w-editor-settings-box"><label><input type="checkbox" /> Synchronized with the system hosts</label></p>
+					      	<p className="w-editor-settings-box"><a href="javascript:;">Import system hosts to <strong>Default</strong></a></p>
+					      </div>
+					      <div className="modal-footer">
+					        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					</div>
+				</div>
+				<div ref="valuesSettingsDialog" className="modal fade w-values-settings-dialog">
+					<div className="modal-dialog"> 
+				  		<div className="modal-content">
+					      <div className="modal-body">
+						      <EditorSettings />
+					      </div>
+					      <div className="modal-footer">
+					        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+				    </div>
+				</div>
 			</div>
 		);
 	}
