@@ -10,8 +10,8 @@ var EditorSettings = React.createClass({
 				<div className="w-editor-settings">
 					<p>
 				      <label><span className="w-label">Theme:</span> 
-				    	  <select className="form-control">
-								<option selected="selected" value="default">default</option>
+				    	  <select value={this.props.theme} onChange={this.props.onThemeChange} className="form-control">
+								<option value="default">default</option>
 						        <option value="ambiance">ambiance</option>
 						        <option  value="blackboard">blackboard</option>
 						        <option  value="cobalt">cobalt</option>
@@ -35,9 +35,9 @@ var EditorSettings = React.createClass({
 			      </p>
 				  <p>
 					  <label><span className="w-label">Font size:</span>
-						  <select className="form-control">
+						  <select value={this.props.fontSize} onChange={this.props.onFontSizeChange} className="form-control">
 								<option value="13px">13px</option>
-								<option selected="selected" value="14px">14px</option>
+								<option value="14px">14px</option>
 								<option value="16px">16px</option>
 								<option value="18px">18px</option>
 								<option value="20px">20px</option>
@@ -51,7 +51,7 @@ var EditorSettings = React.createClass({
 							</select>
 						</label>
 				  </p>
-				  <p className="w-editor-settings-box"><label><input type="checkbox" /> Show line number</label></p>
+				  <p className="w-editor-settings-box"><label><input checked={this.props.showLineNumber}  onChange={this.props.onLineNumberChange} type="checkbox" /> Show line number</label></p>
 				 </div>
 		);
 	}

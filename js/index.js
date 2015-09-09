@@ -638,28 +638,95 @@ var Index = React.createClass({
 			activeValues: item
 		});
 	},
+	onRulesThemeChange: function(e) {
+		var theme = e.target.value;
+		this.setState({
+			rulesTheme: theme
+		});
+	},
+	onValuesThemeChange: function(e) {
+		var theme = e.target.value;
+		this.setState({
+			valuesTheme: theme
+		});
+	},
+	onRulesFontSizeChange: function(e) {
+		var fontSize = e.target.value;
+		this.setState({
+			rulesFontSize: fontSize
+		});
+	},
+	onValuesFontSizeChange: function(e) {
+		var fontSize = e.target.value;
+		this.setState({
+			valuesFontSize: fontSize
+		});
+	},
+	onRulesLineNumberChange: function(e) {
+		var checked = e.target.checked;
+		this.setState({
+			showRulesLineNumber: checked
+		});
+	},
+	onValuesLineNumberChange: function(e) {
+		var checked = e.target.checked;
+		this.setState({
+			showValuesLineNumber: checked
+		});
+	},
 	render: function() {
-		var name = this.state.name;
+		var state = this.state;
+		var name = state.name;
 		var isNetwork = name === undefined || name == 'network';
 		var isRules = name == 'rules';
 		var isValues = name == 'values';
 		var disabledEditBtn = true;
 		var disabledDeleteBtn = true;
+		var rulesTheme = 'cobalt';
+		var valuesTheme = 'cobalt';
+		var rulesFontSize = '14px';
+		var valuesFontSize = '14px';
+		var showRulesLineNumber = false;
+		var showValuesLineNumber = false;
+		
 		if (isRules) {
-			var data = this.state.rules.data;
+			var data = state.rules.data;
 			for (var i in data) {
 				if (data[i].active) {
 					disabledEditBtn = disabledDeleteBtn = data[i].isDefault;
 					break;
 				}
 			}
+			if (state.rulesTheme) {
+				rulesTheme = state.rulesTheme;
+			}
+			
+			if (state.rulesFontSize) {
+				rulesFontSize = state.rulesFontSize;
+			}
+			
+			if (state.showRulesLineNumber) {
+				showRulesLineNumber = state.showRulesLineNumber;
+			}
+			
 		} else if (isValues) {
-			var data = this.state.values.data;
+			var data = state.values.data;
 			for (var i in data) {
 				if (data[i].active) {
 					disabledEditBtn = disabledDeleteBtn = false;
 					break;
 				}
+			}
+			if (state.valuesTheme) {
+				valuesTheme = state.valuesTheme;
+			}
+			
+			if (state.valuesFontSize) {
+				valuesFontSize = state.valuesFontSize;
+			}
+			
+			if (state.showValuesLineNumber) {
+				showValuesLineNumber = state.showValuesLineNumber;
 			}
 		}
 		
@@ -674,7 +741,7 @@ var Index = React.createClass({
 					<a onClick={this.autoScroll} className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-play"></span>AutoScroll</a>
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
-					<a onClick={this.showEditFilter} className={'w-filter-menu' + (this.state.filterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
+					<a onClick={this.showEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
 					<a onClick={this.clear} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" title="Ctrl[Command]+D"><span className="glyphicon glyphicon-remove"></span>Clear</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.showSettings} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
@@ -683,23 +750,26 @@ var Index = React.createClass({
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem ref="rulesMenuItem" name="Open" options={this.state.rulesOptions} hide={!this.state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.props.onClickOption} />
-					<MenuItem ref="valuesMenuItem" name="Open" options={this.state.valuesOptions} hide={!this.state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.props.onClickOption} />
-					<MenuItem ref="weinreMenuItem" name="Anonymous" options={this.state.weinreOptions} hide={!this.state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (this.state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: this.state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={this.state.filterText || 'string or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
+					<MenuItem ref="rulesMenuItem" name="Open" options={state.rulesOptions} hide={!state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} hide={!state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} hide={!state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
+					<div onMouseDown={this.preventBlur} style={{display: state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={state.filterText || 'string or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
-				{this.state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={this.state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
-				{this.state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={this.state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
-				{this.state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' ? false : true} modal={this.state.network} /> : ''}
+				{state.hasRules ? <List onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{state.hasValues ? <List onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
+				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' ? false : true} modal={state.network} /> : ''}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">
 					      <div className="modal-body">
-					      	<EditorSettings />
+					      	<EditorSettings theme={rulesTheme} fontSize={rulesFontSize} showLineNumber={showRulesLineNumber}
+						      	onThemeChange={this.onRulesThemeChange} 
+						      	onFontSizeChange={this.onRulesFontSizeChange} 
+						      	onLineNumberChange={this.onRulesLineNumberChange} />
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" /> Allow multiple choice</label></p>
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" /> Synchronized with the system hosts</label></p>
 					      	<p className="w-editor-settings-box"><a href="javascript:;">Import system hosts to <strong>Default</strong></a></p>
@@ -714,7 +784,10 @@ var Index = React.createClass({
 					<div className="modal-dialog"> 
 				  		<div className="modal-content">
 					      <div className="modal-body">
-						      <EditorSettings />
+						      <EditorSettings theme={valuesTheme} fontSize={valuesFontSize} showLineNumber={showValuesLineNumber} 
+							      onThemeChange={this.onValuesThemeChange} 
+							      onFontSizeChange={this.onValuesFontSizeChange} 
+							      onLineNumberChange={this.onValuesLineNumberChange} />
 					      </div>
 					      <div className="modal-footer">
 					        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
