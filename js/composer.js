@@ -38,7 +38,6 @@ var Composer = React.createClass({
 		var refs = this.refs;
 		var url = refs.url.getDOMNode().value.trim();
 		if (!url) {
-			alert('Please input the url.');
 			return;
 		}
 		
