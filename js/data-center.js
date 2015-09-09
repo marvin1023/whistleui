@@ -52,7 +52,9 @@ exports.rules = createCgi({
 	setFontSize: '/cgi-bin/rules/set-font-size',
 	setTheme: '/cgi-bin/rules/set-theme',
 	showLineNumbers: '/cgi-bin/rules/show-line-numbers',
-	unselect: '/cgi-bin/rules/unselect'
+	unselect: '/cgi-bin/rules/unselect',
+	allowMultipleChoice: '/cgi-bin/rules/allow-multiple-choice',
+	syncWithSysHosts: '/cgi-bin/rules/sync-with-sys-hosts'
 }, POST_CONF);
 
 exports.log = createCgi({

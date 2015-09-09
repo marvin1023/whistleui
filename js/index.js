@@ -18,7 +18,13 @@ function getPageName() {
 
 var Index = React.createClass({
 	getInitialState: function() {
-		var state = {};
+		var modal = this.props.modal;
+		var rules = modal.rules;
+		var values = modal.values;
+		var state = {
+				allowMultipleChoice: modal.rules.allowMultipleChoice,
+				syncWithSysHosts: modal.rules.syncWithSysHosts
+		};
 		var pageName = getPageName();
 		if (!pageName || pageName.indexOf('rules') != -1) {
 			state.hasRules = true;
@@ -37,9 +43,6 @@ var Index = React.createClass({
 		var valuesOptions = [];
 		var valuesData = {};
 		
-		var modal = this.props.modal;
-		var rules = modal.rules;
-		var values = modal.values;
 		if (rules) {
 			var selectedName = rules.current;
 			var DEFAULT = 'Default';
@@ -686,6 +689,20 @@ var Index = React.createClass({
 			showValuesLineNumbers: checked
 		});
 	},
+	allowMultipleChoice: function(e) {
+		var checked = e.target.checked;
+		dataCenter.rules.allowMultipleChoice({allowMultipleChoice: checked ? 1 : 0});
+		this.setState({
+			allowMultipleChoice: checked
+		});
+	},
+	syncWithSysHosts: function(e) {
+		var checked = e.target.checked;
+		dataCenter.rules.syncWithSysHosts({syncWithSysHosts: checked ? 1 : 0});
+		this.setState({
+			syncWithSysHosts: checked
+		});
+	},
 	render: function() {
 		var state = this.state;
 		var name = state.name;
@@ -782,8 +799,8 @@ var Index = React.createClass({
 						      	onThemeChange={this.onRulesThemeChange} 
 						      	onFontSizeChange={this.onRulesFontSizeChange} 
 						      	onLineNumberChange={this.onRulesLineNumberChange} />
-					      	<p className="w-editor-settings-box"><label><input type="checkbox" /> Allow multiple choice</label></p>
-					      	<p className="w-editor-settings-box"><label><input type="checkbox" /> Synchronized with the system hosts</label></p>
+					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.allowMultipleChoice} onChange={this.allowMultipleChoice} /> Allow multiple choice</label></p>
+					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.syncWithSysHosts} onChange={this.syncWithSysHosts} /> Synchronized with the system hosts</label></p>
 					      	<p className="w-editor-settings-box"><a href="javascript:;">Import system hosts to <strong>Default</strong></a></p>
 					      </div>
 					      <div className="modal-footer">
