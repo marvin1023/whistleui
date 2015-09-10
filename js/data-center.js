@@ -62,7 +62,7 @@ exports.rules = createCgi({
 	getSysHosts: '/cgi-bin/rules/get-sys-hosts'
 }, POST_CONF);
 
-window.log = exports.log = createCgi({
+exports.log = createCgi({
 	set: '/cgi-bin/log/set'
 }, POST_CONF);
 
