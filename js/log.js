@@ -9,108 +9,38 @@ var Log = React.createClass({
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	render: function() {
-		
+		var text = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\nbbbbb\r\nccccc\r\ndddddd';
 		return (
 				<div  className={'fill orient-vertical-box w-detail-content w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<ul>
-						<li className="fatal">
-							<h5>Level: FATAL</h5>
-							<h5>Date: xxxxxx</h5>
-							<h5>Source:</h5>
+						<li className="w-fatal">
+							<label className="w-level">Fatal</label>
 							<pre>
-								xxxxxx
-							</pre>
-							<h5>Message:</h5>
-							<pre>
-								mmmmmmm
-							</pre>
-							<h5>stack:</h5>
-							<pre>
-								ssssssssssssssss
-							</pre>
-							<h5>UA:</h5>
-							<pre>
-								xxxxxx
+								{text}
 							</pre>
 						</li>
-						<li className="error">
-							<h5>Level: ERROR</h5>
-							<h5>Date: xxxxxx</h5>
-							<h5>Source:</h5>
+						<li className="w-error">
+							<label className="w-level">Error</label>
 							<pre>
-								xxxxxx
-							</pre>
-							<h5>Message:</h5>
-							<pre>
-								mmmmmmm
-							</pre>
-							<h5>stack:</h5>
-							<pre>
-								ssssssssssssssss
-							</pre>
-							<h5>UA:</h5>
-							<pre>
-								xxxxxx
+								{text}
 							</pre>
 						</li>
-						<li className="warn">
-							<h5>Level: WARN</h5>
-							<h5>Date: xxxxxx</h5>
-							<h5>Source:</h5>
+						<li className="w-warn">
+							<label className="w-level">Warn</label>
 							<pre>
-								xxxxxx
-							</pre>
-							<h5>Message:</h5>
-							<pre>
-								mmmmmmm
-							</pre>
-							<h5>stack:</h5>
-							<pre>
-								ssssssssssssssss
-							</pre>
-							<h5>UA:</h5>
-							<pre>
-								xxxxxx
+								{text}
 							</pre>
 						</li>
-						<li className="info">
-							<h5>Level: INFO</h5>
-							<h5>Date: xxxxxx</h5>
-							<h5>Source:</h5>
+						<li className="w-info">
+							<label className="w-level">Info</label>
 							<pre>
-								xxxxxx
-							</pre>
-							<h5>Message:</h5>
-							<pre>
-								mmmmmmm
-							</pre>
-							<h5>stack:</h5>
-							<pre>
-								ssssssssssssssss
-							</pre>
-							<h5>UA:</h5>
-							<pre>
-								xxxxxx
+								{text}
 							</pre>
 						</li>
-						<li className="debug">
-							<h5>Level: DEBUG</h5>
-							<h5>Date: xxxxxx</h5>
-							<h5>Source:</h5>
+						<li className="w-debug">
+							<label className="w-level">Debug</label>
 							<pre>
-								xxxxxx
-							</pre>
-							<h5>Message:</h5>
-							<pre>
-								mmmmmmm
-							</pre>
-							<h5>stack:</h5>
-							<pre>
-								ssssssssssssssss
-							</pre>
-							<h5>UA:</h5>
-							<pre>
-								xxxxxx
+								{text}
 							</pre>
 						</li>
 					</ul>

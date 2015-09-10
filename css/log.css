@@ -1,9 +1,10 @@
 .w-detail-log ul, .w-detail-log li {list-style: none; padding: 0; margin: 0; display: block; width: 100%; font-size: 12px;}
-.w-detail-log li {border-bottom: 1px solid #ccc; width: 100%; padding: 1px 0;}
-.w-detail-log h5 {padding-left: 10px; font-size: 12px}
+.w-detail-log li {border-bottom: 1px solid #ccc; width: 100%; padding: 1px 0; position: relative;}
+.w-detail-log li .w-level { display: none; width: 42px; line-height: 1.5; text-align: center; background: #eee; position: absolute; top: 2px; right: 2px; border-radius: 1px;}
+.w-detail-log li:hover .w-level {display: block;}
 .w-detail-log pre {background: none; border: none; padding: 0 10px 0 20px; font-size: 12px}
-.w-detail-log li.fatal {background: #bbb;}
-.w-detail-log li.error {background: #f2dede;}
-.w-detail-log li.warn {background: #fee;}
-.w-detail-log li.info {background: #f5f5f5;}
-.w-detail-log li.debug {background: #fff;}
+.w-detail-log li.w-fatal {background: #bbb;}
+.w-detail-log li.w-error {background: #fbaaaa;}
+.w-detail-log li.w-warn {background: #f2dede;}
+.w-detail-log li.w-info {background: #f5f5f5;}
+.w-detail-log li.w-debug {background: #fff;}
