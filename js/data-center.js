@@ -203,6 +203,7 @@ exports.on = function(type, callback) {
 		if (typeof callback == 'function') {
 			dataCallbacks.push(callback);
 			startLoadData();
+			callback(networkModal);
 		}
 	} else if (type == 'serverInfo') {
 		if (typeof callback == 'function') {
@@ -213,6 +214,7 @@ exports.on = function(type, callback) {
 		if (typeof callback == 'function') {
 			logCallbacks.push(callback);
 			startLoadData();
+			callback(logList);
 		}
 	}
 };
