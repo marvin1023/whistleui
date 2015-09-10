@@ -62,7 +62,7 @@ exports.rules = createCgi({
 	getSysHosts: '/cgi-bin/rules/get-sys-hosts'
 }, POST_CONF);
 
-exports.log = createCgi({
+window.log = exports.log = createCgi({
 	set: '/cgi-bin/log/set'
 }, POST_CONF);
 
@@ -187,14 +187,14 @@ function startLoadLog() {
 	function load() {
 		var lastLog = logList[logList.length - 1];
 		cgi.getLog({
-			startTime: lastLog ? lastLog.id : Date.now(),
+			startTime: lastLog ? lastLog.id : null,
 			count: 60
 		}, function(data) {
 			setTimeout(load, 2000);
 			if (data && data.length) {
-				dataList.push.apply(dataList, data);
+				logList.push.apply(logList, data);
 				$.each(logCallbacks, function() {
-					this(dataList);
+					this(logList);
 				});
 			}
 			

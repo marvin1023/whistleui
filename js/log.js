@@ -6,8 +6,13 @@ var dataCenter = require('./data-center');
 
 var Log = React.createClass({
 	componentDidMount: function() {
+		var self = this;
 		dataCenter.on('log', function(data) {
-			this.setState({logs: data});
+			var len = data.length - 120;
+			if (len > 0) {
+				data.splice(0, len);
+			}
+			self.setState({logs: data});
 		});
 	},
 	shouldComponentUpdate: function(nextProps) {
