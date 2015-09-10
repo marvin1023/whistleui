@@ -5,7 +5,9 @@ var	MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 10000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
+var logCallbacks = [];
 var dataList = [];
+var logList = [];
 var networkModal = new NetworkModal(dataList);
 var curServerInfo;
 var initialData;
@@ -18,6 +20,7 @@ var DEFAULT_CONF = {
 var POST_CONF = $.extend({type: 'post'}, DEFAULT_CONF);
 var GET_CONF = $.extend({cache: false}, DEFAULT_CONF);
 var cgi = createCgi({
+	getLog: '/cgi-bin/log/get',
 	getData: '/cgi-bin/get-data',
 	getServerInfo: '/cgi-bin/server-info',
 	getInitaial: '/cgi-bin/init'
@@ -60,12 +63,8 @@ exports.rules = createCgi({
 }, POST_CONF);
 
 exports.log = createCgi({
-	get: '/cgi-bin/log/get',
-	set: {
-		type: 'post',
-		url: '/cgi-bin/log/set'
-	}
-}, GET_CONF);
+	set: '/cgi-bin/log/set'
+}, POST_CONF);
 
 $.extend(exports, createCgi({
 	composer: '/cgi-bin/composer',
@@ -180,6 +179,30 @@ function startLoadServerInfo() {
 	load();
 }
 
+function startLoadLog() {
+	if (logList.length) {
+		return;
+	}
+	
+	function load() {
+		var lastLog = logList[logList.length - 1];
+		cgi.getLog({
+			startTime: lastLog ? lastLog.id : Date.now(),
+			count: 60
+		}, function(data) {
+			setTimeout(load, 2000);
+			if (data && data.length) {
+				dataList.push.apply(dataList, data);
+				$.each(logCallbacks, function() {
+					this(dataList);
+				});
+			}
+			
+		});
+	}
+	load();
+} 
+
 exports.on = function(type, callback) {
 	if (type == 'data') {
 		if (typeof callback == 'function') {
@@ -190,6 +213,11 @@ exports.on = function(type, callback) {
 		if (typeof callback == 'function') {
 			startLoadServerInfo();
 			serverInfoCallbacks.push(callback);
+		}
+	} else if (type == 'log') {
+		if (typeof callback == 'function') {
+			startLoadLog();
+			logCallbacks.push(callback);
 		}
 	}
 };

@@ -2,8 +2,14 @@ require('./base-css.js');
 require('../css/log.css');
 var React = require('react');
 var util = require('./util');
+var dataCenter = require('./data-center');
 
 var Log = React.createClass({
+	componentDidMount: function() {
+		dataCenter.on('log', function(data) {
+			console.log(data)
+		});
+	},
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
