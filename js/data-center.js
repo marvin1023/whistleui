@@ -54,7 +54,9 @@ exports.rules = createCgi({
 	showLineNumbers: '/cgi-bin/rules/show-line-numbers',
 	unselect: '/cgi-bin/rules/unselect',
 	allowMultipleChoice: '/cgi-bin/rules/allow-multiple-choice',
-	syncWithSysHosts: '/cgi-bin/rules/sync-with-sys-hosts'
+	syncWithSysHosts: '/cgi-bin/rules/sync-with-sys-hosts',
+	setSysHosts: '/cgi-bin/rules/set-sys-hosts',
+	getSysHosts: '/cgi-bin/rules/get-sys-hosts'
 }, POST_CONF);
 
 exports.log = createCgi({

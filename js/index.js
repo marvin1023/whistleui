@@ -703,6 +703,23 @@ var Index = React.createClass({
 			syncWithSysHosts: checked
 		});
 	},
+	importSysHosts: function() {
+		var self = this;
+		var defaultRules = self.state.rules.data['Default'];
+		if (!(defaultRules.value || '').trim() || confirm('Confirm overwrite the original Default data?')) {
+			dataCenter.rules.getSysHosts(function(data) {
+				if (data.ec !== 0) {
+					alert(data.em);
+					return;
+				}
+				defaultRules.changed = true;
+				defaultRules.active = true;
+				defaultRules.value = data.hosts;
+				self.setState({});
+			});
+		}
+		
+	},
 	render: function() {
 		var state = this.state;
 		var name = state.name;
@@ -801,7 +818,7 @@ var Index = React.createClass({
 						      	onLineNumberChange={this.onRulesLineNumberChange} />
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.allowMultipleChoice} onChange={this.allowMultipleChoice} /> Allow multiple choice</label></p>
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.syncWithSysHosts} onChange={this.syncWithSysHosts} /> Synchronized with the system hosts</label></p>
-					      	<p className="w-editor-settings-box"><a href="javascript:;">Import system hosts to <strong>Default</strong></a></p>
+					      	<p className="w-editor-settings-box"><a onClick={this.importSysHosts} href="javascript:;">Import system hosts to <strong>Default</strong></a></p>
 					      </div>
 					      <div className="modal-footer">
 					        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
