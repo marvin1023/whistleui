@@ -473,7 +473,7 @@ var Index = React.createClass({
 		var self = this;
 		dataCenter.rules[item.isDefault ? 'enableDefault' : 'select'](item, function(data) {
 			if (data && data.ec === 0) {
-				self.setSelected(self.state.rules, item.name);
+				self.reselectRules(data);
 			} else {
 				util.showSystemError();
 			}
@@ -484,12 +484,20 @@ var Index = React.createClass({
 		var self = this;
 		dataCenter.rules[item.isDefault ? 'disableDefault' : 'unselect'](item, function(data) {
 			if (data && data.ec === 0) {
-				self.setSelected(self.state.rules, item.name, false);
+				self.reselectRules(data);
 			} else {
 				util.showSystemError();
 			}
 		});
 		return false;
+	},
+	reselectRules: function(data) {
+		var self = this;
+		self.state.rules.clearAllSelected();
+		self.setSelected(self.state.rules, 'Default', !data.defaultRulesIsDisabled);
+		data.list.forEach(function(name) {
+			self.setSelected(self.state.rules, name);
+		});
 	},
 	saveValues: function(item) {
 		if (!item.changed) {

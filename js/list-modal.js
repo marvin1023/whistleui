@@ -107,6 +107,13 @@ proto.clearAllActive = function() {
 	});
 };
 
+proto.clearAllSelected = function() {
+	var data = this.data;
+	Object.keys(data).forEach(function(name) {
+		data[name].selected = false;
+	});
+};
+
 proto.setActive = function(name, active) {
 	var item = this.get(name);
 	if (item) {
