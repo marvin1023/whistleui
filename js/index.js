@@ -705,17 +705,21 @@ var Index = React.createClass({
 	},
 	importSysHosts: function() {
 		var self = this;
-		var defaultRules = self.state.rules.data['Default'];
+		var modal = self.state.rules;
+		var defaultRules = modal.data['Default'];
 		if (!(defaultRules.value || '').trim() || confirm('Confirm overwrite the original Default data?')) {
 			dataCenter.rules.getSysHosts(function(data) {
 				if (data.ec !== 0) {
 					alert(data.em);
 					return;
 				}
+				
+				modal.setActive('Default');
 				defaultRules.changed = true;
-				defaultRules.active = true;
 				defaultRules.value = data.hosts;
-				self.setState({});
+				self.setState({}, function() {
+					self.refs.rules.refs.list.getDOMNode().scrollTop = 0;
+				});
 			});
 		}
 		
@@ -805,7 +809,7 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={state.filterText || 'string or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
-				{state.hasRules ? <List theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{state.hasRules ? <List ref="rules" theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' ? false : true} modal={state.network} /> : ''}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
