@@ -14,7 +14,7 @@ var Log = React.createClass({
 		dataCenter.on('log', function(data) {
 			var atBottom = scrollAtBottom();
 			if (atBottom) {
-				var len = data.length - 110;
+				var len = data.length - 119;
 				if (len > 0) {
 					data.splice(0, len);
 				}
