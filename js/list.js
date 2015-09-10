@@ -40,28 +40,32 @@ var List = React.createClass({
 			}
 			
 			if (item) {
-				self.onClick(item, true);
+				self.onClick(item);
 				e.preventDefault();
 			}
 		});
-		
-		var activeItem = modal.getActive();
-		if (activeItem) {
-			util.ensureVisible(self.refs[activeItem.name].getDOMNode(), listCon);
-		}
+		this.ensureVisible();
 	},
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
-	onClick: function(item, hm) {
+	componentDidUpdate: function() {
+		this.ensureVisible();
+	},
+	ensureVisible: function() {
+		var activeItem = this.props.modal.getActive();
+		if (activeItem) {
+			util.ensureVisible(this.refs[activeItem.name].getDOMNode(), this.refs.list.getDOMNode());
+		}
+	},
+	onClick: function(item) {
 		var self = this;
 		if (typeof self.props.onActive != 'function' ||
 				self.props.onActive(item) !== false) {
 			self.props.modal.setActive(item.name);
 			self.setState({activeItem: item});
 		}
-		hm && util.ensureVisible(self.refs[item.name].getDOMNode(), self.refs.list.getDOMNode());
 	},
 	onDoubleClick: function(item, okIcon) {
 		item.selected && !item.changed || okIcon ? this.onUnselect(item) : this.onSelect(item);
