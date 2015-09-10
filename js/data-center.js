@@ -185,9 +185,16 @@ function startLoadLog() {
 	}
 	
 	function load() {
-		var lastLog = logList[logList.length - 1];
+		var len = logList.length;
+		var startTime = -1;
+		if (!len) {
+			startTime = null;
+		} else if (len < 120) {
+			startTime = logList[len - 1].id;
+		}
+		
 		cgi.getLog({
-			startTime: lastLog ? lastLog.id : null,
+			startTime: startTime,
 			count: 60
 		}, function(data) {
 			setTimeout(load, 2000);
