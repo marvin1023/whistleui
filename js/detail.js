@@ -47,12 +47,16 @@ var ReqData = React.createClass({
 		events.on('showOverview', function() {
 			self.toggleTab(TABS[0]);
 		}).on('composer', function() {
-			self.toggleTab(TABS[4]);
+			var modal = self.props.modal;
+			self.state.activeItem = modal && modal.getActive();
+			self.toggleTab(TABS[4], function() {
+				events.trigger('setComposer');
+			});
 		});
 	},
-	toggleTab: function(tab) {
+	toggleTab: function(tab, callback) {
 		this.selectTab(tab);
-		this.setState({tab: tab});
+		this.setState({tab: tab}, callback);
 	}, 
 	selectTab: function(tab) {
 		TABS.forEach(function(tab) {
@@ -83,7 +87,7 @@ var ReqData = React.createClass({
 				{this.state.initedRequest ? <ReqDetail modal={activeItem} hide={name != TABS[1].name} /> : ''}
 				{this.state.initedResponse ? <ResDetail modal={activeItem} hide={name != TABS[2].name} /> : ''}
 				{this.state.initedTimeline ? <Timeline modal={modal} hide={name != TABS[3].name} /> : ''}
-				{this.state.initedComposer ? <Composer modal={activeItem} hide={name != TABS[4].name} /> : ''}
+				{this.state.initedComposer ? <Composer modal={this.state.activeItem} hide={name != TABS[4].name} /> : ''}
 				{this.state.initedLog ? <Log hide={name != TABS[5].name} /> : ''}
 			</div>
 		);

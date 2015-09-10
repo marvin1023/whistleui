@@ -10,7 +10,7 @@ var Composer = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		self.update(self.props.modal);
-		events.on('composer', function() {
+		events.on('setComposer', function() {
 			var activeItem = self.props.modal;
 			activeItem && self.setState({
 				data: activeItem
