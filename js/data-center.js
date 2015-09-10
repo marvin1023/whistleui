@@ -93,14 +93,33 @@ function startLoadData() {
 	function load() {
 		var pendingIds = getPendingIds();
 		var startTime = getStartTime();
+		var len = logList.length;
+		var startLogTime = -1;
+		if (!len) {
+			startLogTime = null;
+		} else if (len < 120) {
+			startLogTime = logList[len - 1].id;
+		}
 		
 		cgi.getData({
+			startLogTime: startLogTime,
 			ids: pendingIds.join(),
 			startTime: startTime,
 			count: 60
 		}, function(data) {
 			setTimeout(load, 800);
-			if (!data || (!data.ids.length && !data.newIds.length)) {
+			if (!data || data.ec !== 0) {
+				return;
+			}
+			if (data.log) {
+				logList.push.apply(logList, data.log);
+				$.each(logCallbacks, function() {
+					this(logList);
+				});
+			}
+			
+			data = data.data;
+			if (!data.ids.length && !data.newIds.length) {
 				return;
 			}
 			var ids = data.newIds;
@@ -179,37 +198,6 @@ function startLoadServerInfo() {
 	load();
 }
 
-function startLoadLog() {
-	if (logList.length) {
-		return;
-	}
-	
-	function load() {
-		var len = logList.length;
-		var startTime = -1;
-		if (!len) {
-			startTime = null;
-		} else if (len < 120) {
-			startTime = logList[len - 1].id;
-		}
-		
-		cgi.getLog({
-			startTime: startTime,
-			count: 60
-		}, function(data) {
-			setTimeout(load, 2000);
-			if (data && data.length) {
-				logList.push.apply(logList, data);
-				$.each(logCallbacks, function() {
-					this(logList);
-				});
-			}
-			
-		});
-	}
-	load();
-} 
-
 exports.on = function(type, callback) {
 	if (type == 'data') {
 		if (typeof callback == 'function') {
@@ -218,13 +206,13 @@ exports.on = function(type, callback) {
 		}
 	} else if (type == 'serverInfo') {
 		if (typeof callback == 'function') {
-			startLoadServerInfo();
 			serverInfoCallbacks.push(callback);
+			startLoadServerInfo();
 		}
 	} else if (type == 'log') {
 		if (typeof callback == 'function') {
-			startLoadLog();
 			logCallbacks.push(callback);
+			startLoadData();
 		}
 	}
 };
