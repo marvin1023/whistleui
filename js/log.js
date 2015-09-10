@@ -22,10 +22,10 @@ var Log = React.createClass({
 						{logs.map(function(log) {
 							
 							return (
-								<li className={'w-' + log.level}>
+								<li key={log.id} className={'w-' + log.level}>
 									<label className="w-level">{log.level}</label>
 									<pre>
-										{(new Date(log.date)).toLocaleString() + '\r\n' + log.text}
+										{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
 									</pre>
 								</li>		
 							);
