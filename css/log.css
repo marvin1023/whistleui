@@ -9,4 +9,3 @@
 .w-detail-log-bar {position: fixed; z-index: 1; border-radius: 2px; right: 12px; font-size: 12px; top: 60px; white-space: nowrap; line-height: 1.5; background: #eee;}
 .w-detail-log-bar a {display: inline-block; text-decoration: none; color: #000; padding: 0 5px;}
 .w-detail-log-bar a:hover {color: #337ab7;}
-.w-detail-log-bar .w-auto-scroll-log {margin-right: 5px;}

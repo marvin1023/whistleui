@@ -66,7 +66,7 @@ var Log = React.createClass({
 						{logs.map(function(log) {
 							
 							return (
-								<li key={log.id} className={'w-' + log.level}>
+								<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level}>
 									<pre>
 										{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
 									</pre>
