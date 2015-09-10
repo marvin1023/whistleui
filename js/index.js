@@ -333,7 +333,7 @@ var Index = React.createClass({
 		
 		dataCenter.values.add({name: name}, function(data) {
 			if (data && data.ec === 0) {
-				modal.add(name);
+				var item = modal.add(name);
 				self.setValuesActive(name);
 				target.value = '';
 				target.blur();
