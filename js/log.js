@@ -27,15 +27,22 @@ var Log = React.createClass({
 			});
 		});
 		
-		$(container).on('click', '.w-level', function() {
-			container.scrollTop = content.offsetHeight;
-		}).on('scroll', function() {
+		$(container).on('scroll', function() {
 			var data = self.state.logs;
 			if (data && scrollAtBottom()) {
 				var len = data.length - 110;
 				if (len > 0) {
 					data.splice(0, len);
+					self.setState({logs: data});
 				}
+			}
+		}).on('click', '.w-auto-scroll-log', function() {
+			container.scrollTop = content.offsetHeight;
+		}).on('click', '.w-clear-log', function() {
+			var data = self.state.logs;
+			if (data) {
+				data.splice(0, data.length);
+				self.setState({logs: data});
 			}
 		});
 		
@@ -51,12 +58,15 @@ var Log = React.createClass({
 		var logs = this.state && this.state.logs || [];
 		return (
 				<div ref="container" className={'fill orient-vertical-box w-detail-content w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+					<div style={{display: logs.length ? 'block' : 'none'}} className="w-detail-log-bar">
+						<a className="w-auto-scroll-log" href="javascript:;">AutoScroll</a>
+						<a className="w-clear-log" href="javascript:;">Clear</a>
+					</div>
 					<ul ref="content">
 						{logs.map(function(log) {
 							
 							return (
 								<li key={log.id} className={'w-' + log.level}>
-									<label className="w-level" title="Auto scroll">{log.level}<span className="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></label>
 									<pre>
 										{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
 									</pre>
