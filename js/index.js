@@ -723,7 +723,7 @@ var Index = React.createClass({
 				}
 				
 				modal.setActive('Default');
-				defaultRules.changed = defaultRules.value != data.hosts;
+				defaultRules.changed = !data.selected || defaultRules.value != data.hosts;
 				defaultRules.value = data.hosts;
 				self.activeRules(defaultRules);
 				self.setState({}, function() {
