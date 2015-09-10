@@ -111,7 +111,7 @@ function startLoadData() {
 			if (!data || data.ec !== 0) {
 				return;
 			}
-			if (data.log) {
+			if (data.log.length) {
 				logList.push.apply(logList, data.log);
 				$.each(logCallbacks, function() {
 					this(logList);
@@ -206,8 +206,8 @@ exports.on = function(type, callback) {
 		}
 	} else if (type == 'serverInfo') {
 		if (typeof callback == 'function') {
-			serverInfoCallbacks.push(callback);
 			startLoadServerInfo();
+			serverInfoCallbacks.push(callback);
 		}
 	} else if (type == 'log') {
 		if (typeof callback == 'function') {
