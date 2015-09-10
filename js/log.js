@@ -7,7 +7,7 @@ var dataCenter = require('./data-center');
 var Log = React.createClass({
 	componentDidMount: function() {
 		dataCenter.on('log', function(data) {
-			console.log(data)
+			this.setState({logs: data});
 		});
 	},
 	shouldComponentUpdate: function(nextProps) {
@@ -15,40 +15,21 @@ var Log = React.createClass({
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	render: function() {
-		var text = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\nbbbbb\r\nccccc\r\ndddddd';
+		var logs = this.state && this.state.logs || [];
 		return (
 				<div  className={'fill orient-vertical-box w-detail-content w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<ul>
-						<li className="w-fatal">
-							<label className="w-level">Fatal</label>
-							<pre>
-								{text}
-							</pre>
-						</li>
-						<li className="w-error">
-							<label className="w-level">Error</label>
-							<pre>
-								{text}
-							</pre>
-						</li>
-						<li className="w-warn">
-							<label className="w-level">Warn</label>
-							<pre>
-								{text}
-							</pre>
-						</li>
-						<li className="w-info">
-							<label className="w-level">Info</label>
-							<pre>
-								{text}
-							</pre>
-						</li>
-						<li className="w-debug">
-							<label className="w-level">Debug</label>
-							<pre>
-								{text}
-							</pre>
-						</li>
+						{logs.map(function(log) {
+							
+							return (
+								<li className={'w-' + log.level}>
+									<label className="w-level">{log.level}</label>
+									<pre>
+										{(new Date(log.date)).toLocaleString() + '\r\n' + log.text}
+									</pre>
+								</li>		
+							);
+						})}
 					</ul>
 			</div>
 		);
