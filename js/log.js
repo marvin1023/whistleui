@@ -1,5 +1,6 @@
 require('./base-css.js');
 require('../css/log.css');
+var $ = require('jquery');
 var React = require('react');
 var util = require('./util');
 var dataCenter = require('./data-center');
@@ -25,6 +26,10 @@ var Log = React.createClass({
 				}
 			});
 		});
+		
+		$(container).on('click', '.w-level', function() {
+			container.scrollTop = content.offsetHeight;
+		});
 	},
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
@@ -39,7 +44,7 @@ var Log = React.createClass({
 							
 							return (
 								<li key={log.id} className={'w-' + log.level}>
-									<label className="w-level">{log.level}</label>
+									<label className="w-level" title="Auto scroll">{log.level}<span className="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></label>
 									<pre>
 										{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
 									</pre>
