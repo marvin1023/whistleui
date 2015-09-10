@@ -247,7 +247,7 @@ exports.stringify = function(str) {
 	str = RegExp.$1;
 	try {
 		str = JSON.parse(str);
-		return str ? JSON.stringify(str, null, '    ') : '';
+		return str ? JSON.stringify(str, null, '\t') : '';
 	} catch(e) {}
 	
 	return '';
