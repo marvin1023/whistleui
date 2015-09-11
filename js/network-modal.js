@@ -225,17 +225,6 @@ proto.setSelectedList = function(startId, endId) {
 	}
 };
 
-proto.getChangedList = function() {
-	var list = [];
-	this.list.forEach(function(item) {
-		if (item.changed) {
-			list.push(item);
-		}
-	});
-	
-	return list;
-};
-
 proto.clearSelection = function() {
 	this.list.forEach(function(item) {
 		item.selected = false;

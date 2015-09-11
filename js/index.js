@@ -139,6 +139,13 @@ var Index = React.createClass({
 			self.autoScroll && self.autoScroll();
 		});
 	},
+	parseWeinreFromRules: function() {
+		var modal = this.state.rules;
+		modal.
+	},
+	parseValuesFromRules: function() {
+		
+	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();
 	},
