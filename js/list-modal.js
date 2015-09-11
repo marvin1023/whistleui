@@ -121,6 +121,7 @@ proto.setActive = function(name, active) {
 		active && this.clearAllActive();
 		item.active = active;
 	}
+	return item;
 };
 
 proto.getActive = function() {

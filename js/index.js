@@ -276,6 +276,28 @@ var Index = React.createClass({
 		});
 		location.hash = 'rules';
 	},
+	showAndActiveValues: function(item) {
+		var self = this;
+		var modal = self.state.values;
+		var name = item.name;
+		if (!modal.exists(name)) {
+			dataCenter.values.add({name: name}, function(data) {
+				if (data && data.ec === 0) {
+					var item = modal.add(name);
+					self.setValuesActive(name);
+					self.setState({
+						activeValues: item
+					});
+				} else {
+					util.showSystemError();
+				}
+			});
+		} else {
+			self.setValuesActive(name);
+		}
+		
+		this.showValues();
+	},
 	showValues: function() {
 		if (this.state.name == 'values') {
 			return;
@@ -924,7 +946,7 @@ var Index = React.createClass({
 					<About />
 					<Online />
 					<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} hide={!state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.onClickRulesOption} onDoubleClickOption={this.showAndActiveRules} />
-					<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} hide={!state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.showValues} />
+					<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} hide={!state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} hide={!state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
