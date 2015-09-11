@@ -211,7 +211,11 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 		var value = pair.slice(1).join('=');
 		if (key || value) {
 			try {
-				value = decode ? decode(value) : value;
+				var val = value;
+				if (decode == decodeURIComponent) {
+					val = value.replace(/\+/g, '%20');
+				}
+				value = decode ? decode(val) : value;
 			} catch(e) {}
 			
 			result[key] = value;
