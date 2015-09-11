@@ -255,6 +255,26 @@ exports.stringify = function(str) {
 	return '';
 };
 
+exports.unique = function(arr, reverse) {
+	var result = [];
+	if (reverse) {
+		for (var i = arr.length - 1; i >= 0; i--) {
+			var item = arr[i];
+			if (result.indexOf(item) == -1) {
+				result.unshift(item);
+			}
+		}
+	} else {
+		arr.forEach(function(item) {
+			if (result.indexOf(item) == -1) {
+				result.push(item);
+			}
+		});
+	}
+	
+	return result;
+};
+
 exports.getFilename = function(url) {
 	url = removeProtocol(url.replace(/[?#].*/, ''));
 	var index = url.lastIndexOf('/');

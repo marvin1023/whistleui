@@ -169,7 +169,7 @@ var Index = React.createClass({
 				}
 				var key = getKey(weinre);
 				if (key !== false) {
-					key = values[key];
+					key = values.get(key);
 					return key && key.value;
 				}
 				
@@ -178,15 +178,17 @@ var Index = React.createClass({
 				return !!weinre;
 			});
 		}
+		
 		return text;
 	},
 	getValuesFromRules: function() {
 		var values = this.state.values;
 		var text = ' ' + this.getAllRulesValue();
-		if (text = text.match(/\s[\w-]:\/\/\{[^\s#]+\}/g)) {
+		if (text = text.match(/\s(?:[\w-]+:\/\/)?\{[^\s#]+\}/g)) {
 			text = text.map(function(key) {
-				
-				return util.removeProtocol(weinre);;
+				return getKey(util.removeProtocol(key.trim()));
+			}).filter(function(key) {
+				return !!key;
 			});
 		}
 		return text;
@@ -295,13 +297,29 @@ var Index = React.createClass({
 	},
 	showValuesOptions: function() {
 		var self = this;
+		var valuesList = this.state.values.list;
+		var list = self.getValuesFromRules() || [];
+		list.push.apply(list, valuesList);
+		list = util.unique(list, true);
+		self.state.valuesOptions = list.map(function(name) {
+			return {
+				name: name,
+				icon: valuesList.indexOf(name) == -1 ? 'plus' : 'edit'
+			};
+		});
 		self.setMenuOptionsState('showValuesOptions', function() {
 			self.refs.valuesMenuItem.getDOMNode().focus();
 		});
 	},
 	showWeinreOptions: function() {
 		var self = this;
-		//self.state.weinreOptions = self.getWeinreFromRules();
+		var list = self.state.weinreOptions = self.getWeinreFromRules() || [];
+		self.state.weinreOptions = util.unique(list).map(function(name) {
+			return {
+				name: name,
+				icon: 'globe'
+			};
+		});
 		self.setMenuOptionsState('showWeinreOptions', function() {
 			self.refs.weinreMenuItem.getDOMNode().focus();
 		});
