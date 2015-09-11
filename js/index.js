@@ -262,7 +262,7 @@ var Index = React.createClass({
 		location.hash = 'network';
 	},
 	showAndActiveRules: function(item) {
-		this.state.rules.setActive(item.name);
+		this.setRulesActive(item.name);
 		this.showRules();
 	},
 	showRules: function() {
