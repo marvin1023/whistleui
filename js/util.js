@@ -213,7 +213,7 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 			try {
 				var val = value;
 				if (decode == decodeURIComponent) {
-					val = value.replace(/\+/g, '%20');
+					val = value.replace(/\+/g, ' ');
 				}
 				value = decode ? decode(val) : value;
 			} catch(e) {}
