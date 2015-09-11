@@ -233,6 +233,8 @@ function removeProtocol(url) {
 	return index == -1 ? url : url.substring(index + 3);
 }
 
+exports.removeProtocol = removeProtocol;
+
 exports.getPath = function(url) {
 	url = removeProtocol(url);
 	var index = url.indexOf('/');

@@ -16,6 +16,24 @@ function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
 }
 
+function getKey(url) {
+	if (url.indexOf('{') == 0) {
+		var index = url.lastIndexOf('}');
+		return index > 1 && url.substring(1, index);
+	}
+	
+	return false;
+}
+
+function getValue(url) {
+	if (url.indexOf('(') == 0) {
+		var index = url.lastIndexOf(')');
+		return index != -1 && url.substring(1, index) || '';
+	}
+	
+	return false;
+}
+
 var Index = React.createClass({
 	getInitialState: function() {
 		var modal = this.props.modal;
@@ -139,12 +157,49 @@ var Index = React.createClass({
 			self.autoScroll && self.autoScroll();
 		});
 	},
-	parseWeinreFromRules: function() {
-		var modal = this.state.rules;
-		modal.
+	getWeinreFromRules: function() {
+		var values = this.state.values;
+		var text = ' ' + this.getAllRulesValue();
+		if (text = text.match(/\s?weinre:\/\/[^\s#]+/g)) {
+			text = text.map(function(weinre) {
+				weinre = util.removeProtocol(weinre);
+				var value = getValue(weinre);
+				if (value !== false) {
+					return value;
+				}
+				var key = getKey(weinre);
+				if (key !== false) {
+					key = values[key];
+					return key && key.value;
+				}
+				
+				return weinre;
+			}).filter(function(weinre) {
+				return !!weinre;
+			});
+		}
+		return text;
 	},
-	parseValuesFromRules: function() {
-		
+	getValuesFromRules: function() {
+		var values = this.state.values;
+		var text = ' ' + this.getAllRulesValue();
+		if (text = text.match(/\s[\w-]:\/\/\{[^\s#]+\}/g)) {
+			text = text.map(function(key) {
+				
+				return util.removeProtocol(weinre);;
+			});
+		}
+		return text;
+	},
+	getAllRulesValue: function() {
+		var result = [];
+		var modal = this.state.rules;
+		var data = modal.data;
+		modal.list.forEach(function(name) {
+			var value = data[name].value;
+			value && result.push(value);
+		});
+		return result.join('\r\n');
 	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();
@@ -246,6 +301,7 @@ var Index = React.createClass({
 	},
 	showWeinreOptions: function() {
 		var self = this;
+		//self.state.weinreOptions = self.getWeinreFromRules();
 		self.setMenuOptionsState('showWeinreOptions', function() {
 			self.refs.weinreMenuItem.getDOMNode().focus();
 		});
