@@ -68,12 +68,8 @@ var Index = React.createClass({
 			state.rulesTheme = rules.theme;
 			state.rulesFontSize = rules.fontSize;
 			state.showRulesLineNumbers = rules.showLineNumbers;
-			rulesOptions.push({
-				name: DEFAULT,
-				icon: selected ? 'ok' : ''
-			});
 			rulesList.push(DEFAULT);
-			rulesData.Default = {
+			var item = rulesData.Default = {
 					name: DEFAULT,
 					value: rules.defaultRules,
 					selected: selected,
@@ -81,19 +77,17 @@ var Index = React.createClass({
 					active: selectedName === DEFAULT
 			};
 			
+			rulesOptions.push(rulesData.Default);
+			
 			$.each(rules.list, function() {
 				rulesList.push(this.name);
-				
-				rulesData[this.name] = {
+				item = rulesData[this.name] = {
 					name: this.name,
 					value: this.data,
 					selected: this.selected,
 					active: selectedName === this.name
 				};
-				rulesOptions.push({
-					name: this.name,
-					icon: this.selected ? 'ok' : ''
-				});
+				rulesOptions.push(item);
 			});
 		}
 		
@@ -291,6 +285,11 @@ var Index = React.createClass({
 	},
 	showRulesOptions: function() {
 		var self = this;
+		var rules = self.state.rules;
+		var data = rules.data;
+		self.state.rulesOptions = rules.list.map(function(name) {
+			return data[name];
+		});
 		self.setMenuOptionsState('showRulesOptions', function() {
 			self.refs.rulesMenuItem.getDOMNode().focus();
 		});
@@ -550,11 +549,15 @@ var Index = React.createClass({
 		window.open('http://' + hostname + '/client/#' + (name || 'anonymous'));
 		this.hideOptions();
 	},
+	onClickRulesOption: function(item) {
+		item.selected ? this.unselectRules(item) : this.selectRules(item);
+	},
 	selectRules: function(item) {
 		var self = this;
 		dataCenter.rules[item.isDefault ? 'enableDefault' : 'select'](item, function(data) {
 			if (data && data.ec === 0) {
 				self.reselectRules(data);
+				self.setState({});
 			} else {
 				util.showSystemError();
 			}
@@ -566,6 +569,7 @@ var Index = React.createClass({
 		dataCenter.rules[item.isDefault ? 'disableDefault' : 'unselect'](item, function(data) {
 			if (data && data.ec === 0) {
 				self.reselectRules(data);
+				self.setState({});
 			} else {
 				util.showSystemError();
 			}
@@ -847,6 +851,11 @@ var Index = React.createClass({
 		var valuesFontSize = '14px';
 		var showRulesLineNumbers = false;
 		var showValuesLineNumbers = false;
+		var rulesOptions = state.rulesOptions;
+		
+		rulesOptions.forEach(function(item) {
+			item.icon = item.selected ? 'ok' : '';
+		});
 		
 		if (isRules) {
 			var data = state.rules.data;
@@ -910,8 +919,8 @@ var Index = React.createClass({
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem ref="rulesMenuItem" name="Open" options={state.rulesOptions} hide={!state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.props.onClickOption} />
-					<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} hide={!state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.props.onClickOption} />
+					<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} hide={!state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.onClickRulesOption} onDoubleClickOption={this.showRules} />
+					<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} hide={!state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.showValues} />
 					<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} hide={!state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
