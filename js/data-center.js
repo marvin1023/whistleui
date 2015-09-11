@@ -107,7 +107,7 @@ function startLoadData() {
 			startTime: startTime,
 			count: 60
 		}, function(data) {
-			setTimeout(load, 800);
+			setTimeout(load, 1000);
 			if (!data || data.ec !== 0) {
 				return;
 			}
