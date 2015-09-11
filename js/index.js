@@ -261,7 +261,7 @@ var Index = React.createClass({
 		});
 		location.hash = 'network';
 	},
-	showAndSelectRules: function(item) {
+	showAndActiveRules: function(item) {
 		this.state.rules.setActive(item.name);
 		this.showRules();
 	},
@@ -923,7 +923,7 @@ var Index = React.createClass({
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} hide={!state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.onClickRulesOption} onDoubleClickOption={this.showAndSelectRules} />
+					<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} hide={!state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.onClickRulesOption} onDoubleClickOption={this.showAndActiveRules} />
 					<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} hide={!state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.showValues} />
 					<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} hide={!state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
