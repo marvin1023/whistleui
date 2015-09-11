@@ -17,11 +17,11 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isReq(str) {
-				return /^req:\/\//.test(str);
+				return /^(?:req|delayReq|reqSpeed|reqHeaders|method|reqType|reqBody|prependReq|appendReq):\/\//.test(str);
 			}
 			
 			function isRes(str) {
-				return /^res:\/\//.test(str);
+				return /^(?:res|resHeaders|statusCode|redirect|delayRes|resSpeed|resType|cache|resBody|prependRes|appendRes):\/\//.test(str);
 			}
 			
 			function isUrl(str) {
@@ -35,6 +35,14 @@ CodeMirror.defineMode('rules', function() {
 			function isRegExp(str) {
 				
 				return /^\/(.+)\/(i)?$/.test(str);
+			}
+			
+			function isParams(str) {
+				return /^params:\/\//.test(str);
+			}
+			
+			function isLog(str) {
+				return /^log:\/\//.test(str);
 			}
 			
 			return {
@@ -72,6 +80,10 @@ CodeMirror.defineMode('rules', function() {
 								 type = 'positive js-res js-type';
 							 } else if (isUrl(str)) {
 								 type = 'string-2 js-url js-type';
+							 } else if (isParams(str)) {
+								 type = 'meta js-params js-type';
+							 } else if (isLog(str)) {
+								 type = 'error js-log js-type';
 							 } else if (isRule(str)) {
 								 type = 'builtin js-rule js-type';
 							 }
