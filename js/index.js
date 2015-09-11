@@ -631,13 +631,32 @@ var Index = React.createClass({
 	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
-		var isRules = this.state.name == 'rules';
+		var self = this;
+		var isRules = self.state.name == 'rules';
 		if (target.hasClass('w-create-menu')) {
-			isRules ? this.showCreateRules() : this.showCreateValues();
+			isRules ? self.showCreateRules() : self.showCreateValues();
 		} else if (target.hasClass('w-edit-menu')) {
-			isRules ? this.showEditRules() : this.showEditValues();
+			isRules ? self.showEditRules() : self.showEditValues();
 		} else if (target.hasClass('w-delete-menu')) {
-			isRules ? this.removeRules() : this.removeValues();
+			isRules ? self.removeRules() : self.removeValues();
+		} else if (target.hasClass('w-save-menu')) {
+			if (isRules) {
+				var list = self.state.rules.getChangedList();
+				if(list.length) {
+					list.forEach(function(item) {
+						self.selectRules(item);
+					});
+					self.setState({});
+				}
+			} else {
+				var list = self.state.values.getChangedList();
+				if (list.length) {
+					list.forEach(function(item) {
+						self.saveValues(item);
+					});
+					self.setState({});
+				}
+			}
 		}
 	},
 	showSettings: function(e) {
@@ -795,6 +814,7 @@ var Index = React.createClass({
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<a onClick={this.showRulesOptions} onDoubleClick={this.showRules} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
 					<a onClick={this.showValuesOptions} onDoubleClick={this.showValues} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
+					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
 					<a onClick={this.autoScroll} className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-play"></span>AutoScroll</a>
