@@ -27,7 +27,7 @@ proto.search = function(keyword) {
 		this._keyword = RegExp.$2.trim();
 	}
 	this.filter();
-	return !!this._keyword;
+	return keyword;
 };
 
 proto.hasKeyword = function() {
