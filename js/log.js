@@ -26,15 +26,18 @@ var Log = React.createClass({
 				}
 			});
 		});
-		
+		var timeout;
 		$(container).on('scroll', function() {
 			var data = self.state.logs;
+			timeout && clearTimeout(timeout);
 			if (data && scrollAtBottom()) {
-				var len = data.length - 110;
-				if (len > 0) {
-					data.splice(0, len);
-					self.setState({logs: data});
-				}
+				timeout = setTimeout(function() {
+					var len = data.length - 110;
+					if (len > 0) {
+						data.splice(0, len);
+						self.setState({logs: data});
+					}
+				}, 2000);
 			}
 		}).on('click', '.w-auto-scroll-log', function() {
 			container.scrollTop = content.offsetHeight;
