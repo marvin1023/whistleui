@@ -11,7 +11,7 @@ var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.st
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 
  * cache://xxxs[no], params://json|string(放在url)
  */
-var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'log', 'params', 'delayReq', 'reqSpeed', 'reqHeaders',
+var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'log', 'params', 'rawParams', 'delayReq', 'reqSpeed', 'reqHeaders',
              'method', 'reqType', 'reqBody', 'prependReq', 'appendReq', 'resHeaders', 'statusCode', 'redirect', 'delayRes', 
              'resSpeed', 'resType', 'cache', 'resBody', 'prependRes', 'appendRes'];
 var DEFAULT_OVERVIEW_MODAL = {};
