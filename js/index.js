@@ -206,12 +206,16 @@ var Index = React.createClass({
 			self._updateNetwork();
 			return;
 		}
-		
+		var scrollTimeout;
 		var con = $(self.refs.network.getDOMNode())
 			.find('.w-req-data-list').scroll(function() {
 				var modal = self.state.network;
+				scrollTimeout && clearTimeout(scrollTimeout);
+				scrollTimeout = null;
 				if (modal && atBottom()) {
-					update(modal, true);
+					scrollTimeout = setTimeout(function() {
+						update(modal, true);
+					}, 2000);
 				}
 			});
 		var body = con.children('table')[0];
