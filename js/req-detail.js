@@ -48,7 +48,7 @@ var ReqDetail = React.createClass({
 			var url = modal.url;
 			var index = modal.url.indexOf('?');
 			query = util.parseQueryString(index == -1 ? '' : url.substring(index + 1), null, null, decodeURIComponent);
-			if (headers['content-type'] == 'application/x-www-form-urlencoded') {
+			if (util.isUrlEncoded(req)) {
 				form = util.parseQueryString(req.body, null, null, decodeURIComponent);
 			}
 			

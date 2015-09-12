@@ -351,4 +351,11 @@ exports.getStatusMessage = function(res) {
 	return res.statusMessage || STATUS_CODES[res.statusCode] || '';
 };
 
+function isUrlEncoded(req) {
+	
+	return /^post$/i.test(req.method) && /urlencoded/i.test(req.headers && req.headers['content-type']);
+}
+
+exports.isUrlEncoded = isUrlEncoded;
+
 
