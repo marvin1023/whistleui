@@ -40,6 +40,7 @@ var ReqDetail = React.createClass({
 		var name = btn && btn.name;
 		var modal = this.props.modal;
 		var req, headers, cookies, body, raw, query, form;
+		body = raw = '';
 		if (modal) {
 			req = modal.req
 			body = req.body || '';

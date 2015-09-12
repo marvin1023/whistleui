@@ -40,6 +40,7 @@ var ResDetail = React.createClass({
 		var name = btn && btn.name;
 		var modal = this.props.modal;
 		var res, headers, cookies, body, raw, json;
+		body = raw = json = '';
 		if (modal) {
 			res = modal.res
 			body = res.body || '';
