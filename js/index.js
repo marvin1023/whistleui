@@ -150,6 +150,17 @@ var Index = React.createClass({
 		events.on('executeComposer', function() {
 			self.autoScroll && self.autoScroll();
 		});
+		
+		var timeout;
+		$(document).on('visibilitychange', function() {
+			clearTimeout(timeout);
+			if (document.hidden) {
+				return;
+			}
+			timeout = setTimeout(function() {
+				self.setState({});
+			}, 100);
+		});
 	},
 	getWeinreFromRules: function() {
 		var values = this.state.values;
@@ -242,6 +253,9 @@ var Index = React.createClass({
 			_atBottom = _atBottom || atBottom();
 			if (modal.update(_atBottom) && _atBottom) {
 				timeout = setTimeout(update, 3000);
+			}
+			if (document.hidden) {
+				return;
 			}
 			self.setState({
 				network: modal
