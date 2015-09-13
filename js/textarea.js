@@ -18,7 +18,14 @@ var Textarea = React.createClass({
 		return hide != util.getBoolean(nextProps.hide) || (!hide && this.props.value != nextProps.value);
 	},
 	edit: function() {
-		alert(2)
+		var self = this;
+		var win = window.open('/editor.html');
+		win.getValue = function() {
+			return self.props.value;
+		};
+		if (win.setValue) {
+			win.setValue(self.props.value);
+		}
 	},
 	updateValue: function() {
 		var self = this;
