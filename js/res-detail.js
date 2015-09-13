@@ -5,7 +5,8 @@ var Table = require('./table');
 var Properties = require('./properties');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
-BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
+var Textarea = require('./textarea');
+var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
 var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires', 'Http Only', 'Secure'];
 
 var ResDetail = React.createClass({
@@ -85,15 +86,18 @@ var ResDetail = React.createClass({
 			}
 		}
 		
+		this.state.raw = raw;
+		this.state.body = body;
+		
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-response' 
 				+ (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
 				{this.state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={headers} /></div> : ''}
-				{this.state.initedTextView ? <textarea value={body} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-textview' + (name == BTNS[1].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedTextView ? <Textarea value={body} className="fill w-detail-response-textview" hide={name != BTNS[1].name} /> : ''}
 				{this.state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} modal={cookies} /></div> : ''}
-				{this.state.initedJSON ? <textarea value={json} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-json' + (name == BTNS[3].name ? '' : ' hide')}></textarea> : ''}
-				{this.state.initedRaw ? <textarea value={raw} onKeyDown={util.preventDefault} readOnly="readonly" className={'fill w-detail-response-raw' + (name == BTNS[4].name ? '' : ' hide')}></textarea> : ''}
+				{this.state.initedJSON ? <Textarea value={json} className="fill w-detail-response-json" hide={name != BTNS[3].name} /> : ''}
+				{this.state.initedRaw ? <Textarea value={raw} className="fill w-detail-response-raw" hide={name != BTNS[4].name} /> : ''}
 			</div>
 		);
 	}
