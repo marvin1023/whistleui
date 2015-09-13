@@ -22,7 +22,7 @@ var proto = NetworkModal.prototype;
 proto.search = function(keyword) {
 	this._type = 'url';
 	this._keyword = typeof keyword != 'string' ? '' : keyword.trim();
-	if (this._keyword && /^(url|u|content|c|headers|h|ip|i|status|result|s|r|method|m):(.*)$/.test(keyword)) {
+	if (this._keyword && /^(url|u|content|c|headers|h|ip|i|status|result|s|r|method|m|type|t):(.*)$/.test(keyword)) {
 		this._type = RegExp.$1;
 		this._keyword = RegExp.$2.trim();
 	}
@@ -59,6 +59,14 @@ proto.filter = function() {
 			list.forEach(function(item) {
 				item.hide = !inObject(item.req.headers, keyword) 
 							&& !inObject(item.res.headers, keyword);
+			});
+			break;
+		case 'type':
+		case 't':
+			list.forEach(function(item) {
+				var type = item.res.headers;
+				type = type && type['content-type'];
+				item.hide = !(typeof type == 'string' && type.indexOf(keyword) != -1);
 			});
 			break;
 		case 'ip':
