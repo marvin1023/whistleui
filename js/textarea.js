@@ -1,6 +1,7 @@
+require('../css/textarea.css');
 var React = require('react');
 var util = require('./util');
-var MAX_LENGTH =1024 * 160;
+var MAX_LENGTH =1024 * 100;
 
 var Textarea = React.createClass({
 	getInitialState: function() {
@@ -15,6 +16,9 @@ var Textarea = React.createClass({
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || (!hide && this.props.value != nextProps.value);
+	},
+	edit: function() {
+		alert(2)
 	},
 	updateValue: function() {
 		var self = this;
@@ -32,8 +36,10 @@ var Textarea = React.createClass({
 		}
 		this.state.value = value;
 		return (
-				<textarea ref="textarea" onKeyDown={util.preventDefault} readOnly="readonly" 
-					className={(this.props.className || '') + (this.props.hide ? ' hide' : '')}></textarea>
+				<div className={'fill orient-vertical-box w-textarea' + (this.props.hide ? ' hide' : '')}>
+					<a className={'w-edit' + (value ? '' : ' hide')} onClick={this.edit} href="javascript:;">Edit</a>
+					<textarea ref="textarea" onKeyDown={util.preventDefault} readOnly="readonly" className={this.props.className || ''}></textarea>
+				</div>
 		);
 	}
 });
