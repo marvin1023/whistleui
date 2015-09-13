@@ -198,7 +198,7 @@ var Index = React.createClass({
 			if (item.active) {
 				activeList.push(value);
 			} else if (item.selected) {
-				selectedList.push(values);
+				selectedList.push(value);
 			} else {
 				result.push(value);
 			}
