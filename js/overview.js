@@ -12,7 +12,7 @@ var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.st
  * cache://xxxs[no], params://json|string(放在url)
  */
 var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'log', 'params', 'statusCode', 'redirect', 'method', 'cache', 
-             'delayReq', 'reqSpeed', 'reqHeaders', 'reqType', 'reqBody', 'prependReq', 'appendReq', 'delayRes', 'resSpeed', 
+             'delayReq', 'reqSpeed', 'reqType', 'reqHeaders', 'reqBody', 'prependReq', 'appendReq', 'delayRes', 'resSpeed', 
              'resHeaders', 'resType', 'resBody', 'prependRes', 'appendRes'];
 var DEFAULT_OVERVIEW_MODAL = {};
 var DEFAULT_RULES_MODAL = {};
