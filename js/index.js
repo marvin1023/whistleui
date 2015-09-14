@@ -112,7 +112,7 @@ var Index = React.createClass({
 		
 		state.rules = new ListModal(rulesList, rulesData);
 		state.rulesOptions = rulesOptions;
-		state.values = new ListModal(valuesList, valuesData);
+		dataCenter.valuesModal = state.values = new ListModal(valuesList, valuesData);
 		state.valuesOptions = valuesOptions;
 		state.filterText = modal.filterText;
 		
