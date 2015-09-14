@@ -85,7 +85,7 @@ var List = React.createClass({
 		}
 		var oldValue = item.value || '';
 		var value = e.getValue() || '';
-		if (value != item.value) {
+		if (value != oldValue) {
 			item.changed = true;
 			item.value = value;
 			this.setState({
