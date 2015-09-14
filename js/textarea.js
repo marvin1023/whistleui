@@ -47,9 +47,14 @@ var Textarea = React.createClass({
 			return;
 		}
 		var target = this.refs.valuesNameInput.getDOMNode();
-		var name = target.value;
+		var name = target.value.trim();
 		if (!name) {
 			alert('Value name can not be empty.');
+			return;
+		}
+		
+		if (/\s/.test(name)) {
+			alert('Name can not have spaces.');
 			return;
 		}
 		
@@ -87,7 +92,7 @@ var Textarea = React.createClass({
 		var showAddToValuesBtn = /[^\s]/.test(value);
 		if (exceed > 512) {
 			showAddToValuesBtn = false;
-			value = value.substring(0, MAX_LENGTH) + '...\r\n(' + exceed + ' characters left, you can click on the Edit button in the upper right corner to view all)';
+			value = value.substring(0, MAX_LENGTH) + '...\r\n\r\n(' + exceed + ' characters left, you can click on the Edit button in the upper right corner to view all)\r\n';
 		}
 		
 		this.state.value = value;

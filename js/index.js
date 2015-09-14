@@ -467,6 +467,11 @@ var Index = React.createClass({
 			return;
 		}
 		
+		if (/\s/.test(name)) {
+			alert('Name can not have spaces.');
+			return;
+		}
+		
 		var modal = self.state.values;
 		if (modal.exists(name)) {
 			alert('Value name \'' + name + '\' already exists.');
