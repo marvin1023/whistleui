@@ -58,7 +58,7 @@ var Textarea = React.createClass({
 			return;
 		}
 		
-		var value = this.props.value || '';
+		var value = (this.props.value || '').replace(/\r\n|\r/g, '\n');
 		dataCenter.values.add({name: name, value: value}, function(data) {
 			if (data && data.ec === 0) {
 				modal.add(name, value);
