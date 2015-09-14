@@ -427,6 +427,9 @@ var Index = React.createClass({
 			createValuesInput.focus();
 		});
 	},
+	showRootCADialog: function() {
+		$(this.refs.rootCADialog.getDOMNode()).modal('show');
+	},
 	createRules: function(e) {
 		if (e.keyCode != 13 && e.type != 'click') {
 			return;
@@ -986,7 +989,7 @@ var Index = React.createClass({
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.showSettings} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<a onClick={this.showWeinreOptions} onDoubleClick={this.showAnonymousWeinre} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
-					<a onClick={this.onClickMenu} className="w-rootca-menu" href="/cgi-bin/rootca" target="_blank"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
+					<a onClick={this.showRootCADialog} className="w-rootca-menu" href="javascript:;"><span className="glyphicon glyphicon-download-alt"></span>RootCA</a>
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
@@ -1035,6 +1038,22 @@ var Index = React.createClass({
 					    </div>
 				    </div>
 				</div>
+				<div ref="rootCADialog" className="modal fade w-rootca-dialog">
+				<div className="modal-dialog"> 
+			  		<div className="modal-content">
+				      <div className="modal-body">
+					      <div>
+					      	<a className="w-download-rootca" href="/cgi-bin/rootca" target="_blank">Download</a>
+					      	<a className="w-rootca-help" href="https://github.com/avwo/whistle/wiki/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85%E6%A0%B9%E8%AF%81%E4%B9%A6" target="_blank" title="How to install a root certificate">Help</a>
+					      </div>
+					      <a href="/cgi-bin/rootca" target="_blank"><img src="/img/rootca.png" /></a>
+				      </div>
+				      <div className="modal-footer">
+				        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+			    </div>
+			</div>
 			</div>
 		);
 	}

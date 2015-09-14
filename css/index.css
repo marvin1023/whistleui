@@ -34,3 +34,6 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 
 .w-rules-settings-dialog .modal-dialog {width: 336px;}
 .w-values-settings-dialog .modal-dialog {width: 282px;}
+.w-rootca-dialog .modal-dialog {width: 340px;}
+.w-rootca-help {margin-left: 220px;}
+.w-download-rootca, .w-rootca-help {display: inline-block; line-height: 30px;}
