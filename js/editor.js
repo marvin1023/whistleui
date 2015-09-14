@@ -99,14 +99,19 @@ var Editor = React.createClass({
 			}
 		});
 		self._init();
-		$(elem).find('.CodeMirror').addClass('fill');
+		var codeMirrorElem = $(elem).find('.CodeMirror').addClass('fill');
 		resize();
 		$(window).on('resize', function() {
 			clearTimeout(timeout);
 			timeout = setTimeout(resize, 30);
 		});
 		function resize() {
-			editor.setSize(null, elem.offsetHeight);
+			var height = elem.offsetHeight || 0;
+			if (height < 10) {
+				timeout = setTimeout(resize, 300);
+			} else {
+				editor.setSize(null, height);
+			}
 		}
 	},
 	_init: function() {
