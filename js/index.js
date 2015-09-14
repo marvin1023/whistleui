@@ -1009,6 +1009,7 @@ var Index = React.createClass({
 					<div className="modal-dialog">
 					  	<div className="modal-content">
 					      <div className="modal-body">
+					      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      	<EditorSettings theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers}
 						      	onThemeChange={this.onRulesThemeChange} 
 						      	onFontSizeChange={this.onRulesFontSizeChange} 
@@ -1027,6 +1028,7 @@ var Index = React.createClass({
 					<div className="modal-dialog"> 
 				  		<div className="modal-content">
 					      <div className="modal-body">
+					      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						      <EditorSettings theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} 
 							      onThemeChange={this.onValuesThemeChange} 
 							      onFontSizeChange={this.onValuesFontSizeChange} 
@@ -1042,6 +1044,7 @@ var Index = React.createClass({
 				<div className="modal-dialog"> 
 			  		<div className="modal-content">
 				      <div className="modal-body">
+				      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <div>
 					      	<a className="w-download-rootca" href="/cgi-bin/rootca" target="_blank">Download</a>
 					      	<a className="w-rootca-help" href="https://github.com/avwo/whistle/wiki/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85%E6%A0%B9%E8%AF%81%E4%B9%A6" target="_blank" title="How to install a root certificate">Help</a>
