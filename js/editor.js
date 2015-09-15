@@ -102,12 +102,14 @@ var Editor = React.createClass({
 		var codeMirrorElem = $(elem).find('.CodeMirror').addClass('fill');
 		resize();
 		$(window).on('resize', function() {
-			clearTimeout(timeout);
+			timeout && clearTimeout(timeout);
+			timeout = null;
 			timeout = setTimeout(resize, 30);
 		});
 		function resize() {
 			var height = elem.offsetHeight || 0;
 			if (height < 10) {
+				timeout && clearTimeout(timeout);
 				timeout = setTimeout(resize, 300);
 			} else {
 				editor.setSize(null, height);
