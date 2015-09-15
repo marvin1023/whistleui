@@ -1075,7 +1075,7 @@ var Index = React.createClass({
 				      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <div>
 					      	<a className="w-download-rootca" href="/cgi-bin/rootca" target="_blank">Download RootCA</a>
-					      	<a className="w-https-help" href="https://github.com/avwo/whistle/wiki/%E5%A6%82%E4%BD%95%E6%8B%A6%E6%88%AAhttps%E8%AF%B7%E6%B1%82" target="_blank" title="How to intercept HTTPS CONNECTs">Help</a>
+					      	<a className="w-https-help" href="https://github.com/avwo/whistle/wiki/%E5%90%AF%E7%94%A8https" target="_blank" title="How to intercept HTTPS CONNECTs">Help</a>
 					      </div>
 					      <a title="Download RootCA" href="/cgi-bin/rootca" target="_blank"><img src="/img/rootca.png" /></a>
 					      <div className="w-https-settings">
