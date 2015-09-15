@@ -7,7 +7,7 @@ var util = require('./util');
 var BtnGroup = require('./btn-group');
 var Textarea = require('./textarea');
 var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
-var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires', 'Http Only', 'Secure'];
+var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires', 'HttpOnly', 'Secure'];
 
 var ResDetail = React.createClass({
 	getInitialState: function() {
