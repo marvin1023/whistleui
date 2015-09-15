@@ -435,7 +435,7 @@ var Index = React.createClass({
 	hideHttpsConnects: function(e) {
 		var self = this;
 		var checked = e.target.checked;
-		dataCenter.interceptHttpsConnects({hideHttpsConnects: checked ? 1 : 0},
+		dataCenter.hideHttpsConnects({hideHttpsConnects: checked ? 1 : 0},
 				function(data) {
 			if (data && data.ec === 0) {
 				self.state.hideHttpsConnects = checked;
