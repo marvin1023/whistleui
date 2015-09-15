@@ -110,6 +110,8 @@ var Index = React.createClass({
 			});
 		}
 		
+		state.hideHttpsConnects = modal.hideHttpsConnects;
+		state.interceptHttpsConnects = modal.interceptHttpsConnects;
 		state.rules = new ListModal(rulesList, rulesData);
 		state.rulesOptions = rulesOptions;
 		dataCenter.valuesModal = state.values = new ListModal(valuesList, valuesData);
@@ -431,23 +433,29 @@ var Index = React.createClass({
 		$(this.refs.rootCADialog.getDOMNode()).modal('show');
 	},
 	hideHttpsConnects: function(e) {
-		var target = e.target;
-		dataCenter.hideHttpsConnects({hideHttpsConnects: target.checked ? 0 : 1},
+		var self = this;
+		var checked = e.target.checked;
+		dataCenter.interceptHttpsConnects({hideHttpsConnects: checked ? 1 : 0},
 				function(data) {
-			if (!data || data.ec !== 0) {
-				target.checked = !target.checked;
+			if (data && data.ec === 0) {
+				self.state.hideHttpsConnects = checked;
+			} else {
 				util.showSystemError();
 			}
+			self.setState({});
 		});
 	},
 	interceptHttpsConnects: function(e) {
-		var target = e.target;
-		dataCenter.interceptHttpsConnects({interceptHttpsConnects: target.checked ? 1 : 0},
+		var self = this;
+		var checked = e.target.checked;
+		dataCenter.interceptHttpsConnects({interceptHttpsConnects: checked ? 1 : 0},
 				function(data) {
-			if (!data || data.ec !== 0) {
-				target.checked = !target.checked;
+			if (data && data.ec === 0) {
+				self.state.interceptHttpsConnects = checked;
+			} else {
 				util.showSystemError();
 			}
+			self.setState({});
 		});
 	},
 	createRules: function(e) {
@@ -1071,8 +1079,8 @@ var Index = React.createClass({
 					      </div>
 					      <a title="Download RootCA" href="/cgi-bin/rootca" target="_blank"><img src="/img/rootca.png" /></a>
 					      <div className="w-https-settings">
-					      	<p><label><input onChange={this.hideHttpsConnects} type="checkbox" /> Hide HTTPS CONNECTs</label></p>
-					      	<p><label><input onChange={this.interceptHttpsConnects} type="checkbox" /> Intercept HTTPS CONNECTs</label></p>
+					      	<p><label><input checked={state.hideHttpsConnects} onChange={this.hideHttpsConnects} type="checkbox" /> Hide HTTPS CONNECTs</label></p>
+					      	<p><label><input checked={state.interceptHttpsConnects} onChange={this.interceptHttpsConnects} type="checkbox" /> Intercept HTTPS CONNECTs</label></p>
 					      </div>
 				      </div>
 				      <div className="modal-footer">
