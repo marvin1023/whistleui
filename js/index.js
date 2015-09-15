@@ -430,6 +430,26 @@ var Index = React.createClass({
 	showHttpsSettingsDialog: function() {
 		$(this.refs.rootCADialog.getDOMNode()).modal('show');
 	},
+	hideHttpsConnects: function(e) {
+		var target = e.target;
+		dataCenter.hideHttpsConnects({hideHttpsConnects: target.checked ? 0 : 1},
+				function(data) {
+			if (!data || data.ec !== 0) {
+				target.checked = !target.checked;
+				util.showSystemError();
+			}
+		});
+	},
+	interceptHttpsConnects: function(e) {
+		var target = e.target;
+		dataCenter.interceptHttpsConnects({interceptHttpsConnects: target.checked ? 1 : 0},
+				function(data) {
+			if (!data || data.ec !== 0) {
+				target.checked = !target.checked;
+				util.showSystemError();
+			}
+		});
+	},
 	createRules: function(e) {
 		if (e.keyCode != 13 && e.type != 'click') {
 			return;
@@ -1046,10 +1066,10 @@ var Index = React.createClass({
 				      <div className="modal-body">
 				      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <div>
-					      	<a className="w-download-rootca" href="/cgi-bin/rootca" target="_blank">Download rootca</a>
+					      	<a className="w-download-rootca" href="/cgi-bin/rootca" target="_blank">Download RootCA</a>
 					      	<a className="w-https-help" href="https://github.com/avwo/whistle/wiki/%E5%A6%82%E4%BD%95%E6%8B%A6%E6%88%AAhttps%E8%AF%B7%E6%B1%82" target="_blank" title="How to intercept HTTPS CONNECTs">Help</a>
 					      </div>
-					      <a title="Download rootca" href="/cgi-bin/rootca" target="_blank"><img src="/img/rootca.png" /></a>
+					      <a title="Download RootCA" href="/cgi-bin/rootca" target="_blank"><img src="/img/rootca.png" /></a>
 					      <div className="w-https-settings">
 					      	<p><label><input onChange={this.hideHttpsConnects} type="checkbox" /> Hide HTTPS CONNECTs</label></p>
 					      	<p><label><input onChange={this.interceptHttpsConnects} type="checkbox" /> Intercept HTTPS CONNECTs</label></p>
