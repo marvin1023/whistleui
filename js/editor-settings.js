@@ -41,6 +41,7 @@ var EditorSettings = React.createClass({
 								<option value="16px">16px</option>
 								<option value="18px">18px</option>
 								<option value="20px">20px</option>
+								<option value="22px">22px</option>
 								<option value="24px">24px</option>
 								<option value="26px">26px</option>
 								<option value="28px">28px</option>
