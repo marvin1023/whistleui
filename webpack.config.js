@@ -26,5 +26,7 @@ module.exports = {
 	    compress: {
 	        warnings: false
 	    }
-	})]
+	})
+//	, new webpack.SourceMapDevToolPlugin({filename: 'sourcemap.json'})
+	]
 };
