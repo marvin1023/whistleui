@@ -17,11 +17,11 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isReq(str) {
-				return /^(?:req|referer|auth|ua|reqCookies|reqDelay|reqSpeed|reqHeaders|method|reqType|reqBody|prependReq|appendReq):\/\//.test(str);
+				return /^(?:req|referer|auth|ua|reqCookies|reqDelay|reqSpeed|reqHeaders|method|reqType|reqBody|reqPrepend|reqAppend):\/\//.test(str);
 			}
 			
 			function isRes(str) {
-				return /^(?:res|reqCookies|resHeaders|statusCode|redirect|resDelay|resSpeed|resType|cache|resBody|prependRes|appendRes):\/\//.test(str);
+				return /^(?:res|reqCookies|resHeaders|statusCode|redirect|resDelay|resSpeed|resType|cache|resBody|resPrepend|resAppend):\/\//.test(str);
 			}
 			
 			function isUrl(str) {
