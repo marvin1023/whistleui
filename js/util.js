@@ -358,4 +358,10 @@ function isUrlEncoded(req) {
 
 exports.isUrlEncoded = isUrlEncoded;
 
+function toString(value) {
+	return value == null ? '' : value + '';
+}
+
+exports.toString = toString;
+
 

@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/properties.css');
 var React = require('react');
+var util = require('./util');
 
 var Properties = React.createClass({
 	render: function() {
@@ -17,14 +18,14 @@ var Properties = React.createClass({
 											return (
 												<tr key={i}>
 													<th>{name}</th>
-													<td>{val}</td>
+													<td>{util.toString(val)}</td>
 												</tr>		
 											);
 										})
 										: 
 										<tr key={name}>
 											<th>{name}</th>
-											<td>{value}</td>
+											<td>{util.toString(value)}</td>
 										</tr>	
 								);
 							})
