@@ -359,7 +359,7 @@ function isUrlEncoded(req) {
 exports.isUrlEncoded = isUrlEncoded;
 
 function toString(value) {
-	return value == null ? '' : value + '';
+	return value === undefined ? '' : value + '';
 }
 
 exports.toString = toString;
