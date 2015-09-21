@@ -38,7 +38,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isParams(str) {
-				return /^params:\/\//.test(str);
+				return /^(?:urlParams|params):\/\//.test(str);
 			}
 			
 			function isLog(str) {
