@@ -1,5 +1,5 @@
-var MAX_LENGTH = 360;
-var MAX_COUNT = 1260;
+var MAX_LENGTH = 200;
+var MAX_COUNT = 1200;
 
 function NetworkModal(list) {
 	this._list = updateOrder(list);
@@ -120,7 +120,7 @@ function inObject(obj, keyword) {
 
 proto.clear = function clear() {
 	this._list.splice(0, this._list.length);
-	this.update();
+	this.list = [];
 	return this;
 };
 
