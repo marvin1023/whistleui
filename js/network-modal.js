@@ -1,5 +1,5 @@
 var MAX_LENGTH = 360;
-var MAX_COUNT = 2560;//不能超过MAX_LENGTH * 2，否则order衔接会有问题
+var MAX_COUNT = 1260;
 
 function NetworkModal(list) {
 	this._list = updateOrder(list);
@@ -119,7 +119,7 @@ function inObject(obj, keyword) {
 }
 
 proto.clear = function clear() {
-	this._list.splice(0, this.list.length);
+	this._list.splice(0, this._list.length);
 	this.update();
 	return this;
 };
