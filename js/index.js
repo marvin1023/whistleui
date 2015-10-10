@@ -342,8 +342,9 @@ var Index = React.createClass({
 		});
 		location.hash = 'values';
 	},
-	showRulesOptions: function() {
+	showRulesOptions: function(e) {
 		var self = this;
+		var target = $(e.target);
 		var rules = self.state.rules;
 		var data = rules.data;
 		var selectedList = [];
@@ -353,12 +354,16 @@ var Index = React.createClass({
 			item.selected ? selectedList.push(item) : list.push(item);
 		});
 		self.state.rulesOptions = selectedList.concat(list);
-		self.setMenuOptionsState('showRulesOptions', function() {
-			self.refs.rulesMenuItem.getDOMNode().focus();
+		self.setState({}, function() {
+			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 		});
 	},
-	showValuesOptions: function() {
+	hideMenuOptions: function(e) {
+		$(e.target).closest('.w-menu-wrapper').removeClass('w-menu-wrapper-show');
+	},
+	showValuesOptions: function(e) {
 		var self = this;
+		var target = $(e.target);
 		var valuesList = this.state.values.list;
 		var list = self.getValuesFromRules() || [];
 		list = util.unique(list.concat(valuesList));
@@ -373,13 +378,13 @@ var Index = React.createClass({
 			exists ? valuesOptions.push(item) : newValues.push(item);
 		});
 		self.state.valuesOptions = newValues.concat(valuesOptions);
-		
-		self.setMenuOptionsState('showValuesOptions', function() {
-			self.refs.valuesMenuItem.getDOMNode().focus();
+		self.setState({}, function() {
+			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 		});
 	},
-	showWeinreOptions: function() {
+	showWeinreOptions: function(e) {
 		var self = this;
+		var target = $(e.target);
 		var list = self.state.weinreOptions = self.getWeinreFromRules() || [];
 		self.state.weinreOptions = util.unique(list).map(function(name) {
 			return {
@@ -387,8 +392,8 @@ var Index = React.createClass({
 				icon: 'globe'
 			};
 		});
-		self.setMenuOptionsState('showWeinreOptions', function() {
-			self.refs.weinreMenuItem.getDOMNode().focus();
+		self.setState({}, function() {
+			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 		});
 	},
 	hideOptions: function() {
@@ -396,9 +401,6 @@ var Index = React.createClass({
 	},
 	setMenuOptionsState: function(name, callback) {
 		var state = {
-				showRulesOptions: false,
-				showValuesOptions: false,
-				showWeinreOptions: false,
 				showCreateRules: false,
 				showCreateValues: false,
 				showEditRules: false,
@@ -1004,8 +1006,14 @@ var Index = React.createClass({
 			<div className="main orient-vertical-box">
 				<div className={'w-menu w-' + name + '-menu-list'}>
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
-					<a onClick={this.showRulesOptions} onDoubleClick={this.showRules} className="w-rules-menu" style={{display: isRules ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
-					<a onClick={this.showValuesOptions} onDoubleClick={this.showValues} className="w-values-menu" style={{display: isValues ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
+					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isRules ? 'none' : ''}} className="w-menu-wrapper">
+						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
+						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.showAndActiveRules} />
+					</div>
+					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isValues ? 'none' : ''}} className="w-menu-wrapper">
+						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
+						<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.showAndActiveValues} />
+					</div>
 					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
@@ -1016,14 +1024,14 @@ var Index = React.createClass({
 					<a onClick={this.clear} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" title="Ctrl[Command]+D"><span className="glyphicon glyphicon-remove"></span>Clear</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.showSettings} className="w-settings-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
-					<a onClick={this.showWeinreOptions} onDoubleClick={this.showAnonymousWeinre} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
+					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideMenuOptions} className="w-menu-wrapper">
+						<a onClick={this.showAnonymousWeinre} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
+						<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
+					</div>
 					<a onClick={this.showHttpsSettingsDialog} className="w-https-menu" href="javascript:;"><span className="glyphicon glyphicon-lock"></span>Https</a>
 					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 					<About />
 					<Online />
-					<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} hide={!state.showRulesOptions} className="w-rules-menu-item" onBlur={this.hideOptions} onClick={this.showRules} onClickOption={this.showAndActiveRules} />
-					<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} hide={!state.showValuesOptions} className="w-values-menu-item" onBlur={this.hideOptions} onClick={this.showValues} onClickOption={this.showAndActiveValues} />
-					<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} hide={!state.showWeinreOptions} className="w-weinre-menu-item" onBlur={this.hideOptions} onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create rules" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>

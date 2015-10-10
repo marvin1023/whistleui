@@ -10,6 +10,7 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-menu .w-offline {color: #ccc!important; cursor: default;}
 .w-menu .w-disabled {color: #888!important; cursor: default!important;}
 .w-menu .w-menu-enable {color: #337ab7;}
+.w-menu .w-menu-wrapper {display: inline-block; position: relative; height: 30px;}
 
 .w-input-menu-item {display: block; position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 2px; z-index: 101; top: 30px; display: none; white-space: nowrap;}
 .w-input-menu-item input {width: 246px; height: 32px; border: 1px solid #ccc; border-radius: 2px; padding: 0 5px; vertical-align: middle;}
@@ -21,16 +22,11 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-edit-values-input {left: 294px;}
 .w-edit-filter-input {left: 425px;}
 
+.w-menu-wrapper .w-menu-item {display: none!important;}
+.w-menu-wrapper-show .w-menu-item {display: block!important;}
+
 .w-values-list .glyphicon {display: none!important;}
 .w-values-list a {font-weight: normal!important;}
-
-.w-rules-menu-list .w-values-menu-item {left: 92px;}
-.w-network-menu-list .w-values-menu-item {left: 75px;}
-.w-network-menu-list .w-rules-menu-item {left: 8px;}
-.w-values-menu-list .w-rules-menu-item {left: 92px;}
-.w-rules-menu-list .w-weinre-menu-item {left: 519px;}
-.w-network-menu-list .w-weinre-menu-item {left: 550px;}
-.w-values-menu-list .w-weinre-menu-item {left: 509px;}
 
 .w-rules-settings-dialog .modal-dialog {width: 336px;}
 .w-values-settings-dialog .modal-dialog {width: 282px;}
