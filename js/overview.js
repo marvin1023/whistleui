@@ -12,9 +12,8 @@ var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.st
  * cache://xxxs[no], params://json|string(放在url)
  */
 var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'log', 'referer', 'auth', 'ua', 'urlParams', 'params', 'statusCode', 'redirect', 'method', 'cache', 
-             'reqDelay', 'resDelay', 'reqSpeed', 'resSpeed', 'reqType', 'resType', 'reqCookies', 'resCookies', 'reqCors', 'resCors', 
-             'reqHeaders', 'resHeaders', 'reqPrepend', 'resPrepend', 'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqTransform', 
-             'resTransform'];
+             'reqDelay', 'resDelay', 'reqSpeed', 'resSpeed', 'reqType', 'resType', 'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqHeaders', 'resHeaders', 
+             'reqPrepend', 'resPrepend', 'reqBody', 'resBody', 'reqAppend', 'resAppend', 'insertHTML', 'insertJS', 'insertCSS'];
 var DEFAULT_OVERVIEW_MODAL = {};
 var DEFAULT_RULES_MODAL = {};
 
@@ -22,12 +21,6 @@ OVERVIEW.forEach(function(name) {
 	DEFAULT_OVERVIEW_MODAL[name] = '';
 });
 RULES.forEach(function(name) {
-	if (name == 'reqTransform') {
-		name += '(reqT)';
-	} else if (name == 'resTransform') {
-		name += '(resT)';
-	} 
-	
 	DEFAULT_RULES_MODAL[name] = '';
 });
 
@@ -92,16 +85,7 @@ var Overview = React.createClass({
 			if (rules) {
 				rulesModal = {};
 				RULES.forEach(function(name) {
-					var rule = rules[name];
-					if (name == 'reqTransform') {
-						rule = rule || rules.reqT;
-						rulesModal[name + '(reqT)'] = rule && rule.raw;
-					} else if (name == 'resTransform') {
-						rule = rule || rules.resT;
-						rulesModal[name + '(resT)'] = rule && rule.raw;
-					} else {
-						rulesModal[name] = rule && rule.raw;
-					}
+					rulesModal[name] = rules[name] && rules[name].raw;
 				});
 			}
 		}
