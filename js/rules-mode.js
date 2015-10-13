@@ -21,7 +21,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRes(str) {
-				return /^(?:res|reqCookies|resHeaders|statusCode|redirect|resDelay|resSpeed|resCors|resType|cache|resBody|resPrepend|resAppend|insertHTML|insertJS|insertCSS):\/\//.test(str);
+				return /^(?:res|reqCookies|resHeaders|statusCode|redirect|resDelay|resSpeed|resCors|resType|cache|resBody|resPrepend|resAppend|css|html|js):\/\//.test(str);
 			}
 			
 			function isUrl(str) {
