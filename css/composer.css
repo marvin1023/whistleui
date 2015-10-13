@@ -3,6 +3,6 @@
 .w-composer-url {padding: 5px 3px 5px 0; border-bottom: 1px solid #ccc;}
 .w-composer-input, .w-composer-method, .w-composer-execute {height: 26px;}
 .w-composer-input {padding: 0 5px; display: block; border: 1px solid #ccc; margin-left: 2px;}
-.w-composer-method {display: block; width: 118px; margin: 0 2px;}
+.w-composer-method {display: block; width: 118px; margin: 0 2px; padding: 0;}
 .w-composer-execute {padding: 0 6px; line-height: 24px;}
 .w-composer-headers {}
