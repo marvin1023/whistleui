@@ -1,5 +1,5 @@
-var MAX_LENGTH = 320;
-var MAX_COUNT = 1200;
+var MAX_LENGTH = 330;
+var MAX_COUNT = 1320;
 
 function NetworkModal(list) {
 	this._list = updateOrder(list);
