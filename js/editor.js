@@ -115,6 +115,60 @@ var Editor = React.createClass({
 				editor.setSize(null, height);
 			}
 		}
+		if (self.props.name == 'rules') {
+			$(elem).on('keydown', function(e) {
+				if (!(e.ctrlKey || e.metaKey) || e.keyCode != 191) {
+					return;
+				}
+
+				var list = editor.listSelections();
+				if (!list || !list.length) {
+					return;
+				}
+
+				list.forEach(function(range) {
+					var anchor = range.anchor;
+					var head = range.head;
+					var lines = [];
+					var hasComment, hasRule;
+	
+					for (var i = anchor.line; i <= head.line; i++) {
+						var line = editor.getLine(i);
+						if (/^\s*#/.test(line)) {
+							hasComment = true;
+						} else {
+							hasRule = true;
+						}
+						lines.push(line);
+					}
+	
+					if (hasRule) {
+						lines = lines.map(function(line) {
+										return '#' + line;
+								});
+						if (anchor.ch > 0) {
+							anchor.ch += 1;
+						}
+						head.ch += 1;
+					} else {
+						var lastLine = lines[lines.length - 1];
+						var hashIndex = lastLine.indexOf('#');
+						if (hashIndex < head.ch) {
+							head.ch -= 1;
+						}
+						if (anchor.ch > 0) {
+							anchor.ch -= 1;
+						}
+		
+						lines = lines.map(function(line) {
+									return line.replace('#', '');
+								});
+					}
+					editor.replaceRange(lines.join('\n') + '\n', {line: anchor.line, ch: 0}, {line: head.line + 1, ch: 0});
+					editor.setSelection(anchor, head);
+				});
+			});
+		}
 	},
 	_init: function() {
 		this.setMode(this.props.mode);
@@ -131,7 +185,7 @@ var Editor = React.createClass({
 	render: function() {
 		
 		return (
-			<div ref="editor" className="fill orient-vertical-box w-list-content"></div>
+			<div tabIndex="0" ref="editor" className="fill orient-vertical-box w-list-content"></div>
 		);
 	}
 });
