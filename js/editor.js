@@ -125,7 +125,7 @@ var Editor = React.createClass({
 				if (!list || !list.length) {
 					return;
 				}
-
+				var ranges = [];
 				list.forEach(function(range) {
 					var anchor = range.anchor;
 					var head = range.head;
@@ -165,8 +165,9 @@ var Editor = React.createClass({
 								});
 					}
 					editor.replaceRange(lines.join('\n') + '\n', {line: anchor.line, ch: 0}, {line: head.line + 1, ch: 0});
-					editor.setSelection(anchor, head);
+					ranges.push({anchor: anchor, head: head});
 				});
+				editor.setSelections(ranges);
 			});
 		}
 	},
