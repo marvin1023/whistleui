@@ -130,7 +130,13 @@ var Editor = React.createClass({
 					var anchor = range.anchor;
 					var head = range.head;
 					var lines = [];
-					var hasComment, hasRule;
+					var hasComment, hasRule, revert;
+					
+					if (anchor.line > head.line) {
+						revert = anchor;
+						anchor = head;
+						head = revert;
+					}
 	
 					for (var i = anchor.line; i <= head.line; i++) {
 						var line = editor.getLine(i);
@@ -166,8 +172,14 @@ var Editor = React.createClass({
 									return line.replace('#', '');
 								});
 					}
-					editor.replaceRange(lines.join('\n') + '\n', {line: anchor.line, ch: 0}, {line: head.line + 1, ch: 0});
-					ranges.push({anchor: anchor, head: head});
+					
+					if (revert) {
+						editor.replaceRange(lines.join('\n') + '\n', {line: head.line + 1, ch: 0}, {line: anchor.line, ch: 0});
+						ranges.push({anchor: head, head: anchor});
+					} else {
+						editor.replaceRange(lines.join('\n') + '\n', {line: anchor.line, ch: 0}, {line: head.line + 1, ch: 0});
+						ranges.push({anchor: anchor, head: head});
+					}
 				});
 				editor.setSelections(ranges);
 			});
