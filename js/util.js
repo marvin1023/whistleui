@@ -212,10 +212,13 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 		if (key || value) {
 			try {
 				var val = value;
+				var k = key;
 				if (decode == decodeURIComponent) {
 					val = value.replace(/\+/g, ' ');
+					k = k.replace(/\+/g, ' ');
 				}
 				value = decode ? decode(val) : value;
+				key = decode ? decode(k) : key;
 			} catch(e) {}
 			
 			result[key] = value;
