@@ -23,7 +23,9 @@ var cgi = createCgi({
 	getLog: '/cgi-bin/log/get',
 	getData: '/cgi-bin/get-data',
 	getServerInfo: '/cgi-bin/server-info',
-	getInitaial: '/cgi-bin/init'
+	getInitaial: '/cgi-bin/init',
+	donotShowAgain: '/cgi-bin/do-not-show-again',
+	checkUpdate: '/cgi-bin/check-update'
 }, GET_CONF);
 
 exports.values = createCgi({

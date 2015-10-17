@@ -166,6 +166,16 @@ var Index = React.createClass({
 				});
 			}, 100);
 		});
+		
+		setTimeout(function() {
+			dataCenter.checkUpdate(function(data) {
+				console.log(data);
+			});
+			$(self.refs.showUpdateTipsDialog.getDOMNode()).modal('show');
+		}, 30000);
+	},
+	hideUpdateTipsDialog: function() {
+		$(this.refs.showUpdateTipsDialog.getDOMNode()).modal('hide');
 	},
 	getWeinreFromRules: function() {
 		var values = this.state.values;
@@ -1096,6 +1106,23 @@ var Index = React.createClass({
 				      </div>
 				    </div>
 			    </div>
+			</div>
+			<div ref="showUpdateTipsDialog" className="modal fade w-show-update-tips-dialog">
+				<div className="modal-dialog">
+				  	<div className="modal-content">
+				      <div className="modal-body">
+				      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				      	<p>whistle有重要更新，建议你更新到最新版本。</p>
+				      	<p>当前版本： {state.version}</p>
+				      	<p>最新稳定版本： {state.latestVersion}</p>
+				      	<p>查看变更：<a title="Change log" href="/cgi-bin/sdfsdf" target="_blank">CHANGELOG.md</a></p>
+				      </div>
+				      <div className="modal-footer">
+				        <button type="button" className="btn btn-default" data-dismiss="modal">不再提醒</button>
+				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="/cgi-bin/sdfds" target="_blank">立即更新</a>
+				      </div>
+				    </div>
+				</div>
 			</div>
 			</div>
 		);
