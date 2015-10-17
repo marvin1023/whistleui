@@ -169,10 +169,16 @@ var Index = React.createClass({
 		
 		setTimeout(function() {
 			dataCenter.checkUpdate(function(data) {
-				console.log(data);
+				if (data && data.showUpdate) {
+					self.setState({
+						version: data.version,
+						latestVersion: data.latestVersion
+					}, function() {
+						$(self.refs.showUpdateTipsDialog.getDOMNode()).modal('show');
+					})
+				}
 			});
-			$(self.refs.showUpdateTipsDialog.getDOMNode()).modal('show');
-		}, 30000);
+		}, 10000);
 	},
 	hideUpdateTipsDialog: function() {
 		$(this.refs.showUpdateTipsDialog.getDOMNode()).modal('hide');
@@ -1119,7 +1125,7 @@ var Index = React.createClass({
 				      </div>
 				      <div className="modal-footer">
 				        <button type="button" className="btn btn-default" data-dismiss="modal">不再提醒</button>
-				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="/cgi-bin/sdfds" target="_blank">立即更新</a>
+				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="/cgi-bin/sdfds#v{state.latestVersion}" target="_blank">立即更新</a>
 				      </div>
 				    </div>
 				</div>

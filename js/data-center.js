@@ -23,9 +23,7 @@ var cgi = createCgi({
 	getLog: '/cgi-bin/log/get',
 	getData: '/cgi-bin/get-data',
 	getServerInfo: '/cgi-bin/server-info',
-	getInitaial: '/cgi-bin/init',
-	donotShowAgain: '/cgi-bin/do-not-show-again',
-	checkUpdate: '/cgi-bin/check-update'
+	getInitaial: '/cgi-bin/init'
 }, GET_CONF);
 
 exports.values = createCgi({
@@ -72,7 +70,9 @@ $.extend(exports, createCgi({
 	composer: '/cgi-bin/composer',
 	setFilter: '/cgi-bin/set-filter',
 	interceptHttpsConnects: '/cgi-bin/intercept-https-connects',
-	hideHttpsConnects: '/cgi-bin/hide-https-connects'
+	hideHttpsConnects: '/cgi-bin/hide-https-connects',
+	donotShowAgain: '/cgi-bin/do-not-show-again',
+	checkUpdate: '/cgi-bin/check-update'
 }, POST_CONF));
 
 exports.getInitialData = function(callback) {
