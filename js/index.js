@@ -180,6 +180,9 @@ var Index = React.createClass({
 			});
 		}, 10000);
 	},
+	donotShowAgain: function() {
+		dataCenter.donotShowAgain();
+	},
 	hideUpdateTipsDialog: function() {
 		$(this.refs.showUpdateTipsDialog.getDOMNode()).modal('hide');
 	},
@@ -1124,7 +1127,7 @@ var Index = React.createClass({
 				      	<p>查看变更：<a title="Change log" href="/cgi-bin/sdfsdf" target="_blank">CHANGELOG.md</a></p>
 				      </div>
 				      <div className="modal-footer">
-				        <button type="button" className="btn btn-default" data-dismiss="modal">不再提醒</button>
+				        <button type="button" className="btn btn-default" onClick={this.donotShowAgain} data-dismiss="modal">不再提醒</button>
 				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="/cgi-bin/sdfds#v{state.latestVersion}" target="_blank">立即更新</a>
 				      </div>
 				    </div>

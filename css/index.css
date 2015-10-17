@@ -31,6 +31,7 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-rules-settings-dialog .modal-dialog {width: 336px;}
 .w-values-settings-dialog .modal-dialog {width: 282px;}
 .w-show-update-tips-dialog .modal-dialog {width: 336px;}
+.w-show-update-tips-dialog .modal-body p {margin-bottom: 5px;}
 .w-https-dialog .modal-dialog {width: 340px;}
 .w-https-help {margin-left: 150px;}
 .w-https-dialog .modal-dialog div {white-space: nowrap;}
