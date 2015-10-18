@@ -1121,14 +1121,14 @@ var Index = React.createClass({
 				  	<div className="modal-content">
 				      <div className="modal-body">
 				      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				      	<p>whistle有重要更新，建议你更新到最新版本。</p>
-				      	<p>当前版本： {state.version}</p>
-				      	<p>最新稳定版本： {state.latestVersion}</p>
-				      	<p>查看变更：<a title="Change log" href="/cgi-bin/sdfsdf" target="_blank">CHANGELOG.md</a></p>
+				      	<p>whistle has important updates, it is recommended that you update to the latest version.</p>
+				      	<p>Current version: {state.version}</p>
+				      	<p>The latest stable version: {state.latestVersion}</p>
+				      	<p>View change: <a title="Change log" href={'https://github.com/avwo/whistle/blob/master/CHANGELOG.md#v' + state.latestVersion} target="_blank">CHANGELOG.md</a></p>
 				      </div>
 				      <div className="modal-footer">
-				        <button type="button" className="btn btn-default" onClick={this.donotShowAgain} data-dismiss="modal">不再提醒</button>
-				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href={'/cgi-bin/sdfds#v' + state.latestVersion} target="_blank">立即更新</a>
+				        <button type="button" className="btn btn-default" onClick={this.donotShowAgain} data-dismiss="modal">Don't show again</button>
+				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="https://github.com/avwo/whistle/wiki/%E6%9B%B4%E6%96%B0whistle" target="_blank">Update now</a>
 				      </div>
 				    </div>
 				</div>
