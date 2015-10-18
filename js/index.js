@@ -1121,7 +1121,7 @@ var Index = React.createClass({
 				  	<div className="modal-content">
 				      <div className="modal-body">
 				      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				      	<p>whistle has important updates, it is recommended that you update to the latest version.</p>
+				      	<p className="w-show-update-tips">whistle has important updates, it is recommended that you update to the latest version.</p>
 				      	<p>Current version: {state.version}</p>
 				      	<p>The latest stable version: {state.latestVersion}</p>
 				      	<p>View change: <a title="Change log" href={'https://github.com/avwo/whistle/blob/master/CHANGELOG.md#v' + state.latestVersion} target="_blank">CHANGELOG.md</a></p>
