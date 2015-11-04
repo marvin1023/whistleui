@@ -172,8 +172,10 @@ var Index = React.createClass({
 				return;
 			}
 			var name = getKey(elem.text());
-			name && self.showAndActiveValues({name: name});
-			return false;
+			if (name) {
+				self.showAndActiveValues({name: name});
+				return false;
+			}
 		});
 		
 		if (self.state.name == 'network') {
