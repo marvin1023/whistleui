@@ -166,8 +166,13 @@ var Index = React.createClass({
 			}
 		}).on('mouseleave', '.cm-js-type', function(e) {
 			$(this).removeClass('w-has-key');
-		}).on('mousedown', '.w-has-key', function() {
-			self.showAndActiveValues({name: getKey($(this).text())});
+		}).on('mousedown', '.cm-js-type', function(e) {
+			var elem = $(this);
+			if (!e.ctrlKey && !e.metaKey && !elem.hasClass('w-has-key')) {
+				return;
+			}
+			var name = getKey(elem.text());
+			name && self.showAndActiveValues({name: name});
 			return false;
 		});
 		
