@@ -141,6 +141,36 @@ var Index = React.createClass({
 			}
 		});
 		
+		function getKey(url) {
+			if (!(url = url && url.trim())) {
+				return;
+			}
+			
+			var index = url.indexOf('://') + 3;
+			url = index != -1 ? url.substring(index) : url;
+			if (url.indexOf('{') !== 0) {
+				return;
+			}
+			
+			index = url.lastIndexOf('}');
+			return index > 1 ? url.substring(1, index) : null;
+		}
+		
+		$(self.refs.rules.getDOMNode()).on('mouseenter', '.cm-js-type', function(e) {
+			if (!(e.ctrlKey || e.metaKey)) {
+				return;
+			}
+			var elem = $(this);
+			if (getKey(elem.text())) {
+				elem.addClass('w-has-key');
+			}
+		}).on('mouseleave', '.cm-js-type', function(e) {
+			$(this).removeClass('w-has-key');
+		}).on('mousedown', '.w-has-key', function() {
+			self.showAndActiveValues({name: getKey($(this).text())});
+			return false;
+		});
+		
 		if (self.state.name == 'network') {
 			self.startLoadData();
 		}

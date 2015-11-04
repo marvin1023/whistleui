@@ -42,3 +42,5 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-https-settings label {font-weight: normal;}
 .w-https-settings p {margin: 10px 0;}
 
+.w-has-key {cursor: pointer; text-decoration: underline;}
+
