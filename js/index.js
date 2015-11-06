@@ -156,7 +156,7 @@ var Index = React.createClass({
 			return index > 1 ? url.substring(1, index) : null;
 		}
 		
-		$(self.refs.rules.getDOMNode()).on('mouseenter', '.cm-js-type', function(e) {
+		$(document.body).on('mouseenter', '.cm-js-type', function(e) {
 			if (!(e.ctrlKey || e.metaKey)) {
 				return;
 			}
