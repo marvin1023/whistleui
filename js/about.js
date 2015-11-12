@@ -41,13 +41,20 @@ function createDialog(data) {
 
 var About = React.createClass({
 	showAboutInfo: function() {
+		var self = this;
 		dataCenter.getInitialData(function(data) {
 			createDialog(data).modal('show');
+			
+			var version = data.version;
+			var latest = data.latestVersion;
+			self.setState({
+				hasUpdate: !!latest && latest != version
+			});
 		});
 	},
 	render: function() {
 		return (
-				<a onClick={this.showAboutInfo} className="w-about-menu" href="javascript:;"><span className="glyphicon glyphicon-info-sign"></span>About</a>
+				<a onClick={this.showAboutInfo} className="w-about-menu" href="javascript:;"><i style={{display: this.state && this.state.hasUpdate ? 'block' : ''}}></i><span className="glyphicon glyphicon-info-sign"></span>About</a>
 		);
 	}
 });
