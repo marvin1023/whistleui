@@ -40,23 +40,29 @@ function createDialog(data) {
 }
 
 var About = React.createClass({
-	showAboutInfo: function() {
+	showAboutInfo: function(showTips) {
+		this._showUpdateTips(function(data) {
+			createDialog(data).modal('show');
+			if (data.latestVersion) {
+				localStorage.latestVersion = data.latestVersion;
+			}
+		});
+	},
+	_showUpdateTips: function(callback) {
 		var self = this;
 		dataCenter.getInitialData(function(data) {
-			createDialog(data).modal('show');
-			
 			var version = data.version;
 			var latest = data.latestVersion;
-			var _latest = localStorage.latestVersion;
-			if (_latest == latest) {
-				latest = null;
-			} else if (latest) {
-				localStorage.latestVersion = latest;
-			}
+			
 			self.setState({
-				hasUpdate: !!latest && latest != version
+				hasUpdate: !latest || localStorage.latestVersion == latest ? false : latest != version
 			});
+			
+			callback && callback(data);
 		});
+	},
+	componentDidMount: function() {
+		this._showUpdateTips();
 	},
 	render: function() {
 		return (
