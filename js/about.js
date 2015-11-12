@@ -47,6 +47,12 @@ var About = React.createClass({
 			
 			var version = data.version;
 			var latest = data.latestVersion;
+			var _latest = localStorage.latestVersion;
+			if (_latest == latest) {
+				latest = null;
+			} else if (latest) {
+				localStorage.latestVersion = latest;
+			}
 			self.setState({
 				hasUpdate: !!latest && latest != version
 			});
