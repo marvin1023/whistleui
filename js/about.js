@@ -51,14 +51,13 @@ var About = React.createClass({
 	_showUpdateTips: function(callback) {
 		var self = this;
 		dataCenter.getInitialData(function(data) {
+			callback && callback(data);
 			var version = data.version;
 			var latest = data.latestVersion;
 			
 			self.setState({
 				hasUpdate: !latest || localStorage.latestVersion == latest ? false : latest != version
 			});
-			
-			callback && callback(data);
 		});
 	},
 	componentDidMount: function() {
