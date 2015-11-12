@@ -45,6 +45,14 @@ CodeMirror.defineMode('rules', function() {
 				return /^log:\/\//.test(str);
 			}
 			
+			function isFilter(str) {
+				return /^filter:\/\//.test(str);
+			}
+			
+			function isDisable(str) {
+				return /^disable:\/\//.test(str);
+			}
+			
 			return {
 				 token: function(stream, state) {
 					 if (stream.eatSpace()) {
@@ -84,6 +92,10 @@ CodeMirror.defineMode('rules', function() {
 								 type = 'meta js-params js-type';
 							 } else if (isLog(str)) {
 								 type = 'error js-log js-type';
+							 } else if (isFilter(str)) {
+								 type = 'variable-2 js-filter js-type';
+							 } else if (isDisable(str)) {
+								 type = 'variable-2 js-disable js-type';
 							 } else if (isRule(str)) {
 								 type = 'builtin js-rule js-type';
 							 }
