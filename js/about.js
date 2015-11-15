@@ -80,7 +80,7 @@ var About = React.createClass({
 			callback && callback(data);
 			
 			self.setState({
-				hasUpdate: compareVersion(data.latestVersion, data.version)
+				hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
 			});
 		});
 	},
