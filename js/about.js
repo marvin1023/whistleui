@@ -78,11 +78,9 @@ var About = React.createClass({
 		var self = this;
 		dataCenter.getInitialData(function(data) {
 			callback && callback(data);
-			var version = data.version;
-			var latest = data.latestVersion;
 			
 			self.setState({
-				hasUpdate: !latest || localStorage.latestVersion == latest ? false : latest != version
+				hasUpdate: compareVersion(data.latestVersion, data.version)
 			});
 		});
 	},
