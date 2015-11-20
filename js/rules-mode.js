@@ -29,7 +29,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRule(str) {
-				return /^[a-z0-9.+-]+:\/\//i.test(str);
+				return /^(?:[a-z0-9.+-]+:\/\/|[a-z]:(?:\\|\/(?!\/))|\/)/i.test(str);
 			}
 			
 			function isRegExp(str) {
@@ -114,6 +114,10 @@ CodeMirror.defineMode('rules', function() {
 					 
 					 if (isRegExp(str)) {
 						 return 'attribute';
+					 }
+					 
+					 if (isRule(str)) {
+						 return 'builtin js-rule js-type';
 					 }
 					 
 					 return null;
