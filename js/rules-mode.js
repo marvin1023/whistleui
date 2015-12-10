@@ -53,6 +53,10 @@ CodeMirror.defineMode('rules', function() {
 				return /^disable:\/\//.test(str);
 			}
 			
+			function isExports(str) {
+				return /^exports:\/\//.test(str);
+			}
+			
 			return {
 				 token: function(stream, state) {
 					 if (stream.eatSpace()) {
@@ -96,6 +100,8 @@ CodeMirror.defineMode('rules', function() {
 								 type = 'variable-2 js-filter js-type';
 							 } else if (isDisable(str)) {
 								 type = 'variable-2 js-disable js-type';
+							 } else if (isExports(str)) {
+								 type = 'variable-2 js-exports js-type';
 							 } else if (isRule(str)) {
 								 type = 'builtin js-rule js-type';
 							 }
