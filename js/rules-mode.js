@@ -54,7 +54,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isExports(str) {
-				return /^exports:\/\//.test(str);
+				return /^exports(?:Url)?:\/\//.test(str);
 			}
 			
 			return {
