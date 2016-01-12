@@ -57,6 +57,10 @@ CodeMirror.defineMode('rules', function() {
 				return /^exports(?:Url)?:\/\//.test(str);
 			}
 			
+			function isDispatch(str) {
+				return /^dispatch:\/\//.test(str);
+			}
+			
 			return {
 				 token: function(stream, state) {
 					 if (stream.eatSpace()) {
@@ -102,6 +106,8 @@ CodeMirror.defineMode('rules', function() {
 								 type = 'variable-2 js-disable js-type';
 							 } else if (isExports(str)) {
 								 type = 'variable-2 js-exports js-type';
+							 } else if (isDispatch(str)) {
+								 type = 'variable-2 js-dispatch js-type';
 							 } else if (isRule(str)) {
 								 type = 'builtin js-rule js-type';
 							 }
