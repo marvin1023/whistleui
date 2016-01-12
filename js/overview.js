@@ -11,8 +11,8 @@ var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.st
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 
  * cache://xxxs[no], params://json|string(放在url)
  */
-var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'disable', 'log', 'exports', 'exportsUrl', 'dispatch', 'referer', 
-             'auth', 'ua', 'urlParams', 'params', 'statusCode', 'redirect', 'method', 'cache', 'reqDelay', 'resDelay', 'reqSpeed', 
+var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'disable', 'log', 'exports', 'exportsUrl', 'referer', 'auth', 'ua', 
+             'urlParams', 'dispatch', 'params', 'statusCode', 'redirect', 'method', 'cache', 'reqDelay', 'resDelay', 'reqSpeed', 
              'resSpeed', 'reqType', 'resType', 'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqHeaders', 'resHeaders', 
              'reqPrepend', 'resPrepend', 'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace', 'reqWrite', 
              'resWrite', 'reqWriteRaw', 'resWriteRaw', 'css', 'html', 'js'];
