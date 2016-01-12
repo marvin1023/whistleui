@@ -54,7 +54,11 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isExports(str) {
-				return /^exports(?:Url)?:\/\//.test(str);
+				return /^exports:\/\//.test(str);
+			}
+			
+			function isExportsUrl(str) {
+				return /^exportsUrl:\/\//.test(str);
 			}
 			
 			function isDispatch(str) {
@@ -106,6 +110,8 @@ CodeMirror.defineMode('rules', function() {
 								 type = 'variable-2 js-disable js-type';
 							 } else if (isExports(str)) {
 								 type = 'variable-2 js-exports js-type';
+							 } else if (isExportsUrl(str)) {
+								 type = 'variable-2 js-exportsUrl js-type';
 							 } else if (isDispatch(str)) {
 								 type = 'variable-2 js-dispatch js-type';
 							 } else if (isRule(str)) {
