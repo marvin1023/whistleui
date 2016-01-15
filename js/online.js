@@ -78,6 +78,9 @@ var Online = React.createClass({
 			if (server.host) {
 				info.push('<h5>Host: ' + server.host + '</h5>');
 			}
+			if (server.nodeVersion) {
+				info.push('<h5>Node: ' + server.nodeVersion + '</h5>');
+			}
 			if (server.port) {
 				info.push('<h5>Port: ' + server.port + '</h5>');
 			}
