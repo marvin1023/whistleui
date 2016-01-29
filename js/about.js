@@ -82,8 +82,10 @@ function createDialog(data) {
 		dialog.find('.w-about-plugins-list')
 				.html(pluginsNames.map(function(name) {
 					var pkg = plugins[name];
-					return '<a title="' + (pkg.homepage ? 'View plugin homepage' : 'No plugin homepage') + '" href="' + 
-							(pkg.homepage ? pkg.homepage : 'javascript:;') + '" target="_blank">' + name.slice(0, -1) + '</a>';
+					name = name.slice(0, -1);
+					var detail = name + '(v' + pkg.version + ')';
+					return '<a title="' + (pkg.homepage ? 'View ' + detail + ' homepage' : detail + ' no homepage') + '" href="' + 
+							(pkg.homepage ? pkg.homepage : 'javascript:;') + '" target="_blank">' + name + '</a>';
 				}).join(''));
 	}
 	
