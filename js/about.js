@@ -4,7 +4,7 @@ var $ = window.jQuery = require('jquery'); //for bootstrap
 require('bootstrap/dist/js/bootstrap.js');
 var React = require('react');
 var dataCenter = require('./data-center');
-var dialog, curPlugins;
+var dialog;
 
 function compareVersion(v1, v2) {
 	return formatSemer(v1) > formatSemer(v2);
@@ -78,14 +78,10 @@ function createDialog(data) {
 			return;
 		}
 		
-		if (curPlugins && Object.keys(curPlugins).join() == pluginsNames.join()) {
-			return;
-		}
-		curPlugins = plugins;
 		dialog.find('.w-about-plugins').show();
 		dialog.find('.w-about-plugins-list')
 				.html(pluginsNames.map(function(name) {
-					var pkg = curPlugins[name];
+					var pkg = plugins[name];
 					return '<a title="' + (pkg.homepage ? 'View plugin homepage' : 'No plugin homepage') + '" href="' + 
 							(pkg.homepage ? pkg.homepage : 'javascript:;') + '" target="_blank">' + name.slice(0, -1) + '</a>';
 				}).join(''));
