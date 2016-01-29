@@ -4,7 +4,7 @@ var $ = window.jQuery = require('jquery'); //for bootstrap
 require('bootstrap/dist/js/bootstrap.js');
 var React = require('react');
 var dataCenter = require('./data-center');
-var dialog;
+var dialog, curPlugins;
 
 function compareVersion(v1, v2) {
 	return formatSemer(v1) > formatSemer(v2);
@@ -60,7 +60,35 @@ function createDialog(data) {
 			aboutUrl.attr('href', 'http://www.whistlejs.com#v=' + version);
 		}
 		updateVersion(data);
+		setPlugins(data.plugins);
 		dataCenter.on('serverInfo', updateVersion);
+	}
+	
+	dataCenter.getPlugins(function(data) {
+		if (!data || data.ec !== 0) {
+			return;
+		}
+		setPlugins(data.plugins);
+	});
+	
+	function setPlugins(plugins) {
+		var pluginsNames = plugins && Object.keys(plugins);
+		if (!pluginsNames && !pluginsNames.length) {
+			dialog.find('.w-about-plugins').hide();
+			return;
+		}
+		
+		if (curPlugins && Object.keys(curPlugins).join() == pluginsNames.join()) {
+			return;
+		}
+		curPlugins = plugins;
+		dialog.find('.w-about-plugins').show();
+		dialog.find('.w-about-plugins-list')
+				.html(pluginsNames.map(function(name) {
+					var pkg = curPlugins[name];
+					return '<a title="View detail" href="' + 
+							(pkg.homepage ? pkg.homepage : 'javascript:;') + '" target="_blank">' + name.slice(0, -1) + '</a>';
+				}).join(''));
 	}
 	
 	return dialog;
