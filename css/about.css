@@ -5,4 +5,6 @@
 .w-about-latest-version {display: none;}
 .w-about-menu {position: relative;}
 .w-about-menu i {display: none; position: absolute; top: 2px; left: 17px; width: 5px; height: 5px; border-radius: 5px; background: red;}
-.w-about-plugins {}
+.w-about-plugins {border-top: 1px solid #e5e5e5; padding: 5px 0; margin-top: 10px; display: none;}
+.w-about-plugins-list {padding: 5px 0 0 5px;}
+.w-about-plugins-list a {margin-right: 5px;}

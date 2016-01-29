@@ -32,7 +32,8 @@ function createDialog(data) {
 					  '<span class="w-about-latest-version">Latest version: <a class="w-about-github" href="https://github.com/avwo/whistle/wiki/%E6%9B%B4%E6%96%B0whistle" target="_blank">' + latest + '</a><br></span>' +
 					  'View <a title="View all plugins" href="/plugins.html" target="_blank">plugins</a><br/>' +
 					  'Visit <a class="w-about-url" title="How to update whistle" href="http://www.whistlejs.com/#v=' + version + '" target="_blank">http://www.whistlejs.com</a></span>' +
-				      '</div>' + 
+					  '<div class="w-about-plugins">All plugins:<div class="w-about-plugins-list"></div></div>' +
+					  '</div>' + 
 				      '<div class="modal-footer">' + 
 				        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' + 
 				      '</div>' + 
