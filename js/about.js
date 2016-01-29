@@ -73,7 +73,7 @@ function createDialog(data) {
 	
 	function setPlugins(plugins) {
 		var pluginsNames = plugins && Object.keys(plugins);
-		if (!pluginsNames && !pluginsNames.length) {
+		if (!pluginsNames || !pluginsNames.length) {
 			dialog.find('.w-about-plugins').hide();
 			return;
 		}
