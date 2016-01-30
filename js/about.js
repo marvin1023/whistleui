@@ -31,7 +31,7 @@ function createDialog(data) {
 					  'Version: <span class="w-about-version">' + version + '</span><br>' +
 					  '<span class="w-about-latest-version">Latest version: <a class="w-about-github" href="https://github.com/avwo/whistle/wiki/%E6%9B%B4%E6%96%B0whistle" target="_blank">' + latest + '</a><br></span>' +
 					  'Visit <a class="w-about-url" title="How to update whistle" href="http://www.whistlejs.com/#v=' + version + '" target="_blank">http://www.whistlejs.com</a></span>' +
-					  '<div class="w-about-plugins">All plugins:<div class="w-about-plugins-list"></div></div>' +
+					  '<div class="w-about-plugins">Installed plugins:<div class="w-about-plugins-list"></div></div>' +
 					  '</div>' + 
 				      '<div class="modal-footer">' + 
 				        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' + 
@@ -78,15 +78,16 @@ function createDialog(data) {
 			return;
 		}
 		
+		var thead = '<thead><tr><td class="w-about-plugin-name">Name</td><td class="w-about-plugin-version">Version</td><td class="w-about-plugin-homepage">Homepage</td></tr></thead>';
 		dialog.find('.w-about-plugins').show();
 		dialog.find('.w-about-plugins-list')
-				.html(pluginsNames.map(function(name) {
+				.html('<table class="table">' + thead + '<tbody>' + pluginsNames.map(function(name) {
 					var pkg = plugins[name];
 					name = name.slice(0, -1);
 					var detail = name + '(v' + pkg.version + ')';
-					return '<a title="' + (pkg.homepage ? 'View ' + detail + ' homepage' : detail + ' no homepage') + '" href="' + 
-							(pkg.homepage ? pkg.homepage : 'javascript:;') + '" target="_blank">' + name + '</a>';
-				}).join(''));
+					return '<tr><td>' + name + '</td><td>' + pkg.version + '</td><td><a title="' + (pkg.homepage ? 'View ' + detail + ' homepage' : detail + ' no homepage') + '" href="' + 
+							(pkg.homepage ? pkg.homepage : 'javascript:;') + '" target="_blank">' + (pkg.homepage || '') + '</a></td></tr>';
+				}).join('') + '</tbody></table>');
 	}
 	
 	return dialog;
