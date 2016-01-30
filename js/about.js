@@ -84,9 +84,9 @@ function createDialog(data) {
 				.html('<table class="table">' + thead + '<tbody>' + pluginsNames.map(function(name) {
 					var pkg = plugins[name];
 					name = name.slice(0, -1);
-					var detail = name + '(v' + pkg.version + ')';
-					return '<tr><td>' + name + '</td><td>' + pkg.version + '</td><td><a title="' + (pkg.homepage ? 'View ' + detail + ' homepage' : detail + ' no homepage') + '" href="' + 
-							(pkg.homepage ? pkg.homepage : 'javascript:;') + '" target="_blank">' + (pkg.homepage || '') + '</a></td></tr>';
+					var homepage = pkg.homepage || '';
+					return '<tr><td title="' + name + '">' + name + '</td><td title="' + pkg.version + '">' + pkg.version + 
+					'</td><td><a title="' + homepage + '" href="' + homepage + '" target="_blank">' + homepage + '</a></td></tr>';
 				}).join('') + '</tbody></table>');
 	}
 	
