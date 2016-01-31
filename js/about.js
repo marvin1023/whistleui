@@ -73,13 +73,14 @@ function createDialog(data) {
 	
 	function setPlugins(plugins) {
 		var pluginsNames = plugins && Object.keys(plugins);
+		var dialogBody = dialog.find('.modal-body');
 		if (!pluginsNames || !pluginsNames.length) {
-			dialog.find('.w-about-plugins').hide();
+			dialogBody.removeClass('w-about-has-plugins');
 			return;
 		}
 		
 		var thead = '<thead><tr><td class="w-about-plugin-name">Name</td><td class="w-about-plugin-version">Version</td><td class="w-about-plugin-homepage">Homepage</td></tr></thead>';
-		dialog.find('.w-about-plugins').show();
+		dialogBody.addClass('w-about-has-plugins');
 		dialog.find('.w-about-plugins-list')
 				.html('<table class="table">' + thead + '<tbody>' + pluginsNames.map(function(name) {
 					var pkg = plugins[name];

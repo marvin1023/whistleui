@@ -1,5 +1,5 @@
 .w-about-dialog .modal-dialog {width: 360px;}
-.w-about-dialog .modal-dialog .modal-body {padding-bottom: 0;}
+.w-about-dialog .modal-dialog .modal-body {padding-bottom: 10px;}
 .w-about-dialog-ctn {display: inline-block; padding-top: 10px; margin-left: 20px;}
 .w-about-dialog-title {margin-bottom: 10px; display: block;}
 .w-about-dialog img {width: 60px; vertical-align: top;}
@@ -7,6 +7,8 @@
 .w-about-menu {position: relative;}
 .w-about-menu i {display: none; position: absolute; top: 2px; left: 17px; width: 5px; height: 5px; border-radius: 5px; background: red;}
 .w-about-plugins {border-top: 1px solid #e5e5e5; padding: 5px 0 0; margin-top: 10px; display: none;}
+.w-about-has-plugins {padding-bottom: 0!important;}
+.w-about-has-plugins .w-about-plugins {display: block;}
 .w-about-plugins-list {padding-left: 5px;}
 .w-about-plugins-list a {margin-right: 10px;}
 .w-about-plugins-list .table {table-layout: fixed;}
