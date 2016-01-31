@@ -85,7 +85,9 @@ function createDialog(data) {
 					var pkg = plugins[name];
 					name = name.slice(0, -1);
 					var homepage = pkg.homepage || '';
-					return '<tr><td title="' + name + '">' + name + '</td><td title="' + pkg.version + '">' + pkg.version + 
+					var configPage = 'http://' + name + '.local.whistlejs.com/';
+					return '<tr><td><a title="' + configPage + '" href="' + configPage + '" target="_blank">' 
+					+ name + '</a></td><td title="' + pkg.version + '">' + pkg.version + 
 					'</td><td><a title="' + homepage + '" href="' + homepage + '" target="_blank">' + homepage + '</a></td></tr>';
 				}).join('') + '</tbody></table>');
 	}
