@@ -82,7 +82,9 @@ function createDialog(data) {
 		var thead = '<thead><tr><td class="w-about-plugin-name">Name</td><td class="w-about-plugin-version">Version</td><td class="w-about-plugin-homepage">Homepage</td></tr></thead>';
 		dialogBody.addClass('w-about-has-plugins');
 		dialog.find('.w-about-plugins-list')
-				.html('<table class="table">' + thead + '<tbody>' + pluginsNames.map(function(name) {
+				.html('<table class="table">' + thead + '<tbody>' + pluginsNames.sort(function(a, b) {
+					return a > b ? 1 : -1;
+				}).map(function(name) {
 					var pkg = plugins[name];
 					name = name.slice(0, -1);
 					var homepage = pkg.homepage || '';
