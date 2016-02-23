@@ -13,7 +13,7 @@ var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.st
  */
 var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'disable', 'log', 'exports', 'exportsUrl', 'referer', 'auth', 'ua', 'etag',
              'urlParams', 'dispatch', 'params', 'statusCode', 'redirect', 'method', 'cache', 'attachment', 'reqDelay', 'resDelay', 'reqSpeed', 
-             'resSpeed', 'reqType', 'resType', 'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqHeaders', 'resHeaders', 
+             'resSpeed', 'reqType', 'resType', 'reqCharset', 'resCharset', 'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqHeaders', 'resHeaders', 
              'reqPrepend', 'resPrepend', 'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace', 'reqWrite', 
              'resWrite', 'reqWriteRaw', 'resWriteRaw', 'css', 'html', 'js'];
 var DEFAULT_OVERVIEW_MODAL = {};
