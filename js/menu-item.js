@@ -17,7 +17,7 @@ var MenuItem = React.createClass({
 		var onClickOption = this.props.onClickOption || util.noop;
 		var onDoubleClickOption = this.props.onDoubleClickOption || util.noop;
 		return (
-			<div onBlur={this.props.onBlur} tabIndex="0" onMouseDown={this.preventBlur} style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (this.props.className || '')}>
+			<div onBlur={this.props.onBlur} tabIndex="0" onMouseDown={this.preventBlur} style={{display: util.getBoolean(this.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (this.props.className || '') + (this.props.disabled ? ' w-disabled' : '')}>
 			{
 					options ? <div className="w-menu-options">{options.map(function(option) {
 						

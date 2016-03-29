@@ -110,6 +110,7 @@ var Index = React.createClass({
 			});
 		}
 		
+		state.disabledAllRules = modal.disabledAllRules;
 		state.hideHttpsConnects = modal.hideHttpsConnects;
 		state.interceptHttpsConnects = modal.interceptHttpsConnects;
 		state.rules = new ListModal(rulesList, rulesData);
@@ -961,6 +962,18 @@ var Index = React.createClass({
 			showValuesLineNumbers: checked
 		});
 	},
+	disableAllRules: function(e) {
+		 var checked = e.target.checked;
+		 var self = this;
+		 dataCenter.rules.disableAllRules({disabledAllRules: checked ? 1 : 0}, function(data) {
+			  if (data.ec === 0) {
+				self.setState({
+					disabledAllRules: checked
+				});
+			  }
+		 });
+		 e.preventDefault();
+	},
 	allowMultipleChoice: function(e) {
 		var checked = e.target.checked;
 		dataCenter.rules.allowMultipleChoice({allowMultipleChoice: checked ? 1 : 0});
@@ -1064,7 +1077,7 @@ var Index = React.createClass({
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isRules ? 'none' : ''}} className="w-menu-wrapper">
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
-						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules} />
+						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} disabled={state.disabledAllRules} className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules} />
 					</div>
 					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isValues ? 'none' : ''}} className="w-menu-wrapper">
 						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
@@ -1094,7 +1107,7 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={state.filterText || 'substring or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
-				{state.hasRules ? <List ref="rules" theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
+				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : ''}
 				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : ''}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' ? false : true} modal={state.network} /> : ''}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
@@ -1107,6 +1120,7 @@ var Index = React.createClass({
 						      	onFontSizeChange={this.onRulesFontSizeChange} 
 						      	onLineNumberChange={this.onRulesLineNumberChange} />
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.allowMultipleChoice} onChange={this.allowMultipleChoice} /> Allow multiple choice</label></p>
+					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.disabledAllRules} onChange={this.disableAllRules} /> Disable all rules</label></p>
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.syncWithSysHosts} onChange={this.syncWithSysHosts} /> Synchronized with the system hosts</label></p>
 					      	<p className="w-editor-settings-box"><a onClick={this.importSysHosts} href="javascript:;">Import system hosts to <strong>Default</strong></a></p>
 					      </div>

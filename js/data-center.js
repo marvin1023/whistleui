@@ -44,6 +44,7 @@ exports.values = createCgi({
 }, POST_CONF);
 
 exports.rules = createCgi({
+	disableAllRules: '/cgi-bin/rules/disable-all-rules',
 	get: {
 		type: 'get',
 		get: '/cgi-bin/rules/list'

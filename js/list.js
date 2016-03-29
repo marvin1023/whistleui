@@ -110,7 +110,7 @@ var List = React.createClass({
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
 				<div className="fill orient-vertical-box w-list-left">	
-					<div ref="list" tabIndex="0" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '')}>
+					<div ref="list" tabIndex="0" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '') + (this.props.disabled ? ' w-disabled' : '')}>
 							{
 								list.map(function(name) {
 									var item = data[name];
