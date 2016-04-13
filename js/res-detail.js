@@ -1,5 +1,6 @@
 require('./base-css.js');
 require('../css/res-detail.css');
+var $ = require('jquery');
 var React = require('react');
 var Table = require('./table');
 var Properties = require('./properties');
@@ -48,7 +49,11 @@ var ResDetail = React.createClass({
 			headers = res.headers;
 			json = util.stringify(body);
 			if (headers && headers['set-cookie']) {
-				cookies = headers['set-cookie'].map(function(cookie) {
+				cookies = headers['set-cookie'];
+				if (!$.isArray(cookies)) {
+					cookies = typeof cookies == 'string' ? [cookies] : [];
+				}
+				cookies = cookies.map(function(cookie) {
 							cookie = util.parseQueryString(cookie, /;\s*/, null, decodeURIComponent);
 							var row = ['', '', '', '', '', '', ''];
 							for (var i in cookie) {
