@@ -64,7 +64,7 @@ function createDialog(data) {
 		dataCenter.on('serverInfo', updateVersion);
 	}
 	
-	dataCenter.getPlugins(function(data) {
+	dataCenter.plugins.getPlugins(function(data) {
 		if (!data || data.ec !== 0) {
 			return;
 		}

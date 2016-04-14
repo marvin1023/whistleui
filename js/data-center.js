@@ -23,11 +23,8 @@ var cgi = createCgi({
 	getLog: '/cgi-bin/log/get',
 	getData: '/cgi-bin/get-data',
 	getServerInfo: '/cgi-bin/server-info',
-	getInitaial: '/cgi-bin/init',
-	getPlugins: '/cgi-bin/get-plugins'
+	getInitaial: '/cgi-bin/init'
 }, GET_CONF);
-
-exports.getPlugins = cgi.getPlugins;
 
 exports.values = createCgi({
 	get: {
@@ -45,7 +42,8 @@ exports.values = createCgi({
 
 exports.plugins = createCgi({
 	disablePlugin: '/cgi-bin/plugins/disable-plugin',
-	disableRules: '/cgi-bin/plugins/disable-rules'
+	disableRules: '/cgi-bin/plugins/disable-rules',
+	getPlugins: '/cgi-bin/plugins/get-plugins'
 }, POST_CONF);
 
 exports.rules = createCgi({
