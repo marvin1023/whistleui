@@ -43,6 +43,11 @@ exports.values = createCgi({
 	showLineNumbers: '/cgi-bin/values/show-line-numbers'
 }, POST_CONF);
 
+exports.plugins = createCgi({
+	disablePlugin: '/cgi-bin/plugins/disable-plugin',
+	disableRules: '/cgi-bin/plugins/disable-rules'
+}, POST_CONF);
+
 exports.rules = createCgi({
 	disableAllRules: '/cgi-bin/rules/disable-all-rules',
 	get: {
