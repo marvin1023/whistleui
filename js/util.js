@@ -200,7 +200,7 @@ exports.ensureVisible = function(elem, container) {
 
 exports.parseQueryString = function(str, delimiter, seperator, decode) {
 	var result = {};
-	if (!str || !(str = str.trim())) {
+	if (!str || !(str = (str + '').trim())) {
 		return result;
 	}
 	delimiter = delimiter || '&';
