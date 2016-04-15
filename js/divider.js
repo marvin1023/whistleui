@@ -2,6 +2,8 @@ require('./base-css.js');
 require('../css/divider.css');
 var $ = require('jquery');
 var React = require('react');
+var ReactDOM = require('react-dom');
+
 var util = require('./util');
 
 util.addDragEvent('.w-divider', function(target, x, y) {
@@ -16,7 +18,7 @@ util.addDragEvent('.w-divider', function(target, x, y) {
 
 var Divider = React.createClass({
 	componentDidMount: function() {
-		var divider = this.refs.divider.getDOMNode();
+		var divider = ReactDOM.findDOMNode(this.refs.divider);
 		var vertical = util.getBoolean(this.props.vertical);
 		var prop = vertical ? 'height' : 'width';
 		if (this._leftWidth > 0) {

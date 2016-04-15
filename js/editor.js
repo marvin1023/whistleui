@@ -20,6 +20,7 @@ require('../css/list.css');
 require('../css/editor.css');
 var $ = require('jquery');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var CodeMirror = require('codemirror');
 var javascript = require('codemirror/mode/javascript/javascript');
 var css = require('codemirror/mode/css/css');
@@ -73,7 +74,7 @@ var Editor = React.createClass({
 	setFontSize: function(fontSize) {
 		fontSize = this._fontSize = fontSize || DEFAULT_FONT_SIZE;
 		if (this._editor) {
-			this.refs.editor.getDOMNode().style.fontSize = fontSize;
+			ReactDOM.findDOMNode(this.refs.editor).style.fontSize = fontSize;
 		}
 	},
 	showLineNumber: function(show) {
@@ -91,7 +92,7 @@ var Editor = React.createClass({
 	componentDidMount: function() {
 		var timeout;
 		var self = this;
-		var elem = self.refs.editor.getDOMNode();
+		var elem = ReactDOM.findDOMNode(self.refs.editor);
 		var editor = self._editor = CodeMirror(elem);
 		editor.on('change', function(e) {
 			if (typeof self.props.onChange == 'function' && editor.getValue() !== (self.props.value || '')) {

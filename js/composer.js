@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/composer.css');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
@@ -25,10 +26,10 @@ var Composer = React.createClass({
 		}
 		var refs = this.refs;
 		var req = item.req;
-		refs.url.getDOMNode().value = item.url;
-		refs.method.getDOMNode().value = req.method;
-		refs.headers.getDOMNode().value = util.objectToString(req.headers);
-		refs.body.getDOMNode().value = req.body || '';
+		ReactDOM.findDOMNode(refs.url).value = item.url;
+		ReactDOM.findDOMNode(refs.method).value = req.method;
+		ReactDOM.findDOMNode(refs.headers).value = util.objectToString(req.headers);
+		ReactDOM.findDOMNode(refs.body).value = req.body || '';
 	},
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
@@ -36,16 +37,16 @@ var Composer = React.createClass({
 	},
 	execute: function() {
 		var refs = this.refs;
-		var url = refs.url.getDOMNode().value.trim();
+		var url = ReactDOM.findDOMNode(refs.url).value.trim();
 		if (!url) {
 			return;
 		}
 		
 		dataCenter.composer({
 			url: url,
-			headers: refs.headers.getDOMNode().value,
-			method: refs.method.getDOMNode().value || 'GET',
-			body: refs.body.getDOMNode().value
+			headers: ReactDOM.findDOMNode(refs.headers).value,
+			method: ReactDOM.findDOMNode(refs.method).value || 'GET',
+			body: ReactDOM.findDOMNode(refs.body).value
 		});
 		events.trigger('executeComposer');
 	},

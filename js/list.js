@@ -3,6 +3,7 @@ require('../css/list.css');
 var $ = require('jquery');
 var util = require('./util');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Divider = require('./divider');
 var Editor = require('./editor');
 var FilterInput = require('./filter-input');
@@ -31,7 +32,7 @@ var List = React.createClass({
 			self.onDoubleClick(item);
 		}
 		var modal = self.props.modal;
-		var listCon = $(self.refs.list.getDOMNode()).focus().on('keydown', function(e) {
+		var listCon = $(ReactDOM.findDOMNode(self.refs.list)).focus().on('keydown', function(e) {
 			var item;
 			if (e.keyCode == 38) { //up
 				item = modal.prev();
@@ -56,7 +57,7 @@ var List = React.createClass({
 	ensureVisible: function() {
 		var activeItem = this.props.modal.getActive();
 		if (activeItem) {
-			util.ensureVisible(this.refs[activeItem.name].getDOMNode(), this.refs.list.getDOMNode());
+			util.ensureVisible(ReactDOM.findDOMNode(this.refs[activeItem.name]), ReactDOM.findDOMNode(this.refs.list));
 		}
 	},
 	onClick: function(item) {

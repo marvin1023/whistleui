@@ -1,5 +1,6 @@
 require('../css/textarea.css');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var util = require('./util');
 var dataCenter = require('./data-center');
 var MAX_LENGTH =1024 * 100;
@@ -35,7 +36,7 @@ var Textarea = React.createClass({
 		var self = this;
 		self.state.showAddToValues = true;
 		self.forceUpdate(function() {
-			self.refs.valuesNameInput.getDOMNode().focus();
+			ReactDOM.findDOMNode(self.refs.valuesNameInput).focus();
 		});
 	},
 	addToValues: function(e) {
@@ -46,7 +47,7 @@ var Textarea = React.createClass({
 		if (!modal) {
 			return;
 		}
-		var target = this.refs.valuesNameInput.getDOMNode();
+		var target = ReactDOM.findDOMNode(this.refs.valuesNameInput);
 		var name = target.value.trim();
 		if (!name) {
 			alert('Value name can not be empty.');
@@ -83,7 +84,7 @@ var Textarea = React.createClass({
 		clearTimeout(self._timeout);
 		var value = self.state.value;
 		self._timeout = setTimeout(function() {
-			self.refs.textarea.getDOMNode().value = value;
+			ReactDOM.findDOMNode(self.refs.textarea).value = value;
 		}, Math.ceil((value && value.length || 0) / 1024));
 	},
 	render: function() {

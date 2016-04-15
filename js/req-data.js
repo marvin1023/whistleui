@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/req-data.css');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var util = require('./util');
 var FilterInput = require('./filter-input');
@@ -75,8 +76,8 @@ function getSelection() {
 var ReqData = React.createClass({
 	componentDidMount: function() {
 		var self = this;
-		self.container = self.refs.container.getDOMNode();
-		self.content = self.refs.content.getDOMNode();
+		self.container = ReactDOM.findDOMNode(self.refs.container);
+		self.content = ReactDOM.findDOMNode(self.refs.content);
 		$(self.container).on('keydown', function(e) {
 			var modal = self.props.modal;
 			if (!modal) {
@@ -121,7 +122,7 @@ var ReqData = React.createClass({
 				activeItem: item
 			});
 		}
-		hm && util.ensureVisible(self.refs[item.id].getDOMNode(), self.container);
+		hm && util.ensureVisible(ReactDOM.findDOMNode(self.refs[item.id]), self.container);
 	},
 	clearSelection: function() {
 		var modal = this.props.modal;

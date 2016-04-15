@@ -13,7 +13,7 @@ module.exports = {
 		loaders : [ {
 			test : /\.js$/,
 			exclude : /node_modules/,
-			loader : 'jsx-loader?harmony'
+			loader : 'babel-loader'
 		}, {
 			test : /\.css$/,
 			loader : 'style-loader!css-loader'
@@ -22,11 +22,16 @@ module.exports = {
 			loader : 'url-loader?limit=1000000'
 		} ]
 	},
-	plugins : [new webpack.optimize.UglifyJsPlugin({
-	    compress: {
-	        warnings: false
-	    }
-	})
-//	, new webpack.SourceMapDevToolPlugin({filename: 'sourcemap.json'})
+	plugins : [
+	           new webpack.DefinePlugin({
+				    'process.env': {
+				      'NODE_ENV': '"production"'
+				    }
+	           }),
+	           new webpack.optimize.UglifyJsPlugin({
+				    compress: {
+				        warnings: false
+				    }
+	           })
 	]
 };

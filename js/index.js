@@ -1,6 +1,7 @@
 require('../css/index.css');
 var $ = require('jquery');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var List = require('./list');
 var ListModal = require('./list-modal');
 var Network = require('./network');
@@ -212,7 +213,7 @@ var Index = React.createClass({
 						version: data.version,
 						latestVersion: data.latestVersion
 					}, function() {
-						$(self.refs.showUpdateTipsDialog.getDOMNode()).modal('show');
+						$(ReactDOM.findDOMNode(self.refs.showUpdateTipsDialog)).modal('show');
 					})
 				}
 			});
@@ -222,7 +223,7 @@ var Index = React.createClass({
 		dataCenter.donotShowAgain();
 	},
 	hideUpdateTipsDialog: function() {
-		$(this.refs.showUpdateTipsDialog.getDOMNode()).modal('hide');
+		$(ReactDOM.findDOMNode(this.refs.showUpdateTipsDialog)).modal('hide');
 	},
 	getWeinreFromRules: function() {
 		var values = this.state.values;
@@ -289,7 +290,7 @@ var Index = React.createClass({
 			return;
 		}
 		var scrollTimeout;
-		var con = $(self.refs.network.getDOMNode())
+		var con = $(ReactDOM.findDOMNode(self.refs.network))
 			.find('.w-req-data-list').scroll(function() {
 				var modal = self.state.network;
 				scrollTimeout && clearTimeout(scrollTimeout);
@@ -473,7 +474,7 @@ var Index = React.createClass({
 		this.setState(state, callback);
 	},
 	showCreateRules: function() {
-		var createRulesInput = this.refs.createRulesInput.getDOMNode();
+		var createRulesInput = ReactDOM.findDOMNode(this.refs.createRulesInput);
 		this.setState({
 			showCreateRules: true
 		}, function() {
@@ -481,7 +482,7 @@ var Index = React.createClass({
 		});
 	},
 	showCreateValues: function() {
-		var createValuesInput = this.refs.createValuesInput.getDOMNode();
+		var createValuesInput = ReactDOM.findDOMNode(this.refs.createValuesInput);
 		this.setState({
 			showCreateValues: true
 		}, function() {
@@ -489,7 +490,7 @@ var Index = React.createClass({
 		});
 	},
 	showHttpsSettingsDialog: function() {
-		$(this.refs.rootCADialog.getDOMNode()).modal('show');
+		$(ReactDOM.findDOMNode(this.refs.rootCADialog)).modal('show');
 	},
 	hideHttpsConnects: function(e) {
 		var self = this;
@@ -522,7 +523,7 @@ var Index = React.createClass({
 			return;
 		}
 		var self = this;
-		var target = self.refs.createRulesInput.getDOMNode();
+		var target = ReactDOM.findDOMNode(self.refs.createRulesInput);
 		var name = $.trim(target.value);
 		if (!name) {
 			alert('Rule name can not be empty.');
@@ -554,7 +555,7 @@ var Index = React.createClass({
 			return;
 		}
 		var self = this;
-		var target = self.refs.createValuesInput.getDOMNode();
+		var target = ReactDOM.findDOMNode(self.refs.createValuesInput);
 		var name = $.trim(target.value);
 		if (!name) {
 			alert('Value name can not be empty.');
@@ -592,7 +593,7 @@ var Index = React.createClass({
 		if (!activeItem || activeItem.isDefault) {
 			return;
 		}
-		var editRulesInput = this.refs.editRulesInput.getDOMNode();
+		var editRulesInput = ReactDOM.findDOMNode(this.refs.editRulesInput);
 		this.setState({
 			showEditRules: true,
 			selectedRuleName: activeItem.name,
@@ -608,7 +609,7 @@ var Index = React.createClass({
 			return;
 		}
 		
-		var editValuesInput = this.refs.editValuesInput.getDOMNode();
+		var editValuesInput = ReactDOM.findDOMNode(this.refs.editValuesInput);
 		this.setState({
 			showEditValues: true,
 			selectedValueName: activeItem.name,
@@ -618,7 +619,7 @@ var Index = React.createClass({
 		});	
 	},
 	showEditFilter: function() {
-		var editFilterInput = this.refs.editFilterInput.getDOMNode();
+		var editFilterInput = ReactDOM.findDOMNode(this.refs.editFilterInput);
 		this.setState({
 			showEditFilter: true
 		}, function() {
@@ -635,7 +636,7 @@ var Index = React.createClass({
 		if (!activeItem) {
 			return;
 		}
-		var target = self.refs.editRulesInput.getDOMNode();
+		var target = ReactDOM.findDOMNode(self.refs.editRulesInput);
 		var name = $.trim(target.value);
 		if (!name) {
 			alert('Rule name can not be empty.');
@@ -671,7 +672,7 @@ var Index = React.createClass({
 		if (!activeItem) {
 			return;
 		}
-		var target = self.refs.editValuesInput.getDOMNode();
+		var target = ReactDOM.findDOMNode(self.refs.editValuesInput);
 		var name = $.trim(target.value);
 		if (!name) {
 			alert('Rule name can not be empty.');
@@ -797,7 +798,7 @@ var Index = React.createClass({
 			return;
 		}
 		var self = this;
-		var target = self.refs.editFilterInput.getDOMNode();
+		var target = ReactDOM.findDOMNode(self.refs.editFilterInput);
 		var filter = $.trim(target.value);
 		dataCenter.setFilter({filter: filter}, function(data) {
 			if (data && data.ec === 0) {
@@ -870,10 +871,10 @@ var Index = React.createClass({
 		this.state.values.setActive(name);
 	},
 	showRulesSettings: function() {
-		$(this.refs.rulesSettingsDialog.getDOMNode()).modal('show');
+		$(ReactDOM.findDOMNode(this.refs.rulesSettingsDialog)).modal('show');
 	},
 	showValuesSettings: function() {
-		$(this.refs.valuesSettingsDialog.getDOMNode()).modal('show');
+		$(ReactDOM.findDOMNode(this.refs.valuesSettingsDialog)).modal('show');
 	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
@@ -1004,7 +1005,7 @@ var Index = React.createClass({
 				defaultRules.value = data.hosts;
 				self.activeRules(defaultRules);
 				self.setState({}, function() {
-					self.refs.rules.refs.list.getDOMNode().scrollTop = 0;
+					ReactDOM.findDOMNode(self.refs.rules.refs.list).scrollTop = 0;
 				});
 			});
 		}
@@ -1189,7 +1190,7 @@ var Index = React.createClass({
 	}
 });
 dataCenter.getInitialData(function(data) {
-	React.render(<Index modal={data} />, document.body);	
+	ReactDOM.render(<Index modal={data} />, document.getElementById('container'));	
 });
 
 

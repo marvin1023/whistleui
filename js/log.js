@@ -2,14 +2,15 @@ require('./base-css.js');
 require('../css/log.css');
 var $ = require('jquery');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var util = require('./util');
 var dataCenter = require('./data-center');
 
 var Log = React.createClass({
 	componentDidMount: function() {
 		var self = this;
-		var container = self.refs.container.getDOMNode();
-		var content = self.refs.content.getDOMNode();
+		var container = ReactDOM.findDOMNode(self.refs.container);
+		var content = ReactDOM.findDOMNode(self.refs.content);
 		
 		dataCenter.on('log', function(data) {
 			var atBottom = scrollAtBottom();
