@@ -5,7 +5,7 @@ var ReactDOM = require('react-dom');
 var Dialog = React.createClass({
 	componentDidMount: function() {
 		this.container = document.createElement('div');
-		this.container.className = 'modal fade';
+		this.container.className = 'modal fade' + (this.props.wstyle ? ' ' + this.props.wstyle : '');
 	    document.body.appendChild(this.container);
 	    this.componentDidUpdate();
 	},

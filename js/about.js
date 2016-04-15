@@ -3,6 +3,7 @@ require('../css/about.css');
 var $ = window.jQuery = require('jquery'); //for bootstrap
 require('bootstrap/dist/js/bootstrap.js');
 var React = require('react');
+var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
 var dialog;
 
@@ -122,7 +123,12 @@ var About = React.createClass({
 	},
 	render: function() {
 		return (
-				<a onClick={this.showAboutInfo} className="w-about-menu" href="javascript:;"><i style={{display: this.state && this.state.hasUpdate ? 'block' : ''}}></i><span className="glyphicon glyphicon-info-sign"></span>About</a>
+				<a onClick={this.showAboutInfo} className="w-about-menu" href="javascript:;">
+					<i style={{display: this.state && this.state.hasUpdate ? 'block' : ''}}></i><span className="glyphicon glyphicon-info-sign"></span>About
+					<Dialog ref="aboutDialog" wstyle="w-about-has-plugins">
+						
+					</Dialog>
+				</a>
 		);
 	}
 });
