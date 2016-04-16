@@ -121,12 +121,18 @@ var About = React.createClass({
 	componentDidMount: function() {
 		this._showUpdateTips();
 	},
+	showDialog: function() {
+		this.refs.aboutDialog.show();
+	},
+	hideDialog: function() {
+		this.refs.aboutDialog.hide();
+	},
 	render: function() {
 		return (
 				<a onClick={this.showAboutInfo} className="w-about-menu" href="javascript:;">
 					<i style={{display: this.state && this.state.hasUpdate ? 'block' : ''}}></i><span className="glyphicon glyphicon-info-sign"></span>About
 					<Dialog ref="aboutDialog" wstyle="w-about-has-plugins">
-						
+						sdfsdfs
 					</Dialog>
 				</a>
 		);
