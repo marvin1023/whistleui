@@ -169,7 +169,7 @@ var About = React.createClass({
 	},
 	showAboutInfo: function(showTips) {
 		var self = this;
-		var sate = self.state || {};
+		var state = self.state || {};
 		self.showDialog();
 		if (!state.data) {
 			dataCenter.getInitialData(function(data) {
