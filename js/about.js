@@ -7,6 +7,7 @@ var ReactDOM = require('react-dom');
 var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
 var util = require('./util');
+var events = require('./events');
 var dialog;
 
 function compareVersion(v1, v2) {
@@ -116,10 +117,11 @@ var PluginsList = React.createClass({
 				});
 	},
 	render: function() {
-		var data = this.props.data;
+		var props = this.props;
+		var data = props.data;
 		var list = Object.keys(data || {});
 		return (
-			<div ref="pluginsList" className={this.props.wstyle}>
+			<div ref="pluginsList" className={props.wstyle}>
 				<table className="table">
 					<thead>
 						<tr>
@@ -137,7 +139,7 @@ var PluginsList = React.createClass({
 							return (
 								<tr key={name}>
 									<td>
-										<input type="checkbox" />
+										<input type="checkbox" disabled={props.disabled} />
 									</td>
 									<td>
 										<a title={configPage} href={configPage} className="w-about-plugin-item" data-key={name + ':'} target="_blank">{name}</a>
@@ -157,18 +159,30 @@ var PluginsList = React.createClass({
 });
 
 var About = React.createClass({
+	componentDidMount: function() {
+		var self = this;
+		events.on('disableAllRules', function(e, checked) {
+			 self.setState({
+				 disabledAllRules: checked
+			 });
+		});
+	},
 	showAboutInfo: function(showTips) {
 		var self = this;
 		self.showDialog();
-		dataCenter.getInitialData(function(data) {
-			self.setState({
-				data: data,
-				hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
+		if (!this.state || !this.state.data) {
+			dataCenter.getInitialData(function(data) {
+				self.setState({
+					data: data,
+					disabledAllRules: data.disabledAllRules,
+					hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
+				});
+				if (data.latestVersion) {
+					localStorage.latestVersion = data.latestVersion;
+				}
 			});
-			if (data.latestVersion) {
-				localStorage.latestVersion = data.latestVersion;
-			}
-		});
+		}
+		
 		//TODO: getPluginAndRules
 	},
 	showDialog: function() {
@@ -201,7 +215,9 @@ var About = React.createClass({
 		target.closest('.w-about-plugins').addClass('w-about-show-rules');
 	},
 	render: function() {
-		var data = this.state && this.state.data || {};
+		var state = this.state || {};
+		var data = state.data || {};
+		
 		return (
 				<a onClick={this.showAboutInfo} className="w-about-menu" href="javascript:;">
 					<i style={{display: this.state && this.state.hasUpdate ? 'block' : ''}}></i><span className="glyphicon glyphicon-info-sign"></span>About
@@ -226,8 +242,8 @@ var About = React.createClass({
 									<button type="button" onClick={this.showPlugins} className="btn btn-default active">Plugins</button>
 									<button type="button" onClick={this.showRules} className="btn btn-default">Rules</button>
 								</div>
-								<PluginsList wstyle="w-about-plugins-list" data={data.plugins} />
-								<PluginsList wstyle="w-about-rules-list" data={data.pluginsRules} isRules={true} />
+								<PluginsList wstyle="w-about-plugins-list" data={data.plugins} disabled={state.disabledAllRules} />
+								<PluginsList wstyle="w-about-rules-list" data={data.pluginsRules} disabled={state.disabledAllRules} isRules={true} />
 							</div>
 						</div>
 						<div className="modal-footer">
