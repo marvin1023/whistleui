@@ -967,12 +967,14 @@ var Index = React.createClass({
 		 var checked = e.target.checked;
 		 var self = this;
 		 dataCenter.rules.disableAllRules({disabledAllRules: checked ? 1 : 0}, function(data) {
-			  if (data.ec === 0) {
+			  if (data && data.ec === 0) {
 				  events.trigger('disableAllRules', checked);
 				  self.setState({
 					disabledAllRules: checked
 				});
-			  }
+			  } else {
+				util.showSystemError();
+			 }
 		 });
 		 e.preventDefault();
 	},

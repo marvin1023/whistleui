@@ -210,6 +210,8 @@ var About = React.createClass({
 				self.setState({
 					disabledPlugins: data.data
 				});
+			} else {
+				util.showSystemError();
 			}
 		});
 	},
@@ -224,6 +226,8 @@ var About = React.createClass({
 				self.setState({
 					disabledRules: data.data
 				});
+			} else {
+				util.showSystemError();
 			}
 		});
 	},
