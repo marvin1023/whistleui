@@ -175,7 +175,7 @@ var About = React.createClass({
 			dataCenter.getInitialData(function(data) {
 				self.setState({
 					data: data,
-					disabledAllRules: state.disabledAllRules == null ? state.disabledAllRules : data.disabledAllRules,
+					disabledAllRules: state.disabledAllRules != null ? state.disabledAllRules : data.disabledAllRules,
 					hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
 				});
 				if (data.latestVersion) {
