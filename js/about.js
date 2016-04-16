@@ -169,12 +169,13 @@ var About = React.createClass({
 	},
 	showAboutInfo: function(showTips) {
 		var self = this;
+		var sate = self.state || {};
 		self.showDialog();
-		if (!this.state || !this.state.data) {
+		if (!state.data) {
 			dataCenter.getInitialData(function(data) {
 				self.setState({
 					data: data,
-					disabledAllRules: data.disabledAllRules,
+					disabledAllRules: state.disabledAllRules == null ? state.disabledAllRules : data.disabledAllRules,
 					hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
 				});
 				if (data.latestVersion) {
