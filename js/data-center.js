@@ -29,7 +29,7 @@ var cgi = createCgi({
 exports.values = createCgi({
 	get: {
 		type: 'get',
-		get: '/cgi-bin/values/list'
+		url: '/cgi-bin/values/list'
 	},
 	add: '/cgi-bin/values/add',
 	remove: '/cgi-bin/values/remove',
@@ -43,7 +43,14 @@ exports.values = createCgi({
 exports.plugins = createCgi({
 	disablePlugin: '/cgi-bin/plugins/disable-plugin',
 	disableRules: '/cgi-bin/plugins/disable-rules',
-	getPlugins: '/cgi-bin/plugins/get-plugins'
+	getPlugins: {
+		type: 'get',
+		url: '/cgi-bin/plugins/get-plugins'
+	},
+	getPluginsAndRules: {
+		type: 'get',
+		url: '/cgi-bin/plugins/get-plugins-and-rules'
+	}
 }, POST_CONF);
 
 exports.rules = createCgi({

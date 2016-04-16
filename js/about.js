@@ -121,6 +121,8 @@ var PluginsList = React.createClass({
 		var props = self.props;
 		var data = props.data;
 		var list = Object.keys(data || {});
+		var disabledData = props.disabledData || {};
+		
 		return (
 			<div ref="pluginsList" className={props.wstyle}>
 				<table className="table">
@@ -135,12 +137,12 @@ var PluginsList = React.createClass({
 					<tbody>
 						{!list.length ? <td colSpan="4" className="w-empty">no data</td> : list.map(function(name) {
 							var item = data[name];
-							name = name.substring(0, name.indexOf(':'));
+							name = name.slice(0, -1);
 							var configPage = 'http://' + name + '.local.whistlejs.com/';
 							return (
 								<tr key={name}>
 									<td>
-										<input type="checkbox" data-name={name} onChange={props.onChange} disabled={props.disabled} />
+										<input type="checkbox" data-name={name} checked={!disabledData[name]} onChange={props.onChange} disabled={props.disabled} />
 									</td>
 									<td>
 										<a title={configPage} href={configPage} className="w-about-plugin-item" data-key={name + ':'} target="_blank">{name}</a>
@@ -172,10 +174,13 @@ var About = React.createClass({
 		var self = this;
 		var state = self.state || {};
 		self.showDialog();
-		if (!state.data) {
+		if (!state.plugins) {
 			dataCenter.getInitialData(function(data) {
 				self.setState({
-					data: data,
+					plugins: data.plugins,
+					pluginsRules: data.pluginsRules,
+					disabledPlugins: data.disabledPlugins,
+					disabledRules: data.disabledPluginsRules,
 					disabledAllRules: state.disabledAllRules != null ? state.disabledAllRules : data.disabledAllRules,
 					hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
 				});
@@ -185,7 +190,42 @@ var About = React.createClass({
 			});
 		}
 		
-		//TODO: getPluginAndRules
+		dataCenter.plugins.getPluginsAndRules(function(data) {
+			self.setState({
+				plugins: data.plugins,
+				pluginsRules: data.pluginsRules,
+				disabledPlugins: data.disabledPlugins,
+				disabledRules: data.disabledPluginsRules
+			});
+		});
+	},
+	disablePlugin: function(e) {
+		var self = this;
+		var target = e.target;
+		dataCenter.plugins.disablePlugin({
+			name: $(target).attr('data-name'),
+			disabled: target.checked ? 0 : 1
+		}, function(data) {
+			if (data && data.ec === 0) {
+				self.setState({
+					disabledPlugins: data.data
+				});
+			}
+		});
+	},
+	disableRules: function(e) {
+		var self = this;
+		var target = e.target;
+		dataCenter.plugins.disableRules({
+			name: $(target).attr('data-name'),
+			disabled: target.checked ? 0 : 1
+		}, function(data) {
+			if (data && data.ec === 0) {
+				self.setState({
+					disabledRules: data.data
+				});
+			}
+		});
 	},
 	showDialog: function() {
 		this.refs.aboutDialog.show();
@@ -217,12 +257,13 @@ var About = React.createClass({
 		target.closest('.w-about-plugins').addClass('w-about-show-rules');
 	},
 	render: function() {
-		var state = this.state || {};
+		var self = this;
+		var state = self.state || {};
 		var data = state.data || {};
 		
 		return (
-				<a onClick={this.showAboutInfo} className="w-about-menu" href="javascript:;">
-					<i style={{display: this.state && this.state.hasUpdate ? 'block' : ''}}></i><span className="glyphicon glyphicon-info-sign"></span>About
+				<a onClick={self.showAboutInfo} className="w-about-menu" href="javascript:;">
+					<i style={{display: state.hasUpdate ? 'block' : ''}}></i><span className="glyphicon glyphicon-info-sign"></span>About
 					<Dialog ref="aboutDialog" wstyle="w-about-dialog">
 						<div className="modal-body w-about-has-plugins">
 							<button type="button" className="close" data-dismiss="modal">
@@ -241,11 +282,11 @@ var About = React.createClass({
 							</span>
 							<div className="w-about-plugins">
 								<div className="btn-group btn-group-sm w-btn-group-sm">
-									<button type="button" onClick={this.showPlugins} className="btn btn-default active">Plugins</button>
-									<button type="button" onClick={this.showRules} className="btn btn-default">Rules</button>
+									<button type="button" onClick={self.showPlugins} className="btn btn-default active">Plugins</button>
+									<button type="button" onClick={self.showRules} className="btn btn-default">Rules</button>
 								</div>
-								<PluginsList wstyle="w-about-plugins-list" data={data.plugins} disabled={state.disabledAllRules} />
-								<PluginsList wstyle="w-about-rules-list" data={data.pluginsRules} disabled={state.disabledAllRules} isRules={true} />
+								<PluginsList wstyle="w-about-plugins-list" data={state.plugins} disabledData={state.disabledPlugins} disabled={state.disabledAllRules} onChange={self.disablePlugin} />
+								<PluginsList wstyle="w-about-rules-list" data={state.pluginsRules} disabledData={state.disabledRules} disabled={state.disabledAllRules} isRules={true} onChange={self.disableRules} />
 							</div>
 						</div>
 						<div className="modal-footer">
