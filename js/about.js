@@ -117,7 +117,8 @@ var PluginsList = React.createClass({
 				});
 	},
 	render: function() {
-		var props = this.props;
+		var self = this;
+		var props = self.props;
 		var data = props.data;
 		var list = Object.keys(data || {});
 		return (
@@ -139,7 +140,7 @@ var PluginsList = React.createClass({
 							return (
 								<tr key={name}>
 									<td>
-										<input type="checkbox" disabled={props.disabled} />
+										<input type="checkbox" data-name={name} onChange={props.onChange} disabled={props.disabled} />
 									</td>
 									<td>
 										<a title={configPage} href={configPage} className="w-about-plugin-item" data-key={name + ':'} target="_blank">{name}</a>
