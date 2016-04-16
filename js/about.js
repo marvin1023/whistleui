@@ -6,6 +6,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
+var util = require('./util');
 var dialog;
 
 function compareVersion(v1, v2) {
