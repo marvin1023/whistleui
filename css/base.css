@@ -18,6 +18,7 @@ textarea {resize: none; display: block; font-size: 12px;}
 .box>.fill {width: 0;}
 .orient-vertical-box>.fill {height: 0;} /**不加这个滚动会有问题**/
 .table {table-layout: fixed; margin: 0!important;}
+.table .w-empty {text-align: center; font-style: italic; color: #ccc;}
 
 .modal-dialog .modal-body, .modal-dialog .modal-footer {padding: 10px;}
 .modal-dialog .btn {padding: 5px 10px;}

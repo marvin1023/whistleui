@@ -1,4 +1,4 @@
-.w-about-dialog .modal-dialog {width: 360px;}
+.w-about-dialog .modal-dialog {width: 420px;}
 .w-about-dialog .modal-dialog .modal-body {padding-bottom: 10px;}
 .w-about-dialog-ctn {display: inline-block; padding-top: 10px; margin-left: 20px;}
 .w-about-dialog-title {margin-bottom: 10px; display: block;}
@@ -6,13 +6,17 @@
 .w-about-latest-version {display: none;}
 .w-about-menu {position: relative;}
 .w-about-menu i {display: none; position: absolute; top: 2px; left: 17px; width: 5px; height: 5px; border-radius: 5px; background: red;}
-.w-about-plugins {border-top: 1px solid #e5e5e5; padding: 5px 0 0; margin-top: 10px; display: none;}
+.w-about-plugins {border-top: 1px solid #e5e5e5; margin-top: 10px; display: none;}
 .w-about-has-plugins {padding-bottom: 0!important;}
 .w-about-has-plugins .w-about-plugins {display: block;}
-.w-about-plugins-list {padding-left: 5px;}
-.w-about-plugins-list a {margin-right: 10px;}
-.w-about-plugins-list .table {table-layout: fixed;}
-.w-about-plugins-list .table td {padding: 6px;  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
-.w-about-plugins-list .table td:last-child {border-bottom: none;}
-.w-about-plugins-list .table .w-about-plugin-name {width: 100px;}
-.w-about-plugins-list .table .w-about-plugin-version {width: 60px;}
+.w-about-plugins-list, .w-about-rules-list {padding-left: 5px;}
+.w-about-plugins a {margin-right: 10px;}
+.w-about-plugins .table {table-layout: fixed; font-size: 13px;}
+.w-about-plugins .table thead td {border-bottom: 1px solid #ddd;}
+.w-about-plugins .table td {padding: 6px;  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.w-about-plugins .table tbody td:last-child {border-bottom: none;}
+.w-about-plugins .table .w-about-plugin-active {width: 52px}
+.w-about-plugins .table .w-about-plugin-name {width: 100px;}
+.w-about-plugins .table .w-about-plugin-version {width: 60px;}
+.w-about-plugins .w-about-rules-list, .w-about-show-rules .w-about-plugins-list {display: none;}
+.w-about-show-rules .w-about-rules-list {display: block;}

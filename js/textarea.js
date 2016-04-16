@@ -23,14 +23,7 @@ var Textarea = React.createClass({
 		e.target.nodeName != 'INPUT' && e.preventDefault();
 	},
 	edit: function() {
-		var self = this;
-		var win = window.open('/editor.html');
-		win.getValue = function() {
-			return self.props.value;
-		};
-		if (win.setValue) {
-			win.setValue(self.props.value);
-		}
+		util.openEditor(this.props.value);
 	},
 	showAddToValues: function() {
 		var self = this;

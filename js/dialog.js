@@ -26,9 +26,6 @@ var Dialog = React.createClass({
 				</div>
 		);
 	},
-	shouldComponentUpdate: function(nextProps, nextState) {
-		return this.container.hasClass('in');
-	},
 	componentWillUnmount: function() {
 		ReactDOM.unmountComponentAtNode(this.container[0]);
 		document.body.removeChild(this.container[0]);

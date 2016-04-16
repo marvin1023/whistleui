@@ -368,3 +368,17 @@ function toString(value) {
 exports.toString = toString;
 
 
+function openEditor(value) {
+	var win = window.open('/editor.html');
+	win.getValue = function() {
+		return value;
+	};
+	if (win.setValue) {
+		win.setValue(value);
+	}
+}
+
+exports.openEditor = openEditor;
+
+
+
