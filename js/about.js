@@ -135,7 +135,7 @@ var PluginsList = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-						{!list.length ? <td colSpan="4" className="w-empty">no data</td> : list.map(function(name) {
+						{!list.length ? <td colSpan="4" className="w-empty"><a href="https://github.com/avwo/whistle/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6" target="_blank">no data</a></td> : list.map(function(name) {
 							var item = data[name];
 							name = name.slice(0, -1);
 							var configPage = 'http://' + name + '.local.whistlejs.com/';
