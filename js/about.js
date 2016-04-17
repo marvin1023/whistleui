@@ -60,10 +60,11 @@ var PluginsList = React.createClass({
 							var item = data[name];
 							name = name.slice(0, -1);
 							var configPage = 'http://' + name + '.local.whistlejs.com/';
+							var checked = !disabledData[name];
 							return (
 								<tr key={name}>
 									<td>
-										<input type="checkbox" data-name={name} checked={!disabledData[name]} onChange={props.onChange} disabled={props.disabled} />
+										<input type="checkbox" title={props.disabled ? 'Disabled' : (checked ? 'Disabled ' : 'Enable ') + name} data-name={name} checked={checked} onChange={props.onChange} disabled={props.disabled} />
 									</td>
 									<td>
 										<a title={configPage} href={configPage} className="w-about-plugin-item" data-key={name + ':'} target="_blank">{name}</a>
