@@ -1125,6 +1125,7 @@ var Index = React.createClass({
 						      	onLineNumberChange={this.onRulesLineNumberChange} />
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.allowMultipleChoice} onChange={this.allowMultipleChoice} /> Allow multiple choice</label></p>
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.disabledAllRules} onChange={this.disableAllRules} /> Disable all rules</label></p>
+					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.disabledAllPlugins} onChange={this.disableAllPlugins} /> Disable all plugins</label></p>
 					      	<p className="w-editor-settings-box"><label><input type="checkbox" checked={state.syncWithSysHosts} onChange={this.syncWithSysHosts} /> Synchronized with the system hosts</label></p>
 					      	<p className="w-editor-settings-box"><a onClick={this.importSysHosts} href="javascript:;">Import system hosts to <strong>Default</strong></a></p>
 					      </div>
