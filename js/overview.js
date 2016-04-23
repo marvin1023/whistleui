@@ -15,7 +15,7 @@ var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'filter', 'disable', 'log',
              'urlParams', 'dispatch', 'params', 'statusCode', 'redirect', 'method', 'cache', 'attachment', 'accept', 'reqDelay', 'resDelay', 'reqSpeed', 
              'resSpeed', 'reqType', 'resType', 'reqCharset', 'resCharset', 'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqHeaders', 'resHeaders', 
              'reqPrepend', 'resPrepend', 'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace', 'reqWrite', 
-             'resWrite', 'reqWriteRaw', 'resWriteRaw', 'css', 'html', 'js'];
+             'resWrite', 'reqWriteRaw', 'resWriteRaw', 'css', 'html', 'js', 'getRules'];
 var DEFAULT_OVERVIEW_MODAL = {};
 var DEFAULT_RULES_MODAL = {};
 
