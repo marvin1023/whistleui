@@ -112,6 +112,7 @@ var Index = React.createClass({
 		}
 		
 		state.disabledAllRules = modal.disabledAllRules;
+		state.disabledAllPlugins = modal.disabledAllPlugins;
 		state.hideHttpsConnects = modal.hideHttpsConnects;
 		state.interceptHttpsConnects = modal.interceptHttpsConnects;
 		state.rules = new ListModal(rulesList, rulesData);
@@ -971,6 +972,21 @@ var Index = React.createClass({
 				  events.trigger('disableAllRules', checked);
 				  self.setState({
 					disabledAllRules: checked
+				});
+			  } else {
+				util.showSystemError();
+			 }
+		 });
+		 e.preventDefault();
+	},
+	disableAllPlugins: function(e) {
+		 var checked = e.target.checked;
+		 var self = this;
+		 dataCenter.plugins.disableAllPlugins({disabledAllPlugins: checked ? 1 : 0}, function(data) {
+			  if (data && data.ec === 0) {
+				  events.trigger('disableAllPlugins', checked);
+				  self.setState({
+					  disabledAllPlugins: checked
 				});
 			  } else {
 				util.showSystemError();

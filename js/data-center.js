@@ -43,6 +43,7 @@ exports.values = createCgi({
 exports.plugins = createCgi({
 	disablePlugin: '/cgi-bin/plugins/disable-plugin',
 	disableRules: '/cgi-bin/plugins/disable-rules',
+	disableAllPlugins: '/cgi-bin/plugins/disable-all-plugins',
 	getPlugins: {
 		type: 'get',
 		url: '/cgi-bin/plugins/get-plugins'

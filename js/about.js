@@ -91,6 +91,11 @@ var About = React.createClass({
 				 disabledAllRules: checked
 			 });
 		});
+		events.on('disableAllPlugins', function(e, checked) {
+			 self.setState({
+				 disabledAllPlugins: checked
+			 });
+		})
 	},
 	showAboutInfo: function(showTips) {
 		var self = this;
@@ -106,6 +111,7 @@ var About = React.createClass({
 					disabledPlugins: data.disabledPlugins,
 					disabledRules: data.disabledPluginsRules,
 					disabledAllRules: state.disabledAllRules != null ? state.disabledAllRules : data.disabledAllRules,
+					disabledAllPlugins: state.disabledAllPlugins != null ? state.disabledAllPlugins : data.disabledAllPlugins,
 					hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
 				});
 				if (data.latestVersion) {
@@ -214,8 +220,8 @@ var About = React.createClass({
 									<button type="button" onClick={self.showPlugins} className="btn btn-default active">Plugins</button>
 									<button type="button" onClick={self.showRules} className="btn btn-default">Rules</button>
 								</div>
-								<PluginsList wstyle="w-about-plugins-list" data={state.plugins} disabledData={state.disabledPlugins} disabled={state.disabledAllRules} onChange={self.disablePlugin} />
-								<PluginsList wstyle="w-about-rules-list" data={state.pluginsRules} disabledData={state.disabledRules} disabled={state.disabledAllRules} isRules={true} onChange={self.disableRules} />
+								<PluginsList wstyle="w-about-plugins-list" data={state.plugins} disabledData={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} onChange={self.disablePlugin} />
+								<PluginsList wstyle="w-about-rules-list" data={state.pluginsRules} disabledData={state.disabledRules} disabled={state.disabledAllRules || state.disabledAllPlugins} isRules={true} onChange={self.disableRules} />
 							</div>
 						</div>
 						<div className="modal-footer">
