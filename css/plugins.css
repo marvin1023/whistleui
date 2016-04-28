@@ -4,4 +4,4 @@
 .w-nav-tabs>.nav>li>a>span:hover {color: #000;}
 .w-nav-tabs iframe {border: none; display: block; margin: 0; padding: 0; width: 100%; height: 100%;}
 .w-nav-tabs .w-nav-tab-panel, .w-nav-tabs .w-nav-tab-panel>div {overflow: hidden;}
-.w-nav-tabs .w-nav-home-tab {padding-right: 5px!important;}
+.w-nav-tabs>.nav>.w-nav-home-tab>a {padding-right: 5px!important;}
