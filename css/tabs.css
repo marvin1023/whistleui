@@ -1,4 +1,6 @@
 .w-nav-tabs {margin-top: 10px; font-size: 13px;}
-.w-nav-tabs>.nav>li>a {padding: 5px 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 120px;}
+.w-nav-tabs>.nav>li>a {padding: 5px 15px 5px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 120px; position: relative;}
+.w-nav-tabs>.nav>li>a>span {display: block; position: absolute; top: 5px; right: 3px; color: #999;}
+.w-nav-tabs>.nav>li>a>span:hover {color: #000;}
 .w-nav-tabs iframe {border: none; display: block; margin: 0; padding: 0; width: 100%; height: 100%;}
 .w-nav-tabs .w-nav-tab-panel, .w-nav-tabs .w-nav-tab-panel>div {overflow: hidden;}

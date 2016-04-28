@@ -26,9 +26,9 @@ var Tabs = React.createClass({
 			<div className="w-nav-tabs fill orient-vertical-box">
 				 <ul className="nav nav-tabs">
 				    <li className="active"><a href="javascript:;">Home</a></li>
-				    <li><a href="javascript:;">Profile</a></li>
-				    <li><a href="javascript:;">Messages</a></li>
-				    <li><a href="javascript:;">Settings</a></li>
+				    <li><a href="javascript:;">Profile<span title="Close">&times;</span></a></li>
+				    <li><a href="javascript:;">Messages<span title="Close">&times;</span></a></li>
+				    <li><a href="javascript:;">Settings<span title="Close">&times;</span></a></li>
 				  </ul>
 				  <div className="fill orient-vertical-box w-nav-tab-panel">
 				  	<div ref="tabPanel" className="fill">
