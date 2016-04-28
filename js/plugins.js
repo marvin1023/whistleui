@@ -1,4 +1,4 @@
-require('../css/tabs.css');
+require('../css/plugins.css');
 var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -33,7 +33,7 @@ var Tabs = React.createClass({
 		return (
 			<div className="w-nav-tabs fill orient-vertical-box" style={{display: this.props.hide ? 'none' : ''}}>
 				 <ul className="nav nav-tabs">
-				    <li className="active"><a href="javascript:;">Home</a></li>
+				    <li className="active w-nav-home-tab"><a href="javascript:;">Home</a></li>
 				    <li><a href="javascript:;">Profile<span title="Close">&times;</span></a></li>
 				    <li><a href="javascript:;">Messages<span title="Close">&times;</span></a></li>
 				    <li><a href="javascript:;">Settings<span title="Close">&times;</span></a></li>
