@@ -107,7 +107,6 @@ var About = React.createClass({
 					version: data.version,
 					latestVersion: data.latestVersion,
 					plugins: data.plugins,
-					pluginsRules: data.pluginsRules,
 					disabledPlugins: data.disabledPlugins,
 					disabledRules: data.disabledPluginsRules,
 					disabledAllRules: state.disabledAllRules != null ? state.disabledAllRules : data.disabledAllRules,
@@ -120,12 +119,11 @@ var About = React.createClass({
 			});
 		}
 		
-		dataCenter.plugins.getPluginsAndRules(function(data) {
+		dataCenter.plugins.getPlugins(function(data) {
 			self.setState({
 				version: data.version,
 				latestVersion: data.latestVersion,
 				plugins: data.plugins,
-				pluginsRules: data.pluginsRules,
 				disabledPlugins: data.disabledPlugins,
 				disabledRules: data.disabledPluginsRules
 			});
@@ -169,29 +167,6 @@ var About = React.createClass({
 	hideDialog: function() {
 		this.refs.aboutDialog.hide();
 	},
-	toggleTab: function(e) {
-		var target = $(e.target);
-		if (target.hasClass('active')) {
-			return;
-		}
-		target.parent().find('.active').removeClass('active');
-		target.addClass('active');
-		return target;
-	},
-	showPlugins: function(e) {
-		var target = this.toggleTab(e);
-		if (!target) {
-			return;
-		}
-		target.closest('.w-about-plugins').removeClass('w-about-show-rules');
-	},
-	showRules: function(e) {
-		var target = this.toggleTab(e);
-		if (!target) {
-			return;
-		}
-		target.closest('.w-about-plugins').addClass('w-about-show-rules');
-	},
 	render: function() {
 		var self = this;
 		var state = self.state || {};
@@ -216,12 +191,10 @@ var About = React.createClass({
 								Visit <a className="w-about-url" title="How to update whistle" href={'http://www.whistlejs.com#v=' + version} target="_blank">http://www.whistlejs.com</a>
 							</span>
 							<div className="w-about-plugins">
-								<div className="btn-group btn-group-sm w-btn-group-sm">
-									<button type="button" onClick={self.showPlugins} className="btn btn-default active">Plugins</button>
-									<button type="button" onClick={self.showRules} className="btn btn-default">Rules</button>
+								<div className="w-about-plugins-title">
+									Installed plugins:
 								</div>
 								<PluginsList wstyle="w-about-plugins-list" data={state.plugins} disabledData={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} onChange={self.disablePlugin} />
-								<PluginsList wstyle="w-about-rules-list" data={state.pluginsRules} disabledData={state.disabledRules} disabled={state.disabledAllRules || state.disabledAllPlugins} isRules={true} onChange={self.disableRules} />
 							</div>
 						</div>
 						<div className="modal-footer">
