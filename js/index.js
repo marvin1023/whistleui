@@ -9,7 +9,7 @@ var About = require('./about');
 var Online = require('./online');
 var MenuItem = require('./menu-item');
 var EditorSettings = require('./editor-settings');
-var Tabs = require('./tabs');
+var Plugins = require('./plugins');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
@@ -1154,7 +1154,7 @@ var Index = React.createClass({
 				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : null}
 				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' && name != 'plugins' ? false : true} modal={state.network} /> : null}
-				{state.hasPlugins ? <Tabs ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
+				{state.hasPlugins ? <Plugins ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">
