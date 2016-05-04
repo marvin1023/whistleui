@@ -3,6 +3,31 @@ var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var Home = React.createClass({
+	
+	render: function() {
+		
+		return (
+				<table className="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Version</th>
+							<th>Operations</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th>1</th>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tbody>
+				</table>
+		);
+	}
+});
+
 var Tabs = React.createClass({
 	componentDidMount: function() {
 		var self = this;
@@ -40,7 +65,7 @@ var Tabs = React.createClass({
 				  </ul>
 				  <div className="fill orient-vertical-box w-nav-tab-panel">
 				  	<div ref="tabPanel" className="fill">
-				  		<iframe src="http://www.ifeng.com/" />
+				  		<Home />
 				  	</div>
 				  </div>
 			</div>

@@ -143,6 +143,10 @@ var Index = React.createClass({
 		}).on('keyup', function(e) {
 			if (e.keyCode == 27) {
 				self.hideOptions();
+				var dialog = $('.modal');
+				if (typeof dialog.modal == 'function') {
+					dialog.modal('hide');
+				}
 			}
 		}).on('keydown', function(e) {
 			if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) {
