@@ -54,6 +54,9 @@ var Tabs = React.createClass({
 		resizeHandler();
 		$(window).on('resize', resizeHandler);
 	},
+	shouldComponentUpdate: function(nextProps, nextState) {
+		return !this.props.hide || !nextProps.hide;
+	},
 	render: function() {
 		return (
 			<div className="w-nav-tabs fill orient-vertical-box" style={{display: this.props.hide ? 'none' : ''}}>
