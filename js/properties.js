@@ -18,14 +18,14 @@ var Properties = React.createClass({
 											return (
 												<tr key={i}>
 													<th>{name}</th>
-													<td>{util.toString(val)}</td>
+													<td><pre>{util.toString(val)}</pre></td>
 												</tr>		
 											);
 										})
 										: 
 										<tr key={name}>
 											<th>{name}</th>
-											<td>{util.toString(value)}</td>
+											<td><pre>{util.toString(value)}</pre></td>
 										</tr>	
 								);
 							})
