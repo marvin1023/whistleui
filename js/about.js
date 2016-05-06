@@ -8,7 +8,6 @@ var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
-var dialog;
 
 function compareVersion(v1, v2) {
 	return formatSemer(v1) > formatSemer(v2);
@@ -95,7 +94,7 @@ var About = React.createClass({
 			 self.setState({
 				 disabledAllPlugins: checked
 			 });
-		})
+		});
 	},
 	showAboutInfo: function(showTips) {
 		var self = this;
