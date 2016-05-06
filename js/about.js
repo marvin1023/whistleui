@@ -38,19 +38,17 @@ var About = React.createClass({
 		var self = this;
 		var state = self.state || {};
 		self.showDialog();
-		if (state.latestVersion) {
-			localStorage.latestVersion = state.latestVersion;
-		}
+		
 		dataCenter.checkUpdate(function(data) {
 			if (data && data.ec === 0) {
+				if (data.latestVersion) {
+					localStorage.latestVersion = data.latestVersion;
+				}
 				self.setState({
 					version: data.version,
 					latestVersion: data.latestVersion,
 					hasUpdate: hasNewVersion(data)
 				});
-				if (data.latestVersion) {
-					localStorage.latestVersion = data.latestVersion;
-				}
 			}
 		});
 	},
