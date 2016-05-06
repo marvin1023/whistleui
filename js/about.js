@@ -20,22 +20,19 @@ function formatSemer(ver) {
 }
 
 var About = React.createClass({
+	componentDidMount: function() {
+		dataCenter.getInitialData(function(data) {
+			self.setState({
+				version: data.version,
+				latestVersion: data.latestVersion,
+				hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
+			});
+		});
+	},
 	showAboutInfo: function(showTips) {
 		var self = this;
 		var state = self.state || {};
 		self.showDialog();
-		if (!state.version) {
-			dataCenter.getInitialData(function(data) {
-				self.setState({
-					version: data.version,
-					latestVersion: data.latestVersion,
-					hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
-				});
-				if (data.latestVersion) {
-					localStorage.latestVersion = data.latestVersion;
-				}
-			});
-		}
 		
 		dataCenter.checkUpdate(function(data) {
 			if (data && data.ec === 0) {
@@ -43,6 +40,9 @@ var About = React.createClass({
 					version: data.version,
 					latestVersion: data.latestVersion
 				});
+				if (data.latestVersion) {
+					localStorage.latestVersion = data.latestVersion;
+				}
 			}
 		});
 	},
