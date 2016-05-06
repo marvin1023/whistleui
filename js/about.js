@@ -38,7 +38,9 @@ var About = React.createClass({
 		var self = this;
 		var state = self.state || {};
 		self.showDialog();
-		
+		if (state.latestVersion) {
+			localStorage.latestVersion = state.latestVersion;
+		}
 		dataCenter.checkUpdate(function(data) {
 			if (data && data.ec === 0) {
 				self.setState({
