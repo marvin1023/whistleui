@@ -187,7 +187,7 @@ var Tabs = React.createClass({
 				  </ul>
 				  <div className="fill orient-vertical-box w-nav-tab-panel">
 				  	<div ref="tabPanel" className="fill orient-vertical-box">
-				  		<Home data={self.state} hide={activeName != 'Home'} onChange={self.disablePlugin} />
+				  		<Home data={self.props} hide={activeName != 'Home'} onChange={self.props.onChange} />
 				  		{tabs.map(function(tab) {
 				  			return <iframe style={{display: activeName == tab.name ? '' : 'none'}} src={tab.url} />
 				  		})}
