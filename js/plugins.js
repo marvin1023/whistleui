@@ -39,7 +39,7 @@ var Home = React.createClass({
 									name = name.slice(0, -1);
 									var checked = !disabledPlugins[name];
 									var disabled = data.disabledAllRules || data.disabledAllPlugins;
-									
+									var url = 'http://' + name + '.local.whistlejs.com/';
 									return (
 										<tr key={name}>
 											<th className="w-plugins-order">{i + 1}</th>
@@ -47,10 +47,10 @@ var Home = React.createClass({
 												<input type="checkbox"  title={disabled ? 'Disabled' : (checked ? 'Disable ' : 'Enable ') + name} 
 													data-name={name} checked={checked} disabled={disabled} onChange={self.props.onChange} />
 											</td>
-											<td className="w-plugins-name"><a href={'http://' + name + '.local.whitlejs.com/'} target="_blank">{name}</a></td>
+											<td className="w-plugins-name"><a href={url} target="_blank">{name}</a></td>
 											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
 											<td className="w-plugins-operation">
-												<a href={'http://' + name + '.local.whitlejs.com/'} target="_blank">Open</a>	
+												<a href={url} target="_blank">Open</a>	
 												{(plugin.rules || plugin._rules) ? <a href="javascript:;">Rules</a> : null}
 												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Help</a> : null}
 											</td>
