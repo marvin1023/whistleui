@@ -33,7 +33,7 @@ var Home = React.createClass({
 					<div className="fill w-plugins-list">
 						<table className="table table-hover">
 							<tbody>
-								{list.sort(function(a, b) {
+								{list.length ? list.sort(function(a, b) {
 									return a > b ? 1 : -1;
 								}).map(function(name, i) {
 									var plugin = plugins[name];
@@ -57,7 +57,7 @@ var Home = React.createClass({
 											</td>
 										</tr>
 									);
-								})}
+								}) : <tr><td colSpan="5" className="w-empty"><a href="https://github.com/whistle-plugins" target="_blank">no data</a></td></tr>}
 							</tbody>
 						</table>
 					</div>
