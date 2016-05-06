@@ -19,6 +19,10 @@ function formatSemer(ver) {
 	}).join('.') : '';
 }
 
+function hasNewVersion(data) {
+	return compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion);
+}
+
 var About = React.createClass({
 	componentDidMount: function() {
 		var self = this;
@@ -26,7 +30,7 @@ var About = React.createClass({
 			self.setState({
 				version: data.version,
 				latestVersion: data.latestVersion,
-				hasUpdate: compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion)
+				hasUpdate: hasNewVersion(data)
 			});
 		});
 	},
@@ -39,7 +43,8 @@ var About = React.createClass({
 			if (data && data.ec === 0) {
 				self.setState({
 					version: data.version,
-					latestVersion: data.latestVersion
+					latestVersion: data.latestVersion,
+					hasUpdate: hasNewVersion(data)
 				});
 				if (data.latestVersion) {
 					localStorage.latestVersion = data.latestVersion;
