@@ -18,11 +18,11 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-input-menu-item input {width: 246px; height: 32px; border: 1px solid #ccc; border-radius: 2px; padding: 0 5px; vertical-align: middle;}
 .w-input-menu-item .btn {height: 32px; padding: 0 12px; vertical-align: middle; border-radius: 0; border-right-top-radius: 2px; border-right-bottom-radius: 2px;}
 
-.w-create-rules-input {left: 232px;}
-.w-create-values-input {left: 222px;}
-.w-edit-rules-input {left: 304px;}
-.w-edit-values-input {left: 294px;}
-.w-edit-filter-input {left: 425px;}
+.w-create-rules-input {left: 305px;}
+.w-create-values-input {left: 295px;}
+.w-edit-rules-input {left: 377px;}
+.w-edit-values-input {left: 367px;}
+.w-edit-filter-input {left: 498px;}
 
 .w-menu-wrapper .w-menu-item {display: none!important;}
 .w-menu-wrapper-show .w-menu-item {display: block!important;}
