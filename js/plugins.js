@@ -53,7 +53,7 @@ var Home = React.createClass({
 											<td className="w-plugins-operation">
 												<a href={url} target="_blank">Open</a>	
 												{(plugin.rules || plugin._rules) ? <a href="javascript:;">Rules</a> : <span className="disabled">Rules</span>}
-												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Help</a> : <span className="disabled">Help</span>}
+												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Homepage</a> : <span className="disabled">Homepage</span>}
 											</td>
 										</tr>
 									);
