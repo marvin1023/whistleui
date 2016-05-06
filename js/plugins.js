@@ -158,7 +158,7 @@ var Tabs = React.createClass({
 		var self = this;
 		var tabs = self.state.tabs;
 		var activeName = 'Home';
-		var activeTab = self.props.activeTabName;
+		var activeTabName = self.props.activeTabName;
 		if (activeTabName && activeTabName != activeName) {
 			for (var i = 0, len = tabs.length; i < len; i++) {
 				var tab = tabs[i];
