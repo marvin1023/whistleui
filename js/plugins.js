@@ -47,12 +47,12 @@ var Home = React.createClass({
 												<input type="checkbox"  title={disabled ? 'Disabled' : (checked ? 'Disable ' : 'Enable ') + name} 
 													data-name={name} checked={checked} disabled={disabled} onChange={self.props.onChange} />
 											</td>
-											<td className="w-plugins-name"><a href="javascript:;">{name}</a></td>
-											<td className="w-plugins-version"><a href="javascript:;">{plugin.version}</a></td>
+											<td className="w-plugins-name"><a href={'http://' + name + '.local.whitlejs.com/'} target="_blank">{name}</a></td>
+											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
 											<td className="w-plugins-operation">
-												<a href="javascript:;">Open</a>	
-												<a href="javascript:;">Rules</a>
-												<a href="javascript:;">Help</a>
+												<a href={'http://' + name + '.local.whitlejs.com/'} target="_blank">Open</a>	
+												{(plugin.rules || plugin._rules) ? <a href="javascript:;">Rules</a> : null}
+												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Help</a> : null}
 											</td>
 										</tr>
 									);
