@@ -9,12 +9,13 @@ var events = require('./events');
 var Home = React.createClass({
 	
 	render: function() {
-		var data = this.props.data || {};
+		var self = this;
+		var data = self.props.data || {};
 		var plugins = data.plugins || [];
 		var list = Object.keys(plugins);
 		var disabledPlugins = data.disabledPlugins || {};
 		return (
-				<div className="fill orient-vertical-box w-plugins" style={{display: this.props.hide ? 'none' : ''}}>
+				<div className="fill orient-vertical-box w-plugins" style={{display: self.props.hide ? 'none' : ''}}>
 					<div className="w-plugins-headers">
 						<table className="table">
 							<thead>
@@ -44,7 +45,7 @@ var Home = React.createClass({
 											<th className="w-plugins-order">{i + 1}</th>
 											<td className="w-plugins-active">
 												<input type="checkbox"  title={disabled ? 'Disabled' : (checked ? 'Disable ' : 'Enable ') + name} 
-													data-name={name} checked={checked} disabled={disabled} />
+													data-name={name} checked={checked} disabled={disabled} onChange={self.props.onChange} />
 											</td>
 											<td className="w-plugins-name"><a href="javascript:;">{name}</a></td>
 											<td className="w-plugins-version"><a href="javascript:;">{plugin.version}</a></td>
@@ -142,6 +143,22 @@ var Tabs = React.createClass({
 		this.state.tabs.splice(i, 1);
 		this.setState({});
 	},
+	disablePlugin: function(e) {
+		var self = this;
+		var target = e.target;
+		dataCenter.plugins.disablePlugin({
+			name: $(target).attr('data-name'),
+			disabled: target.checked ? 0 : 1
+		}, function(data) {
+			if (data && data.ec === 0) {
+				self.setState({
+					disabledPlugins: data.data
+				});
+			} else {
+				util.showSystemError();
+			}
+		});
+	},
 	render: function() {
 		var self = this;
 		var tabs = self.state.tabs;
@@ -171,7 +188,7 @@ var Tabs = React.createClass({
 				  </ul>
 				  <div className="fill orient-vertical-box w-nav-tab-panel">
 				  	<div ref="tabPanel" className="fill orient-vertical-box">
-				  		<Home data={self.state} hide={activeName != 'Home'} />
+				  		<Home data={self.state} hide={activeName != 'Home'} onChange={self.disablePlugin} />
 				  		{tabs.map(function(tab) {
 				  			return <iframe style={{display: activeName == tab.name ? '' : 'none'}} src={tab.url} />
 				  		})}
