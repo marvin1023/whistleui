@@ -7,7 +7,6 @@ var ReactDOM = require('react-dom');
 var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
 var util = require('./util');
-var events = require('./events');
 
 function compareVersion(v1, v2) {
 	return formatSemer(v1) > formatSemer(v2);
