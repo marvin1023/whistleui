@@ -24,7 +24,7 @@ var About = React.createClass({
 		var self = this;
 		var state = self.state || {};
 		self.showDialog();
-		if (state.version) {
+		if (!state.version) {
 			dataCenter.getInitialData(function(data) {
 				self.setState({
 					version: data.version,
