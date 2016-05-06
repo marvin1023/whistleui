@@ -5,6 +5,7 @@ var ReactDOM = require('react-dom');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
+var MAX_COUNT = 6;
 
 var Home = React.createClass({
 	
@@ -68,13 +69,7 @@ var Home = React.createClass({
 var Tabs = React.createClass({
 	getInitialState: function() {
 		return {
-			tabs: [
-			       {
-			    	   name: 'test',
-			    	   active: true,
-			    	   url: 'http://www.qq.com/'
-			       }
-			       ]
+			tabs: []
 		};
 	},
 	componentDidMount: function() {
@@ -163,13 +158,17 @@ var Tabs = React.createClass({
 		var self = this;
 		var tabs = self.state.tabs;
 		var activeName = 'Home';
-		for (var i = 0, len = tabs.length; i < len; i++) {
-			var tab = tabs[i];
-			if (tab.active) {
-				activeName = tab.name;
-				break;
+		var activeTab = self.props.activeTabName;
+		if (activeTabName && activeTabName != activeName) {
+			for (var i = 0, len = tabs.length; i < len; i++) {
+				var tab = tabs[i];
+				if (tab.name == activeTabName) {
+					activeName = tab.name;
+					break;
+				}
 			}
 		}
+		
 		return (
 			<div className="w-nav-tabs fill orient-vertical-box" style={{display: self.props.hide ? 'none' : ''}}>
 				 <ul className="nav nav-tabs">
