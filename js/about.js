@@ -21,6 +21,7 @@ function formatSemer(ver) {
 
 var About = React.createClass({
 	componentDidMount: function() {
+		var self = this;
 		dataCenter.getInitialData(function(data) {
 			self.setState({
 				version: data.version,
