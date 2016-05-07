@@ -26,7 +26,7 @@ padding: 5px 6px!important; overflow: hidden; text-overflow: ellipsis; white-spa
 .w-plugin-rules-dialog .modal-dialog {width: 640px;}
 .w-plugin-rules-dialog .modal-dialog pre {max-height: 220px; overflow: auto; padding: 10px;}
 .w-plugin-rules-dialog fieldset {border: 1px solid #ddd;}
-.w-plugin-rules-dialog fieldset legend {font-size: 13px; border: none; width: auto; margin: 0 10px;}
+.w-plugin-rules-dialog fieldset legend {font-size: 13px; border: none; width: auto; margin: 0 10px; font-weight: bold;}
 .w-plugin-rules-dialog fieldset:nth-child(2) {margin-top: 15px;}
 .w-plugin-rules-dialog .modal-header h4 {margin: 0;}
 .w-plugin-rules-dialog .modal-header .close { position: absolute; right: 10px; top: 16px;}
