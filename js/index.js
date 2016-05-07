@@ -229,7 +229,20 @@ var Index = React.createClass({
 					})
 				}
 			});
+			loadPlugins();
 		}, 10000);
+		
+		function loadPlugins() {
+	        dataCenter.plugins.getPlugins(function(data) {
+	            if (data && data.ec === 0) {
+	            	self.setState({
+                    	plugins: data.plugins,
+                    	disabledPlugins: data.disabledPlugins
+                    });
+	            }
+	            setTimeout(loadPlugins, 8000);
+	        });
+	    }
 	},
 	donotShowAgain: function() {
 		dataCenter.donotShowAgain();
