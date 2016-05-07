@@ -240,7 +240,7 @@ var Index = React.createClass({
                     	disabledPlugins: data.disabledPlugins
                     });
 	            }
-	            setTimeout(loadPlugins, 8000);
+	            setTimeout(loadPlugins, 10000);
 	        });
 	    }
 	},
