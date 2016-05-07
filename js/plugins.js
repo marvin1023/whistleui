@@ -5,7 +5,6 @@ var ReactDOM = require('react-dom');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
-var MAX_COUNT = 6;
 
 var Home = React.createClass({
 	

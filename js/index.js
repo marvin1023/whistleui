@@ -13,6 +13,7 @@ var Plugins = require('./plugins');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
+var MAX_PLUGINS_TABS = 6;
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -505,13 +506,38 @@ var Index = React.createClass({
 		this.showPluginTab(option.name);
 	},
 	showPluginTab: function(name) {
+		var active = 'Home';
+		var tabs = this.state.tabs || [];
+		if (name && name != active) {
+			for (var i = 0, len = tabs.length; i < len; i++) {
+				if (tabs[i].name == name) {
+					active = name;
+					name = null;
+					break;
+				}
+			}
+		}
+		
+		var plugin;
+		if (name && (plugin = this.state.plugins[name + ':'])) {
+			if (tabs.length >= MAX_PLUGINS_TABS) {
+				alert('You can only open ' + MAX_PLUGINS_TABS + ' tabs');
+				return this.showPlugins();
+			}
+			active = name;
+			tabs.push({
+				name: name,
+				url: 'http://' + name + '.local.whistlejs.com/'
+			});
+		}
+		
 		this.setState({
-			active: 'test',
-			tabs: [{
-				name: 'test',
-				url: 'https://github.com/'
-			}]
+			active: active,
+			tabs: tabs
 		});
+	},
+	activePluginTab: function(e) {
+		this.showPluginTab($(e.target).attr('data-name'));
 	},
 	showPluginsOptions: function(e) {
 		$(e.target).closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
@@ -1230,7 +1256,7 @@ var Index = React.createClass({
 				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : null}
 				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' && name != 'plugins' ? false : true} modal={state.network} /> : null}
-				{state.hasPlugins ? <Plugins {...state} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
+				{state.hasPlugins ? <Plugins {...state} onActive={this.activePluginTab} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">
