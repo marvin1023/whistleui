@@ -546,7 +546,9 @@ var Index = React.createClass({
 			for (var i = 0, len = tabs.length; i < len; i++) {
 				if (tabs[i].name == name) {
 					tabs.splice(i, 1);
+					var plugin = tabs[i] || tabs[i - 1];
 					return this.setState({
+						active: plugin ? plugin.name : null,
 						tabs: tabs
 					});
 				}
