@@ -499,8 +499,13 @@ var Index = React.createClass({
 			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 		});
 	},
-	showAndActivePlugins: function() {
+	showAndActivePlugins: function(option) {
 		this.hidePluginsOptions();
+		this.showPlugins();
+		this.showPluginUI(option.name);
+	},
+	showPluginUI: function(name) {
+		
 	},
 	showPluginsOptions: function(e) {
 		$(e.target).closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
