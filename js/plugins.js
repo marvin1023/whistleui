@@ -2,6 +2,7 @@ require('../css/plugins.css');
 var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
@@ -11,10 +12,25 @@ var Home = React.createClass({
 		this.props.onOpen && this.props.onOpen(e);
 		e.preventDefault();
 	},
+	showDialog: function() {
+		this.refs.pluginRulesDialog.show();
+	},
+	hideDialog: function() {
+		this.refs.pluginRulesDialog.hide();
+	},
+	showRules: function(e) {
+		var name = $(e.target).attr('data-name');
+		var plugin = this.props.data.plugins[name + ':'];
+		plugin.name = name;
+		this.setState({
+			plugin: plugin
+		}, this.showDialog);
+	},
 	render: function() {
 		var self = this;
 		var data = self.props.data || {};
 		var plugins = data.plugins || [];
+		var plugin = self.state && self.state.plugin || {};
 		var list = Object.keys(plugins);
 		var disabledPlugins = data.disabledPlugins || {};
 		return (
@@ -58,7 +74,7 @@ var Home = React.createClass({
 											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
 											<td className="w-plugins-operation">
 												<a href={url} target="_blank" data-name={name} onClick={self.onOpen}>Open</a>	
-												{(plugin.rules || plugin._rules) ? <a href="javascript:;">Rules</a> : <span className="disabled">Rules</span>}
+												{(plugin.rules || plugin._rules) ? <a href="javascript:;" data-name={name} onClick={self.showRules}>Rules</a> : <span className="disabled">Rules</span>}
 												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Homepage</a> : <span className="disabled">Homepage</span>}
 											</td>
 										</tr>
@@ -67,6 +83,29 @@ var Home = React.createClass({
 							</tbody>
 						</table>
 					</div>
+					<Dialog ref="pluginRulesDialog" wstyle="w-plugin-rules-dialog">
+						<div className="modal-header">	
+						<h4>{plugin.name}</h4>	
+						<button type="button" className="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div className="modal-body">
+							<div className="w-plugin-rules">
+								{plugin.rules ? (<fieldset>
+									<legend>rules.txt</legend>
+									<pre>{plugin.rules}</pre>
+								</fieldset>) : null}
+								{plugin._rules ? (<fieldset>
+									<legend>_rules.txt</legend>
+									<pre>{plugin._rules}</pre>
+								</fieldset>) : null}
+							</div>
+						</div>
+						<div className="modal-footer">
+							<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</Dialog>
 				</div>
 		);
 	}
