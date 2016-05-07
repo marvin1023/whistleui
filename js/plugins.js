@@ -7,7 +7,10 @@ var util = require('./util');
 var events = require('./events');
 
 var Home = React.createClass({
-	
+	onOpen: function(e) {
+		this.props.onOpen && this.props.onOpen(e);
+		e.preventDefault();
+	},
 	render: function() {
 		var self = this;
 		var data = self.props.data || {};
@@ -51,10 +54,10 @@ var Home = React.createClass({
 													data-name={name} checked={checked} disabled={disabled} onChange={self.props.onChange} />
 											</td>
 											<td className="w-plugins-date">{new Date(plugin.mtime).toLocaleString()}</td>
-											<td className="w-plugins-name"><a href={url} target="_blank" data-name={name} onClick={self.props.onOpen}>{name}</a></td>
+											<td className="w-plugins-name"><a href={url} target="_blank" data-name={name} onClick={self.onOpen}>{name}</a></td>
 											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
 											<td className="w-plugins-operation">
-												<a href={url} target="_blank" data-name={name} onClick={self.props.onOpen}>Open</a>	
+												<a href={url} target="_blank" data-name={name} onClick={self.onOpen}>Open</a>	
 												{(plugin.rules || plugin._rules) ? <a href="javascript:;">Rules</a> : <span className="disabled">Rules</span>}
 												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Homepage</a> : <span className="disabled">Homepage</span>}
 											</td>
@@ -99,8 +102,7 @@ var Tabs = React.createClass({
 		return !this.props.hide || !nextProps.hide;
 	},
 	onClose: function(e) {
-		//this.state.tabs.splice(i, 1);
-		//this.setState({});
+		this.props.onClose && this.props.onClose(e);
 		e.stopPropagation();
 	},
 	render: function() {

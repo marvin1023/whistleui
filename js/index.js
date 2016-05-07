@@ -539,6 +539,20 @@ var Index = React.createClass({
 	activePluginTab: function(e) {
 		this.showPluginTab($(e.target).attr('data-name'));
 	},
+	closePluginTab: function(e) {
+		var name = $(e.target).attr('data-name');
+		var tabs = this.state.tabs || [];
+		if (tabs) {
+			for (var i = 0, len = tabs.length; i < len; i++) {
+				if (tabs[i].name == name) {
+					tabs.splice(i, 1);
+					return this.setState({
+						tabs: tabs
+					});
+				}
+			}
+		}
+	},
 	showPluginsOptions: function(e) {
 		$(e.target).closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 	},
@@ -1256,7 +1270,7 @@ var Index = React.createClass({
 				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : null}
 				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' && name != 'plugins' ? false : true} modal={state.network} /> : null}
-				{state.hasPlugins ? <Plugins {...state} onActive={this.activePluginTab} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
+				{state.hasPlugins ? <Plugins {...state} onOpen={this.activePluginTab} onClose={this.closePluginTab} onActive={this.activePluginTab} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">
