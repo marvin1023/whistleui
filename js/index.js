@@ -114,7 +114,8 @@ var Index = React.createClass({
 				});
 			});
 		}
-		
+		state.plugins = modal.plugins;
+		state.disabledPlugins = modal.disabledPlugins;
 		state.disabledAllRules = modal.disabledAllRules;
 		state.disabledAllPlugins = modal.disabledAllPlugins;
 		state.hideHttpsConnects = modal.hideHttpsConnects;
@@ -1015,6 +1016,22 @@ var Index = React.createClass({
 		 });
 		 e.preventDefault();
 	},
+	disablePlugin: function(e) {
+		var self = this;
+		var target = e.target;
+		dataCenter.plugins.disablePlugin({
+			name: $(target).attr('data-name'),
+			disabled: target.checked ? 0 : 1
+		}, function(data) {
+			if (data && data.ec === 0) {
+				self.setState({
+					disabledPlugins: data.data
+				});
+			} else {
+				util.showSystemError();
+			}
+		});
+	},
 	allowMultipleChoice: function(e) {
 		var checked = e.target.checked;
 		dataCenter.rules.allowMultipleChoice({allowMultipleChoice: checked ? 1 : 0});
@@ -1158,7 +1175,7 @@ var Index = React.createClass({
 				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : null}
 				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' && name != 'plugins' ? false : true} modal={state.network} /> : null}
-				{state.hasPlugins ? <Plugins ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
+				{state.hasPlugins ? <Plugins {...state} onChange={self.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">

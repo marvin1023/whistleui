@@ -25,6 +25,7 @@ var Home = React.createClass({
 									<th className="w-plugins-active">Active</th>
 									<th className="w-plugins-name">Name</th>
 									<th className="w-plugins-version">Version</th>
+									<th className="w-plugins-date">Date</th>
 									<th className="w-plugins-operation">Operation</th>
 								</tr>
 							</thead>
@@ -50,6 +51,7 @@ var Home = React.createClass({
 											</td>
 											<td className="w-plugins-name"><a href={url} target="_blank">{name}</a></td>
 											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
+											<td className="w-plugins-date">{new Date(plugin.mtime).toLocaleString()}</td>
 											<td className="w-plugins-operation">
 												<a href={url} target="_blank">Open</a>	
 												{(plugin.rules || plugin._rules) ? <a href="javascript:;">Rules</a> : <span className="disabled">Rules</span>}
@@ -137,22 +139,6 @@ var Tabs = React.createClass({
 	onClose: function(i) {
 		this.state.tabs.splice(i, 1);
 		this.setState({});
-	},
-	disablePlugin: function(e) {
-		var self = this;
-		var target = e.target;
-		dataCenter.plugins.disablePlugin({
-			name: $(target).attr('data-name'),
-			disabled: target.checked ? 0 : 1
-		}, function(data) {
-			if (data && data.ec === 0) {
-				self.setState({
-					disabledPlugins: data.data
-				});
-			} else {
-				util.showSystemError();
-			}
-		});
 	},
 	render: function() {
 		var self = this;
