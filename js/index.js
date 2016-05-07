@@ -13,7 +13,7 @@ var Plugins = require('./plugins');
 var dataCenter = require('./data-center');
 var util = require('./util');
 var events = require('./events');
-var MAX_PLUGINS_TABS = 6;
+var MAX_PLUGINS_TABS = 7;
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
