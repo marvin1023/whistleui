@@ -37,7 +37,7 @@ var Home = React.createClass({
 								{list.length ? list.sort(function(a, b) {
 									var p1 = plugins[a];
 									var p2 = plugins[b];
-									return (p1.mtime > p2.mtime || a > b) ? 1 : -1;
+									return (p1.mtime > p2.mtime) ? 1 : -1;
 								}).map(function(name, i) {
 									var plugin = plugins[name];
 									name = name.slice(0, -1);
