@@ -1175,7 +1175,7 @@ var Index = React.createClass({
 				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : null}
 				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' && name != 'plugins' ? false : true} modal={state.network} /> : null}
-				{state.hasPlugins ? <Plugins {...state} onChange={self.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
+				{state.hasPlugins ? <Plugins {...state} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">

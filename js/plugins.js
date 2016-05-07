@@ -100,40 +100,6 @@ var Tabs = React.createClass({
 		
 		resizeHandler();
 		$(window).on('resize', resizeHandler);
-		
-		events.on('disableAllRules', function(e, checked) {
-			 self.setState({
-				 disabledAllRules: checked
-			 });
-		});
-		events.on('disableAllPlugins', function(e, checked) {
-			 self.setState({
-				 disabledAllPlugins: checked
-			 });
-		});
-		
-		dataCenter.getInitialData(function(data) {
-			self.setState({
-				plugins: data.plugins,
-				disabledPlugins: data.disabledPlugins,
-				disabledAllRules: self.state.disabledAllRules != null ? self.state.disabledAllRules : data.disabledAllRules,
-				disabledAllPlugins: self.state.disabledAllPlugins != null ? self.state.disabledAllPlugins : data.disabledAllPlugins,
-			});
-			loadPlugins();
-		});
-		
-		function loadPlugins() {
-			dataCenter.plugins.getPlugins(function(data) {
-				if (data && data.ec === 0) {
-					self.state.plugins = data.plugins;
-					self.state.disabledPlugins = data.disabledPlugins;
-					if (!self.props.hide) {
-						self.setState({});
-					}
-				}
-				setTimeout(loadPlugins, 8000);
-			});
-		}
 	},
 	shouldComponentUpdate: function(nextProps, nextState) {
 		return !this.props.hide || !nextProps.hide;
