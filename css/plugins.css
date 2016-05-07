@@ -18,7 +18,7 @@ padding: 5px 6px!important; overflow: hidden; text-overflow: ellipsis; white-spa
 .w-plugins-list td.w-plugins-active input {margin-left: 12px;}
 .w-plugins-name {width: 280px;}
 .w-plugins-version {width: 100px;}
-.w-plugins-date {width: 160px;}
+.w-plugins-date {width: 180px;}
 .w-plugins-operation a, .w-plugins-operation span.disabled  {margin-right: 30px;}
 .w-plugins-operation a:last-child, .w-plugins-operation span.disabled:last-child {margin-right: 0;}
 .w-plugins-operation span.disabled {color: #ccc;}

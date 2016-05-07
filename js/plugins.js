@@ -23,9 +23,9 @@ var Home = React.createClass({
 								<tr>
 									<th className="w-plugins-order">#</th>
 									<th className="w-plugins-active">Active</th>
+									<th className="w-plugins-date">Date</th>
 									<th className="w-plugins-name">Name</th>
 									<th className="w-plugins-version">Version</th>
-									<th className="w-plugins-date">Date</th>
 									<th className="w-plugins-operation">Operation</th>
 								</tr>
 							</thead>
@@ -35,7 +35,9 @@ var Home = React.createClass({
 						<table className="table table-hover">
 							<tbody>
 								{list.length ? list.sort(function(a, b) {
-									return a > b ? 1 : -1;
+									var p1 = plugins[a];
+									var p2 = plugins[b];
+									return (p1.mtime > p2.mtime || a > b) ? 1 : -1;
 								}).map(function(name, i) {
 									var plugin = plugins[name];
 									name = name.slice(0, -1);
@@ -49,9 +51,9 @@ var Home = React.createClass({
 												<input type="checkbox"  title={disabled ? 'Disabled' : (checked ? 'Disable ' : 'Enable ') + name} 
 													data-name={name} checked={checked} disabled={disabled} onChange={self.props.onChange} />
 											</td>
+											<td className="w-plugins-date">{new Date(plugin.mtime).toLocaleString()}</td>
 											<td className="w-plugins-name"><a href={url} target="_blank">{name}</a></td>
 											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
-											<td className="w-plugins-date">{new Date(plugin.mtime).toLocaleString()}</td>
 											<td className="w-plugins-operation">
 												<a href={url} target="_blank">Open</a>	
 												{(plugin.rules || plugin._rules) ? <a href="javascript:;">Rules</a> : <span className="disabled">Rules</span>}
