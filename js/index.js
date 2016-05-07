@@ -61,6 +61,7 @@ var Index = React.createClass({
 		}
 		var rulesList = [];
 		var rulesOptions = [];
+		var pluginsOptions = [];
 		var rulesData = {};
 		var valuesList = [];
 		var valuesOptions = [];
@@ -122,6 +123,7 @@ var Index = React.createClass({
 		state.interceptHttpsConnects = modal.interceptHttpsConnects;
 		state.rules = new ListModal(rulesList, rulesData);
 		state.rulesOptions = rulesOptions;
+		state.pluginsOptions = pluginsOptions;
 		dataCenter.valuesModal = state.values = new ListModal(valuesList, valuesData);
 		state.valuesOptions = valuesOptions;
 		state.filterText = modal.filterText;
@@ -475,6 +477,12 @@ var Index = React.createClass({
 		self.setState({}, function() {
 			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 		});
+	},
+	showPluginsOptions: function(e) {
+		$(e.target).closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
+	},
+	hidePluginsOptions: function(e) {
+		$(e.target).closest('.w-menu-wrapper').removeClass('w-menu-wrapper-show');
 	},
 	showWeinreOptions: function(e) {
 		var self = this;
@@ -1097,6 +1105,7 @@ var Index = React.createClass({
 		var showRulesLineNumbers = false;
 		var showValuesLineNumbers = false;
 		var rulesOptions = state.rulesOptions;
+		var pluginsOptions = state.pluginsOptions;
 		
 		rulesOptions.forEach(function(item) {
 			item.icon = item.selected ? 'ok' : 'edit';
@@ -1157,7 +1166,7 @@ var Index = React.createClass({
 					</div>
 					<div onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className="w-menu-wrapper">
 						<a onClick={this.showPlugins} className="w-plugins-menu" href="javascript:;"><span className="glyphicon glyphicon-list-alt"></span>Plugins</a>
-						<MenuItem ref="pluginsMenuItem" name="Open" options={rulesOptions} disabled={state.disabledAllRules || state.disabledAllPlugins} className="w-plugins-menu-item" onClick={this.showPlugins} onClickOption={this.showAndActivePlugins} />
+						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} disabled={state.disabledAllRules || state.disabledAllPlugins} className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
 					</div>
 					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
