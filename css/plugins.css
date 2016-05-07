@@ -24,7 +24,7 @@ padding: 5px 6px!important; overflow: hidden; text-overflow: ellipsis; white-spa
 .w-plugins-operation span.disabled {color: #ccc;}
 
 .w-plugin-rules-dialog .modal-dialog {width: 640px;}
-.w-plugin-rules-dialog .modal-dialog pre {max-height: 220px; overflow: auto;}
-.w-plugin-rules-dialog fieldset {border: 1px solid #ddd; padding: 10px;}
+.w-plugin-rules-dialog .modal-dialog pre {max-height: 220px; overflow: auto; padding: 10px;}
+.w-plugin-rules-dialog fieldset {border: 1px solid #ddd;}
 .w-plugin-rules-dialog fieldset legend {font-size: 13px; margin-bottom: 0; border: none; width: auto;}
 .w-plugin-rules-dialog fieldset:nth-child(2) {margin-top: 15px;}
