@@ -41,6 +41,7 @@ var Index = React.createClass({
 		var modal = this.props.modal;
 		var rules = modal.rules;
 		var values = modal.values;
+		var plugins = modal.plugins;
 		var state = {
 				allowMultipleChoice: modal.rules.allowMultipleChoice,
 				syncWithSysHosts: modal.rules.syncWithSysHosts
@@ -61,7 +62,6 @@ var Index = React.createClass({
 		}
 		var rulesList = [];
 		var rulesOptions = [];
-		var pluginsOptions = [];
 		var rulesData = {};
 		var valuesList = [];
 		var valuesOptions = [];
@@ -115,6 +115,7 @@ var Index = React.createClass({
 				});
 			});
 		}
+		
 		state.plugins = modal.plugins;
 		state.disabledPlugins = modal.disabledPlugins;
 		state.disabledAllRules = modal.disabledAllRules;
@@ -123,12 +124,29 @@ var Index = React.createClass({
 		state.interceptHttpsConnects = modal.interceptHttpsConnects;
 		state.rules = new ListModal(rulesList, rulesData);
 		state.rulesOptions = rulesOptions;
-		state.pluginsOptions = pluginsOptions;
+		state.pluginsOptions = this.createPluginsOptions(modal.plugins);
 		dataCenter.valuesModal = state.values = new ListModal(valuesList, valuesData);
 		state.valuesOptions = valuesOptions;
 		state.filterText = modal.filterText;
 		
 		return state;
+	},
+	createPluginsOptions: function(plugins) {
+		plugins = plugins || {};
+		var pluginsOptions = [{
+			name: 'Home'
+		}];
+		
+		Object.keys(plugins).sort(function(a, b) {
+			var p1 = plugins[a];
+			var p2 = plugins[b];
+			return (p1.mtime > p2.mtime) ? 1 : -1;
+		}).forEach(function(name) {
+			pluginsOptions.push({
+				name: name.slice(0, -1)
+			});
+		});
+		return pluginsOptions;
 	},
 	componentDidMount: function() {
 		var self = this;
@@ -239,7 +257,8 @@ var Index = React.createClass({
 	            if (data && data.ec === 0) {
 	            	self.setState({
                     	plugins: data.plugins,
-                    	disabledPlugins: data.disabledPlugins
+                    	disabledPlugins: data.disabledPlugins,
+                    	pluginsOptions: self.createPluginsOptions(data.plugins)
                     });
 	            }
 	            setTimeout(loadPlugins, 10000);
@@ -371,6 +390,7 @@ var Index = React.createClass({
 			return;
 		}
 		this.setMenuOptionsState();
+		this.hidePluginsOptions();
 		this.setState({
 			hasPlugins: true,
 			name: 'plugins'
@@ -478,11 +498,14 @@ var Index = React.createClass({
 			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 		});
 	},
+	showAndActivePlugins: function() {
+		this.hidePluginsOptions();
+	},
 	showPluginsOptions: function(e) {
 		$(e.target).closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 	},
-	hidePluginsOptions: function(e) {
-		$(e.target).closest('.w-menu-wrapper').removeClass('w-menu-wrapper-show');
+	hidePluginsOptions: function() {
+		$(ReactDOM.findDOMNode(this.refs.pluginsMenu)).removeClass('w-menu-wrapper-show');
 	},
 	showWeinreOptions: function(e) {
 		var self = this;
@@ -1164,7 +1187,7 @@ var Index = React.createClass({
 						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 						<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					</div>
-					<div onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className="w-menu-wrapper">
+					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className="w-menu-wrapper">
 						<a onClick={this.showPlugins} className="w-plugins-menu" href="javascript:;"><span className="glyphicon glyphicon-list-alt"></span>Plugins</a>
 						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} disabled={state.disabledAllRules || state.disabledAllPlugins} className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
 					</div>
