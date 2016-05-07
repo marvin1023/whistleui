@@ -502,10 +502,16 @@ var Index = React.createClass({
 	showAndActivePlugins: function(option) {
 		this.hidePluginsOptions();
 		this.showPlugins();
-		this.showPluginUI(option.name);
+		this.showPluginTab(option.name);
 	},
-	showPluginUI: function(name) {
-		
+	showPluginTab: function(name) {
+		this.setState({
+			active: 'test',
+			tabs: [{
+				name: 'test',
+				url: 'https://github.com/'
+			}]
+		});
 	},
 	showPluginsOptions: function(e) {
 		$(e.target).closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');

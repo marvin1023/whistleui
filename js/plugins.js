@@ -52,10 +52,10 @@ var Home = React.createClass({
 													data-name={name} checked={checked} disabled={disabled} onChange={self.props.onChange} />
 											</td>
 											<td className="w-plugins-date">{new Date(plugin.mtime).toLocaleString()}</td>
-											<td className="w-plugins-name"><a href={url} target="_blank">{name}</a></td>
+											<td className="w-plugins-name"><a href={url} target="_blank" data-name={name} onClick={self.props.onOpen}>{name}</a></td>
 											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
 											<td className="w-plugins-operation">
-												<a href={url} target="_blank">Open</a>	
+												<a href={url} target="_blank" data-name={name} onClick={self.props.onOpen}>Open</a>	
 												{(plugin.rules || plugin._rules) ? <a href="javascript:;">Rules</a> : <span className="disabled">Rules</span>}
 												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Homepage</a> : <span className="disabled">Homepage</span>}
 											</td>
@@ -99,19 +99,20 @@ var Tabs = React.createClass({
 	shouldComponentUpdate: function(nextProps, nextState) {
 		return !this.props.hide || !nextProps.hide;
 	},
-	onClose: function(i) {
-		this.state.tabs.splice(i, 1);
-		this.setState({});
+	onClose: function(e) {
+		//this.state.tabs.splice(i, 1);
+		//this.setState({});
+		e.stopPropagation();
 	},
 	render: function() {
 		var self = this;
 		var tabs = self.props.tabs || [];
 		var activeName = 'Home';
-		var activeTabName = self.props.activeTabName;
-		if (activeTabName && activeTabName != activeName) {
+		var active = self.props.active;
+		if (active && active != activeName) {
 			for (var i = 0, len = tabs.length; i < len; i++) {
 				var tab = tabs[i];
-				if (tab.name == activeTabName) {
+				if (tab.name == active) {
 					activeName = tab.name;
 					break;
 				}
@@ -121,22 +122,19 @@ var Tabs = React.createClass({
 		return (
 			<div className="w-nav-tabs fill orient-vertical-box" style={{display: self.props.hide ? 'none' : ''}}>
 				 <ul className="nav nav-tabs">
-				    <li className={'w-nav-home-tab' + (activeName == 'Home' ? ' active' : '')}><a href="javascript:;">Home</a></li>
-				    {tabs.map(function(tab, i) {
+				    <li className={'w-nav-home-tab' + (activeName == 'Home' ? ' active' : '')} data-name="Home"  onClick={self.props.onActive}><a href="javascript:;">Home</a></li>
+				    {tabs.map(function(tab) {
 				    	return <li className={activeName == tab.name ? ' active' : ''}>
-						    	<a href="javascript:;">
+						    	<a data-name={tab.name}  onClick={self.props.onActive} href="javascript:;">
 						    		{tab.name}
-						    		<span title="Close" 
-							    		onClick={function() {
-							    		self.onClose(i);
-							    		}}>&times;</span>
+						    		<span data-name={tab.name} title="Close" onClick={self.onClose}>&times;</span>
 							    </a>
 						      </li>;
 				    })}
 				  </ul>
 				  <div className="fill orient-vertical-box w-nav-tab-panel">
 				  	<div ref="tabPanel" className="fill orient-vertical-box">
-				  		<Home data={self.props} hide={activeName != 'Home'} onChange={self.props.onChange} />
+				  		<Home data={self.props} hide={activeName != 'Home'} onChange={self.props.onChange} onOpen={self.props.onOpen} />
 				  		{tabs.map(function(tab) {
 				  			return <iframe style={{display: activeName == tab.name ? '' : 'none'}} src={tab.url} />
 				  		})}
