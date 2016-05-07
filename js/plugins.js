@@ -71,11 +71,6 @@ var Home = React.createClass({
 });
 
 var Tabs = React.createClass({
-	getInitialState: function() {
-		return {
-			tabs: []
-		};
-	},
 	componentDidMount: function() {
 		var self = this;
 		var tabPanel = ReactDOM.findDOMNode(self.refs.tabPanel);
@@ -110,7 +105,7 @@ var Tabs = React.createClass({
 	},
 	render: function() {
 		var self = this;
-		var tabs = self.state.tabs;
+		var tabs = self.props.tabs || [];
 		var activeName = 'Home';
 		var activeTabName = self.props.activeTabName;
 		if (activeTabName && activeTabName != activeName) {
