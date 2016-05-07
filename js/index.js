@@ -991,7 +991,6 @@ var Index = React.createClass({
 		 var self = this;
 		 dataCenter.rules.disableAllRules({disabledAllRules: checked ? 1 : 0}, function(data) {
 			  if (data && data.ec === 0) {
-				  events.trigger('disableAllRules', checked);
 				  self.setState({
 					disabledAllRules: checked
 				});
@@ -1006,7 +1005,6 @@ var Index = React.createClass({
 		 var self = this;
 		 dataCenter.plugins.disableAllPlugins({disabledAllPlugins: checked ? 1 : 0}, function(data) {
 			  if (data && data.ec === 0) {
-				  events.trigger('disableAllPlugins', checked);
 				  self.setState({
 					  disabledAllPlugins: checked
 				});
