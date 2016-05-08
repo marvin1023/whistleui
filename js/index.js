@@ -465,14 +465,13 @@ var Index = React.createClass({
 		var target = $(e.target);
 		var rules = self.state.rules;
 		var data = rules.data;
-		var selectedList = [];
-		var list = [];
+		var rulesOptions = [];
 		rules.list.forEach(function(name) {
-			var item = data[name];
-			item.selected ? selectedList.push(item) : list.push(item);
+			rulesOptions.push(data[name]);
 		});
-		self.state.rulesOptions = selectedList.concat(list);
-		self.setState({}, function() {
+		self.setState({
+			rulesOptions: rulesOptions
+		}, function() {
 			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
 		});
 	},
