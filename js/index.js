@@ -145,7 +145,8 @@ var Index = React.createClass({
 		}).forEach(function(name) {
 			pluginsOptions.push({
 				name: name.slice(0, -1),
-				icon: 'checkbox'
+				icon: 'checkbox',
+				mtime: plugins[name].mtime
 			});
 		});
 		return pluginsOptions;
@@ -256,14 +257,30 @@ var Index = React.createClass({
 		
 		function loadPlugins() {
 	        dataCenter.plugins.getPlugins(function(data) {
+	        	 setTimeout(loadPlugins, 3600);
 	            if (data && data.ec === 0) {
+	            	var pluginsOptions = self.createPluginsOptions(data.plugins);
+	            	var oldPluginsOptions = self.state.pluginsOptions;
+	            	if (pluginsOptions.length == oldPluginsOptions.length) {
+	            		var hasUpdate;
+	            		for (var i = 0, len = pluginsOptions.length; i < len; i++) {
+	            			var plugin = pluginsOptions[i];
+	            			var oldPlugin = oldPluginsOptions[i];
+	            			if (plugin.name != oldPlugin.name || plugin.mtime != oldPlugin.mtime) {
+	            				hasUpdate = true;
+	            				break;
+	            			}
+	            		}
+	            		if (!hasUpdate) {
+	            			return;
+	            		}
+	            	}
 	            	self.setState({
                     	plugins: data.plugins,
                     	disabledPlugins: data.disabledPlugins,
-                    	pluginsOptions: self.createPluginsOptions(data.plugins)
+                    	pluginsOptions: pluginsOptions
                     });
 	            }
-	            setTimeout(loadPlugins, 10000);
 	        });
 	    }
 	},
