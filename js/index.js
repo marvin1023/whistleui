@@ -851,6 +851,9 @@ var Index = React.createClass({
 		});
 		return false;
 	},
+	selectRulesByOptions: function(e) {
+		this.selectRules(this.state.rules.data[$(e.target).attr('data-name')]);
+	},
 	unselectRules: function(item) {
 		var self = this;
 		dataCenter.rules[item.isDefault ? 'disableDefault' : 'unselect'](item, function(data) {
@@ -1187,9 +1190,13 @@ var Index = React.createClass({
 		var showValuesLineNumbers = false;
 		var rulesOptions = state.rulesOptions;
 		var pluginsOptions = state.pluginsOptions;
+		var uncheckedRules = {};
 		
 		rulesOptions.forEach(function(item) {
-			item.icon = item.selected ? 'ok' : 'edit';
+			item.icon = 'checkbox';
+			if (!item.selected) {
+				uncheckedRules[item.name] = 1;
+			}
 		});
 		
 		if (isRules) {
@@ -1239,7 +1246,8 @@ var Index = React.createClass({
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isRules ? 'none' : ''}} className="w-menu-wrapper">
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
-						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} disabled={state.disabledAllRules} className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules} />
+						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
+						className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules}  onChange={this.selectRulesByOptions} />
 					</div>
 					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isValues ? 'none' : ''}} className="w-menu-wrapper">
 						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
