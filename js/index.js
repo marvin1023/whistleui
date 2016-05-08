@@ -852,7 +852,8 @@ var Index = React.createClass({
 		return false;
 	},
 	selectRulesByOptions: function(e) {
-		this.selectRules(this.state.rules.data[$(e.target).attr('data-name')]);
+		var item = this.state.rules.data[$(e.target).attr('data-name')];
+		this[e.target.checked ? 'selectRules' : 'unselectRules'](item);
 	},
 	unselectRules: function(item) {
 		var self = this;
