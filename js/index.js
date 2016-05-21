@@ -764,6 +764,7 @@ var Index = React.createClass({
 		this.setState({
 			showEditFilter: true
 		}, function() {
+			editFilterInput.select();
 			editFilterInput.focus();
 		});
 	},
@@ -947,7 +948,6 @@ var Index = React.createClass({
 		var filter = $.trim(target.value);
 		dataCenter.setFilter({filter: filter}, function(data) {
 			if (data && data.ec === 0) {
-				target.value = '';
 				target.blur();
 				self.setState({
 					filterText: filter
@@ -1297,7 +1297,7 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="create values" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (state.selectedRuleName || '')} /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={'rename ' + (state.selectedValueName || '')} /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" placeholder={state.filterText || 'substring or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
+					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="64" defaultValue={state.filterText} placeholder={state.filterText ? null : 'substring or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
 				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : null}
 				{state.hasValues ? <List theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
