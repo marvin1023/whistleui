@@ -133,12 +133,17 @@ var Tabs = React.createClass({
 				tabPanel.style.height = height + 'px';
 			}
 		}
-		
+		self._resizeHandler = resizeHandler;
 		resizeHandler();
 		$(window).on('resize', resizeHandler);
 	},
 	shouldComponentUpdate: function(nextProps, nextState) {
 		return !this.props.hide || !nextProps.hide;
+	},
+	componentDidUpdate: function(prevProps, prevState) {
+		if (prevProps.hide && !this.props.hide) {
+			this._resizeHandler();
+		}
 	},
 	onClose: function(e) {
 		this.props.onClose && this.props.onClose(e);
