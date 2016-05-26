@@ -67,8 +67,8 @@ var Log = React.createClass({
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
-	toggleTab: function() {
-		
+	changePanel: function(btn) {
+		this.setState({});
 	},
 	render: function() {
 		var logs = this.state && this.state.logs || [];
@@ -78,8 +78,8 @@ var Log = React.createClass({
 						<a className="w-auto-scroll-log" href="javascript:;">AutoScroll</a>
 						<a className="w-clear-log" href="javascript:;">Clear</a>
 					</div>
-					<BtnGroup onClick={this.toggleTab} btns={BTNS} />
-					<div className="fill orient-vertical-box w-detail-page-log">
+					<BtnGroup onClick={this.changePanel} btns={BTNS} />
+					<div className={'fill orient-vertical-box w-detail-page-log' + (BTNS[0].active ? '' : ' hide')}>
 						<ul ref="content">
 							{logs.map(function(log) {
 								
@@ -93,7 +93,7 @@ var Log = React.createClass({
 							})}
 						</ul>
 					</div>
-					<div className="fill orient-vertical-box w-detail-sys-log hide">
+					<div className={'fill orient-vertical-box w-detail-sys-log' + (BTNS[1].active ? '' : ' hide')}>
 						<ul ref="content">
 							{logs.map(function(log) {
 								
