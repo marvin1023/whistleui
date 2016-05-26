@@ -73,24 +73,40 @@ var Log = React.createClass({
 	render: function() {
 		var logs = this.state && this.state.logs || [];
 		return (
-				<div ref="container" className={'fill orient-vertical-box w-detail-content w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+				<div ref="container" className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<div style={{display: logs.length ? 'block' : 'none'}} className="w-detail-log-bar">
 						<a className="w-auto-scroll-log" href="javascript:;">AutoScroll</a>
 						<a className="w-clear-log" href="javascript:;">Clear</a>
 					</div>
 					<BtnGroup onClick={this.toggleTab} btns={BTNS} />
-					<ul ref="content">
-						{logs.map(function(log) {
-							
-							return (
-								<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level}>
-									<pre>
-										{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
-									</pre>
-								</li>		
-							);
-						})}
-					</ul>
+					<div className="fill orient-vertical-box w-detail-page-log">
+						<ul ref="content">
+							{logs.map(function(log) {
+								
+								return (
+									<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level}>
+										<pre>
+											{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
+										</pre>
+									</li>		
+								);
+							})}
+						</ul>
+					</div>
+					<div className="fill orient-vertical-box w-detail-sys-log hide">
+						<ul ref="content">
+							{logs.map(function(log) {
+								
+								return (
+									<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level}>
+										<pre>
+											{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
+										</pre>
+									</li>		
+								);
+							})}
+						</ul>
+					</div>
 			</div>
 		);
 	}
