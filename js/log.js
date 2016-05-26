@@ -3,8 +3,17 @@ require('../css/log.css');
 var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
+var BtnGroup = require('./btn-group');
 var util = require('./util');
 var dataCenter = require('./data-center');
+var BTNS = [{
+	name: 'Page',
+	icon: 'file',
+	active: true
+}, {
+	name: 'System',
+	icon: 'exclamation-sign'
+}];
 
 var Log = React.createClass({
 	componentDidMount: function() {
@@ -58,6 +67,9 @@ var Log = React.createClass({
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
+	toggleTab: function() {
+		
+	},
 	render: function() {
 		var logs = this.state && this.state.logs || [];
 		return (
@@ -66,6 +78,7 @@ var Log = React.createClass({
 						<a className="w-auto-scroll-log" href="javascript:;">AutoScroll</a>
 						<a className="w-clear-log" href="javascript:;">Clear</a>
 					</div>
+					<BtnGroup onClick={this.toggleTab} btns={BTNS} />
 					<ul ref="content">
 						{logs.map(function(log) {
 							

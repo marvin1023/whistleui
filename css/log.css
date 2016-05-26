@@ -10,6 +10,6 @@
 .w-detail-log li.w-error pre {color: #c41a16;}
 .w-detail-log li.w-warn pre {color: #5c3b00;}
 
-.w-detail-log-bar {position: fixed; z-index: 1; border-radius: 2px; right: 12px; font-size: 12px; top: 60px; white-space: nowrap; line-height: 1.5; background: #eee;}
+.w-detail-log-bar {position: fixed; z-index: 1; border-radius: 2px; right: 5px; font-size: 12px; top: 61px; white-space: nowrap; line-height: 1.5; background: #eee;}
 .w-detail-log-bar a {display: inline-block; text-decoration: none; color: #000; padding: 0 5px;}
 .w-detail-log-bar a:hover {color: #337ab7;}
