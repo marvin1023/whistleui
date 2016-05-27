@@ -1217,7 +1217,7 @@ var Index = React.createClass({
 	leaveMenuList: function(e) {
 		clearTimeout(this._hoverMenuListTimer);
 		this._hoverMenuListTimer = null;
-		this.state.hoverMenuList = false;
+		this.state.hoverMenuList = !!e;
 	},
 	render: function() {
 		var state = this.state;
@@ -1294,8 +1294,8 @@ var Index = React.createClass({
 		}
 		
 		return (
-			<div className="main orient-vertical-box" onMouseEnter={this.hoverMenuList} onMouseLeave={this.leaveMenuList}>
-				<div className={'w-menu w-' + name + '-menu-list'}>
+			<div className="main orient-vertical-box" onMouseEnter={this.hoverMenuList}>
+				<div className={'w-menu w-' + name + '-menu-list'} onMouseLeave={this.leaveMenuList}>
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} style={{display: isRules ? 'none' : ''}} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
