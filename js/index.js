@@ -487,9 +487,13 @@ var Index = React.createClass({
 			rulesOptions.push(data[name]);
 		});
 		self.setState({
-			rulesOptions: rulesOptions
-		}, function() {
-			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
+			rulesOptions: rulesOptions,
+			showRulesOptions: true
+		});
+	},
+	hideRulesOptions: function() {
+		this.setState({
+			showRulesOptions: false
 		});
 	},
 	hideMenuOptions: function(e) {
@@ -497,7 +501,6 @@ var Index = React.createClass({
 	},
 	showValuesOptions: function(e) {
 		var self = this;
-		var target = $(e.target);
 		var valuesList = this.state.values.list;
 		var list = self.getValuesFromRules() || [];
 		list = util.unique(list.concat(valuesList));
@@ -512,8 +515,13 @@ var Index = React.createClass({
 			exists ? valuesOptions.push(item) : newValues.push(item);
 		});
 		self.state.valuesOptions = newValues.concat(valuesOptions);
-		self.setState({}, function() {
-			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
+		self.setState({
+			showValuesOptions: true
+		});
+	},
+	hideValuesOptions: function() {
+		this.setState({
+			showValuesOptions: false
 		});
 	},
 	showAndActivePlugins: function(option) {
@@ -1195,7 +1203,7 @@ var Index = React.createClass({
 			self.setState({
 				hoverMenuList: true
 			});
-		}, 1000);
+		}, 600);
 	},
 	leaveMenuList: function() {
 		clearTimeout(this._hoverMenuListTimer);
@@ -1223,6 +1231,10 @@ var Index = React.createClass({
 		var pluginsOptions = state.pluginsOptions;
 		var uncheckedRules = {};
 		var hoverMenuList = state.hoverMenuList;
+		var showRulesOptions = state.showRulesOptions && hoverMenuList;
+		var showValuesOptions = state.showValuesOptions && hoverMenuList;
+		var showPluginsOptions = state.showPluginsOptions && hoverMenuList;
+		var showWeinreOptions = state.showWeinreOptions && hoverMenuList;
 		
 		rulesOptions.forEach(function(item) {
 			item.icon = 'checkbox';
@@ -1276,12 +1288,12 @@ var Index = React.createClass({
 			<div className="main orient-vertical-box">
 				<div className={'w-menu w-' + name + '-menu-list'} onMouseEnter={this.hoverMenuList} onMouseLeave={this.leaveMenuList}>
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
-					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isRules ? 'none' : ''}} className="w-menu-wrapper">
+					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} style={{display: isRules ? 'none' : ''}} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
 						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
 						className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules}  onChange={this.selectRulesByOptions} />
 					</div>
-					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isValues ? 'none' : ''}} className="w-menu-wrapper">
+					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideValuesOptions} style={{display: isValues ? 'none' : ''}} className={'w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 						<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					</div>
