@@ -6,14 +6,14 @@ var TIMEOUT = 10000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
 var logCallbacks = [];
-var sysLogCallbacks = [];
+var svrLogCallbacks = [];
 var dataList = [];
 var logList = [];
-var sysLogList = [];
+var svrLogList = [];
 var networkModal = new NetworkModal(dataList);
 var curServerInfo;
 var initialData, startedLoad;
-var lastPageLogTime, lastSysLogTime;
+var lastPageLogTime, lastSvrLogTime;
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
 		xhrFields: {
@@ -33,8 +33,8 @@ if (/_lastPageLogTime=([^;]+)/.test(document.cookie)) {
 	lastPageLogTime = RegExp.$1;
 }
 
-if (/_lastSysLogTime=([^;]+)/.test(document.cookie)) {
-	lastSysLogTime = RegExp.$1;
+if (/_lastSvrLogTime=([^;]+)/.test(document.cookie)) {
+	lastSvrLogTime = RegExp.$1;
 }
 
 exports.values = createCgi({
@@ -119,9 +119,9 @@ function startLoadData() {
 		var pendingIds = getPendingIds();
 		var startTime = getStartTime();
 		var len = logList.length;
-		var sysLen = sysLogList.length;
+		var svrLen = svrLogList.length;
 		var startLogTime = -1;
-		var startSysLogTime = -1;
+		var startSvrLogTime = -1;
 		
 		if (!len) {
 			startLogTime = lastPageLogTime || -2;
@@ -129,14 +129,14 @@ function startLoadData() {
 			startLogTime = logList[len - 1].id;
 		}
 		
-		if (!sysLen) {
-			startSysLogTime = lastSysLogTime || -2;
-		} else if (sysLen < 120) {
-			startSysLogTime = sysLogList[sysLen - 1].id;
+		if (!svrLen) {
+			startSvrLogTime = lastSvrLogTime || -2;
+		} else if (svrLen < 120) {
+			startSvrLogTime = svrLogList[svrLen - 1].id;
 		}
 		cgi.getData({
 			startLogTime: startLogTime,
-			startSysLogTime: startSysLogTime,
+			startSvrLogTime: startSvrLogTime,
 			ids: pendingIds.join(),
 			startTime: startTime,
 			count: 60
@@ -146,20 +146,20 @@ function startLoadData() {
 				return;
 			}
 			var len = data.log.length;
-			var sysLen = data.sysLog.length;
-			if (len || sysLen) {
+			var svrLen = data.svrLog.length;
+			if (len || svrLen) {
 				if (len) {
 					logList.push.apply(logList, data.log);
 					document.cookie = '_lastPageLogTime=' + data.log[data.log.length - 1].id;
 				}
 				
-				if (sysLen) {
-					sysLogList.push.apply(sysLogList, data.sysLog);
-					document.cookie = '_lastSysLogTime=' + data.sysLog[data.sysLog.length - 1].id;
+				if (svrLen) {
+					svrLogList.push.apply(svrLogList, data.svrLog);
+					document.cookie = '_lastSvrLogTime=' + data.svrLog[data.svrLog.length - 1].id;
 				}
 				
 				$.each(logCallbacks, function() {
-					this(logList, sysLogList);
+					this(logList, svrLogList);
 				});
 			}
 			
@@ -259,7 +259,7 @@ exports.on = function(type, callback) {
 		if (typeof callback == 'function') {
 			logCallbacks.push(callback);
 			startLoadData();
-			callback(logList, sysLogList);
+			callback(logList, svrLogList);
 		}
 	}
 };

@@ -15,4 +15,4 @@
 .w-detail-log-bar a {display: inline-block; text-decoration: none; color: #000; padding: 0 5px;}
 .w-detail-log-bar a:hover {color: #337ab7;}
 
-.w-detail-page-log, .w-detail-sys-log {overflow: auto;}
+.w-detail-page-log, .w-detail-svr-log {overflow: auto;}

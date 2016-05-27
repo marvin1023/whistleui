@@ -11,7 +11,7 @@ var BTNS = [{
 	icon: 'file',
 	active: true
 }, {
-	name: 'System',
+	name: 'Server',
 	icon: 'exclamation-sign'
 }];
 
@@ -20,36 +20,36 @@ var Log = React.createClass({
 		var self = this;
 		var container = ReactDOM.findDOMNode(self.refs.container);
 		var content = ReactDOM.findDOMNode(self.refs.content);
-		var sysContainer = ReactDOM.findDOMNode(self.refs.sysContainer);
-		var sysContent = ReactDOM.findDOMNode(self.refs.sysContent);
+		var svrContainer = ReactDOM.findDOMNode(self.refs.svrContainer);
+		var svrContent = ReactDOM.findDOMNode(self.refs.svrContent);
 		document.cookie = '_logComponentDidMount=1';
-		dataCenter.on('log', function(logs, sysLogs) {
+		dataCenter.on('log', function(logs, svrLogs) {
 			var isPageLog = self.isPageLog();
-			var atBottom = isPageLog ? scrollAtBottom() : scrollAtBottom(sysContainer, sysContent);
-			var data = isPageLog ? logs : sysLogs;
+			var atBottom = isPageLog ? scrollAtBottom() : scrollAtBottom(svrContainer, svrContent);
+			var data = isPageLog ? logs : svrLogs;
 			if (atBottom) {
 				var len = data.length - 119;
 				if (len > 0) {
 					data.splice(0, len);
 				}
 			}
-			var state = {logs: logs, sysLogs: sysLogs};
+			var state = {logs: logs, svrLogs: svrLogs};
 			if (isPageLog) {
 				state.atPageLogBottom = atBottom;
 			} else {
-				state.atSysLogBottom = atBottom;
+				state.atSvrLogBottom = atBottom;
 			}
 			self.setState(state, function() {
 				if (atBottom) {
 					if (isPageLog) {
 						container.scrollTop = content.offsetHeight;
 					} else {
-						sysContainer.scrollTop = sysContent.offsetHeight;
+						svrContainer.scrollTop = svrContent.offsetHeight;
 					}
 				}
 			});
 		});
-		var timeout, sysTimeout;
+		var timeout, svrTimeout;
 		$(container).on('scroll', function() {
 			var data = self.state.logs;
 			timeout && clearTimeout(timeout);
@@ -64,11 +64,11 @@ var Log = React.createClass({
 			}
 		});
 		
-		$(sysContainer).on('scroll', function() {
-			var data = self.state.sysLogs;
-			sysTimeout && clearTimeout(sysTimeout);
-			if (data && (self.state.atSysLogBottom = scrollAtBottom(sysContainer, sysContent))) {
-				sysTimeout = setTimeout(function() {
+		$(svrContainer).on('scroll', function() {
+			var data = self.state.svrLogs;
+			svrTimeout && clearTimeout(svrTimeout);
+			if (data && (self.state.atSvrLogBottom = scrollAtBottom(svrContainer, svrContent))) {
+				svrTimeout = setTimeout(function() {
 					var len = data.length - 110;
 					if (len > 0) {
 						data.splice(0, len);
@@ -85,14 +85,14 @@ var Log = React.createClass({
 		}
 	},
 	clearLogs: function() {
-		var data = this.isPageLog() ? this.state.logs : this.state.sysLogs;
+		var data = this.isPageLog() ? this.state.logs : this.state.svrLogs;
 		data && data.splice(0, data.length);
 		this.setState({});
 	},
 	autoScroll: function() {
 		var self = this;
-		var container = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.container : self.refs.sysContainer);
-		var content = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.content : self.refs.sysContent);
+		var container = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.container : self.refs.svrContainer);
+		var content = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.content : self.refs.svrContent);
 		container.scrollTop = content.offsetHeight;
 	},
 	shouldComponentUpdate: function(nextProps) {
@@ -108,9 +108,9 @@ var Log = React.createClass({
 					container.scrollTop = content.offsetHeight;
 				}
 			} else {
-				if (this.state.atSysLogBottom !== false) {
-					var container = ReactDOM.findDOMNode(this.refs.sysContainer);
-					var content = ReactDOM.findDOMNode(this.refs.sysContent);
+				if (this.state.atSvrLogBottom !== false) {
+					var container = ReactDOM.findDOMNode(this.refs.svrContainer);
+					var content = ReactDOM.findDOMNode(this.refs.svrContent);
 					container.scrollTop = content.offsetHeight;
 				}
 			}
@@ -122,9 +122,9 @@ var Log = React.createClass({
 	render: function() {
 		var state = this.state || {};
 		var logs = state.logs || [];
-		var sysLogs = state.sysLogs || [];
+		var svrLogs = state.svrLogs || [];
 		var isPageLog = this.isPageLog();
-		var hasLogs = isPageLog ? logs.length : sysLogs.length;
+		var hasLogs = isPageLog ? logs.length : svrLogs.length;
 		
 		return (
 				<div className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
@@ -147,9 +147,9 @@ var Log = React.createClass({
 							})}
 						</ul>
 					</div>
-					<div ref="sysContainer" className={'fill orient-vertical-box w-detail-sys-log' + (!this.isPageLog() ? '' : ' hide')}>
-						<ul ref="sysContent">
-							{sysLogs.map(function(log) {
+					<div ref="svrContainer" className={'fill orient-vertical-box w-detail-svr-log' + (!this.isPageLog() ? '' : ' hide')}>
+						<ul ref="svrContent">
+							{svrLogs.map(function(log) {
 								
 								return (
 									<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level}>
