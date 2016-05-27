@@ -21,7 +21,7 @@ var Log = React.createClass({
 		var container = ReactDOM.findDOMNode(self.refs.container);
 		var content = ReactDOM.findDOMNode(self.refs.content);
 		
-		dataCenter.on('log', function(data) {
+		dataCenter.on('log', function(data, sysLogs) {
 			var atBottom = scrollAtBottom();
 			if (atBottom) {
 				var len = data.length - 119;
@@ -30,7 +30,7 @@ var Log = React.createClass({
 				}
 			}
 			
-			self.setState({logs: data}, function() {
+			self.setState({logs: data, sysLogs: sysLogs}, function() {
 				if (atBottom) {
 					container.scrollTop = content.offsetHeight;
 				}
@@ -67,19 +67,21 @@ var Log = React.createClass({
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
-	changePanel: function(btn) {
+	toggleTabs: function(btn) {
 		this.setState({});
 	},
 	render: function() {
-		var logs = this.state && this.state.logs || [];
+		var state = this.state || {};
+		var logs = state.logs || [];
+		var sysLogs = state.sysLogs || [];
 		return (
-				<div ref="container" className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+				<div className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<div style={{display: logs.length ? 'block' : 'none'}} className="w-detail-log-bar">
 						<a className="w-auto-scroll-log" href="javascript:;">AutoScroll</a>
 						<a className="w-clear-log" href="javascript:;">Clear</a>
 					</div>
-					<BtnGroup onClick={this.changePanel} btns={BTNS} />
-					<div className={'fill orient-vertical-box w-detail-page-log' + (BTNS[0].active ? '' : ' hide')}>
+					<BtnGroup onClick={this.toggleTabs} btns={BTNS} />
+					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (BTNS[0].active ? '' : ' hide')}>
 						<ul ref="content">
 							{logs.map(function(log) {
 								
@@ -93,9 +95,9 @@ var Log = React.createClass({
 							})}
 						</ul>
 					</div>
-					<div className={'fill orient-vertical-box w-detail-sys-log' + (BTNS[1].active ? '' : ' hide')}>
-						<ul ref="content">
-							{logs.map(function(log) {
+					<div ref="sysContainer" className={'fill orient-vertical-box w-detail-sys-log' + (BTNS[1].active ? '' : ' hide')}>
+						<ul ref="sysContent">
+							{sysLogs.map(function(log) {
 								
 								return (
 									<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level}>
