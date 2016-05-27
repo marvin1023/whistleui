@@ -90,6 +90,7 @@ var Log = React.createClass({
 		this.setState({});
 	},
 	autoScroll: function() {
+		var self = this;
 		var container = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.container : self.refs.sysContainer);
 		var content = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.content : self.refs.sysContent);
 		container.scrollTop = content.offsetHeight;
