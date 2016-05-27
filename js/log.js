@@ -23,8 +23,10 @@ var Log = React.createClass({
 		var sysContainer = ReactDOM.findDOMNode(self.refs.sysContainer);
 		var sysContent = ReactDOM.findDOMNode(self.refs.sysContent);
 		document.cookie = '_logComponentDidMount=1';
-		dataCenter.on('log', function(data, sysLogs) {
-			var atBottom = self.isPageLog() ? scrollAtBottom() : scrollAtBottom(sysContainer, sysContent);
+		dataCenter.on('log', function(logs, sysLogs) {
+			var isPageLog = self.isPageLog();
+			var atBottom = isPageLog ? scrollAtBottom() : scrollAtBottom(sysContainer, sysContent);
+			var data = isPageLog ? logs : sysLogs;
 			if (atBottom) {
 				var len = data.length - 119;
 				if (len > 0) {
@@ -32,12 +34,12 @@ var Log = React.createClass({
 				}
 			}
 			
-			self.setState({logs: data, sysLogs: sysLogs}, function() {
+			self.setState({logs: logs, sysLogs: sysLogs}, function() {
 				if (atBottom) {
-					if (self.isPageLog()) {
+					if (isPageLog) {
 						container.scrollTop = content.offsetHeight;
 					} else {
-						sysContainer.scrollTop = content.sysContent;
+						sysContainer.scrollTop = sysContent.sysContent;
 					}
 				}
 			});
@@ -59,7 +61,7 @@ var Log = React.createClass({
 		
 		$(sysContainer).on('scroll', function() {
 			var data = self.state.sysLogs;
-			sysTimeout && clearTimeout(timeout);
+			sysTimeout && clearTimeout(sysTimeout);
 			if (data && scrollAtBottom(sysContainer, sysContent)) {
 				sysTimeout = setTimeout(function() {
 					var len = data.length - 110;
