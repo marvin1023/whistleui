@@ -6,8 +6,10 @@ var TIMEOUT = 10000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
 var logCallbacks = [];
+var sysLogCallbacks = [];
 var dataList = [];
 var logList = [];
+var sysLogList = [];
 var networkModal = new NetworkModal(dataList);
 var curServerInfo;
 var initialData;
@@ -108,15 +110,24 @@ function startLoadData() {
 		var pendingIds = getPendingIds();
 		var startTime = getStartTime();
 		var len = logList.length;
+		var sysLen = sysLogList.length;
 		var startLogTime = -1;
+		var startSysLogTime = -1;
 		if (!len) {
 			startLogTime = null;
 		} else if (len < 120) {
 			startLogTime = logList[len - 1].id;
 		}
 		
+		if (!sysLen) {
+			startSysLogTime = null;
+		} else if (sysLen < 120) {
+			startSysLogTime = sysLogList[sysLen - 1].id;
+		}
+		
 		cgi.getData({
 			startLogTime: startLogTime,
+			startSysLogTime: startSysLogTime,
 			ids: pendingIds.join(),
 			startTime: startTime,
 			count: 60
@@ -228,7 +239,7 @@ exports.on = function(type, callback) {
 		if (typeof callback == 'function') {
 			logCallbacks.push(callback);
 			startLoadData();
-			callback(logList);
+			callback(logList, sysLogList);
 		}
 	}
 };
