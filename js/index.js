@@ -1214,10 +1214,10 @@ var Index = React.createClass({
 			});
 		}, 2000);
 	},
-	leaveMenuList: function() {
+	leaveMenuList: function(e) {
 		clearTimeout(this._hoverMenuListTimer);
 		this._hoverMenuListTimer = null;
-		this.state.hoverMenuList = false;
+		this.state.hoverMenuList = e && e.relatedTarget ? true : false;
 	},
 	render: function() {
 		var state = this.state;
