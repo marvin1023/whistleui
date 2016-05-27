@@ -1212,7 +1212,7 @@ var Index = React.createClass({
 			self.setState({
 				hoverMenuList: true
 			});
-		}, 3000);
+		}, 1500);
 	},
 	leaveMenuList: function(e) {
 		clearTimeout(this._hoverMenuListTimer);
