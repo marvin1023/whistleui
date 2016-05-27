@@ -33,13 +33,18 @@ var Log = React.createClass({
 					data.splice(0, len);
 				}
 			}
-			
-			self.setState({logs: logs, sysLogs: sysLogs}, function() {
+			var state = {logs: logs, sysLogs: sysLogs};
+			if (isPageLog) {
+				state.atPageLogBottom = atBottom;
+			} else {
+				state.atSysLogBottom = atBottom;
+			}
+			self.setState(state, function() {
 				if (atBottom) {
 					if (isPageLog) {
 						container.scrollTop = content.offsetHeight;
 					} else {
-						sysContainer.scrollTop = sysContent.sysContent;
+						sysContainer.scrollTop = sysContent.offsetHeight;
 					}
 				}
 			});
@@ -94,7 +99,21 @@ var Log = React.createClass({
 		return hide != util.getBoolean(nextProps.hide) || !hide;
 	},
 	toggleTabs: function(btn) {
-		this.setState({});
+		this.setState({}, function() {
+			if (this.isPageLog()) {
+				if (this.state.atPageLogBottom !== false) {
+					var container = ReactDOM.findDOMNode(this.refs.container);
+					var content = ReactDOM.findDOMNode(this.refs.content);
+					container.scrollTop = content.offsetHeight;
+				}
+			} else {
+				if (this.state.atSysLogBottom !== false) {
+					var container = ReactDOM.findDOMNode(this.refs.sysContainer);
+					var content = ReactDOM.findDOMNode(this.refs.sysContent);
+					container.scrollTop = content.offsetHeight;
+				}
+			}
+		});
 	},
 	isPageLog: function() {
 		return BTNS[0].active;
