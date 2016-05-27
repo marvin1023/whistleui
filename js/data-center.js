@@ -136,9 +136,11 @@ function startLoadData() {
 			if (!data || data.ec !== 0) {
 				return;
 			}
-			if (data.log.length || data.sysLog.length) {
-				logList.push.apply(logList, data.log);
-				sysLogList.push.apply(sysLogList, data.sysLog);
+			var len = data.log.length;
+			var sysLen = data.sysLog.length;
+			if (len || sysLen) {
+				len && logList.push.apply(logList, data.log);
+				sysLen && sysLogList.push.apply(sysLogList, data.sysLog);
 				$.each(logCallbacks, function() {
 					this(logList, sysLogList);
 				});
