@@ -865,7 +865,9 @@ var Index = React.createClass({
 		hostname = /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname) && this.serverInfo ? 
 				hostname + ':' + this.serverInfo.weinrePort : 'weinre.local.whistlejs.com';
 		window.open('http://' + hostname + '/client/#' + (name || 'anonymous'));
-		this.hideOptions();
+		this.setState({
+			showWeinreOptions: false
+		});
 	},
 	onClickRulesOption: function(item) {
 		item.selected ? this.unselectRules(item) : this.selectRules(item);
