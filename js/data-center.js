@@ -152,14 +152,14 @@ function startLoadData() {
 					logList.push.apply(logList, data.log);
 					document.cookie = '_lastPageLogTime=' + data.log[data.log.length - 1].id;
 				} else {
-					document.cookie = '_lastPageLogTime=';
+					document.cookie = '_lastPageLogTime=' + Date.now();
 				}
 				
 				if (sysLen) {
 					sysLogList.push.apply(sysLogList, data.sysLog);
 					document.cookie = '_lastSysLogTime=' + data.sysLog[data.sysLog.length - 1].id;
 				} else {
-					document.cookie = '_lastSysLogTime=';
+					document.cookie = '_lastSysLogTime=' + Date.now();
 				}
 				
 				$.each(logCallbacks, function() {
