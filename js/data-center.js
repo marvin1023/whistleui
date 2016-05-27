@@ -13,7 +13,7 @@ var sysLogList = [];
 var networkModal = new NetworkModal(dataList);
 var curServerInfo;
 var initialData, startedLoad;
-var initedLog = /_logComponentDidMount=1/.test(document.cookie);
+var lastPageLogTime, lastSysLogTime;
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
 		xhrFields: {
@@ -28,6 +28,14 @@ var cgi = createCgi({
 	getServerInfo: '/cgi-bin/server-info',
 	getInitaial: '/cgi-bin/init'
 }, GET_CONF);
+
+if (/_lastPageLogTime=([^;]+)/.test(document.cookie)) {
+	lastPageLogTime = RegExp.$1;
+}
+
+if (/_lastSysLogTime=([^;]+)/.test(document.cookie)) {
+	lastSysLogTime = RegExp.$1;
+}
 
 exports.values = createCgi({
 	get: {
@@ -116,17 +124,16 @@ function startLoadData() {
 		var startSysLogTime = -1;
 		
 		if (!len) {
-			startLogTime = initedLog ? null : -2;
+			startLogTime = lastPageLogTime || -2;
 		} else if (len < 120) {
 			startLogTime = logList[len - 1].id;
 		}
 		
 		if (!sysLen) {
-			startSysLogTime = initedLog ? null : -2;
+			startSysLogTime = lastSysLogTime || -2;
 		} else if (sysLen < 120) {
 			startSysLogTime = sysLogList[sysLen - 1].id;
 		}
-		initedLog = true;
 		cgi.getData({
 			startLogTime: startLogTime,
 			startSysLogTime: startSysLogTime,
@@ -141,8 +148,16 @@ function startLoadData() {
 			var len = data.log.length;
 			var sysLen = data.sysLog.length;
 			if (len || sysLen) {
-				len && logList.push.apply(logList, data.log);
-				sysLen && sysLogList.push.apply(sysLogList, data.sysLog);
+				if (len) {
+					logList.push.apply(logList, data.log);
+					document.cookie = '_lastPageLogTime=' + data.log[data.log.length - 1].id;
+				}
+				
+				if (sysLen) {
+					sysLogList.push.apply(sysLogList, data.sysLog);
+					document.cookie = '_lastSysLogTime=' + data.sysLog[data.sysLog.length - 1].id;
+				}
+				
 				$.each(logCallbacks, function() {
 					this(logList, sysLogList);
 				});
