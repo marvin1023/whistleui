@@ -12,7 +12,7 @@ var logList = [];
 var sysLogList = [];
 var networkModal = new NetworkModal(dataList);
 var curServerInfo;
-var initialData;
+var initialData, startedLoad;
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
 		xhrFields: {
@@ -102,10 +102,10 @@ exports.getInitialData = function(callback) {
 };
 
 function startLoadData() {
-	if (dataList.length) {
+	if (startedLoad) {
 		return;
 	}
-	
+	startedLoad = true;
 	function load() {
 		var pendingIds = getPendingIds();
 		var startTime = getStartTime();

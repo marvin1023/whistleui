@@ -20,6 +20,8 @@ var Log = React.createClass({
 		var self = this;
 		var container = ReactDOM.findDOMNode(self.refs.container);
 		var content = ReactDOM.findDOMNode(self.refs.content);
+		var sysContainer = ReactDOM.findDOMNode(self.refs.sysContainer);
+		var sysContent = ReactDOM.findDOMNode(self.refs.sysContent);
 		
 		dataCenter.on('log', function(data, sysLogs) {
 			var atBottom = scrollAtBottom();
@@ -49,19 +51,23 @@ var Log = React.createClass({
 					}
 				}, 2000);
 			}
-		}).on('click', '.w-auto-scroll-log', function() {
-			container.scrollTop = content.offsetHeight;
-		}).on('click', '.w-clear-log', function() {
-			var data = self.state.logs;
-			if (data) {
-				data.splice(0, data.length);
-				self.setState({logs: data});
-			}
 		});
 		
-		function scrollAtBottom() {
-			return container.scrollTop + container.offsetHeight + 5 > content.offsetHeight;
+		function scrollAtBottom(con, ctn) {
+			con = con || container;
+			ctn = ctn || content;
+			return con.scrollTop + con.offsetHeight + 5 > ctn.offsetHeight;
 		}
+	},
+	clearLogs: function() {
+		var data = this.isPageLog() ? this.state.logs : this.state.sysLogs;
+		data && data.splice(0, data.length);
+		this.setState({});
+	},
+	autoScroll: function() {
+		var container = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.container : self.refs.sysContainer);
+		var content = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.content : self.refs.sysContent);
+		container.scrollTop = content.offsetHeight;
 	},
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
@@ -80,8 +86,8 @@ var Log = React.createClass({
 		return (
 				<div className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<div style={{display: logs.length ? 'block' : 'none'}} className="w-detail-log-bar">
-						<a className="w-auto-scroll-log" href="javascript:;">AutoScroll</a>
-						<a className="w-clear-log" href="javascript:;">Clear</a>
+						<a className="w-auto-scroll-log" href="javascript:;" onClick={this.autoScroll}>AutoScroll</a>
+						<a className="w-clear-log" href="javascript:;" onClick={this.clearLogs}>Clear</a>
 					</div>
 					<BtnGroup onClick={this.toggleTabs} btns={BTNS} />
 					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (this.isPageLog() ? '' : ' hide')}>
