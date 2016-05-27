@@ -13,7 +13,8 @@ var svrLogList = [];
 var networkModal = new NetworkModal(dataList);
 var curServerInfo;
 var initialData, startedLoad;
-var lastPageLogTime, lastSvrLogTime;
+var lastPageLogTime = -2;
+var lastSvrLogTime = -2;
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
 		xhrFields: {
@@ -124,16 +125,18 @@ function startLoadData() {
 		var startSvrLogTime = -1;
 		
 		if (!len) {
-			startLogTime = lastPageLogTime || -2;
+			startLogTime = lastPageLogTime;
 		} else if (len < 120) {
 			startLogTime = logList[len - 1].id;
 		}
 		
 		if (!svrLen) {
-			startSvrLogTime = lastSvrLogTime || -2;
+			startSvrLogTime = lastSvrLogTime;
 		} else if (svrLen < 120) {
 			startSvrLogTime = svrLogList[svrLen - 1].id;
 		}
+		
+		lastPageLogTime = lastSvrLogTime = null;
 		cgi.getData({
 			startLogTime: startLogTime,
 			startSvrLogTime: startSvrLogTime,
