@@ -53,7 +53,7 @@ var Log = React.createClass({
 		$(container).on('scroll', function() {
 			var data = self.state.logs;
 			timeout && clearTimeout(timeout);
-			if (data && scrollAtBottom()) {
+			if (data && (self.state.atPageLogBottom = scrollAtBottom())) {
 				timeout = setTimeout(function() {
 					var len = data.length - 110;
 					if (len > 0) {
@@ -67,7 +67,7 @@ var Log = React.createClass({
 		$(sysContainer).on('scroll', function() {
 			var data = self.state.sysLogs;
 			sysTimeout && clearTimeout(sysTimeout);
-			if (data && scrollAtBottom(sysContainer, sysContent)) {
+			if (data && (self.state.atSysLogBottom = scrollAtBottom(sysContainer, sysContent))) {
 				sysTimeout = setTimeout(function() {
 					var len = data.length - 110;
 					if (len > 0) {
