@@ -22,7 +22,7 @@ var Log = React.createClass({
 		var content = ReactDOM.findDOMNode(self.refs.content);
 		var sysContainer = ReactDOM.findDOMNode(self.refs.sysContainer);
 		var sysContent = ReactDOM.findDOMNode(self.refs.sysContent);
-		
+		document.cookie = '_logComponentDidMount=1';
 		dataCenter.on('log', function(data, sysLogs) {
 			var atBottom = scrollAtBottom();
 			if (atBottom) {

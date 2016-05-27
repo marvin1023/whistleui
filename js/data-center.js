@@ -13,6 +13,7 @@ var sysLogList = [];
 var networkModal = new NetworkModal(dataList);
 var curServerInfo;
 var initialData, startedLoad;
+var initedLog = /_logComponentDidMount=1/.test(document.cookie);
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
 		xhrFields: {
@@ -113,18 +114,19 @@ function startLoadData() {
 		var sysLen = sysLogList.length;
 		var startLogTime = -1;
 		var startSysLogTime = -1;
+		
 		if (!len) {
-			startLogTime = null;
+			startLogTime = initedLog ? null : -2;
 		} else if (len < 120) {
 			startLogTime = logList[len - 1].id;
 		}
 		
 		if (!sysLen) {
-			startSysLogTime = null;
+			startSysLogTime = initedLog ? null : -2;
 		} else if (sysLen < 120) {
 			startSysLogTime = sysLogList[sysLen - 1].id;
 		}
-		
+		initedLog = true;
 		cgi.getData({
 			startLogTime: startLogTime,
 			startSysLogTime: startSysLogTime,
