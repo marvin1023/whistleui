@@ -24,7 +24,7 @@ var Log = React.createClass({
 		var sysContent = ReactDOM.findDOMNode(self.refs.sysContent);
 		document.cookie = '_logComponentDidMount=1';
 		dataCenter.on('log', function(data, sysLogs) {
-			var atBottom = scrollAtBottom();
+			var atBottom = self.isPageLog() ? scrollAtBottom() : scrollAtBottom(sysContainer, sysContent);
 			if (atBottom) {
 				var len = data.length - 119;
 				if (len > 0) {
@@ -34,11 +34,15 @@ var Log = React.createClass({
 			
 			self.setState({logs: data, sysLogs: sysLogs}, function() {
 				if (atBottom) {
-					container.scrollTop = content.offsetHeight;
+					if (self.isPageLog()) {
+						container.scrollTop = content.offsetHeight;
+					} else {
+						sysContainer.scrollTop = content.sysContent;
+					}
 				}
 			});
 		});
-		var timeout;
+		var timeout, sysTimeout;
 		$(container).on('scroll', function() {
 			var data = self.state.logs;
 			timeout && clearTimeout(timeout);
@@ -48,6 +52,20 @@ var Log = React.createClass({
 					if (len > 0) {
 						data.splice(0, len);
 						self.setState({logs: data});
+					}
+				}, 2000);
+			}
+		});
+		
+		$(sysContainer).on('scroll', function() {
+			var data = self.state.sysLogs;
+			sysTimeout && clearTimeout(timeout);
+			if (data && scrollAtBottom(sysContainer, sysContent)) {
+				sysTimeout = setTimeout(function() {
+					var len = data.length - 110;
+					if (len > 0) {
+						data.splice(0, len);
+						self.setState({});
 					}
 				}, 2000);
 			}
@@ -83,14 +101,17 @@ var Log = React.createClass({
 		var state = this.state || {};
 		var logs = state.logs || [];
 		var sysLogs = state.sysLogs || [];
+		var isPageLog = this.isPageLog();
+		var hasLogs = isPageLog ? logs.length : sysLogs.length;
+		
 		return (
 				<div className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
-					<div style={{display: logs.length ? 'block' : 'none'}} className="w-detail-log-bar">
+					<div style={{display: hasLogs ? 'block' : 'none'}} className="w-detail-log-bar">
 						<a className="w-auto-scroll-log" href="javascript:;" onClick={this.autoScroll}>AutoScroll</a>
 						<a className="w-clear-log" href="javascript:;" onClick={this.clearLogs}>Clear</a>
 					</div>
 					<BtnGroup onClick={this.toggleTabs} btns={BTNS} />
-					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (this.isPageLog() ? '' : ' hide')}>
+					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (isPageLog ? '' : ' hide')}>
 						<ul ref="content">
 							{logs.map(function(log) {
 								
