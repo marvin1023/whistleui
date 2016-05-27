@@ -164,6 +164,7 @@ var Index = React.createClass({
 			} else {
 				self.showNetwork();
 			}
+			self.hoverMenuList();
 		}).on('keyup', function(e) {
 			if (e.keyCode == 27) {
 				self.hideOptions();
@@ -1206,12 +1207,12 @@ var Index = React.createClass({
 	},
 	hoverMenuList: function() {
 		var self = this;
-		clearTimeout(self._hoverMenuListTimer);
+		self.leaveMenuList();
 		self._hoverMenuListTimer = setTimeout(function() {
 			self.setState({
 				hoverMenuList: true
 			});
-		}, 600);
+		}, 1000);
 	},
 	leaveMenuList: function() {
 		clearTimeout(this._hoverMenuListTimer);
