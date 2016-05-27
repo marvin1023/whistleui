@@ -70,6 +70,9 @@ var Log = React.createClass({
 	toggleTabs: function(btn) {
 		this.setState({});
 	},
+	isPageLog: function() {
+		return BTNS[0].active;
+	},
 	render: function() {
 		var state = this.state || {};
 		var logs = state.logs || [];
@@ -81,7 +84,7 @@ var Log = React.createClass({
 						<a className="w-clear-log" href="javascript:;">Clear</a>
 					</div>
 					<BtnGroup onClick={this.toggleTabs} btns={BTNS} />
-					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (BTNS[0].active ? '' : ' hide')}>
+					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (this.isPageLog() ? '' : ' hide')}>
 						<ul ref="content">
 							{logs.map(function(log) {
 								
@@ -95,7 +98,7 @@ var Log = React.createClass({
 							})}
 						</ul>
 					</div>
-					<div ref="sysContainer" className={'fill orient-vertical-box w-detail-sys-log' + (BTNS[1].active ? '' : ' hide')}>
+					<div ref="sysContainer" className={'fill orient-vertical-box w-detail-sys-log' + (!this.isPageLog() ? '' : ' hide')}>
 						<ul ref="sysContent">
 							{sysLogs.map(function(log) {
 								
