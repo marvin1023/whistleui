@@ -1294,8 +1294,8 @@ var Index = React.createClass({
 		}
 		
 		return (
-			<div className="main orient-vertical-box">
-				<div className={'w-menu w-' + name + '-menu-list'} onMouseEnter={this.hoverMenuList} onMouseLeave={this.leaveMenuList}>
+			<div className="main orient-vertical-box" onMouseEnter={this.hoverMenuList} onMouseLeave={this.leaveMenuList}>
+				<div className={'w-menu w-' + name + '-menu-list'}>
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} style={{display: isRules ? 'none' : ''}} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
