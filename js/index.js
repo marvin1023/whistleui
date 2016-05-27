@@ -496,9 +496,6 @@ var Index = React.createClass({
 			showRulesOptions: false
 		});
 	},
-	hideMenuOptions: function(e) {
-		$(e.target).closest('.w-menu-wrapper').removeClass('w-menu-wrapper-show');
-	},
 	showValuesOptions: function(e) {
 		var self = this;
 		var valuesList = this.state.values.list;
@@ -584,10 +581,14 @@ var Index = React.createClass({
 		}
 	},
 	showPluginsOptions: function(e) {
-		$(e.target).closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
+		this.setState({
+			showPluginsOptions: true
+		});
 	},
 	hidePluginsOptions: function() {
-		$(ReactDOM.findDOMNode(this.refs.pluginsMenu)).removeClass('w-menu-wrapper-show');
+		this.setState({
+			showPluginsOptions: false
+		});
 	},
 	showWeinreOptions: function(e) {
 		var self = this;
@@ -599,8 +600,13 @@ var Index = React.createClass({
 				icon: 'globe'
 			};
 		});
-		self.setState({}, function() {
-			target.closest('.w-menu-wrapper').addClass('w-menu-wrapper-show');
+		self.setState({
+			showWeinreOptions: true
+		});
+	},
+	hideWeinreOptions: function() {
+		this.setState({
+			showWeinreOptions: false
 		});
 	},
 	hideOptions: function() {
@@ -1297,7 +1303,7 @@ var Index = React.createClass({
 						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 						<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					</div>
-					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className="w-menu-wrapper">
+					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showPlugins} className="w-plugins-menu" href="javascript:;"><span className="glyphicon glyphicon-list-alt"></span>Plugins</a>
 						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
 							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
@@ -1312,7 +1318,7 @@ var Index = React.createClass({
 					<a onClick={this.clear} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" title="Ctrl[Command]+D"><span className="glyphicon glyphicon-remove"></span>Clear</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
-					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideMenuOptions} className="w-menu-wrapper">
+					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideWeinreOptions} className={'w-menu-wrapper' + (showWeinreOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showAnonymousWeinre} className="w-weinre-menu" href="javascript:;"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 						<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} className="w-weinre-menu-item" onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
 					</div>
