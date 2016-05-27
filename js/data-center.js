@@ -151,11 +151,15 @@ function startLoadData() {
 				if (len) {
 					logList.push.apply(logList, data.log);
 					document.cookie = '_lastPageLogTime=' + data.log[data.log.length - 1].id;
+				} else {
+					document.cookie = '_lastPageLogTime=';
 				}
 				
 				if (sysLen) {
 					sysLogList.push.apply(sysLogList, data.sysLog);
 					document.cookie = '_lastSysLogTime=' + data.sysLog[data.sysLog.length - 1].id;
+				} else {
+					document.cookie = '_lastSysLogTime=';
 				}
 				
 				$.each(logCallbacks, function() {
