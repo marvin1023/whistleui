@@ -1188,6 +1188,20 @@ var Index = React.createClass({
 		}
 		
 	},
+	hoverMenuList: function() {
+		var self = this;
+		clearTimeout(self._hoverMenuListTimer);
+		self._hoverMenuListTimer = setTimeout(function() {
+			self.setState({
+				hoverMenuList: true
+			});
+		}, 1000);
+	},
+	leaveMenuList: function() {
+		clearTimeout(this._hoverMenuListTimer);
+		this._hoverMenuListTimer = null;
+		this.state.hoverMenuList = false;
+	},
 	render: function() {
 		var state = this.state;
 		var name = state.name;
@@ -1208,6 +1222,7 @@ var Index = React.createClass({
 		var rulesOptions = state.rulesOptions;
 		var pluginsOptions = state.pluginsOptions;
 		var uncheckedRules = {};
+		var hoverMenuList = state.hoverMenuList;
 		
 		rulesOptions.forEach(function(item) {
 			item.icon = 'checkbox';
@@ -1259,7 +1274,7 @@ var Index = React.createClass({
 		
 		return (
 			<div className="main orient-vertical-box">
-				<div className={'w-menu w-' + name + '-menu-list'}>
+				<div className={'w-menu w-' + name + '-menu-list'} onMouseEnter={this.hoverMenuList} onMouseLeave={this.leaveMenuList}>
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideMenuOptions} style={{display: isRules ? 'none' : ''}} className="w-menu-wrapper">
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
