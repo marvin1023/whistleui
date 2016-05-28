@@ -131,12 +131,12 @@ var ReqData = React.createClass({
 	onFilterChange: function(keyword) {
 		var self = this;
 		var modal = self.props.modal;
-		var autoScroll = modal && modal.search(keyword);
+		var autoRefresh = modal && modal.search(keyword);
 		self.setState({filterText: keyword}, function() {
-			autoScroll && self.autoScroll()
+			autoRefresh && self.autoRefresh()
 		});
 	},
-	autoScroll: function() {
+	autoRefresh: function() {
 		if (this.container) {
 			this.container.scrollTop = this.content.offsetHeight;
 		}

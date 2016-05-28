@@ -225,7 +225,7 @@ var Index = React.createClass({
 		});
 		
 		events.on('executeComposer', function() {
-			self.autoScroll && self.autoScroll();
+			self.autoRefresh && self.autoRefresh();
 		});
 		
 		var timeout;
@@ -237,7 +237,7 @@ var Index = React.createClass({
 			timeout = setTimeout(function() {
 				var atBottom = self.scrollerAtBottom && self.scrollerAtBottom();
 				self.setState({}, function() {
-					atBottom && self.autoScroll();
+					atBottom && self.autoRefresh();
 				});
 			}, 100);
 		});
@@ -398,7 +398,7 @@ var Index = React.createClass({
 		}
 		
 		self._updateNetwork = update;
-		self.autoScroll = scrollToBottom;
+		self.autoRefresh = scrollToBottom;
 		self.scrollerAtBottom = atBottom;
 		
 		function atBottom() {
@@ -951,7 +951,7 @@ var Index = React.createClass({
 				});
 			}
 		});
-		this.autoScroll && this.autoScroll();
+		this.autoRefresh && this.autoRefresh();
 	},
 	composer: function() {
 		events.trigger('composer');
@@ -1314,7 +1314,7 @@ var Index = React.createClass({
 					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Edit</a>
-					<a onClick={this.autoScroll} className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-play"></span>AutoScroll</a>
+					<a onClick={this.autoRefresh} className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-play"></span>AutoRefresh</a>
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
 					<a onClick={this.showEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} title={state.filterText} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>

@@ -89,7 +89,7 @@ var Log = React.createClass({
 		data && data.splice(0, data.length);
 		this.setState({});
 	},
-	autoScroll: function() {
+	autoRefresh: function() {
 		var self = this;
 		var container = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.container : self.refs.svrContainer);
 		var content = ReactDOM.findDOMNode(self.isPageLog() ? self.refs.content : self.refs.svrContent);
@@ -129,7 +129,7 @@ var Log = React.createClass({
 		return (
 				<div className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<div style={{display: hasLogs ? 'block' : 'none'}} className="w-detail-log-bar">
-						<a className="w-auto-scroll-log" href="javascript:;" onClick={this.autoScroll}>AutoScroll</a>
+						<a className="w-auto-scroll-log" href="javascript:;" onClick={this.autoRefresh}>AutoRefresh</a>
 						<a className="w-clear-log" href="javascript:;" onClick={this.clearLogs}>Clear</a>
 					</div>
 					<BtnGroup onClick={this.toggleTabs} btns={BTNS} />
