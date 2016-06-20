@@ -2,7 +2,7 @@
 .w-about-dialog .modal-dialog .modal-body {padding-bottom: 15px;}
 .w-about-dialog-ctn {display: inline-block; padding-top: 10px; margin-left: 20px;}
 .w-about-dialog-title {margin-bottom: 10px; display: block;}
-.w-about-dialog img {width: 60px; vertical-align: top;}
+.w-about-dialog img {width: 60px; vertical-align: top; margin-top: 10px;}
 .w-about-menu {position: relative;}
 .w-about-menu i {display: none; position: absolute; top: 2px; left: 17px; width: 5px; height: 5px; border-radius: 5px; background: red;}
 .w-about-plugins {border-top: 1px solid #e5e5e5; margin-top: 10px; display: none;}
