@@ -72,7 +72,7 @@ var About = React.createClass({
 							<button type="button" className="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span>
 							</button>
-							<img alt="logo" src="/img/whistle.png" />
+							<img alt="logo" src="/img/whistle.png?v=2016" />
 							<span className="w-about-dialog-ctn">
 								<span className="w-about-dialog-title">Whistle for Web Developers.</span>
 								Version: <span className="w-about-version">{version}</span><br/>
