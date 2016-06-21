@@ -74,7 +74,8 @@ var Online = React.createClass({
 	checkServerChanged: function(data) {
 		if (this.macAddr === undefined) {
 			this.macAddr = data.mac || '';
-		} else if (this.macAddr != (data.mac || '')) {
+			this.serverPort = data.port;
+		} else if (this.macAddr != (data.mac || '') || this.serverPort != data.port) {
 			this.refs.confirmReload.show();
 		} else {
 			this.refs.confirmReload.hide();
