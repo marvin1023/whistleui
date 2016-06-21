@@ -1,4 +1,4 @@
-var MAX_LENGTH = 540;
+var MAX_LENGTH = 560;
 var MAX_COUNT = 720;
 
 function NetworkModal(list) {
