@@ -5,6 +5,7 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var util = require('./util');
 var FilterInput = require('./filter-input');
+var HEIGHT = 24; //每条数据的高度
 
 function getClassName(data) {
 	return getStatusClass(data) + ' w-req-data-item'
@@ -76,6 +77,10 @@ function getSelection() {
 var ReqData = React.createClass({
 	componentDidMount: function() {
 		var self = this;
+		var timer;
+		var update = function() {
+			self.setState({});
+		};
 		self.container = ReactDOM.findDOMNode(self.refs.container);
 		self.content = ReactDOM.findDOMNode(self.refs.content);
 		$(self.container).on('keydown', function(e) {
@@ -94,6 +99,9 @@ var ReqData = React.createClass({
 				self.onClick(e, item, true);
 				e.preventDefault();
 			}
+		}).on('scroll', function() {
+			timer && clearTimeout(timer);
+			timer = setTimeout(update, 60);
 		});
 	},
 	onClick: function(e, item, hm) {
@@ -141,12 +149,34 @@ var ReqData = React.createClass({
 			this.container.scrollTop = this.content.offsetHeight;
 		}
 	},
+	getVisibleIndex: function() {
+		var container = this.container;
+		var len = container && this.props.modal && this.props.modal.list.length;
+		var height = len && container.offsetHeight;
+		if (height) {
+			var scrollTop = container.scrollTop;
+			var startIndex = Math.floor(Math.max(scrollTop - 240, 0) / HEIGHT);
+			var endIndex = Math.floor(Math.max(scrollTop + height + 240, 0) / HEIGHT); 
+			this.indeies = [startIndex, endIndex];
+		}
+		
+		return this.indeies;
+	},
 	render: function() {
 		var self = this;
 		var modal = self.props.modal;
 		var list = modal ? modal.list : [];
 		var hasKeyword = modal && modal.hasKeyword();
 		var order = 0;
+		var indeies = self.getVisibleIndex();
+		var startIndex, endIndex;
+		if (indeies) {
+			startIndex = indeies[0];
+			endIndex = indeies[1];
+		} else {
+			startIndex = 0;
+			endIndex = list.length;
+		}
 		
 		return (
 				<div className="fill w-req-data-con orient-vertical-box">
@@ -178,17 +208,19 @@ var ReqData = React.createClass({
 						    		  var req = item.req;
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
+						    		  var url = i >= startIndex && i <= endIndex ? item.url : null;
+						    		  
 						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
 						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++order : item.order}</th>			        
-						    		  				<td className="result">{item.res.statusCode || '-'}</td>			        
+						    		  				<td className="result">{res.statusCode || '-'}</td>			        
 						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        
 						    		  				<td className="method">{req.method}</td>			        
 						    		  				<td className="host">{util.getHostname(item.url)}</td>			        
 						    		  				<td className="host-ip">{res.ip || defaultValue}</td>			        
-						    		  				<td className="url" title={item.url}>{item.url}</td>			        
+						    		  				<td className="url" title={url}>{url}</td>			        
 						    		  				<td className="type" title={type}>{type}</td>			        
 						    		  				<td className="time">{end ? end - item.startTime + 'ms' : defaultValue}</td>			     
 						    		  			</tr>);
