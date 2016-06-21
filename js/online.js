@@ -3,6 +3,7 @@ require('../css/online.css');
 var $ = window.jQuery = require('jquery'); //for bootstrap
 require('bootstrap/dist/js/bootstrap.js');
 var React = require('react');
+var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
 var dialog;
 
@@ -65,8 +66,19 @@ var Online = React.createClass({
 		var self = this;
 		dataCenter.on('serverInfo', function(data) {
 			self.updateServerInfo(data);
+			data && self.checkServerChanged(data);
 			self.setState({server: data});
 		});
+		
+	},
+	checkServerChanged: function(data) {
+		if (this.macAddr === undefined) {
+			this.macAddr = data.mac || '';
+		} else if (this.macAddr != (data.mac || '')) {
+			this.refs.confirmReload.show();
+		} else {
+			this.refs.confirmReload.hide();
+		}
 	},
 	showServerInfo: function() {
 		this.updateServerInfo(this.state.server);
@@ -98,6 +110,9 @@ var Online = React.createClass({
 		dialog.find('.w-ip').prop('placeholder', server && server.ipv4[0] || '127.0.0.1');
 		dialog.find('.w-port').prop('placeholder', server && server.port || '8899');
 	},
+	reload: function() {
+		location.reload();
+	},
 	render: function() {
 		var info = [];
 		var server = this.state.server;
@@ -123,6 +138,18 @@ var Online = React.createClass({
 				<a className="w-online-menu" title={info.join('\n')} href="javascript:;" 
 					className={'w-online' + (server ? '' : ' w-offline')} onClick={this.showServerInfo}>
 					<span className="glyphicon glyphicon-stats"></span>{server ? 'Online' : 'Offline'}
+					<Dialog ref="confirmReload" wstyle="w-confirm-reload-dialog">
+						<div className="modal-body w-confirm-reload">
+							<button type="button" className="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							Proxy Server has been changed, whether to refresh the page to reload the data
+						</div>
+						<div className="modal-footer">
+							<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" className="btn btn-primary" onClick={this.reload}>Reload</button>
+						</div>
+					</Dialog>
 				</a>
 		);
 	}
