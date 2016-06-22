@@ -81,6 +81,10 @@ var ReqData = React.createClass({
 		var update = function() {
 			self.setState({});
 		};
+		var render = function() {
+			timer && clearTimeout(timer);
+			timer = setTimeout(update, 60);
+		};
 		self.container = ReactDOM.findDOMNode(self.refs.container);
 		self.content = ReactDOM.findDOMNode(self.refs.content);
 		$(self.container).on('keydown', function(e) {
@@ -99,10 +103,9 @@ var ReqData = React.createClass({
 				self.onClick(e, item, true);
 				e.preventDefault();
 			}
-		}).on('scroll', function() {
-			timer && clearTimeout(timer);
-			timer = setTimeout(update, 60);
-		});
+		}).on('scroll', render);
+		
+		$(window).on('resize', render);
 	},
 	onClick: function(e, item, hm) {
 		var self = this;
