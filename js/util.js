@@ -14,12 +14,6 @@ exports.preventBlur = function preventDefault(e) {
 	e.preventDefault();
 };
 
-exports.preventBack = function(e) {
-	if (e.keyCode == 8 || e.keyCode == 46) {
-		e.preventDefault();
-	}
-};
-
 $(document).on('mousedown', function(e) {
 	stopDrag();
 	var target = $(e.target);

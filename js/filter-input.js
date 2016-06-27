@@ -14,11 +14,16 @@ var FilterInput = React.createClass({
 		this.setState({filterText: value});
 	},
 	onFilterKeyDown: function(e) {
-		if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
-			this.clearFilterText();
-			e.preventDefault();
-			e.stopPropagation();
+		if ((e.ctrlKey || e.metaKey)) {
+			if (e.keyCode == 68) {
+				this.clearFilterText();
+				e.preventDefault();
+				e.stopPropagation();
+			} else if (e.keyCode == 88) {
+				e.stopPropagation();
+			}
 		}
+		
 	},
 	clearFilterText: function() {
 		this.props.onChange && this.props.onChange('');

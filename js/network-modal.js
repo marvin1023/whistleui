@@ -124,6 +124,33 @@ proto.clear = function clear() {
 	return this;
 };
 
+proto.removeSelectedItems = function() {
+	var hasSelectedItem;
+	var endIndex = -1;
+	var list = this._list;
+	
+	for (var i = list.length - 1; i >= 0; i--) {
+		var item = list[i];
+		if (item.selected) {
+			hasSelectedItem = true;
+			if (endIndex == -1) {
+				endIndex = i;
+			}
+			if (!i) {
+				list.splice(i, endIndex - i + 1);
+			}
+		} else if (endIndex != -1) {
+			list.splice(i + 1, endIndex - i);
+			endIndex = -1;
+		}
+	}
+	
+	if (hasSelectedItem) {
+		this.update(false, true);
+		return true;
+	}
+};
+
 proto.prev = function() {
 	var list = this.list;
 	var len = list.length;
@@ -170,8 +197,8 @@ proto.next = function() {
 	}
 };
 
-proto.update = function(scrollAtBottom) {
-	updateOrder(this._list);
+proto.update = function(scrollAtBottom, force) {
+	updateOrder(this._list, force);
 	if (scrollAtBottom) {
 		var exceed = this._list.length - MAX_LENGTH;
 		if (exceed > 0) {
@@ -245,9 +272,9 @@ proto.clearActive = function() {
 	});
 };
 
-function updateOrder(list) {
+function updateOrder(list, force) {
 	var len = list.length;
-	if (len && !list[len - 1].order) {
+	if (len && (force || !list[len - 1].order)) {
 		var order = list[0].order || 1;
 		list.forEach(function(item, i) {
 			item.order = order + i;

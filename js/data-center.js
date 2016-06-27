@@ -15,6 +15,7 @@ var curServerInfo;
 var initialData, startedLoad;
 var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
+var lastRowData;
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
 		xhrFields: {
@@ -186,6 +187,7 @@ function startLoadData() {
 				var item = data[this];
 				item && dataList.push(item);
 			});
+			lastRowData = dataList[dataList.length - 1];
 			$.each(dataCallbacks, function() {
 				this(networkModal);
 			});
@@ -207,8 +209,25 @@ function getPendingIds() {
 
 function getStartTime() {
 	var len = dataList.length - 1;
+	if (len > MAX_COUNT) {
+		return -1;
+	}
 	var item = dataList[len];
-	return len <= MAX_COUNT ? (item ? item.id : '') : -1;
+	if (!item) {
+		return '';
+	}
+	
+	return (!lastRowData || compareId(item.id, lastRowData.id)) ? item.id : lastRowData.id;
+}
+
+function compareId(curId, refId) {
+	if (curId >= refId) {
+		return true;
+	}
+	
+	curId = curId.split('-');
+	refId = refId.split('-');
+	return curId[0] == refId[0] && curId[1] > refId[1];
 }
 
 function startLoadServerInfo() {

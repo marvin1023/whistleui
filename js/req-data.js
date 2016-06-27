@@ -201,7 +201,7 @@ var ReqData = React.createClass({
 						      </thead>
 						    </table>
 						</div>
-						<div ref="container" tabIndex="0" onKeyDown={util.preventBack} className="w-req-data-list fill">
+						<div ref="container" tabIndex="0" className="w-req-data-list fill">
 							<table ref="content" className="table">
 						      <tbody>
 						      {
