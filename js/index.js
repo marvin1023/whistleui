@@ -177,6 +177,17 @@ var Index = React.createClass({
 			if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) {
 				self.clear();
 			}
+			if (e.keyCode == 8 || e.keyCode == 46) {
+				var target = e.target;
+				if ( target.nodeName == 'A' 
+						&& $(target).parent().hasClass('w-list-data')) {
+					self.state.name == 'rules' ? self.removeRules() : self.removeValues();
+				}
+				var nodeName = e.target.nodeName;
+				if (nodeName != 'INPUT' && nodeName != 'TEXTAREA') {
+					e.preventDefault();
+				}
+			}
 		});
 		
 		function getKey(url) {
