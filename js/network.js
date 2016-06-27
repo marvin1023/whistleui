@@ -12,8 +12,7 @@ var Network = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		$(window).on('keydown', function(e) {
-			if (self.props.hide || e.target.nodeName == 'INPUT' 
-				|| e.target.nodeName == 'TEXTAREA') {
+			if (self.props.hide || e.target.nodeName == 'INPUT') {
 				return;
 			}
 			if (e.keyCode == 8 || e.keyCode == 46) {
