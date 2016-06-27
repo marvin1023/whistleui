@@ -174,17 +174,17 @@ var Index = React.createClass({
 				}
 			}
 		}).on('keydown', function(e) {
-			if ((e.ctrlKey || e.metaKey) && e.keyCode == 88) {
-				self.clear();
-			}
-			if (e.keyCode == 8 || e.keyCode == 46) {
-				var target = e.target;
-				if ( target.nodeName == 'A' 
-						&& $(target).parent().hasClass('w-list-data')) {
-					self.state.name == 'rules' ? self.removeRules() : self.removeValues();
+			if (e.ctrlKey || e.metaKey) {
+				if (e.keyCode == 88) {
+					self.clear();
 				}
-				var nodeName = e.target.nodeName;
-				if (nodeName != 'INPUT' && nodeName != 'TEXTAREA') {
+				
+				if (e.keyCode == 68) {
+					var target = e.target;
+					if ( target.nodeName == 'A' 
+							&& $(target).parent().hasClass('w-list-data')) {
+						self.state.name == 'rules' ? self.removeRules() : self.removeValues();
+					}
 					e.preventDefault();
 				}
 			}

@@ -12,15 +12,14 @@ var Network = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		$(window).on('keydown', function(e) {
-			if (self.props.hide || e.target.nodeName == 'INPUT') {
+			if (self.props.hide) {
 				return;
 			}
-			if (e.keyCode == 8 || e.keyCode == 46) {
+			if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
 				var modal = self.props.modal;
 				if (modal && modal.removeSelectedItems()) {
 					self.setState({});
 				}
-				e.preventDefault();
 			}
 		});
 	},
