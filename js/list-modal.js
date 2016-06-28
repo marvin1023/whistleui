@@ -209,16 +209,16 @@ proto.up = function() {
 	var list = this.list;
 	var len = list.length;
 	if (!len) {
-		return -1;
+		return;
 	}
 	var activeItem = this.getActive();
 	if (activeItem.fixed) {
-		return -1;
+		return;
 	}
 	
 	var index = activeItem ? list.indexOf(activeItem.name) : len - 1;
 	if (!index || this.data[list[index - 1]].fixed) {
-		return -1;
+		return;
 	}
 	
 	list[index] = list[index - 1];
@@ -230,16 +230,16 @@ proto.down = function() {
 	var list = this.list;
 	var len = list.length;
 	if (!len) {
-		return -1;
+		return;
 	}
 	var activeItem = this.getActive();
 	if (activeItem.fixed) {
-		return -1;
+		return;
 	}
 	
 	var index = activeItem ? list.indexOf(activeItem.name) : len - 1;
 	if (index >= len - 1 || this.data[list[index + 1]].fixed) {
-		return -1;
+		return;
 	}
 	
 	list[index] = list[index + 1];
