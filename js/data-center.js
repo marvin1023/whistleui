@@ -50,7 +50,9 @@ exports.values = createCgi({
 	setCurrent: '/cgi-bin/values/set-current',
 	setFontSize: '/cgi-bin/values/set-font-size',
 	setTheme: '/cgi-bin/values/set-theme',
-	showLineNumbers: '/cgi-bin/values/show-line-numbers'
+	showLineNumbers: '/cgi-bin/values/show-line-numbers',
+	moveUp: '/cgi-bin/values/move-up',
+	moveDown: '/cgi-bin/values/move-down'
 }, POST_CONF);
 
 exports.plugins = createCgi({
@@ -82,7 +84,9 @@ exports.rules = createCgi({
 	allowMultipleChoice: '/cgi-bin/rules/allow-multiple-choice',
 	syncWithSysHosts: '/cgi-bin/rules/sync-with-sys-hosts',
 	setSysHosts: '/cgi-bin/rules/set-sys-hosts',
-	getSysHosts: '/cgi-bin/rules/get-sys-hosts'
+	getSysHosts: '/cgi-bin/rules/get-sys-hosts',
+	moveUp: '/cgi-bin/rules/move-up',
+	moveDown: '/cgi-bin/rules/move-down'
 }, POST_CONF);
 
 exports.log = createCgi({

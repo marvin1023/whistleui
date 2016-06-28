@@ -7,6 +7,7 @@ var ReactDOM = require('react-dom');
 var Divider = require('./divider');
 var Editor = require('./editor');
 var FilterInput = require('./filter-input');
+var dataCenter = require('./data-center');
 
 function getSuffix(name) {
 	if (typeof name != 'string') {
@@ -32,12 +33,55 @@ var List = React.createClass({
 			self.onDoubleClick(item);
 		}
 		var modal = self.props.modal;
+		var isRules = self.props.name == 'rules';
+		var pending;
+		
 		var listCon = $(ReactDOM.findDOMNode(self.refs.list)).focus().on('keydown', function(e) {
 			var item;
+			if (e.ctrlKey || e.metaKey) {
+				if (pending) {
+					return;
+				}
+				if (e.keyCode == 38) { //up
+					if (item = modal.up()) {
+						pending = true;
+						dataCenter[isRules ? 'rules' : 'values'].moveUp({
+							name: item.name
+						}, function(data) {
+							if (!data || data.ec !== 0) {
+								modal.down();
+								self.setState({});
+								util.showSystemError();
+							}
+							pending = false;
+						});
+					}
+					e.preventDefault();
+					self.setState({});
+				} else if (e.keyCode == 40) {//down
+					if (item = modal.down()) {
+						pending = true;
+						dataCenter[isRules ? 'rules' : 'values'].moveDown({
+							name: item.name
+						}, function(data) {
+							if (!data || data.ec !== 0) {
+								modal.up();
+								self.setState({});
+								util.showSystemError();
+							}
+							pending = false;
+						});
+					}
+					e.preventDefault();
+					self.setState({});
+				}
+				return;
+			}
+			
 			if (e.keyCode == 38) { //up
-				item = e.shiftKey ? modal.up() : modal.prev();
+				item =  modal.prev();
 			} else if (e.keyCode == 40) {//down
-				item = e.shiftKey ? modal.down() : modal.next();
+				item = modal.next();
 			}
 			
 			if (item) {
