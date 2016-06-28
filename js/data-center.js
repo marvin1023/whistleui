@@ -190,7 +190,10 @@ function startLoadData() {
 			
 			$.each(ids, function() {
 				var item = data[this];
-				item && dataList.push(item);
+				if (item) {
+					item.hostname = util.getHostname(item.url);
+					dataList.push(item);
+				}
 			});
 			lastRowData = dataList[dataList.length - 1];
 			$.each(dataCallbacks, function() {
