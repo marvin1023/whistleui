@@ -166,13 +166,51 @@ var ReqData = React.createClass({
 		
 		return this.indeies;
 	},
+	orderBy: function(e) {
+		var target = $(e.target).closest('th')[0];
+		if (!target) {
+			return;
+		}
+		
+		var name = target.className;
+		if (name == 'order') {
+			return this.setState({
+				columnName: null,
+				order: null
+			});
+		}
+		
+		var state = this.state || {};
+		if (name == state.columnName) {
+			var order = 'desc';
+			if (state.order == 'desc') {
+				order = 'asc';
+			} else if (state.order == 'asc') {
+				order = null;
+			} 
+			
+			this.setState({
+				columnName: name,
+				order: order
+			});
+			return;
+		}
+		
+		this.setState({
+			columnName: name,
+			order: 'desc'
+		});
+	},
 	render: function() {
 		var self = this;
+		var state = this.state || {};
 		var modal = self.props.modal;
 		var list = modal ? modal.list : [];
 		var hasKeyword = modal && modal.hasKeyword();
 		var order = 0;
 		var indeies = self.getVisibleIndex();
+		var columnName = state.columnName;
+		var orderType = state.order;
 		var startIndex, endIndex;
 		if (indeies) {
 			startIndex = indeies[0];
@@ -188,16 +226,16 @@ var ReqData = React.createClass({
 						<div className="w-req-data-headers">
 							<table className="table">
 						      <thead>
-						        <tr>
+						        <tr onClick={self.orderBy}>
 						          <th className="order">#</th>
-						          <th className="result">Result<Spinner /></th>
-						          <th className="protocol">Protocol<Spinner /></th>
-						          <th className="method">Method<Spinner /></th>
-						          <th className="host">Host<Spinner /></th>
-						          <th className="host-ip">Host IP<Spinner /></th>
-						          <th className="url">Url<Spinner /></th>
-						          <th className="type">Type<Spinner /></th>
-						          <th className="time">Time<Spinner /></th>
+						          <th className="result">Result<Spinner order={columnName == 'result' ? orderType : ''} /></th>
+						          <th className="protocol">Protocol<Spinner order={columnName == 'protocol' ? orderType : ''} /></th>
+						          <th className="method">Method<Spinner order={columnName == 'method' ? orderType : ''} /></th>
+						          <th className="host">Host<Spinner order={columnName == 'host' ? orderType : ''} /></th>
+						          <th className="host-ip">Host IP<Spinner order={columnName == 'host-ip' ? orderType : ''} /></th>
+						          <th className="url">Url<Spinner order={columnName == 'url' ? orderType : ''} /></th>
+						          <th className="type">Type<Spinner order={columnName == 'type' ? orderType : ''} /></th>
+						          <th className="time">Time<Spinner order={columnName == 'time' ? orderType : ''} /></th>
 						        </tr>
 						      </thead>
 						    </table>
