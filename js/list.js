@@ -70,6 +70,8 @@ var List = React.createClass({
 	},
 	onDoubleClick: function(item, okIcon) {
 		item.selected && !item.changed || okIcon ? this.onUnselect(item) : this.onSelect(item);
+		var onDoubleClick = this.props.onDoubleClick;
+		typeof onDoubleClick == 'function' && onDoubleClick();
 	},
 	onSelect: function(data) {
 		var onSelect = this.props.onSelect;
@@ -107,6 +109,7 @@ var List = React.createClass({
 		var list = modal.list;
 		var data = modal.data;
 		var activeItem = modal.getActive();
+		
 		//不设置height为0，滚动会有问题
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
