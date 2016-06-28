@@ -5,6 +5,7 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var util = require('./util');
 var FilterInput = require('./filter-input');
+var Spinner = require('./spinner');
 var HEIGHT = 24; //每条数据的高度
 
 function getClassName(data) {
@@ -188,7 +189,7 @@ var ReqData = React.createClass({
 							<table className="table">
 						      <thead>
 						        <tr>
-						          <th className="order">#</th>
+						          <th className="order">#<Spinner /></th>
 						          <th className="result">Result</th>
 						          <th className="protocol">Protocol</th>
 						          <th className="method">Method</th>
