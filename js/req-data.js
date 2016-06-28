@@ -189,15 +189,15 @@ var ReqData = React.createClass({
 							<table className="table">
 						      <thead>
 						        <tr>
-						          <th className="order">#<Spinner /></th>
-						          <th className="result">Result</th>
-						          <th className="protocol">Protocol</th>
-						          <th className="method">Method</th>
-						          <th className="host">Host</th>
-						          <th className="host-ip">Host IP</th>
-						          <th className="url">Url</th>
-						          <th className="type">Type</th>
-						          <th className="time">Time</th>
+						          <th className="order">#</th>
+						          <th className="result">Result<Spinner /></th>
+						          <th className="protocol">Protocol<Spinner /></th>
+						          <th className="method">Method<Spinner /></th>
+						          <th className="host">Host<Spinner /></th>
+						          <th className="host-ip">Host IP<Spinner /></th>
+						          <th className="url">Url<Spinner /></th>
+						          <th className="type">Type<Spinner /></th>
+						          <th className="time">Time<Spinner /></th>
 						        </tr>
 						      </thead>
 						    </table>
