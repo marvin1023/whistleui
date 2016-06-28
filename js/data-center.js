@@ -1,5 +1,6 @@
 var $ = require('jquery');
 var createCgi = require('./cgi');
+var util = require('./util');
 var NetworkModal = require('./network-modal');
 var	MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 10000;
@@ -221,17 +222,7 @@ function getStartTime() {
 		return '';
 	}
 	
-	return (!lastRowData || compareId(item.id, lastRowData.id)) ? item.id : lastRowData.id;
-}
-
-function compareId(curId, refId) {
-	if (curId >= refId) {
-		return true;
-	}
-	
-	curId = curId.split('-');
-	refId = refId.split('-');
-	return curId[0] == refId[0] && curId[1] > refId[1];
+	return (!lastRowData || util.compareReqId(item.id, lastRowData.id)) ? item.id : lastRowData.id;
 }
 
 function startLoadServerInfo() {
