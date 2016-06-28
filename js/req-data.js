@@ -258,7 +258,7 @@ var ReqData = React.createClass({
 						    		  				onDoubleClick={self.props.onDoubleClick}>
 						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++order : item.order}</th>			        
 						    		  				<td className="result">{res.statusCode || '-'}</td>			        
-						    		  				<td className="protocol">{util.getProtocol(item.url)}</td>			        
+						    		  				<td className="protocol">{item.protocol}</td>			        
 						    		  				<td className="method">{req.method}</td>			        
 						    		  				<td className="host">{item.hostname}</td>			        
 						    		  				<td className="host-ip">{res.ip || defaultValue}</td>			        

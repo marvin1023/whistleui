@@ -191,6 +191,7 @@ function startLoadData() {
 			$.each(ids, function() {
 				var item = data[this];
 				if (item) {
+					item.protocol = util.getProtocol(item.url);
 					item.hostname = util.getHostname(item.url);
 					dataList.push(item);
 				}
