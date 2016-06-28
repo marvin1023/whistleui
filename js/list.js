@@ -35,13 +35,13 @@ var List = React.createClass({
 		var listCon = $(ReactDOM.findDOMNode(self.refs.list)).focus().on('keydown', function(e) {
 			var item;
 			if (e.keyCode == 38) { //up
-				item = modal.prev();
+				item = e.shiftKey ? modal.up() : modal.prev();
 			} else if (e.keyCode == 40) {//down
-				item = modal.next();
+				item = e.shiftKey ? modal.down() : modal.next();
 			}
 			
 			if (item) {
-				self.onClick(item);
+				e.shiftKey ? self.setState({}) : self.onClick(item);
 				e.preventDefault();
 			}
 		});

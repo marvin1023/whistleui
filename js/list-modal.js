@@ -205,6 +205,48 @@ proto.filter = function() {
 	return list;
 }
 
+proto.up = function() {
+	var list = this.list;
+	var len = list.length;
+	if (!len) {
+		return -1;
+	}
+	var activeItem = this.getActive();
+	if (activeItem.fixed) {
+		return -1;
+	}
+	
+	var index = activeItem ? list.indexOf(activeItem.name) : len - 1;
+	if (!index || this.data[list[index - 1]].fixed) {
+		return -1;
+	}
+	
+	list[index] = list[index - 1];
+	list[index - 1] = activeItem.name;
+	return activeItem;
+};
+
+proto.down = function() {
+	var list = this.list;
+	var len = list.length;
+	if (!len) {
+		return -1;
+	}
+	var activeItem = this.getActive();
+	if (activeItem.fixed) {
+		return -1;
+	}
+	
+	var index = activeItem ? list.indexOf(activeItem.name) : len - 1;
+	if (index >= len - 1 || this.data[list[index + 1]].fixed) {
+		return -1;
+	}
+	
+	list[index] = list[index + 1];
+	list[index + 1] = activeItem.name;
+	return activeItem;
+};
+
 proto.prev = function() {
 	var list = this.list;
 	var len = list.length;

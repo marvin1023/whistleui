@@ -78,6 +78,7 @@ var Index = React.createClass({
 			rulesList.push(DEFAULT);
 			var item = rulesData.Default = {
 					name: DEFAULT,
+					fixed: true,
 					value: rules.defaultRules,
 					selected: selected,
 					isDefault: true,
