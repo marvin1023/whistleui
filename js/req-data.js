@@ -213,7 +213,6 @@ var ReqData = React.createClass({
 		var indeies = self.getVisibleIndex();
 		var columnName = state.columnName;
 		var orderType = state.order;
-		var sortByColumn = state.columnName && orderType;
 		var startIndex, endIndex;
 		if (indeies) {
 			startIndex = indeies[0];
@@ -254,7 +253,7 @@ var ReqData = React.createClass({
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
-						    		  				<th className="order" scope="row">{(hasKeyword || sortByColumn) && !item.hide ? ++index : item.order}</th>			        
+						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++index : item.order}</th>			        
 						    		  				<td className="result">{item.statusCode}</td>			        
 						    		  				<td className="protocol">{item.protocol}</td>			        
 						    		  				<td className="method">{item.method}</td>			        
