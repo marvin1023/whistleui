@@ -183,6 +183,7 @@ function startLoadData() {
 				var newItem = data[item.id];
 				if (newItem) {
 					$.extend(dataList[i], newItem);
+					setReqData(item);
 				} else {
 					item.lost = true;
 				}
@@ -194,6 +195,7 @@ function startLoadData() {
 					item.protocol = util.getProtocol(item.url);
 					item.hostname = util.getHostname(item.url);
 					item.method = item.req.method;
+					setReqData(item);
 					dataList.push(item);
 				}
 			});
@@ -209,10 +211,11 @@ function startLoadData() {
 function setReqData(item) {
 	var end = item.endTime;
 	var defaultValue = end ? '' : '-';
-	var req = item.req;
 	var res = item.res;
-	var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
-	var url = i >= startIndex && i <= endIndex ? item.url : null;
+	item.hostIp = res.ip || defaultValue;
+	item.statusCode = res.statusCode == null ? '-' :  res.statusCode
+	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
+	item.time = end ? end - item.startTime  : defaultValue;
 }
 
 function getPendingIds() {

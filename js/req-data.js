@@ -248,10 +248,6 @@ var ReqData = React.createClass({
 						      <tbody>
 						      {
 						    	  list.map(function(item, i) {
-						    		  var end = item.endTime;
-						    		  var defaultValue = end ? '' : '-';
-						    		  var res = item.res;
-						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
 						    		  var url = i >= startIndex && i <= endIndex ? item.url : null;
 						    		  
 						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
@@ -259,14 +255,14 @@ var ReqData = React.createClass({
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
 						    		  				<th className="order" scope="row">{hasKeyword && sortByColumn && !item.hide ? ++order : item.order}</th>			        
-						    		  				<td className="result">{res.statusCode == null ? '-' :  res.statusCode}</td>			        
+						    		  				<td className="result">{item.statusCode}</td>			        
 						    		  				<td className="protocol">{item.protocol}</td>			        
 						    		  				<td className="method">{item.method}</td>			        
 						    		  				<td className="host">{item.hostname}</td>			        
-						    		  				<td className="host-ip">{res.ip || defaultValue}</td>			        
+						    		  				<td className="host-ip">{item.hostIp}</td>			        
 						    		  				<td className="url" title={url}>{url}</td>			        
-						    		  				<td className="type" title={type}>{type}</td>			        
-						    		  				<td className="time">{end ? end - item.startTime + 'ms' : defaultValue}</td>			     
+						    		  				<td className="type" title={item.type}>{item.type}</td>			        
+						    		  				<td className="time">{item.time >= 0 ? item.time  + 'ms' : item.time}</td>			     
 						    		  			</tr>);
 						    	  })
 						      }	
