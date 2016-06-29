@@ -225,7 +225,7 @@ var ReqData = React.createClass({
 					<div className="w-req-data-content fill orient-vertical-box">
 						<div className="w-req-data-headers">
 							<table className="table">
-						      <thead>
+						      <thead className={columnName && orderType ? 'w-req-data-active-' + columnName : ''}>
 						        <tr onClick={self.orderBy}>
 						          <th className="order">#</th>
 						          <th className="result">Result<Spinner order={columnName == 'result' ? orderType : ''} /></th>
