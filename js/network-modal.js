@@ -137,7 +137,7 @@ function compare(prev, next) {
 	
 	var prevType = typeof prev;
 	var nextType = typeof next;
-	if (prevType != nextType && prevType != 'number') {
+	if (prevType != nextType && prevType == 'number') {
 		return 1;
 	}
 	
