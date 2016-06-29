@@ -7,7 +7,6 @@ var util = require('./util');
 var FilterInput = require('./filter-input');
 var Spinner = require('./spinner');
 var HEIGHT = 24; //每条数据的高度
-var columnList = ['result', 'protocol', 'method', 'hostname', 'hostIp', 'url', 'type', 'time'];
 var columns = {};
 
 
@@ -193,7 +192,7 @@ var ReqData = React.createClass({
 		if (modal) {
 			var sortColumns = [];
 			var order;
-			columnList.forEach(function(name) {
+			Object.keys(columns).forEach(function(name) {
 				if (order = columns[name]) {
 					sortColumns.push({
 						name: name,
@@ -201,7 +200,7 @@ var ReqData = React.createClass({
 					});
 				}
 			});
-			modal.setSortColumns(sortColumns);
+			modal.setSortColumns(sortColumns.reverse());
 		}
 		this.setState({});
 	},
