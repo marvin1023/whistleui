@@ -137,11 +137,11 @@ function compare(prev, next) {
 	
 	var prevType = typeof prev;
 	var nextType = typeof next;
-	if (prevType != nextType && prevType == 'number') {
-		return -1;
+	if (prevType != nextType && prevType != 'number') {
+		return 1;
 	}
 	
-	return 1;
+	return -1;
 }
 
 function inObject(obj, keyword) {
