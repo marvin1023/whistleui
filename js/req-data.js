@@ -171,16 +171,18 @@ var ReqData = React.createClass({
 		if (!target) {
 			return;
 		}
-		
+		var state = this.state || {};
 		var name = target.className;
 		if (name == 'order') {
-			return this.setState({
-				columnName: null,
-				order: null
-			});
+			if (state.order) {
+				this.setState({
+					columnName: null,
+					order: null
+				});
+			}
+			return ;
 		}
 		
-		var state = this.state || {};
 		if (name == state.columnName) {
 			var order = 'desc';
 			if (state.order == 'desc') {
