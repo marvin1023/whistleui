@@ -214,7 +214,7 @@ function setReqData(item) {
 	var res = item.res;
 	item.hostIp = res.ip || defaultValue;
 	item.statusCode = res.statusCode == null ? '-' :  res.statusCode
-	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
+	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0].toLowerCase();
 	item.time = end ? end - item.startTime  : defaultValue;
 }
 
