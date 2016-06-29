@@ -171,10 +171,12 @@ var ReqData = React.createClass({
 		if (!target) {
 			return;
 		}
+		var modal = this.props.modal;
 		var state = this.state || {};
 		var name = target.className;
 		if (name == 'order') {
 			if (state.order) {
+				modal && modal.setSortColumn();
 				this.setState({
 					columnName: null,
 					order: null
@@ -191,6 +193,8 @@ var ReqData = React.createClass({
 				order = null;
 			} 
 			
+			modal && modal.setSortColumn(name, order);
+			
 			this.setState({
 				columnName: name,
 				order: order
@@ -198,6 +202,7 @@ var ReqData = React.createClass({
 			return;
 		}
 		
+		modal && modal.setSortColumn(name, 'desc');
 		this.setState({
 			columnName: name,
 			order: 'desc'

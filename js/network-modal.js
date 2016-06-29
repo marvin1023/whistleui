@@ -32,7 +32,13 @@ proto.search = function(keyword) {
 
 proto.hasKeyword = function() {
 	return !!this._keyword;
-}
+};
+
+proto.setSortColumn = function(name, order) {
+	this._sortName = name;
+	this._sortOrder = order;
+	this.filter();
+};
 
 proto.filter = function() {
 	var keyword = this._keyword;
@@ -41,67 +47,67 @@ proto.filter = function() {
 		list.forEach(function(item) {
 			item.hide = false;
 		});
-		return;
+	} else {
+		switch(this._type) {
+			case 'c':
+			case 'content':
+				list.forEach(function(item) {
+					var reqBody = item.req.body;
+					var resBody = item.res.body;
+					item.hide = (!reqBody || reqBody.indexOf(keyword) == -1) && 
+					 			(!resBody || resBody.indexOf(keyword) == -1);
+				});
+				break;
+			case 'headers':
+			case 'h':
+				list.forEach(function(item) {
+					item.hide = !inObject(item.req.headers, keyword) 
+								&& !inObject(item.res.headers, keyword);
+				});
+				break;
+			case 'type':
+			case 't':
+				list.forEach(function(item) {
+					var type = item.res.headers;
+					type = type && type['content-type'];
+					item.hide = !(typeof type == 'string' && type.indexOf(keyword) != -1);
+				});
+				break;
+			case 'ip':
+			case 'i':
+				list.forEach(function(item) {
+					var ip = item.req.ip || '';
+					var host = item.res.ip || '';
+					item.hide = ip.indexOf(keyword) == -1 
+								&& host.indexOf(keyword) == -1;
+				});
+				break;
+			case 'status':
+			case 's':
+			case 'result':
+			case 'r':
+				list.forEach(function(item) {
+					item.hide = item.res.statusCode == null ? true : 
+						(item.res.statusCode + '').indexOf(keyword) == -1;
+				});
+				break;
+			case 'method':
+			case 'm':
+				keyword = keyword.toUpperCase();
+				list.forEach(function(item) {
+					item.hide = (item.req.method || '').indexOf(keyword) == -1;
+				});
+				break;
+			default:
+				keyword = keyword.toLowerCase();
+				list.forEach(function(item) {
+					item.hide = item.url.toLowerCase().indexOf(keyword) == -1;
+				});
+		}
 	}
 	
-	switch(this._type) {
-		case 'c':
-		case 'content':
-			list.forEach(function(item) {
-				var reqBody = item.req.body;
-				var resBody = item.res.body;
-				item.hide = (!reqBody || reqBody.indexOf(keyword) == -1) && 
-				 			(!resBody || resBody.indexOf(keyword) == -1);
-			});
-			break;
-		case 'headers':
-		case 'h':
-			list.forEach(function(item) {
-				item.hide = !inObject(item.req.headers, keyword) 
-							&& !inObject(item.res.headers, keyword);
-			});
-			break;
-		case 'type':
-		case 't':
-			list.forEach(function(item) {
-				var type = item.res.headers;
-				type = type && type['content-type'];
-				item.hide = !(typeof type == 'string' && type.indexOf(keyword) != -1);
-			});
-			break;
-		case 'ip':
-		case 'i':
-			list.forEach(function(item) {
-				var ip = item.req.ip || '';
-				var host = item.res.ip || '';
-				item.hide = ip.indexOf(keyword) == -1 
-							&& host.indexOf(keyword) == -1;
-			});
-			break;
-		case 'status':
-		case 's':
-		case 'result':
-		case 'r':
-			list.forEach(function(item) {
-				item.hide = item.res.statusCode == null ? true : 
-					(item.res.statusCode + '').indexOf(keyword) == -1;
-			});
-			break;
-		case 'method':
-		case 'm':
-			keyword = keyword.toUpperCase();
-			list.forEach(function(item) {
-				item.hide = (item.req.method || '').indexOf(keyword) == -1;
-			});
-			break;
-		default:
-			keyword = keyword.toLowerCase();
-			list.forEach(function(item) {
-				item.hide = item.url.toLowerCase().indexOf(keyword) == -1;
-			});
-	}
 	return list;
-}
+};
 
 function inObject(obj, keyword) {
 	for (var i in obj) {
