@@ -7,6 +7,9 @@ var util = require('./util');
 var FilterInput = require('./filter-input');
 var Spinner = require('./spinner');
 var HEIGHT = 24; //每条数据的高度
+var columnList = ['result', 'protocol', 'method', 'hostname', 'hostIp', 'url', 'type', 'time'];
+var columns = {};
+
 
 function getClassName(data) {
 	return getStatusClass(data) + ' w-req-data-item'
@@ -175,38 +178,32 @@ var ReqData = React.createClass({
 		var state = this.state || {};
 		var name = target.className;
 		if (name == 'order') {
-			if (state.order) {
-				modal && modal.setSortColumn();
-				this.setState({
-					columnName: null,
-					order: null
-				});
+			columns = {};
+		} else {
+			var order = columns[name];
+			if (order == 'desc') {
+				columns[name] = 'asc';
+			} else if (order == 'asc') {
+				columns[name] = null;
+			} else {
+				columns[name] = 'desc';
 			}
-			return ;
 		}
 		
-		if (name == state.columnName) {
-			var order = 'desc';
-			if (state.order == 'desc') {
-				order = 'asc';
-			} else if (state.order == 'asc') {
-				order = null;
-			} 
-			
-			modal && modal.setSortColumn(name, order);
-			
-			this.setState({
-				columnName: name,
-				order: order
+		if (modal) {
+			var sortColumns = [];
+			var order;
+			columnList.forEach(function(name) {
+				if (order = columns[name]) {
+					sortColumns.push({
+						name: name,
+						order: order
+					});
+				}
 			});
-			return;
+			modal.setSortColumns(sortColumns);
 		}
-		
-		modal && modal.setSortColumn(name, 'desc');
-		this.setState({
-			columnName: name,
-			order: 'desc'
-		});
+		this.setState({});
 	},
 	render: function() {
 		var self = this;
@@ -216,8 +213,6 @@ var ReqData = React.createClass({
 		var hasKeyword = modal && modal.hasKeyword();
 		var index = 0;
 		var indeies = self.getVisibleIndex();
-		var columnName = state.columnName;
-		var orderType = state.order;
 		var startIndex, endIndex;
 		if (indeies) {
 			startIndex = indeies[0];
@@ -232,17 +227,17 @@ var ReqData = React.createClass({
 					<div className="w-req-data-content fill orient-vertical-box">
 						<div className="w-req-data-headers">
 							<table className="table">
-						      <thead className={columnName && orderType ? 'w-req-data-active-' + columnName : ''}>
+						      <thead>
 						        <tr onClick={self.orderBy}>
 						          <th className="order">#</th>
-						          <th className="result">Result<Spinner order={columnName == 'result' ? orderType : ''} /></th>
-						          <th className="protocol">Protocol<Spinner order={columnName == 'protocol' ? orderType : ''} /></th>
-						          <th className="method">Method<Spinner order={columnName == 'method' ? orderType : ''} /></th>
-						          <th className="hostname">Host<Spinner order={columnName == 'hostname' ? orderType : ''} /></th>
-						          <th className="hostIp">Host IP<Spinner order={columnName == 'hostIp' ? orderType : ''} /></th>
-						          <th className="url">Url<Spinner order={columnName == 'url' ? orderType : ''} /></th>
-						          <th className="type">Type<Spinner order={columnName == 'type' ? orderType : ''} /></th>
-						          <th className="time">Time<Spinner order={columnName == 'time' ? orderType : ''} /></th>
+						          <th className="result" style={{color: columns.result ? '#337ab7' : null}}>Result<Spinner order={columns.result} /></th>
+						          <th className="protocol" style={{color: columns.protocol ? '#337ab7' : null}}>Protocol<Spinner order={columns.protocol} /></th>
+						          <th className="method" style={{color: columns.method ? '#337ab7' : null}}>Method<Spinner order={columns.method} /></th>
+						          <th className="hostname" style={{color: columns.hostname ? '#337ab7' : null}}>Host<Spinner order={columns.hostname} /></th>
+						          <th className="hostIp" style={{color: columns.hostIp ? '#337ab7' : null}}>Host IP<Spinner order={columns.hostIp} /></th>
+						          <th className="url" style={{color: columns.url ? '#337ab7' : null}}>Url<Spinner order={columns.url} /></th>
+						          <th className="type" style={{color: columns.type ? '#337ab7' : null}}>Type<Spinner order={columns.type} /></th>
+						          <th className="time" style={{color: columns.time ? '#337ab7' : null}}>Time<Spinner order={columns.time} /></th>
 						        </tr>
 						      </thead>
 						    </table>
@@ -253,6 +248,9 @@ var ReqData = React.createClass({
 						      {
 						    	  list.map(function(item, i) {
 						    		  var url = i >= startIndex && i <= endIndex ? item.url : null;
+						    		  if (url && item.hide) {
+						    			  ++endIndex; //处理过滤掉的情况
+						    		  }
 						    		  
 						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
 						    		  				className={getClassName(item)} 

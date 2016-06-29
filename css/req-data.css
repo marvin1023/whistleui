@@ -22,6 +22,3 @@
 .w-req-data-list tr {cursor: default;}
 .w-req-data-list tr.w-selected th, .w-req-data-list tr.w-selected td {background-color: #337ab7!important; color: #fff;}
 
-.w-req-data-active-result .result, .w-req-data-active-protocol .protocol, .w-req-data-active-method .method, .w-req-data-active-hostname .hostname
-, .w-req-data-active-hostIp .hostIp, .w-req-data-active-url .url, .w-req-data-active-type .type
-, .w-req-data-active-time .time {color: #337ab7!important;}

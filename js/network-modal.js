@@ -34,9 +34,8 @@ proto.hasKeyword = function() {
 	return !!this._keyword;
 };
 
-proto.setSortColumn = function(name, order) {
-	this._sortName = name;
-	this._sortOrder = order;
+proto.setSortColumns = function(columns) {
+	this._columns = columns;
 	this.filter();
 };
 
@@ -106,43 +105,22 @@ proto.filter = function(newList) {
 		}
 	}
 	
-	var sortName = this._sortName;
-	if (sortName && this._sortOrder) {
-		if (this._sortOrder == 'desc') {
-			this.list.sort(function(prev, next) {
-				var prevVal = prev[sortName];
-				var nextVal = next[sortName];
-				if (prevVal == nextVal) {
-					return prev.order > next.order ? 1 : -1;
-				}
-				if (prevVal == '-') {
-					return 1;
-				}
-				if (nextVal == '-') {
-					return -1;
-				}
-				
-				var result = compare(prevVal, nextVal);
-				return result || (prev.order > next.order ? 1 : -1);
-			});
-		} else {
-			this.list.sort(function(prev, next) {
-				var prevVal = prev[sortName];
-				var nextVal = next[sortName];
-				if (prevVal == nextVal) {
-					return prev.order > next.order ? -1 : 1;
-				}
-				if (prevVal == '-') {
-					return 1;
-				}
-				if (nextVal == '-') {
-					return -1;
-				}
-				
-				var result = -compare(prevVal, nextVal);
-				return result || (prev.order > next.order ? -1 : 1);
-			});
-		}
+	var columns = this._columns;
+	if (columns && columns.length) {
+		var len = columns.length;
+		this.list.sort(function(prev, next) {
+            for (var i = 0; i < len; i++) {
+            	var column = columns[i];
+            	var prevVal = prev[column.name];
+                var nextVal = next[column.name];
+                var result = compare(prevVal, nextVal, column.order);
+            	if (result) {
+            		return result;
+            	}
+            }
+            
+            return prev.order > next.order ? 1 : -1;
+        });
 	} else if (!newList) {
 		this.list = this._list.slice(0, MAX_LENGTH);
 	}
@@ -150,7 +128,22 @@ proto.filter = function(newList) {
 	return list;
 };
 
-function compare(prev, next) {
+
+function compare(prev, next, order) {
+    if (prev == next) {
+        return 0;
+    }
+    if (prev == '-') {
+        return 1;
+    }
+    if (next == '-') {
+        return -1;
+    }
+
+    return order == 'asc' ? -_compare(prev, next) : _compare(prev, next);
+}
+
+function _compare(prev, next) {
 	if (prev > next) {
 		return 1;
 	}
