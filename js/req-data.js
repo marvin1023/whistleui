@@ -200,7 +200,7 @@ var ReqData = React.createClass({
 					});
 				}
 			});
-			modal.setSortColumns(sortColumns.reverse());
+			modal.setSortColumns(sortColumns);
 		}
 		this.setState({});
 	},
