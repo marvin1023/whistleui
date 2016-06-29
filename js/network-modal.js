@@ -110,12 +110,36 @@ proto.filter = function(newList) {
 	if (sortName && this._sortOrder) {
 		if (this._sortOrder == 'desc') {
 			this.list.sort(function(prev, next) {
-				var result = compare(prev[sortName], next[sortName]);
+				var prevVal = prev[sortName];
+				var nextVal = next[sortName];
+				if (prev == next) {
+					return prev.order > next.order ? 1 : -1;
+				}
+				if (prev == '-') {
+					return -1;
+				}
+				if (next == '-') {
+					return 1;
+				}
+				
+				var result = compare(prevVal, nextVal);
 				return result || (prev.order > next.order ? 1 : -1);
 			});
 		} else {
 			this.list.sort(function(prev, next) {
-				var result = -compare(prev[sortName], next[sortName]);
+				var prevVal = prev[sortName];
+				var nextVal = next[sortName];
+				if (prev == next) {
+					return prev.order > next.order ? -1 : 1;
+				}
+				if (prev == '-') {
+					return 1;
+				}
+				if (next == '-') {
+					return -1;
+				}
+				
+				var result = -compare(prevVal, nextVal);
 				return result || (prev.order > next.order ? -1 : 1);
 			});
 		}
@@ -127,10 +151,6 @@ proto.filter = function(newList) {
 };
 
 function compare(prev, next) {
-	if (prev == next) {
-		return 0;
-	}
-	
 	if (prev > next) {
 		return 1;
 	}
