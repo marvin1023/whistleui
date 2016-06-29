@@ -112,14 +112,14 @@ proto.filter = function(newList) {
 			this.list.sort(function(prev, next) {
 				var prevVal = prev[sortName];
 				var nextVal = next[sortName];
-				if (prev == next) {
+				if (prevVal == nextVal) {
 					return prev.order > next.order ? 1 : -1;
 				}
-				if (prev == '-') {
-					return -1;
-				}
-				if (next == '-') {
+				if (prevVal == '-') {
 					return 1;
+				}
+				if (nextVal == '-') {
+					return -1;
 				}
 				
 				var result = compare(prevVal, nextVal);
@@ -129,13 +129,13 @@ proto.filter = function(newList) {
 			this.list.sort(function(prev, next) {
 				var prevVal = prev[sortName];
 				var nextVal = next[sortName];
-				if (prev == next) {
+				if (prevVal == nextVal) {
 					return prev.order > next.order ? -1 : 1;
 				}
-				if (prev == '-') {
+				if (prevVal == '-') {
 					return 1;
 				}
-				if (next == '-') {
+				if (nextVal == '-') {
 					return -1;
 				}
 				
