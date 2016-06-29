@@ -193,6 +193,7 @@ function startLoadData() {
 				if (item) {
 					item.protocol = util.getProtocol(item.url);
 					item.hostname = util.getHostname(item.url);
+					item.method = item.req.method;
 					dataList.push(item);
 				}
 			});
@@ -203,6 +204,15 @@ function startLoadData() {
 		});
 	}
 	load();
+}
+
+function setReqData(item) {
+	var end = item.endTime;
+	var defaultValue = end ? '' : '-';
+	var req = item.req;
+	var res = item.res;
+	var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
+	var url = i >= startIndex && i <= endIndex ? item.url : null;
 }
 
 function getPendingIds() {

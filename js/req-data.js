@@ -213,6 +213,7 @@ var ReqData = React.createClass({
 		var indeies = self.getVisibleIndex();
 		var columnName = state.columnName;
 		var orderType = state.order;
+		var sortByColumn = state.columnName && orderType;
 		var startIndex, endIndex;
 		if (indeies) {
 			startIndex = indeies[0];
@@ -249,7 +250,6 @@ var ReqData = React.createClass({
 						    	  list.map(function(item, i) {
 						    		  var end = item.endTime;
 						    		  var defaultValue = end ? '' : '-';
-						    		  var req = item.req;
 						    		  var res = item.res;
 						    		  var type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0];
 						    		  var url = i >= startIndex && i <= endIndex ? item.url : null;
@@ -258,10 +258,10 @@ var ReqData = React.createClass({
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
-						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++order : item.order}</th>			        
+						    		  				<th className="order" scope="row">{hasKeyword && sortByColumn && !item.hide ? ++order : item.order}</th>			        
 						    		  				<td className="result">{res.statusCode == null ? '-' :  res.statusCode}</td>			        
 						    		  				<td className="protocol">{item.protocol}</td>			        
-						    		  				<td className="method">{req.method}</td>			        
+						    		  				<td className="method">{item.method}</td>			        
 						    		  				<td className="host">{item.hostname}</td>			        
 						    		  				<td className="host-ip">{res.ip || defaultValue}</td>			        
 						    		  				<td className="url" title={url}>{url}</td>			        
