@@ -110,21 +110,13 @@ proto.filter = function(newList) {
 	if (sortName && this._sortOrder) {
 		if (this._sortOrder == 'desc') {
 			this.list.sort(function(prev, next) {
-				var prevVal = prev[sortName];
-				var nextVal = next[sortName];
-				if (prevVal == nextVal) {
-					return prev.order > next.order ? 1 : -1;
-				} 
-				return prevVal > nextVal ? 1 : -1;
+				var result = compare(prev[sortName], next[sortName]);
+				return result || (prev.order > next.order ? 1 : -1);
 			});
 		} else {
 			this.list.sort(function(prev, next) {
-				var prevVal = prev[sortName];
-				var nextVal = next[sortName];
-				if (prevVal == nextVal) {
-					return prev.order > next.order ? -1 : 1;
-				} 
-				return prevVal > nextVal ? -1 : 1;
+				var result = -compare(prev[sortName], next[sortName]);
+				return result || (prev.order > next.order ? -1 : 1);
 			});
 		}
 	} else if (!newList) {
@@ -133,6 +125,24 @@ proto.filter = function(newList) {
 	
 	return list;
 };
+
+function compare(prev, next) {
+	if (prev == next) {
+		return 0;
+	}
+	
+	if (prev > next) {
+		return 1;
+	}
+	
+	var prevType = typeof prev;
+	var nextType = typeof next;
+	if (prevType != nextType && prevType == 'number') {
+		return -1;
+	}
+	
+	return 1;
+}
 
 function inObject(obj, keyword) {
 	for (var i in obj) {
