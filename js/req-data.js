@@ -259,7 +259,7 @@ var ReqData = React.createClass({
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
 						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++index : item.order}</th>			        
-						    		  				<td className="result">{item.statusCode}</td>			        
+						    		  				<td className="result">{item.result}</td>			        
 						    		  				<td className="protocol">{item.protocol}</td>			        
 						    		  				<td className="method">{item.method}</td>			        
 						    		  				<td className="hostname">{item.hostname}</td>			        
