@@ -238,8 +238,8 @@ var ReqData = React.createClass({
 						          <th className="result">Result<Spinner order={columnName == 'result' ? orderType : ''} /></th>
 						          <th className="protocol">Protocol<Spinner order={columnName == 'protocol' ? orderType : ''} /></th>
 						          <th className="method">Method<Spinner order={columnName == 'method' ? orderType : ''} /></th>
-						          <th className="host">Host<Spinner order={columnName == 'host' ? orderType : ''} /></th>
-						          <th className="host-ip">Host IP<Spinner order={columnName == 'host-ip' ? orderType : ''} /></th>
+						          <th className="hostname">Host<Spinner order={columnName == 'hostname' ? orderType : ''} /></th>
+						          <th className="hostIp">Host IP<Spinner order={columnName == 'hostIp' ? orderType : ''} /></th>
 						          <th className="url">Url<Spinner order={columnName == 'url' ? orderType : ''} /></th>
 						          <th className="type">Type<Spinner order={columnName == 'type' ? orderType : ''} /></th>
 						          <th className="time">Time<Spinner order={columnName == 'time' ? orderType : ''} /></th>
@@ -262,8 +262,8 @@ var ReqData = React.createClass({
 						    		  				<td className="result">{item.statusCode}</td>			        
 						    		  				<td className="protocol">{item.protocol}</td>			        
 						    		  				<td className="method">{item.method}</td>			        
-						    		  				<td className="host">{item.hostname}</td>			        
-						    		  				<td className="host-ip">{item.hostIp}</td>			        
+						    		  				<td className="hostname">{item.hostname}</td>			        
+						    		  				<td className="hostIp">{item.hostIp}</td>			        
 						    		  				<td className="url" title={url}>{url}</td>			        
 						    		  				<td className="type" title={item.type}>{item.type}</td>			        
 						    		  				<td className="time">{item.time >= 0 ? item.time  + 'ms' : item.time}</td>			     

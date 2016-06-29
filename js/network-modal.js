@@ -40,7 +40,7 @@ proto.setSortColumn = function(name, order) {
 	this.filter();
 };
 
-proto.filter = function() {
+proto.filter = function(newList) {
 	var keyword = this._keyword;
 	var list = this.list;
 	if (!keyword) {
@@ -104,6 +104,31 @@ proto.filter = function() {
 					item.hide = item.url.toLowerCase().indexOf(keyword) == -1;
 				});
 		}
+	}
+	
+	var sortName = this._sortName;
+	if (sortName && this._sortOrder) {
+		if (this._sortOrder == 'desc') {
+			this.list.sort(function(prev, next) {
+				var prevVal = prev[sortName];
+				var nextVal = next[sortName];
+				if (prevVal == prevVal) {
+					return prev.order > next.order ? 1 : -1;
+				} 
+				return prevVal > prevVal ? 1 : -1;
+			});
+		} else {
+			this.list.sort(function(prev, next) {
+				var prevVal = prev[sortName];
+				var nextVal = next[sortName];
+				if (prevVal == prevVal) {
+					return prev.order > next.order ? -1 : 1;
+				} 
+				return prevVal > prevVal ? -1 : 1;
+			});
+		}
+	} else if (!newList) {
+		this.list = this._list.slice(0, MAX_LENGTH);
 	}
 	
 	return list;
@@ -213,7 +238,7 @@ proto.update = function(scrollAtBottom, force) {
 	}
 	
 	this.list = this._list.slice(0, MAX_LENGTH);
-	this.filter();
+	this.filter(true);
 	return this._list.length > MAX_LENGTH;
 };
 
