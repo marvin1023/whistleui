@@ -11,7 +11,7 @@
 .w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}
 .w-req-data-headers .table {height: 30px;}
 .w-req-data-headers .table th {border: none!important; padding: 4px 0 4px 6px; -webkit-user-select: none; font-weight: normal; color: #000; position: relative; cursor: pointer;}
-.w-req-data-headers .table th:hover {color: #337ab7!important;}
+.w-req-data-headers .table th:hover {background-color: #e6e6e6!important;}
 .w-req-data-list {overflow-y: auto; overflow-x: hidden; outline: none;}
 .w-req-data-list th, .w-req-data-list td {border-top: none!important; border-bottom: 1px solid #ddd; font-weight: normal; font-size: 12px; padding: 3px 0 3px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .w-req-data-con .w-filter-con, .w-req-data-content {min-width: 720px;}
