@@ -213,7 +213,8 @@ function setReqData(item) {
 	var defaultValue = end ? '' : '-';
 	var res = item.res;
 	item.hostIp = res.ip || defaultValue;
-	item.result = res.statusCode == null ? '-' :  res.statusCode
+	var result = res.statusCode == null ? '-' :  res.statusCode;
+	item.result = /^[1-9]/.test(result) && parseInt(result, 10) || result;
 	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0].toLowerCase();
 	item.time = end ? end - item.startTime  : defaultValue;
 }
