@@ -16,7 +16,7 @@ var curServerInfo;
 var initialData, startedLoad;
 var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
-var lastRowData;
+var lastRowId;
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
 		xhrFields: {
@@ -199,7 +199,8 @@ function startLoadData() {
 					dataList.push(item);
 				}
 			});
-			lastRowData = dataList[dataList.length - 1];
+			lastRowId = dataList[dataList.length - 1];
+			lastRowId = lastRowId && lastRowId.id;
 			$.each(dataCallbacks, function() {
 				this(networkModal);
 			});
@@ -240,7 +241,7 @@ function getStartTime() {
 		return '';
 	}
 	
-	return (!lastRowData || util.compareReqId(item.id, lastRowData.id)) ? item.id : lastRowData.id;
+	return (!lastRowId || util.compareReqId(item.id, lastRowId)) ? item.id : lastRowId;
 }
 
 function startLoadServerInfo() {
