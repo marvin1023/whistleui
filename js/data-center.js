@@ -199,8 +199,10 @@ function startLoadData() {
 					dataList.push(item);
 				}
 			});
-			lastRowId = dataList[dataList.length - 1];
-			lastRowId = lastRowId && lastRowId.id;
+			var lastRow = dataList[dataList.length - 1];
+			if (lastRow && (!lastRowId || util.compareReqId(lastRow.id, lastRowId))) {
+				lastRowId = lastRow.id;
+			}
 			$.each(dataCallbacks, function() {
 				this(networkModal);
 			});
