@@ -199,6 +199,9 @@ function startLoadData() {
 					dataList.push(item);
 				}
 			});
+			if (ids.length) {
+				dataList = dataList.sort(compareData);
+			}
 			var lastRow = dataList[dataList.length - 1];
 			if (lastRow && (!lastRowId || util.compareReqId(lastRow.id, lastRowId))) {
 				lastRowId = lastRow.id;
@@ -209,6 +212,10 @@ function startLoadData() {
 		});
 	}
 	load();
+}
+
+function compareData(prev, next) {
+	return util.compareReqId(prev.id, next.id) ? 1 : -1;
 }
 
 function setReqData(item) {
