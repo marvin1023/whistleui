@@ -201,10 +201,10 @@ function startLoadData() {
 			});
 			if (ids.length) {
 				dataList = dataList.sort(compareData);
-			}
-			var lastRow = dataList[dataList.length - 1];
-			if (lastRow && (!lastRowId || util.compareReqId(lastRow.id, lastRowId))) {
-				lastRowId = lastRow.id;
+				var lastRow = dataList[dataList.length - 1];
+				if (lastRow && (!lastRowId || util.compareReqId(lastRow.id, lastRowId))) {
+					lastRowId = lastRow.id;
+				}
 			}
 			$.each(dataCallbacks, function() {
 				this(networkModal);
