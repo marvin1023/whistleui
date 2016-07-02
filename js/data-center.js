@@ -213,10 +213,6 @@ function startLoadData() {
 	load();
 }
 
-function compareData(prev, next) {
-	return util.compareReqId(prev.id, next.id) ? 1 : -1;
-}
-
 function setReqData(item) {
 	var end = item.endTime;
 	var defaultValue = end ? '' : '-';
