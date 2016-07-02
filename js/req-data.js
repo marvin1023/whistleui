@@ -246,9 +246,15 @@ var ReqData = React.createClass({
 						      <tbody>
 						      {
 						    	  list.map(function(item, i) {
-						    		  var url = i >= startIndex && i <= endIndex ? item.url : null;
-						    		  if (url && item.hide) {
-						    			  ++endIndex; //处理过滤掉的情况
+						    		  var url;
+						    		  if (item.hide) {
+						    			  if (i < startIndex) {
+						    				  ++startIndex;
+						    			  } else if (i <= endIndex) {
+						    				  ++endIndex;
+						    			  }
+						    		  } else if (i >= startIndex && i <= endIndex) {
+						    			  url = item.url;
 						    		  }
 						    		  
 						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
