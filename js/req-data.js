@@ -248,7 +248,7 @@ var ReqData = React.createClass({
 						    	  list.map(function(item, i) {
 						    		  var url;
 						    		  if (item.hide) {
-						    			  if (i < startIndex) {
+						    			  if (i <= startIndex) {
 						    				  ++startIndex;
 						    			  } else if (i <= endIndex) {
 						    				  ++endIndex;
