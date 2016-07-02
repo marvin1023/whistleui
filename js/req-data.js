@@ -246,16 +246,8 @@ var ReqData = React.createClass({
 						      <tbody>
 						      {
 						    	  list.map(function(item, i) {
-						    		  var url;
-						    		  if (item.hide) {
-						    			  if (i <= startIndex) {
-						    				  ++startIndex;
-						    			  } else if (i <= endIndex) {
-						    				  ++endIndex;
-						    			  }
-						    		  } else if (i >= startIndex && i <= endIndex) {
-						    			  url = item.url;
-						    		  }
+						    		  i = hasKeyword ? index : i;
+						    		  var url = !item.hide && i >= startIndex && i <= endIndex ? item.url : null;
 						    		  
 						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
 						    		  				className={getClassName(item)} 
