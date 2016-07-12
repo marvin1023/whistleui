@@ -46,6 +46,7 @@ var ReqDetail = React.createClass({
 			req = modal.req
 			body = req.body || '';
 			headers = req.headers;
+			delete headers.Host;
 			cookies = util.parseQueryString(headers.cookie, /;\s*/g, null, decodeURIComponent);
 			var url = modal.url;
 			var index = modal.url.indexOf('?');
