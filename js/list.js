@@ -115,7 +115,7 @@ var List = React.createClass({
 	onDoubleClick: function(item, okIcon) {
 		item.selected && !item.changed || okIcon ? this.onUnselect(item) : this.onSelect(item);
 		var onDoubleClick = this.props.onDoubleClick;
-		typeof onDoubleClick == 'function' && onDoubleClick();
+		typeof onDoubleClick == 'function' && onDoubleClick(item);
 	},
 	onSelect: function(data) {
 		var onSelect = this.props.onSelect;

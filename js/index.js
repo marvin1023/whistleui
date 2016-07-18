@@ -771,6 +771,9 @@ var Index = React.createClass({
 			editRulesInput.focus();
 		});	
 	},
+	showEditValuesByDBClick: function(item) {
+		!item.changed && this.showEditValues();
+	},
 	showEditValues: function() {
 		var modal = this.state.values;
 		var activeItem = modal.getActive();
@@ -1350,7 +1353,7 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="128" defaultValue={state.filterText} placeholder={state.filterText ? null : 'substring or regular'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
 				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : null}
-				{state.hasValues ? <List theme={valuesTheme} onDoubleClick={this.showEditValues} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
+				{state.hasValues ? <List theme={valuesTheme} onDoubleClick={this.showEditValuesByDBClick} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
 				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' && name != 'plugins' ? false : true} modal={state.network} /> : null}
 				{state.hasPlugins ? <Plugins {...state} onOpen={this.activePluginTab} onClose={this.closePluginTab} onActive={this.activePluginTab} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
