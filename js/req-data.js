@@ -257,8 +257,8 @@ var ReqData = React.createClass({
 						    		  				<td className="result">{item.result}</td>			        
 						    		  				<td className="protocol">{item.protocol}</td>			        
 						    		  				<td className="method">{item.method}</td>			        
-						    		  				<td className="hostname">{item.hostname}</td>			        
-						    		  				<td className="hostIp">{item.hostIp}</td>			        
+						    		  				<td className="hostname" title={item.hostname}>{item.hostname}</td>			        
+						    		  				<td className="hostIp" title={item.hostIp}>{item.hostIp}</td>			        
 						    		  				<td className="url" title={url}>{url}</td>			        
 						    		  				<td className="type" title={item.type}>{item.type}</td>			        
 						    		  				<td className="time">{item.time >= 0 ? item.time  + 'ms' : item.time}</td>			     
