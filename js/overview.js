@@ -95,7 +95,7 @@ var Overview = React.createClass({
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-overview' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<Properties modal={overviewModal} />
-				<p className="w-detail-overview-title"><a href="https://whistle.gitbooks.io/help_zh/content/rules/" target="_blank"><span className="glyphicon glyphicon-question-sign"></span></a>All rules:</p>
+				<p className="w-detail-overview-title"><a href="https://whistle.gitbooks.io/help/content/rules/" target="_blank"><span className="glyphicon glyphicon-question-sign"></span></a>All rules:</p>
 				<Properties modal={rulesModal} />
 			</div>		
 		);
