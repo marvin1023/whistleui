@@ -1426,7 +1426,7 @@ var Index = React.createClass({
 				      </div>
 				      <div className="modal-footer">
 				        <button type="button" className="btn btn-default" onClick={this.donotShowAgain} data-dismiss="modal">Don't show again</button>
-				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="https://github.com/avwo/whistle/wiki/%E6%9B%B4%E6%96%B0whistle" target="_blank">Update now</a>
+				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="https://whistle.gitbooks.io/help_zh/content/update.html" target="_blank">Update now</a>
 				      </div>
 				    </div>
 				</div>
