@@ -28,6 +28,7 @@ var Composer = React.createClass({
 		var req = item.req;
 		ReactDOM.findDOMNode(refs.url).value = item.url;
 		ReactDOM.findDOMNode(refs.method).value = req.method;
+		delete req.headers.Host;
 		ReactDOM.findDOMNode(refs.headers).value = util.objectToString(req.headers);
 		ReactDOM.findDOMNode(refs.body).value = req.body || '';
 	},
