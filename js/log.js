@@ -7,7 +7,7 @@ var BtnGroup = require('./btn-group');
 var util = require('./util');
 var dataCenter = require('./data-center');
 var BTNS = [{
-	name: 'Page',
+	name: 'Console',
 	icon: 'file',
 	active: true
 }, {
