@@ -1237,6 +1237,19 @@ var Index = React.createClass({
 		this._hoverMenuListTimer = null;
 		this.state.hoverMenuList = !!e;
 	},
+	overMenuList: function(e) {
+		if (this.state.hoverMenuList) {
+			return;
+		}
+		
+		var target = $(e.target);
+		if (target.hasClass('v-rules-menu') || target.hasClass('v-values-menu') 
+				|| target.hasClass('v-plugins-menu')) {
+			return;
+		}
+		
+		this.leaveMenuList(true);
+	},
 	render: function() {
 		var state = this.state;
 		var name = state.name;
@@ -1313,7 +1326,7 @@ var Index = React.createClass({
 		
 		return (
 			<div className="main orient-vertical-box" onMouseEnter={this.hoverMenuList}>
-				<div className={'w-menu w-' + name + '-menu-list'} onMouseLeave={this.leaveMenuList}>
+				<div className={'w-menu w-' + name + '-menu-list'} onMouseLeave={this.leaveMenuList} onMouseOver={this.overMenuList}>
 					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} style={{display: isRules ? 'none' : ''}} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
