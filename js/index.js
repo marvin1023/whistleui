@@ -613,6 +613,7 @@ var Index = React.createClass({
 				icon: 'globe'
 			};
 		});
+		self.leaveMenuList(true);
 		self.setState({
 			showWeinreOptions: true
 		});
