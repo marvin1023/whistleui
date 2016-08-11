@@ -87,7 +87,8 @@ var Overview = React.createClass({
 			if (rules) {
 				rulesModal = {};
 				RULES.forEach(function(name) {
-					rulesModal[name] = rules[name] && rules[name].raw;
+					var rule = rules[name];
+					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher : undefined;
 				});
 			}
 		}
