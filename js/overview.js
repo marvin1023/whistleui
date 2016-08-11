@@ -84,11 +84,13 @@ var Overview = React.createClass({
 				}
 			});
 			var rules = modal.rules;
+			var titleModal = {};
 			if (rules) {
 				rulesModal = {};
 				RULES.forEach(function(name) {
 					var rule = rules[name];
 					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher : undefined;
+					titleModal[name] = rule ? rule.raw : undefined;
 				});
 			}
 		}
@@ -97,7 +99,7 @@ var Overview = React.createClass({
 			<div className={'fill orient-vertical-box w-detail-content w-detail-overview' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<Properties modal={overviewModal} />
 				<p className="w-detail-overview-title"><a href="https://whistle.gitbooks.io/help/content/rules/" target="_blank"><span className="glyphicon glyphicon-question-sign"></span></a>All rules:</p>
-				<Properties modal={rulesModal} />
+				<Properties modal={rulesModal} title={titleModal} />
 			</div>		
 		);
 	}

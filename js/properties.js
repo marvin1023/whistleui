@@ -6,6 +6,7 @@ var util = require('./util');
 var Properties = React.createClass({
 	render: function() {
 		var modal = this.props.modal || {};
+		var title = this.props.title || {};
 		return (
 				<table className="table w-properties">
 					<tbody>
@@ -23,7 +24,7 @@ var Properties = React.createClass({
 											);
 										})
 										: 
-										<tr key={name}>
+										<tr key={name} title={title[name]}>
 											<th>{name}</th>
 											<td><pre>{util.toString(value)}</pre></td>
 										</tr>	
