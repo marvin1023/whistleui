@@ -89,7 +89,7 @@ var Overview = React.createClass({
 				rulesModal = {};
 				RULES.forEach(function(name) {
 					var rule = rules[name];
-					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher : undefined;
+					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher + (rule.port ? ':' + rule.port : '') : undefined;
 					titleModal[name] = rule ? rule.raw : undefined;
 				});
 			}
