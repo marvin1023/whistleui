@@ -49,6 +49,10 @@ CodeMirror.defineMode('rules', function() {
 				return /^filter:\/\//.test(str);
 			}
 			
+			function isPlugin(str) {
+				return /^plugin:\/\//.test(str);
+			}
+			
 			function isDisable(str) {
 				return /^disable:\/\//.test(str);
 			}
@@ -104,6 +108,8 @@ CodeMirror.defineMode('rules', function() {
 								 type = 'meta js-params js-type';
 							 } else if (isLog(str)) {
 								 type = 'error js-log js-type';
+							 } else if (isPlugin(str)) {
+								 type = 'variable-2 js-plugin js-type';
 							 } else if (isFilter(str)) {
 								 type = 'variable-2 js-filter js-type';
 							 } else if (isDisable(str)) {
