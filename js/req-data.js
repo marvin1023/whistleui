@@ -18,10 +18,16 @@ function getClassName(data) {
 }
 
 function hasRules(data) {
-	for (var i in data.rules) {
-		return true;
+	var keys = data.rules && Object.keys(data.rules);
+	if (!keys || keys.length < 1) {
+		return false;
 	}
-	return false;
+	
+	if (keys.length == 1 && keys[0] == 'plugin') {
+		return false;
+	}
+	
+	return true;
 }
 
 function getStatusClass(data) {
