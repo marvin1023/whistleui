@@ -25,7 +25,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isUrl(str) {
-				return /^https?:\/\//i.test(str);
+				return /^(?:https?|wss?|tunnel):\/\//i.test(str);
 			}
 			
 			function isRule(str) {
