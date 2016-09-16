@@ -562,7 +562,7 @@ var Index = React.createClass({
 			active = name;
 			tabs.push({
 				name: name,
-				url: 'http://' + name + '.' + this.state.localUIHost + '/'
+				url: location.protocol + '//' + name + '.' + this.state.localUIHost + '/'
 			});
 		}
 		
