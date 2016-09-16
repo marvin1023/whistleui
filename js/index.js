@@ -45,7 +45,8 @@ var Index = React.createClass({
 		var plugins = modal.plugins;
 		var state = {
 				allowMultipleChoice: modal.rules.allowMultipleChoice,
-				syncWithSysHosts: modal.rules.syncWithSysHosts
+				syncWithSysHosts: modal.rules.syncWithSysHosts,
+				localUIHost: modal.localUIHost || 'local.whistlejs.com'
 		};
 		var pageName = getPageName();
 		if (!pageName || pageName.indexOf('rules') != -1) {
@@ -561,7 +562,7 @@ var Index = React.createClass({
 			active = name;
 			tabs.push({
 				name: name,
-				url: 'http://' + name + '.local.whistlejs.com/'
+				url: 'http://' + name + '.' + this.state.localUIHost + '/'
 			});
 		}
 		
@@ -882,7 +883,7 @@ var Index = React.createClass({
 	openWeinre: function(name) {
 		var hostname = location.hostname;
 		hostname = /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname) && this.serverInfo ? 
-				hostname + ':' + this.serverInfo.weinrePort : 'weinre.local.whistlejs.com';
+				hostname + ':' + this.serverInfo.weinrePort : 'weinre.' + this.state.localUIHost;
 		window.open('http://' + hostname + '/client/#' + (name || 'anonymous'));
 		this.setState({
 			showWeinreOptions: false
