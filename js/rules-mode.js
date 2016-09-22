@@ -133,7 +133,7 @@ CodeMirror.defineMode('rules', function() {
 					 }
 					 
 					 if (isIP(str)) {
-						 return 'number js-number js-type';
+						 return 'number js-number';
 					 }
 					 
 					 if (isRegExp(str)) {
