@@ -1,7 +1,7 @@
 var CodeMirror = require('codemirror');
 CodeMirror.defineMode('rules', function() {
 			function isIP(str) {
-				return /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)$/.test(str);
+				return /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)$/.test(str) || /^host:\/\//.test(str);
 			}
 			
 			function isHead(str) {
@@ -120,7 +120,7 @@ CodeMirror.defineMode('rules', function() {
 								 type = 'variable-2 js-exportsUrl js-type';
 							 } else if (isDispatch(str)) {
 								 type = 'variable-2 js-dispatch js-type';
-							 } else if (isRule(str)) {
+							 } else if (!isIP(str) && isRule(str)) {
 								 type = 'builtin js-rule js-type';
 							 }
 						}
@@ -133,11 +133,11 @@ CodeMirror.defineMode('rules', function() {
 					 }
 					 
 					 if (isIP(str)) {
-						 return 'number';
+						 return 'number js-number js-type';
 					 }
 					 
 					 if (isRegExp(str)) {
-						 return 'attribute';
+						 return 'attribute js-attribute';
 					 }
 					 
 					 if (isRule(str)) {
