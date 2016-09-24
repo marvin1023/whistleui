@@ -1,7 +1,7 @@
 var CodeMirror = require('codemirror');
 CodeMirror.defineMode('rules', function() {
 			function isIP(str) {
-				return /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)$/.test(str) || /^host:\/\//.test(str);
+				return /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(?:\:\d+)?$/.test(str) || /^host:\/\//.test(str);
 			}
 			
 			function isHead(str) {
