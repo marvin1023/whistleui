@@ -50,7 +50,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isPlugin(str) {
-				return /^plugin:\/\//.test(str);
+				return /^plugin:\/\//.test(str) || /^(?:plugin|whistle)\.[a-z\d_\-]+:\/\//.test(str);
 			}
 			
 			function isDisable(str) {
