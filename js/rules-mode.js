@@ -57,6 +57,10 @@ CodeMirror.defineMode('rules', function() {
 				return /^disable:\/\//.test(str);
 			}
 			
+			function isDelete(str) {
+        return /^delete:\/\//.test(str);
+      }
+			
 			function isExports(str) {
 				return /^exports:\/\//.test(str);
 			}
@@ -117,8 +121,10 @@ CodeMirror.defineMode('rules', function() {
 							 } else if (isFilter(str)) {
 								 type = 'variable-2 js-filter js-type';
 							 } else if (isDisable(str)) {
-								 type = 'variable-2 js-disable js-type';
-							 } else if (isExports(str)) {
+                 type = 'variable-2 js-disable js-type';
+               } else if (isDelete(str)) {
+                 type = 'variable-2 js-delete js-type';
+               } else if (isExports(str)) {
 								 type = 'variable-2 js-exports js-type';
 							 } else if (isExportsUrl(str)) {
 								 type = 'variable-2 js-exportsUrl js-type';
