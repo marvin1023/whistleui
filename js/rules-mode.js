@@ -69,6 +69,10 @@ CodeMirror.defineMode('rules', function() {
 				return /^dispatch:\/\//.test(str);
 			}
 			
+			function isPac(str) {
+			  return /^pac:\/\//.test(str);
+			}
+			
 			return {
 				 token: function(stream, state) {
 					 if (stream.eatSpace()) {
@@ -119,8 +123,10 @@ CodeMirror.defineMode('rules', function() {
 							 } else if (isExportsUrl(str)) {
 								 type = 'variable-2 js-exportsUrl js-type';
 							 } else if (isDispatch(str)) {
-								 type = 'variable-2 js-dispatch js-type';
-							 } else if (!isIP(str) && isRule(str)) {
+                 type = 'variable-2 js-dispatch js-type';
+               } else if (isPac(str)) {
+                 type = 'variable-2 js-pac js-type';
+               } else if (!isIP(str) && isRule(str)) {
 								 type = 'builtin js-rule js-type';
 							 }
 						}

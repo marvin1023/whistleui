@@ -23,9 +23,13 @@ function hasRules(data) {
 		return false;
 	}
 	
-	if (keys.length == 1 && keys[0] == 'plugin') {
+	if (keys.length == 1 && (keys[0] == 'plugin' || keys[0] == 'pac')) {
 		return false;
 	}
+	
+	if (keys.length == 2 && keys[0] == 'plugin' && keys[1] == 'pac') {
+    return false;
+  }
 	
 	return true;
 }
