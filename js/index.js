@@ -214,7 +214,7 @@ var Index = React.createClass({
 					e.preventDefault();
 				}
 				
-				if (e.shiftKey && e.keyCode == 83) {
+				if (self.state.name == 'network' && e.shiftKey && e.keyCode == 83) {
 				  self.showSelectedSessions();
 				  e.preventDefault();
 				}
