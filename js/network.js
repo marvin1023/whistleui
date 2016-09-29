@@ -17,8 +17,14 @@ var Network = React.createClass({
 			}
 			if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
 				var modal = self.props.modal;
-				if (modal && modal.removeSelectedItems()) {
-					self.setState({});
+				if (e.shiftKey) {
+				  if (modal && modal.removeUnselectedItems()) {
+            self.setState({});
+          }
+				} else {
+				  if (modal && modal.removeSelectedItems()) {
+	          self.setState({});
+	        }
 				}
 			}
 		});

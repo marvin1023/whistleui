@@ -205,6 +205,33 @@ proto.removeSelectedItems = function() {
 	}
 };
 
+proto.removeUnselectedItems = function() {
+  var hasUnselectedItem;
+  var endIndex = -1;
+  var list = this._list;
+  
+  for (var i = list.length - 1; i >= 0; i--) {
+    var item = list[i];
+    if (!item.selected) {
+      hasUnselectedItem = true;
+      if (endIndex == -1) {
+        endIndex = i;
+      }
+      if (!i) {
+        list.splice(i, endIndex - i + 1);
+      }
+    } else if (endIndex != -1) {
+      list.splice(i + 1, endIndex - i);
+      endIndex = -1;
+    }
+  }
+  
+  if (hasUnselectedItem) {
+    this.update(false, true);
+    return true;
+  }
+};
+
 proto.prev = function() {
 	var list = this.list;
 	var len = list.length;

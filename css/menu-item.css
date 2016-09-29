@@ -3,3 +3,4 @@
 .w-menu-item .w-menu-options {border-bottom: 1px dashed #ccc; max-height: 320px; overflow-x: hidden; overflow-y: auto;}
 .w-menu-item a .glyphicon, .w-menu-item input {margin-right: 8px; font-size: 12px;}
 .w-menu-item a .glyphicon-ok, .w-menu-item a .glyphicon-plus {color: #5bbd72;}
+.w-network-menu-item .w-menu-options a {max-width: 300px;}

@@ -131,6 +131,30 @@ var Index = React.createClass({
 		dataCenter.valuesModal = state.values = new ListModal(valuesList, valuesData);
 		state.valuesOptions = valuesOptions;
 		state.filterText = modal.filterText;
+		state.networkOptions = [
+		                        {
+		                          name: 'All Sessions',
+		                          icon: 'remove',
+		                          id: 'removeAll',
+		                          title: 'Ctrl[Command] + X'
+		                        },
+		                        {
+		                          name: 'Selected Sessions',
+		                          id: 'removeSelected',
+                              title: 'Ctrl[Command] + D'
+		                        },
+		                        {
+		                          name: 'Unselected Sessions',
+		                          id: 'removeUnselected',
+                              title: 'Ctrl[Command] + Shift + D'
+		                        },
+		                        {
+		                          name: 'Show Selected Sessions',
+		                          icon: 'export',
+		                          id: 'showSelected',
+                              title: 'Ctrl[Command] + Shift + S'
+		                        }
+		                        ];
 		
 		return state;
 	},
@@ -188,6 +212,11 @@ var Index = React.createClass({
 						self.state.name == 'rules' ? self.removeRules() : self.removeValues();
 					}
 					e.preventDefault();
+				}
+				
+				if (e.shiftKey && e.keyCode == 83) {
+				  self.showSelectedSessions();
+				  e.preventDefault();
 				}
 			}
 		});
@@ -432,6 +461,8 @@ var Index = React.createClass({
 	},
 	showNetwork: function() {
 		if (this.state.name == 'network') {
+		  this.state.hoverMenuList = true;
+		  this.showNetworkOptions()
 			return;
 		}
 		this.setMenuOptionsState();
@@ -442,6 +473,24 @@ var Index = React.createClass({
 			this.startLoadData();
 		});
 		location.hash = 'network';
+	},
+	handleNetwork: function(item) {
+	  var modal = this.state.network;
+	  if (item.id == 'removeAll') {
+	    this.clear();
+	  } else if (item.id == 'removeSelected') {
+	    modal && modal.removeSelectedItems();
+	  } else if (item.id == 'removeUnselected') {
+	    modal && modal.removeUnselectedItems();
+	  } else if (item.id == 'showSelected') {
+	    this.showSelectedSessions();
+	  }
+	  this.hideNetworkOptions();
+	},
+	showSelectedSessions: function() {
+	  var modal = this.state.network;
+	  var selectedItems = modal && modal.getSelectedList();
+    selectedItems.length && util.openEditor(JSON.stringify(selectedItems, null, '    '));
 	},
 	showAndActiveRules: function(item) {
 		this.setRulesActive(item.name);
@@ -491,6 +540,18 @@ var Index = React.createClass({
 		});
 		location.hash = 'values';
 	},
+	showNetworkOptions: function() {
+	  if (this.state.name == 'network') {
+	    this.setState({
+	      showNetworkOptions: true
+	    });
+	  }
+	},
+  hideNetworkOptions: function() {
+    this.setState({
+      showNetworkOptions: false
+    });
+  },
 	showRulesOptions: function(e) {
 		var self = this;
 		var target = $(e.target);
@@ -1272,6 +1333,7 @@ var Index = React.createClass({
 		var pluginsOptions = state.pluginsOptions;
 		var uncheckedRules = {};
 		var hoverMenuList = state.hoverMenuList;
+		var showNetworkOptions = state.showNetworkOptions && hoverMenuList;
 		var showRulesOptions = state.showRulesOptions && hoverMenuList;
 		var showValuesOptions = state.showValuesOptions && hoverMenuList;
 		var showPluginsOptions = state.showPluginsOptions && hoverMenuList;
@@ -1328,7 +1390,10 @@ var Index = React.createClass({
 		return (
 			<div className="main orient-vertical-box" onMouseEnter={this.hoverMenuList}>
 				<div className={'w-menu w-' + name + '-menu-list'} onMouseLeave={this.leaveMenuList} onMouseOver={this.overMenuList}>
-					<a onClick={this.showNetwork} className="w-network-menu" style={{display: isNetwork ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
+  				<div onMouseEnter={this.showNetworkOptions} onMouseLeave={this.hideNetworkOptions} className={'w-menu-wrapper' + (showNetworkOptions ? ' w-menu-wrapper-show' : '')}>
+  				  <a onClick={this.showNetwork} className="w-network-menu" href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
+            <MenuItem ref="networkMenuItem" options={state.networkOptions} className="w-network-menu-item" onClickOption={this.handleNetwork} />
+          </div>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} style={{display: isRules ? 'none' : ''}} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
 						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
@@ -1350,7 +1415,6 @@ var Index = React.createClass({
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
 					<a onClick={this.showEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} title={state.filterText} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
-					<a onClick={this.clear} className="w-clear-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" title="Ctrl[Command]+X"><span className="glyphicon glyphicon-remove"></span>Clear</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideWeinreOptions} className={'w-menu-wrapper' + (showWeinreOptions ? ' w-menu-wrapper-show' : '')}>

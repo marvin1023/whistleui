@@ -29,7 +29,7 @@ var MenuItem = React.createClass({
 					options ? <div className="w-menu-options">{options.map(function(option) {
 						
 						return (
-								<a key={option.name} onClick={function() {
+								<a key={option.name} title={option.title} onClick={function() {
 									onClickOption(option);
 								}}  onDoubleClick={function() {
 									onDoubleClickOption(option);

@@ -22,7 +22,7 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-create-values-input {left: 295px;}
 .w-edit-rules-input {left: 377px;}
 .w-edit-values-input {left: 367px;}
-.w-edit-filter-input {left: 498px;} 
+.w-edit-filter-input {left: 580px;} 
 
 .w-menu-wrapper .w-menu-item {display: none!important;}
 .w-menu-wrapper-show .w-menu-item {display: block!important;}
