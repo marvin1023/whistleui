@@ -149,10 +149,10 @@ var Index = React.createClass({
                               title: 'Ctrl[Command] + Shift + D'
 		                        },
 		                        {
-		                          name: 'Show Selected Sessions',
+		                          name: 'Export Selected Sessions',
 		                          icon: 'export',
 		                          id: 'showSelected',
-                              title: 'Ctrl[Command] + Shift + S'
+                              title: 'Ctrl[Command] + Shift + E'
 		                        }
 		                        ];
 		
@@ -214,7 +214,7 @@ var Index = React.createClass({
 					e.preventDefault();
 				}
 				
-				if (self.state.name == 'network' && e.shiftKey && e.keyCode == 83) {
+				if (self.state.name == 'network' && e.shiftKey && e.keyCode == 69) {
 				  self.showSelectedSessions();
 				  e.preventDefault();
 				}
