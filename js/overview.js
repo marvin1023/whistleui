@@ -11,7 +11,7 @@ var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.st
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 
  * cache://xxxs[no], params://json|string(放在url)
  */
-var RULES = ['host', 'rule', 'urlParams', 'dispatch', 'urlReplace', 'method',  
+var RULES = ['host', 'rule', 'dispatch', 'urlParams', 'urlReplace', 'method',  
              'statusCode', 'replaceStatus', 'weinre', 'log', 'pac', 'filter', 'disable', 
              'delete', 'plugin', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
               'cache', 'redirect', 'location', 'attachment', 'params', 'html', 'css', 
