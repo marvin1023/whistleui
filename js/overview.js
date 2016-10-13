@@ -11,11 +11,15 @@ var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.st
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 
  * cache://xxxs[no], params://json|string(放在url)
  */
-var RULES = ['host', 'req', 'rule', 'res', 'weinre', 'pac', 'filter', 'disable', 'delete', 'log', 'plugin', 'exports', 'exportsUrl', 'hostname', 'referer', 'auth', 'ua', 'etag',
-             'urlParams', 'dispatch', 'params', 'statusCode', 'replaceStatus', 'redirect', 'method', 'cache', 'attachment', 'location', 'accept', 'html', 'js', 'css', 'reqDelay', 
-             'resDelay', 'reqSpeed', 'resSpeed', 'reqType', 'resType', 'reqCharset', 'resCharset', 'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqHeaders', 
-             'resHeaders', 'reqPrepend', 'resPrepend', 'reqBody', 'resBody', 'reqAppend', 'resAppend', 'urlReplace', 'reqReplace', 'resReplace', 'reqWrite', 
-             'resWrite', 'reqWriteRaw', 'resWriteRaw'];
+var RULES = ['host', 'rule', 'urlParams', 'dispatch', 'urlReplace', 'method',  
+             'statusCode', 'replaceStatus', 'weinre', 'log', 'pac', 'filter', 'disable', 
+             'delete', 'plugin', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
+              'cache', 'redirect', 'location', 'attachment', 'params', 'html', 'css', 
+             'js', 'req', 'res', 'reqHeaders', 'resHeaders',  'reqDelay', 'resDelay', 
+             'reqSpeed', 'resSpeed', 'reqType', 'resType', 'reqCharset', 'resCharset', 
+             'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqPrepend', 'resPrepend',
+              'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace',
+              'reqWrite',  'resWrite', 'reqWriteRaw', 'resWriteRaw', 'exportsUrl', 'exports'];
 var DEFAULT_OVERVIEW_MODAL = {};
 var DEFAULT_RULES_MODAL = {};
 
