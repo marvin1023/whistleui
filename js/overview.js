@@ -15,8 +15,8 @@ var RULES = ['host', 'rule', 'weinre', 'log', 'pac', 'filter', 'disable', 'delet
              'plugin', 'dispatch', 'urlParams', 'urlReplace', 'method', 'statusCode', 
              'replaceStatus', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
               'cache', 'redirect', 'location', 'attachment', 'params', 'html', 'css', 
-             'js', 'req', 'res', 'reqSpeed', 'resSpeed', 'reqHeaders', 'resHeaders',  
-             'reqDelay', 'resDelay', 'reqType', 'resType', 'reqCharset', 'resCharset', 
+             'js', 'req', 'res', 'reqDelay', 'resDelay', 'reqSpeed', 'resSpeed', 
+             'reqHeaders', 'resHeaders', 'reqType', 'resType', 'reqCharset', 'resCharset', 
              'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqPrepend', 'resPrepend',
               'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace',
               'reqWrite',  'resWrite', 'reqWriteRaw', 'resWriteRaw', 'exportsUrl', 'exports'];
