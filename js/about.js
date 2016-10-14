@@ -77,7 +77,7 @@ var About = React.createClass({
 								<span className="w-about-dialog-title">Whistle for Web Developers.</span>
 								Version: <span className="w-about-version">{version}</span><br/>
 								{compareVersion(latest, version) ? (<span className="w-about-latest-version">
-									Latest version: <a className="w-about-github" title="How to update whistle" href="https://whistle.gitbooks.io/help/content/update.html" target="_blank">{latest}</a><br/>
+									Latest version: <a className="w-about-github" title="How to update whistle" href="https://avwo.github.io/whistle/update.html" target="_blank">{latest}</a><br/>
 								</span>) : ''}
 								Visit <a className="w-about-url" href={'http://wproxy.org/?type=nodejs&version=' + version} target="_blank">http://wproxy.org</a>
 							</span>

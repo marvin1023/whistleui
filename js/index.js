@@ -1479,7 +1479,7 @@ var Index = React.createClass({
 				      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <div>
 					      	<a className="w-download-rootca" href="/cgi-bin/rootca" target="_blank">Download RootCA</a>
-					      	<a className="w-https-help" href="https://whistle.gitbooks.io/help/content/webui/https.html" target="_blank" title="How to intercept HTTPS CONNECTs">Help</a>
+					      	<a className="w-https-help" href="https://avwo.github.io/whistle/webui/https.html" target="_blank" title="How to intercept HTTPS CONNECTs">Help</a>
 					      </div>
 					      <a title="Download RootCA" href="/cgi-bin/rootca" target="_blank"><img src="/img/rootca.png" /></a>
 					      <div className="w-https-settings">
@@ -1505,7 +1505,7 @@ var Index = React.createClass({
 				      </div>
 				      <div className="modal-footer">
 				        <button type="button" className="btn btn-default" onClick={this.donotShowAgain} data-dismiss="modal">Don't show again</button>
-				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="https://whistle.gitbooks.io/help/content/update.html" target="_blank">Update now</a>
+				        <a type="button" className="btn btn-primary" onClick={this.hideUpdateTipsDialog} href="https://avwo.github.io/whistle/update.html" target="_blank">Update now</a>
 				      </div>
 				    </div>
 				</div>
