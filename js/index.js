@@ -449,6 +449,7 @@ var Index = React.createClass({
 	showPlugins: function() {
 		if (this.state.name != 'plugins') {
 		  this.setMenuOptionsState();
+		  this.hidePluginsOptions();
 		}
 		this.setState({
 			hasPlugins: true,
@@ -496,6 +497,7 @@ var Index = React.createClass({
 	showRules: function() {
 		if (this.state.name != 'rules') {
 		  this.setMenuOptionsState();
+		  this.hideRulesOptions();
 		}
 		this.setState({
 			hasRules: true,
@@ -529,6 +531,7 @@ var Index = React.createClass({
 	showValues: function() {
 		if (this.state.name != 'values') {
 		  this.setMenuOptionsState();
+		  this.hideValuesOptions();
 		}
 		this.setState({
 			hasValues: true,
