@@ -181,6 +181,7 @@ var Index = React.createClass({
 		var self = this;
 		$(window).on('hashchange', function() {
 			var pageName = getPageName();
+			self.state.changedHash = true;
 			if (!pageName || pageName.indexOf('rules') != -1) {
 				self.showRules();
 			} else if (pageName.indexOf('values') != -1) {
@@ -190,6 +191,7 @@ var Index = React.createClass({
 			} else {
 				self.showNetwork();
 			}
+			self.state.changedHash = false;
 		}).on('keyup', function(e) {
 			if (e.keyCode == 27) {
 				self.hideOptions();
@@ -450,7 +452,9 @@ var Index = React.createClass({
 		if (this.state.name != 'plugins') {
 		  this.setMenuOptionsState();
 		  this.hidePluginsOptions();
-		}
+		} else if (!this.state.changedHash) {
+      this.showPluginsOptions();
+    }
 		this.setState({
 			hasPlugins: true,
 			name: 'plugins'
@@ -459,7 +463,8 @@ var Index = React.createClass({
 	},
 	showNetwork: function() {
 		if (this.state.name == 'network') {
-			return;
+		  !this.state.changedHash && this.showNetworkOptions();
+		  return;
 		}
 		this.setMenuOptionsState();
 		this.setState({
@@ -493,10 +498,12 @@ var Index = React.createClass({
 	  this.setRulesActive(item.name);
 		this.showRules();
 	},
-	showRules: function() {
+	showRules: function(e) {
 		if (this.state.name != 'rules') {
 		  this.setMenuOptionsState();
 		  this.hideRulesOptions();
+		} else if (!this.state.changedHash) {
+		  this.showRulesOptions(e);
 		}
 		this.setState({
 			hasRules: true,
@@ -527,11 +534,13 @@ var Index = React.createClass({
 		
 		this.showValues();
 	},
-	showValues: function() {
+	showValues: function(e) {
 		if (this.state.name != 'values') {
 		  this.setMenuOptionsState();
 		  this.hideValuesOptions();
-		}
+		} else if (!this.state.changedHash) {
+      this.showValuesOptions(e);
+    }
 		this.setState({
 			hasValues: true,
 			name: 'values'
