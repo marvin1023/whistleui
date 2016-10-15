@@ -190,7 +190,6 @@ var Index = React.createClass({
 			} else {
 				self.showNetwork();
 			}
-			self.hoverMenuList();
 		}).on('keyup', function(e) {
 			if (e.keyCode == 27) {
 				self.hideOptions();
@@ -448,11 +447,9 @@ var Index = React.createClass({
 		}
 	},
 	showPlugins: function() {
-		if (this.state.name == 'plugins') {
-			return;
+		if (this.state.name != 'plugins') {
+		  this.setMenuOptionsState();
 		}
-		this.setMenuOptionsState();
-		this.hidePluginsOptions();
 		this.setState({
 			hasPlugins: true,
 			name: 'plugins'
@@ -461,7 +458,6 @@ var Index = React.createClass({
 	},
 	showNetwork: function() {
 		if (this.state.name == 'network') {
-		  this.state.hoverMenuList = true;
 		  this.showNetworkOptions()
 			return;
 		}
@@ -493,14 +489,14 @@ var Index = React.createClass({
     selectedItems.length && util.openEditor(JSON.stringify(selectedItems, null, '    '));
 	},
 	showAndActiveRules: function(item) {
-		this.setRulesActive(item.name);
+	  this.hideRulesOptions();
+	  this.setRulesActive(item.name);
 		this.showRules();
 	},
 	showRules: function() {
-		if (this.state.name == 'rules') {
-			return;
+		if (this.state.name != 'rules') {
+		  this.setMenuOptionsState();
 		}
-		this.setMenuOptionsState();
 		this.setState({
 			hasRules: true,
 			name: 'rules'
@@ -511,6 +507,7 @@ var Index = React.createClass({
 		var self = this;
 		var modal = self.state.values;
 		var name = item.name;
+		self.hideValuesOptions();
 		if (!modal.exists(name)) {
 			dataCenter.values.add({name: name}, function(data) {
 				if (data && data.ec === 0) {
@@ -530,10 +527,9 @@ var Index = React.createClass({
 		this.showValues();
 	},
 	showValues: function() {
-		if (this.state.name == 'values') {
-			return;
+		if (this.state.name != 'values') {
+		  this.setMenuOptionsState();
 		}
-		this.setMenuOptionsState();
 		this.setState({
 			hasValues: true,
 			name: 'values'
@@ -575,7 +571,7 @@ var Index = React.createClass({
 		var self = this;
 		var valuesList = this.state.values.list;
 		var list = self.getValuesFromRules() || [];
-		list = util.unique(list.concat(valuesList));
+		list = util.unique(valuesList.concat(list));
 		var valuesOptions = [];
 		var newValues = [];
 		list.forEach(function(name) {
@@ -675,7 +671,6 @@ var Index = React.createClass({
 				icon: 'globe'
 			};
 		});
-		self.leaveMenuList(true);
 		self.setState({
 			showWeinreOptions: true
 		});
@@ -1285,33 +1280,6 @@ var Index = React.createClass({
 		}
 		
 	},
-	hoverMenuList: function() {
-		var self = this;
-		self.leaveMenuList();
-		self._hoverMenuListTimer = setTimeout(function() {
-			self.setState({
-				hoverMenuList: true
-			});
-		}, 1500);
-	},
-	leaveMenuList: function(e) {
-		clearTimeout(this._hoverMenuListTimer);
-		this._hoverMenuListTimer = null;
-		this.state.hoverMenuList = !!e;
-	},
-	overMenuList: function(e) {
-		if (this.state.hoverMenuList) {
-			return;
-		}
-		
-		var target = $(e.target);
-		if (target.hasClass('v-rules-menu') || target.hasClass('v-values-menu') 
-				|| target.hasClass('v-plugins-menu')) {
-			return;
-		}
-		
-		this.leaveMenuList(true);
-	},
 	render: function() {
 		var state = this.state;
 		var name = state.name;
@@ -1332,12 +1300,11 @@ var Index = React.createClass({
 		var rulesOptions = state.rulesOptions;
 		var pluginsOptions = state.pluginsOptions;
 		var uncheckedRules = {};
-		var hoverMenuList = state.hoverMenuList;
-		var showNetworkOptions = state.showNetworkOptions && hoverMenuList;
-		var showRulesOptions = state.showRulesOptions && hoverMenuList;
-		var showValuesOptions = state.showValuesOptions && hoverMenuList;
-		var showPluginsOptions = state.showPluginsOptions && hoverMenuList;
-		var showWeinreOptions = state.showWeinreOptions && hoverMenuList;
+		var showNetworkOptions = state.showNetworkOptions;
+		var showRulesOptions = state.showRulesOptions;
+		var showValuesOptions = state.showValuesOptions;
+		var showPluginsOptions = state.showPluginsOptions;
+		var showWeinreOptions = state.showWeinreOptions;
 		
 		rulesOptions.forEach(function(item) {
 			item.icon = 'checkbox';
@@ -1388,18 +1355,18 @@ var Index = React.createClass({
 		}
 		
 		return (
-			<div className="main orient-vertical-box" onMouseEnter={this.hoverMenuList}>
-				<div className={'w-menu w-' + name + '-menu-list'} onMouseLeave={this.leaveMenuList} onMouseOver={this.overMenuList}>
+			<div className="main orient-vertical-box">
+				<div className={'w-menu w-' + name + '-menu-list'}>
   				<div onMouseEnter={this.showNetworkOptions} onMouseLeave={this.hideNetworkOptions} className={'w-menu-wrapper' + (showNetworkOptions ? ' w-menu-wrapper-show' : '')}>
   				  <a onClick={this.showNetwork} className="w-network-menu" href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
             <MenuItem ref="networkMenuItem" options={state.networkOptions} className="w-network-menu-item" onClickOption={this.handleNetwork} />
           </div>
-					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} style={{display: isRules ? 'none' : ''}} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
+					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
 						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
 						className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules}  onChange={this.selectRulesByOptions} />
 					</div>
-					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideValuesOptions} style={{display: isValues ? 'none' : ''}} className={'w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '')}>
+					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideValuesOptions} className={'w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 						<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					</div>
