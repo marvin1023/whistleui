@@ -450,6 +450,8 @@ var Index = React.createClass({
 		if (this.state.name != 'plugins') {
 		  this.setMenuOptionsState();
 		  this.hidePluginsOptions();
+		} else {
+		  this.showPluginsOptions();
 		}
 		this.setState({
 			hasPlugins: true,
@@ -459,7 +461,7 @@ var Index = React.createClass({
 	},
 	showNetwork: function() {
 		if (this.state.name == 'network') {
-		  this.showNetworkOptions()
+		  this.showNetworkOptions();
 			return;
 		}
 		this.setMenuOptionsState();
@@ -498,7 +500,9 @@ var Index = React.createClass({
 		if (this.state.name != 'rules') {
 		  this.setMenuOptionsState();
 		  this.hideRulesOptions();
-		}
+		} else {
+      this.showRulesOptions();
+    }
 		this.setState({
 			hasRules: true,
 			name: 'rules'
@@ -532,7 +536,9 @@ var Index = React.createClass({
 		if (this.state.name != 'values') {
 		  this.setMenuOptionsState();
 		  this.hideValuesOptions();
-		}
+		} else {
+      this.showValuesOptions();
+    }
 		this.setState({
 			hasValues: true,
 			name: 'values'
