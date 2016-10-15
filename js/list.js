@@ -175,10 +175,7 @@ var List = React.createClass({
 													'w-changed': item.changed,
 													'w-selected': item.selected
 												})} 
-												href="javascript:;">{name}<span onClick={function(e) {
-													self.onDoubleClick(item, true);
-													e.stopPropagation();
-												}} className="glyphicon glyphicon-ok"></span></a>;
+												href="javascript:;">{name}<span className="glyphicon glyphicon-ok"></span></a>;
 								})
 							}
 						</div>
