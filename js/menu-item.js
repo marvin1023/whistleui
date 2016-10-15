@@ -26,7 +26,7 @@ var MenuItem = React.createClass({
 		return (
 			<div onBlur={self.props.onBlur} tabIndex="0" onMouseDown={self.preventBlur} style={{display: util.getBoolean(self.props.hide) ? 'none' : 'block'}} className={'w-menu-item ' + (self.props.className || '') + (disabled ? ' w-disabled' : '')}>
 			{
-					options ? <div className="w-menu-options">{options.map(function(option) {
+					options ? <div className="w-menu-options" style={{border: name ? null : 'none'}}>{options.map(function(option) {
 						
 						return (
 								<a key={option.name} title={option.title} onClick={function() {
