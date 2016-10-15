@@ -1363,12 +1363,12 @@ var Index = React.createClass({
           </div>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
-						<MenuItem ref="rulesMenuItem" name="Open" options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
+						<MenuItem ref="rulesMenuItem"  name={name == 'rules' ? null : 'Open'} options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
 						className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules}  onChange={this.selectRulesByOptions} />
 					</div>
 					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideValuesOptions} className={'w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
-						<MenuItem ref="valuesMenuItem" name="Open" options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
+						<MenuItem ref="valuesMenuItem" name={name == 'values' ? null : 'Open'} options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					</div>
 					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showPlugins} className="w-plugins-menu" href="javascript:;"><span className="glyphicon glyphicon-list-alt"></span>Plugins</a>
