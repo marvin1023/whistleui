@@ -181,7 +181,6 @@ var Index = React.createClass({
 		var self = this;
 		$(window).on('hashchange', function() {
 			var pageName = getPageName();
-			self.state.changedHash = true;
 			if (!pageName || pageName.indexOf('rules') != -1) {
 				self.showRules();
 			} else if (pageName.indexOf('values') != -1) {
@@ -191,7 +190,6 @@ var Index = React.createClass({
 			} else {
 				self.showNetwork();
 			}
-			self.state.changedHash = false;
 		}).on('keyup', function(e) {
 			if (e.keyCode == 27) {
 				self.hideOptions();
@@ -448,11 +446,11 @@ var Index = React.createClass({
 			return con.scrollTop + con.offsetHeight + 5 > body.offsetHeight;
 		}
 	},
-	showPlugins: function() {
+	showPlugins: function(e) {
 		if (this.state.name != 'plugins') {
 		  this.setMenuOptionsState();
 		  this.hidePluginsOptions();
-		} else if (!this.state.changedHash) {
+		} else if (e) {
       this.showPluginsOptions();
     }
 		this.setState({
@@ -461,9 +459,9 @@ var Index = React.createClass({
 		});
 		location.hash = 'plugins';
 	},
-	showNetwork: function() {
+	showNetwork: function(e) {
 		if (this.state.name == 'network') {
-		  !this.state.changedHash && this.showNetworkOptions();
+		  e && this.showNetworkOptions();
 		  return;
 		}
 		this.setMenuOptionsState();
@@ -502,7 +500,7 @@ var Index = React.createClass({
 		if (this.state.name != 'rules') {
 		  this.setMenuOptionsState();
 		  this.hideRulesOptions();
-		} else if (!this.state.changedHash) {
+		} else if (e) {
 		  this.showRulesOptions(e);
 		}
 		this.setState({
@@ -538,7 +536,7 @@ var Index = React.createClass({
 		if (this.state.name != 'values') {
 		  this.setMenuOptionsState();
 		  this.hideValuesOptions();
-		} else if (!this.state.changedHash) {
+		} else if (e) {
       this.showValuesOptions(e);
     }
 		this.setState({
