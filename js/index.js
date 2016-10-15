@@ -1367,20 +1367,20 @@ var Index = React.createClass({
 			<div className="main orient-vertical-box">
 				<div className={'w-menu w-' + name + '-menu-list'}>
   				<div onMouseEnter={this.showNetworkOptions} onMouseLeave={this.hideNetworkOptions} className={'w-menu-wrapper' + (showNetworkOptions ? ' w-menu-wrapper-show' : '')}>
-  				  <a onClick={this.showNetwork} className="w-network-menu" href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
+  				  <a onClick={this.showNetwork} className="w-network-menu" style={{background: name == 'network' ? '#ddd' : null}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
             <MenuItem ref="networkMenuItem" options={state.networkOptions} className="w-network-menu-item" onClickOption={this.handleNetwork} />
           </div>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
-						<a onClick={this.showRules} className="w-rules-menu" href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
+						<a onClick={this.showRules} className="w-rules-menu" style={{background: name == 'rules' ? '#ddd' : null}} href="javascript:;"><span className="glyphicon glyphicon-list"></span>Rules</a>
 						<MenuItem ref="rulesMenuItem"  name={name == 'rules' ? null : 'Open'} options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
 						className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules}  onChange={this.selectRulesByOptions} />
 					</div>
 					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideValuesOptions} className={'w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '')}>
-						<a onClick={this.showValues} className="w-values-menu" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
+						<a onClick={this.showValues} className="w-values-menu" style={{background: name == 'values' ? '#ddd' : null}} href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 						<MenuItem ref="valuesMenuItem" name={name == 'values' ? null : 'Open'} options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					</div>
 					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '')}>
-						<a onClick={this.showPlugins} className="w-plugins-menu" href="javascript:;"><span className="glyphicon glyphicon-list-alt"></span>Plugins</a>
+						<a onClick={this.showPlugins} className="w-plugins-menu" style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;"><span className="glyphicon glyphicon-list-alt"></span>Plugins</a>
 						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
 							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
 					</div>
