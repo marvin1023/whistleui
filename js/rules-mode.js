@@ -62,7 +62,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isPlugin(str) {
-				return /^plugin:\/\//.test(str) || /^(?:plugin|whistle)\.[a-z\d_\-]+:\/\//.test(str);
+				return (/^plugin:\/\//.test(str) || /^(?:plugin|whistle)\.[a-z\d_\-]+:\/\//.test(str)) && !notExistRule(str);
 			}
 			
 			function isDisable(str) {
