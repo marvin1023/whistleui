@@ -156,7 +156,7 @@ var Index = React.createClass({
                               title: 'Ctrl[Command] + Shift + E'
 		                        }
 		                        ];
-		
+    protocols.setPlugins(state);
 		return state;
 	},
 	createPluginsOptions: function(plugins) {
@@ -1221,9 +1221,9 @@ var Index = React.createClass({
 		 var self = this;
 		 dataCenter.rules.disableAllRules({disabledAllRules: checked ? 1 : 0}, function(data) {
 			  if (data && data.ec === 0) {
-				  self.setState({
-					disabledAllRules: checked
-				});
+			    self.setState({
+			      disabledAllRules: checked
+			    });
 			  } else {
 				util.showSystemError();
 			 }
@@ -1235,9 +1235,9 @@ var Index = React.createClass({
 		 var self = this;
 		 dataCenter.plugins.disableAllPlugins({disabledAllPlugins: checked ? 1 : 0}, function(data) {
 			  if (data && data.ec === 0) {
-				  self.setState({
-					  disabledAllPlugins: checked
-				});
+			    self.state.disabledAllPlugins = checked;
+          protocols.setPlugins(self.state);
+			    self.setState({});
 			  } else {
 				util.showSystemError();
 			 }
@@ -1252,9 +1252,9 @@ var Index = React.createClass({
 			disabled: target.checked ? 0 : 1
 		}, function(data) {
 			if (data && data.ec === 0) {
-				self.setState({
-					disabledPlugins: data.data
-				});
+			  self.state.disabledPlugins = data.data;
+        protocols.setPlugins(self.state);
+        self.setState({});
 			} else {
 				util.showSystemError();
 			}

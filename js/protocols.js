@@ -1,3 +1,4 @@
+var events = require('./events');
 var PROTOCOLS = ['host', 'rule', 'weinre', 'log', 'pac', 'filter', 'disable', 'delete', 
                  'plugin', 'dispatch', 'urlParams', 'urlReplace', 'method', 'statusCode', 
                  'replaceStatus', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
@@ -16,19 +17,15 @@ exports.setPlugins = function(pluginsState) {
   var pluginsOptions = pluginsState.pluginsOptions;
   var disabledPlugins = pluginsState.disabledPlugins;
   allRules = rules.slice();
-  pluginsOptions.forEach(function(plugin) {
-    var name = plugin.name;
-    if (!disabledPlugins[name]) {
-      allRules.push(name, 'whistle.' + name);
-    }
-  });
-  callbacks.forEach(function(cb) {
-    cb(allRules);
-  });
-};
-
-exports.onUpdate = function(callback) {
-  callback && callbacks.push(callback);
+  if (!pluginsState.disabledAllPlugins) {
+    pluginsOptions.forEach(function(plugin) {
+      var name = plugin.name;
+      if (!disabledPlugins[name]) {
+        allRules.push(name, 'whistle.' + name, 'plugin.' + name);
+      }
+    });
+  }
+  events.trigger('updatePlugins');
 };
 
 exports.PROTOCOLS = PROTOCOLS;

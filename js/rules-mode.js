@@ -1,4 +1,11 @@
 var CodeMirror = require('codemirror');
+var events = require('./events');
+var protocols = require('./protocols');
+var allRules = protocols.getAllRules();
+events.on('updatePlugins', function() {
+  allRules = protocols.getAllRules();
+});
+
 CodeMirror.defineMode('rules', function() {
 			function isIP(str) {
 				return /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(?:\:\d+)?$/.test(str) || /^host:\/\//.test(str);
@@ -30,6 +37,11 @@ CodeMirror.defineMode('rules', function() {
 			
 			function isRule(str) {
 				return /^(?:[a-z0-9.+-]+:\/\/|[a-z]:(?:\\|\/(?!\/))|\/)/i.test(str);
+			}
+			
+			function notExistRule(str) {
+			  str = str.substring(0, str.indexOf(':'));
+			  return allRules.indexOf(str) == -1;
 			}
 			
 			function isRegExp(str) {
@@ -133,7 +145,7 @@ CodeMirror.defineMode('rules', function() {
                } else if (isPac(str)) {
                  type = 'variable-2 js-pac js-type';
                } else if (!isIP(str) && isRule(str)) {
-								 type = 'builtin js-rule js-type';
+								 type = 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
 							 }
 						}
 						pre = ch;
@@ -153,7 +165,7 @@ CodeMirror.defineMode('rules', function() {
 					 }
 					 
 					 if (isRule(str)) {
-						 return 'builtin js-rule js-type';
+						 return 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
 					 }
 					 
 					 return null;
