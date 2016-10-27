@@ -12,6 +12,7 @@ var EditorSettings = require('./editor-settings');
 var Plugins = require('./plugins');
 var dataCenter = require('./data-center');
 var util = require('./util');
+var protocols = require('./protocols');
 var events = require('./events');
 var MAX_PLUGINS_TABS = 7;
 
@@ -317,11 +318,13 @@ var Index = React.createClass({
 	            			return;
 	            		}
 	            	}
-	            	self.setState({
-                    	plugins: data.plugins,
-                    	disabledPlugins: data.disabledPlugins,
-                    	pluginsOptions: pluginsOptions
-                    });
+	            	var pluginsState = {
+                    plugins: data.plugins,
+                    disabledPlugins: data.disabledPlugins,
+                    pluginsOptions: pluginsOptions
+                  };
+	            	protocols.setPlugins(pluginsState);
+	            	self.setState(pluginsState);
 	            }
 	        });
 	    }
