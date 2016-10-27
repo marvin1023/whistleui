@@ -11,22 +11,14 @@ var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.st
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 
  * cache://xxxs[no], params://json|string(放在url)
  */
-var RULES = ['host', 'rule', 'weinre', 'log', 'pac', 'filter', 'disable', 'delete', 
-             'plugin', 'dispatch', 'urlParams', 'urlReplace', 'method', 'statusCode', 
-             'replaceStatus', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
-              'cache', 'redirect', 'location', 'attachment', 'params', 'html', 'css', 
-             'js', 'req', 'res', 'reqDelay', 'resDelay', 'reqSpeed', 'resSpeed', 
-             'reqHeaders', 'resHeaders', 'reqType', 'resType', 'reqCharset', 'resCharset', 
-             'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqPrepend', 'resPrepend',
-              'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace',
-              'reqWrite',  'resWrite', 'reqWriteRaw', 'resWriteRaw', 'exportsUrl', 'exports'];
+var PROTOCOLS = require('./protocols').PROTOCOLS;
 var DEFAULT_OVERVIEW_MODAL = {};
 var DEFAULT_RULES_MODAL = {};
 
 OVERVIEW.forEach(function(name) {
 	DEFAULT_OVERVIEW_MODAL[name] = '';
 });
-RULES.forEach(function(name) {
+PROTOCOLS.forEach(function(name) {
 	DEFAULT_RULES_MODAL[name] = '';
 });
 
@@ -91,7 +83,7 @@ var Overview = React.createClass({
 			var titleModal = {};
 			if (rules) {
 				rulesModal = {};
-				RULES.forEach(function(name) {
+				PROTOCOLS.forEach(function(name) {
 					var rule = rules[name];
 					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher + (rule.port ? ':' + rule.port : '') : undefined;
 					titleModal[name] = rule ? rule.raw : undefined;
