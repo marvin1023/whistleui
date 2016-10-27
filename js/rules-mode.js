@@ -115,7 +115,7 @@ CodeMirror.defineMode('rules', function() {
 							 } else if (isParams(str)) {
 								 type = 'meta js-params js-type';
 							 } else if (isLog(str)) {
-								 type = 'error js-log js-type';
+								 type = 'atom js-log js-type';
 							 } else if (isPlugin(str)) {
 								 type = 'variable-2 js-plugin js-type';
 							 } else if (isFilter(str)) {
