@@ -8,7 +8,16 @@ var FilterInput = require('./filter-input');
 var Spinner = require('./spinner');
 var HEIGHT = 24; //每条数据的高度
 var columns = {};
-
+var NOT_BOLD_RULES = {
+    plugin: 1,
+    pac: 1,
+    reqWrite: 1,
+    resWrite: 1,
+    reqWriteRaw: 1,
+    resWriteRaw: 1,
+    exports: 1,
+    exportsUrl: 1
+};
 
 function getClassName(data) {
 	return getStatusClass(data) + ' w-req-data-item'
@@ -22,14 +31,11 @@ function hasRules(data) {
 	if (!keys || keys.length < 1) {
 		return false;
 	}
-	
-	if (keys.length == 1 && (keys[0] == 'plugin' || keys[0] == 'pac')) {
-		return false;
+	for (var i = 0, len = keys.length; i < len; i++) {
+	  if (!NOT_BOLD_RULES[keys[i]]) {
+	    return true;
+	  }
 	}
-	
-	if (keys.length == 2 && keys[0] == 'plugin' && keys[1] == 'pac') {
-    return false;
-  }
 	
 	return true;
 }
