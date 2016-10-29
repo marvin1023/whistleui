@@ -37,7 +37,7 @@ function hasRules(data) {
 	  }
 	}
 	
-	return true;
+	return false;
 }
 
 function getStatusClass(data) {
