@@ -15,44 +15,13 @@ function createDialog() {
 				      '<div class="modal-body">' + 
 				      '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
 				        '<div class="w-online-dialog-ctn"></div>' + 
-				        '<div class="w-switch-to-server"><h5>Switch to:</h5>' + 
-				        '<input class="w-ip" maxlength="256" type="text" placeholder="127.0.0.1" /> : <input maxlength="5" class="w-port" type="text" placeholder="8899" />' +
-				        '</div>' +
 				      '</div>' + 
 				      '<div class="modal-footer">' + 
-				        '<button type="button" class="btn btn-primary w-switch-btn">Switch</button>' + 
 				        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' + 
 				      '</div>' + 
 				    '</div>' + 
 				  '</div>' + 
 				'</div>').appendTo(document.body);
-		dialog.on('click', '.w-switch-btn', function() {
-			var ipInput = dialog.find('.w-ip');
-			var ip = $.trim(ipInput.val()) || ipInput.prop('placeholder');
-			var portInput = dialog.find('.w-port');
-			var port = $.trim(portInput.val()) || portInput.prop('placeholder');
-			if (!/^\d+$/.test(port)) {
-				alert('Please enter the port number of the whistle server.');
-				portInput.focus();
-				return;
-			}
-			dataCenter.checkExists({ip: ip, port: port}, function(exists) {
-				var host = ip + ':' + port;
-				if (!exists) {
-					alert('Please check if the whistle server(' + host + ') is started.');
-					return;
-				}
-				host = 'http://' + host + location.pathname + location.search + location.hash;
-				if (location.href != host) {
-					location.href = host;
-				} else {
-					dialog.modal('hide');
-				}
-			});
-		});
-		dialog.find('input').keydown(function(e) {
-			e.keyCode == 13 && dialog.find('.w-switch-btn').trigger('click');
-		});
 	}
 	
 	return dialog;
