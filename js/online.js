@@ -107,7 +107,8 @@ var Online = React.createClass({
 			}
 		}
 		
-		createDialog().find('.w-online-dialog-ctn').html(info.join(''));
+		var ctn = createDialog().find('.w-online-dialog-ctn').html(info.join(''));
+		server && ctn.find('h5:first').attr('title', server.host);
 		dialog.find('.w-ip').prop('placeholder', server && server.ipv4[0] || '127.0.0.1');
 		dialog.find('.w-port').prop('placeholder', server && server.port || '8899');
 	},
