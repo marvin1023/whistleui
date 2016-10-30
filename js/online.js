@@ -5,6 +5,7 @@ require('bootstrap/dist/js/bootstrap.js');
 var React = require('react');
 var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
+var INDENT = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 var dialog;
 
 function createDialog() {
@@ -58,21 +59,21 @@ var Online = React.createClass({
 		var info = [];
 		if (server) {
 			if (server.host) {
-				info.push('<h5>Host: ' + server.host + '</h5>');
+				info.push('<h5><strong>Host:</strong> ' + server.host + '</h5>');
 			}
 			if (server.nodeVersion) {
-				info.push('<h5>Node: ' + server.nodeVersion + '</h5>');
+				info.push('<h5><strong>Node:</strong> ' + server.nodeVersion + '</h5>');
 			}
 			if (server.port) {
-				info.push('<h5>Port: ' + server.port + '</h5>');
+				info.push('<h5><strong>Port:</strong> ' + server.port + '</h5>');
 			}
 			if (server.ipv4.length) {
-				info.push('<h5>IPv4:</h5>');
-				info.push('<p>' + server.ipv4.join('<br/>') + '</p>');
+				info.push('<h5><strong>IPv4:</strong></h5>');
+				info.push('<p>' + INDENT + server.ipv4.join('<br/>' + INDENT) + '</p>');
 			}
 			if (server.ipv6.length) {
-				info.push('<h5>IPv6:</h5>');
-				info.push('<p>' + server.ipv6.join('<br/>') + '</p>');
+				info.push('<h5><strong>IPv6:</strong></h5>');
+				info.push('<p>' + INDENT + server.ipv6.join('<br/>' + INDENT) + '</p>');
 			}
 		}
 		
