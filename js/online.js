@@ -5,7 +5,6 @@ require('bootstrap/dist/js/bootstrap.js');
 var React = require('react');
 var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
-var INDENT = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 var dialog;
 
 function createDialog() {
@@ -72,11 +71,11 @@ var Online = React.createClass({
 			}
 			if (server.ipv4.length) {
 				info.push('<h5><strong>IPv4:</strong></h5>');
-				info.push('<p>' + INDENT + server.ipv4.join('<br/>' + INDENT) + '</p>');
+				info.push('<p>' + server.ipv4.join('<br/>') + '</p>');
 			}
 			if (server.ipv6.length) {
 				info.push('<h5><strong>IPv6:</strong></h5>');
-				info.push('<p>' + INDENT + server.ipv6.join('<br/>' + INDENT) + '</p>');
+				info.push('<p>' + server.ipv6.join('<br/>') + '</p>');
 			}
 		}
 		
