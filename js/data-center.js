@@ -189,17 +189,18 @@ function startLoadData() {
 				}
 			});
 			
-			$.each(ids, function() {
-				var item = data[this];
-				if (item) {
-					item.protocol = util.getProtocol(item.url);
-					item.hostname = util.getHostname(item.url);
-					item.method = item.req.method;
-					setReqData(item);
-					dataList.push(item);
-				}
-			});
 			if (ids.length) {
+			  $.each(ids, function() {
+	        var item = data[this];
+	        if (item) {
+	          item.protocol = util.getProtocol(item.url);
+	          item.hostname = util.getHostname(item.url);
+	          item.method = item.req.method;
+	          setReqData(item);
+	          dataList.push(item);
+	        }
+	      });
+			  
 				var lastRow = dataList[dataList.length - 1];
 				if (lastRow && (!lastRowId || util.compareReqId(lastRow.id, lastRowId))) {
 					lastRowId = lastRow.id;
