@@ -33,6 +33,7 @@ var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', '
 var rules = require('./rules-mode');
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
+var COMMENT_RE = /^\s*#+/;
 
 var Editor = React.createClass({
 	getThemes: function() {
@@ -126,6 +127,7 @@ var Editor = React.createClass({
 				if (!list || !list.length) {
 					return;
 				}
+				var isShiftKey = e.shiftKey;
 				var ranges = [];
 				list.forEach(function(range) {
 					var anchor = range.anchor;
@@ -141,7 +143,7 @@ var Editor = React.createClass({
 	
 					for (var i = anchor.line; i <= head.line; i++) {
 						var line = editor.getLine(i);
-						if (/^\s*#/.test(line)) {
+						if (COMMENT_RE.test(line)) {
 							hasComment = true;
 						} else {
 							hasRule = true;
@@ -151,8 +153,11 @@ var Editor = React.createClass({
 	
 					if (hasRule) {
 						lines = lines.map(function(line) {
-										return '#' + line;
-								});
+						  if (COMMENT_RE.test(line)) {
+						    return isShiftKey ? line.replace(COMMENT_RE, '') : line;
+						  }
+						  return '#' + line;
+						});
 						if (anchor.ch > 0) {
 							anchor.ch += 1;
 						}
@@ -170,7 +175,7 @@ var Editor = React.createClass({
 						}
 		
 						lines = lines.map(function(line) {
-									return line.replace('#', '');
+									return line.replace(COMMENT_RE, '');
 								});
 					}
 					
