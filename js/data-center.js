@@ -148,6 +148,7 @@ function startLoadData() {
 			startSvrLogTime: startSvrLogTime,
 			ids: pendingIds.join(),
 			startTime: startTime,
+			lastRowId: lastRowId,
 			count: 60
 		}, function(data) {
 			setTimeout(load, 900);
