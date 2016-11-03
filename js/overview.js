@@ -85,8 +85,7 @@ var Overview = React.createClass({
 				rulesModal = {};
 				PROTOCOLS.forEach(function(name) {
 					var rule = rules[name];
-					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher + (rule.port ? ':' + rule.port : '')
-					    + (rule.proxyRule ? '     #' + rule.proxyRule : '') : undefined;
+					rulesModal[name] = rule ? (rule.proxyRule ? '#' + rule.proxyRule + '\n' : '') + rule.rawPattern + ' ' + rule.matcher + (rule.port ? ':' + rule.port : '') : undefined;
 					titleModal[name] = rule ? rule.raw : undefined;
 				});
 			}
