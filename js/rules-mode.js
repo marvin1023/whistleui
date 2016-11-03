@@ -36,10 +36,13 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRule(str) {
-				return /^(?:[a-z0-9.+-]+:\/\/|[a-z]:(?:\\|\/(?!\/))|\/)/i.test(str);
+				return /^(?:[a-z0-9.+\-]+:\/\/|[a-z]:(?:\\|\/(?!\/))|\/)/i.test(str);
 			}
 			
 			function notExistRule(str) {
+			  if (!/^(?:[a-z0-9.+\-]+:\/\/)/.test(str)) {
+			    return false;
+			  }
 			  str = str.substring(0, str.indexOf(':'));
 			  return allRules.indexOf(str) == -1;
 			}
