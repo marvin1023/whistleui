@@ -153,7 +153,9 @@ var List = React.createClass({
 		var list = modal.list;
 		var data = modal.data;
 		var activeItem = modal.getActive();
-		
+		if (!activeItem && list[0] && (activeItem = data[list[0]])) {
+		  activeItem.active = true;
+		}
 		//不设置height为0，滚动会有问题
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
