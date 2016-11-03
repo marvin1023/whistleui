@@ -19,6 +19,12 @@ OVERVIEW.forEach(function(name) {
 	DEFAULT_OVERVIEW_MODAL[name] = '';
 });
 PROTOCOLS.forEach(function(name) {
+  if (name == 'socks') {
+    return;
+  }
+  if (name == 'proxy' || name == 'socks') {
+    name = 'proxy/socks';
+  }
 	DEFAULT_RULES_MODAL[name] = '';
 });
 
@@ -84,8 +90,14 @@ var Overview = React.createClass({
 			if (rules) {
 				rulesModal = {};
 				PROTOCOLS.forEach(function(name) {
-					var rule = rules[name];
-					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher + (rule.port ? ':' + rule.port : '') + (rule.proxyRule ? '\n#' + rule.proxyRule : '') : undefined;
+				  if (name == 'socks') {
+            return;
+          }
+				  var rule = rules[name];
+				  if (name == 'proxy') {
+				    name = 'proxy/socks';
+				  }
+					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher + (rule.port ? ':' + rule.port : '') : undefined;
 					titleModal[name] = rule ? rule.raw : undefined;
 				});
 			}

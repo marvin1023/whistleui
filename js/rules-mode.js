@@ -88,6 +88,14 @@ CodeMirror.defineMode('rules', function() {
 				return /^dispatch:\/\//.test(str);
 			}
 			
+			function isProxy(str) {
+			  return /^(?:proxy|http-proxy):\/\//.test(str);
+			}
+			
+			function isSocks(str) {
+			  return /^socks:\/\//.test(str);
+			}
+			
 			function isPac(str) {
 			  return /^pac:\/\//.test(str);
 			}
@@ -145,6 +153,10 @@ CodeMirror.defineMode('rules', function() {
 								 type = 'variable-2 js-exportsUrl js-type';
 							 } else if (isDispatch(str)) {
                  type = 'variable-2 js-dispatch js-type';
+               } else if (isProxy(str)) {
+                 type = 'variable-2 js-proxy js-type';
+               } else if (isSocks(str)) {
+                 type = 'variable-2 js-socks js-type';
                } else if (isPac(str)) {
                  type = 'variable-2 js-pac js-type';
                } else if (!isIP(str) && isRule(str)) {
