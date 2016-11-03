@@ -152,17 +152,24 @@ var Editor = React.createClass({
 					}
 	
 					if (hasRule) {
+					  var lastIndex = lines.length - 1;
+					  var firstLine = lines[0];
+					  var lastLine = lines[lastIndex];
 						lines = lines.map(function(line) {
 						  if (COMMENT_RE.test(line)) {
 						    return isShiftKey ? line.replace(COMMENT_RE, '') : line;
 						  }
 						  return '#' + line;
 						});
-						if (anchor.ch > 0) {
-							anchor.ch += 1;
+						if (anchor.ch > 0 && firstLine != lines[0]) {
+							anchor.ch += (firstLine.length > lines[0].length ? -1 : 1);
 						}
-						if (head != anchor) {
-							head.ch += 1;
+						if (head != anchor && lastLine != lines[lastIndex]) {
+						  if (lastLine.length < lines[lastIndex].length) {
+						    head.ch += 1;
+						  } else if (head.ch > 0) {
+						    head.ch -= 1;
+						  }
 						}
 					} else {
 						var lastLine = lines[lines.length - 1];
