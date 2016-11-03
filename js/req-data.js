@@ -27,7 +27,11 @@ function getClassName(data) {
 }
 
 function hasRules(data) {
-	var keys = data.rules && Object.keys(data.rules);
+  var rules = data.rules;
+  if (!rules || (rules.pac && rules.pac.proxyRule)) {
+    return false;
+  }
+	var keys = Object.keys(data.rules);
 	if (keys && keys.length) {
 	  for (var i = 0, len = keys.length; i < len; i++) {
 	    if (!NOT_BOLD_RULES[keys[i]]) {
