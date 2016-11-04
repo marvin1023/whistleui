@@ -31,9 +31,6 @@ function hasRules(data) {
   if (!rules) {
     return false;
   }
-  if (rules.pac && rules.pac.proxyRule) {
-    return true;
-  }
 	var keys = Object.keys(data.rules);
 	if (keys && keys.length) {
 	  for (var i = 0, len = keys.length; i < len; i++) {
