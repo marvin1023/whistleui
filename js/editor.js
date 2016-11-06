@@ -161,15 +161,15 @@ var Editor = React.createClass({
 						  }
 						  return '#' + line;
 						});
-						if (anchor.ch > 0 && firstLine != lines[0]) {
-							anchor.ch += (firstLine.length > lines[0].length ? -1 : 1);
+						anchor.ch +=  lines[0].length - firstLine.length;
+						if (anchor.ch < 0) {
+						  anchor.ch = 0;
 						}
-						if (head != anchor && lastLine != lines[lastIndex]) {
-						  if (lastLine.length < lines[lastIndex].length) {
-						    head.ch += 1;
-						  } else if (head.ch > 0) {
-						    head.ch -= 1;
-						  }
+						if (head != anchor) {
+						  head.ch += lines[lastIndex].length - lastLine.length;
+						  if (head.ch < 0) {
+                head.ch = 0;
+              } 
 						}
 					} else {
 						var lastLine = lines[lines.length - 1];
