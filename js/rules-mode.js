@@ -68,6 +68,10 @@ CodeMirror.defineMode('rules', function() {
 				return (/^plugin:\/\//.test(str) || /^(?:plugin|whistle)\.[a-z\d_\-]+:\/\//.test(str)) && !notExistRule(str);
 			}
 			
+			function isRulesFile(str) {
+			  return /^rulesFile:\/\//.test(str);
+			}
+			
 			function isDisable(str) {
 				return /^disable:\/\//.test(str);
 			}
@@ -161,6 +165,8 @@ CodeMirror.defineMode('rules', function() {
                  type = 'variable-2 js-pac js-type';
                } else if (!isIP(str) && isRule(str)) {
 								 type = 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
+							 } else if (isRulesFile(str)) {
+							   type = 'variable-2 js-rulesFile js-type';
 							 }
 						}
 						pre = ch;
