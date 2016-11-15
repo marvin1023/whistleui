@@ -97,7 +97,7 @@ var Overview = React.createClass({
 				  if (name == 'proxy') {
 				    name = 'proxy/socks';
 				  }
-				  if (name == 'plugin' && rule && rule.list) {
+				  if (rule && rule.list) {
 				    rulesModal[name] = rule.list.map(function(rule) {
               return rule.rawPattern + ' ' + rule.matcher;
             }).join('\n');
