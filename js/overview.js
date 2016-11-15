@@ -97,8 +97,17 @@ var Overview = React.createClass({
 				  if (name == 'proxy') {
 				    name = 'proxy/socks';
 				  }
-					rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher + (rule.port ? ':' + rule.port : '') : undefined;
-					titleModal[name] = rule ? rule.raw : undefined;
+				  if (name == 'plugin' && rule && rule.list) {
+				    rulesModal[name] = rule.list.map(function(rule) {
+              return rule.rawPattern + ' ' + rule.matcher;
+            }).join('\n');
+				    titleModal[name] = rule.list.map(function(rule) {
+				      return rule.raw;
+				    }).join('\n');
+				  } else {
+				    rulesModal[name] = rule ? rule.rawPattern + ' ' + rule.matcher + (rule.port ? ':' + rule.port : '') : undefined;
+	          titleModal[name] = rule ? rule.raw : undefined;
+				  }
 				});
 			}
 		}
