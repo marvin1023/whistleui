@@ -183,7 +183,8 @@ function startLoadData() {
 				var item = this;
 				var newItem = data[item.id];
 				if (newItem) {
-					$.extend(dataList[i], newItem);
+				  delete item.isHttps;
+					$.extend(item, newItem);
 					setReqData(item);
 				} else {
 					item.lost = true;
@@ -194,9 +195,6 @@ function startLoadData() {
 			  $.each(ids, function() {
 	        var item = data[this];
 	        if (item) {
-	          item.protocol = util.getProtocol(item.url);
-	          item.hostname = util.getHostname(item.url);
-	          item.method = item.req.method;
 	          setReqData(item);
 	          dataList.push(item);
 	        }
@@ -216,6 +214,9 @@ function startLoadData() {
 }
 
 function setReqData(item) {
+  item.protocol = util.getProtocol(item.url);
+  item.hostname = util.getHostname(item.url);
+  item.method = item.req.method;
 	var end = item.endTime;
 	var defaultValue = end ? '' : '-';
 	var res = item.res;
