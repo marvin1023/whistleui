@@ -1,5 +1,6 @@
 var events = require('./events');
-var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy', 'socks', 'pac', 'filter', 'disable', 'delete', 
+var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy', 'socks', 'pac', 
+                 'filter', 'ignore', 'enable', 'disable', 'delete', 
                  'plugin', 'dispatch', 'urlParams', 'urlReplace', 'method', 'statusCode', 
                  'replaceStatus', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
                   'cache', 'redirect', 'location', 'attachment', 'params', 'html', 'css', 
