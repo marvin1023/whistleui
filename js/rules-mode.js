@@ -61,7 +61,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isFilter(str) {
-				return /^(?:filter|enable):\/\//.test(str);
+				return /^filter:\/\//.test(str);
 			}
 			
 			function isPlugin(str) {
@@ -73,7 +73,15 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isDisable(str) {
-				return /^(?:disable|ignore):\/\//.test(str);
+				return /^disable:\/\//.test(str);
+			}
+			
+			function isIgnore(str) {
+			  return /^ignore:\/\//.test(str);
+			}
+			
+			function isEnable(str) {
+			  return /^enable:\/\//.test(str);
 			}
 			
 			function isDelete(str) {
@@ -144,10 +152,14 @@ CodeMirror.defineMode('rules', function() {
 							 } else if (isLog(str)) {
 								 type = 'atom js-log js-type';
 							 } else if (isPlugin(str)) {
-								 type = 'variable-2 js-plugin js-type';
-							 } else if (isFilter(str)) {
-								 type = 'variable-2 js-filter js-type';
-							 } else if (isDisable(str)) {
+                 type = 'variable-2 js-plugin js-type';
+               } else if (isFilter(str)) {
+                 type = 'variable-2 js-filter js-type';
+               } else if (isIgnore(str)) {
+                 type = 'variable-2 js-ignore js-type';
+               } else if (isEnable(str)) {
+                 type = 'variable-2 js-enable js-type';
+               } else if (isDisable(str)) {
                  type = 'variable-2 js-disable js-type';
                } else if (isDelete(str)) {
                  type = 'variable-2 js-delete js-type';
