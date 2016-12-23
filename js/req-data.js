@@ -65,7 +65,7 @@ function getStatusClass(data) {
 		type += ' danger w-error-status';
 	} else if (data.res.statusCode == 403) {
 		type += ' w-forbidden';
-	} else if (data.res.statusCode >= 400) {
+	} else if (!/^\d+$/.test(data.res.statusCode) ||data.res.statusCode >= 400) {
 		type += ' w-error-status';
 	}
 	
