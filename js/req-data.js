@@ -61,11 +61,12 @@ function getStatusClass(data) {
 			break;
 	}
 	
+	var statusCode = data.res && data.res.statusCode;
 	if (data.reqError || data.resError) {
 		type += ' danger w-error-status';
-	} else if (data.res.statusCode == 403) {
+	} else if (statusCode == 403) {
 		type += ' w-forbidden';
-	} else if (!/^\d+$/.test(data.res.statusCode) ||data.res.statusCode >= 400) {
+	} else if (statusCode && (!/^\d+$/.test(statusCode) || statusCode >= 400)) {
 		type += ' w-error-status';
 	}
 	
@@ -249,11 +250,11 @@ var ReqData = React.createClass({
 						        <tr onClick={self.orderBy}>
 						          <th className="order">#</th>
 						          <th className="result" style={{color: columns.result ? '#337ab7' : null}}>Result<Spinner order={columns.result} /></th>
-						          <th className="protocol" style={{color: columns.protocol ? '#337ab7' : null}}>Protocol<Spinner order={columns.protocol} /></th>
 						          <th className="method" style={{color: columns.method ? '#337ab7' : null}}>Method<Spinner order={columns.method} /></th>
+						          <th className="protocol" style={{color: columns.protocol ? '#337ab7' : null}}>Protocol<Spinner order={columns.protocol} /></th>
 						          <th className="hostname" style={{color: columns.hostname ? '#337ab7' : null}}>Host<Spinner order={columns.hostname} /></th>
-						          <th className="hostIp" style={{color: columns.hostIp ? '#337ab7' : null}}>Host IP<Spinner order={columns.hostIp} /></th>
 						          <th className="url" style={{color: columns.url ? '#337ab7' : null}}>Url<Spinner order={columns.url} /></th>
+						          <th className="hostIp" style={{color: columns.hostIp ? '#337ab7' : null}}>Host IP<Spinner order={columns.hostIp} /></th>
 						          <th className="type" style={{color: columns.type ? '#337ab7' : null}}>Type<Spinner order={columns.type} /></th>
 						          <th className="time" style={{color: columns.time ? '#337ab7' : null}}>Time<Spinner order={columns.time} /></th>
 						        </tr>
@@ -266,19 +267,32 @@ var ReqData = React.createClass({
 						      {
 						    	  list.map(function(item, i) {
 						    		  i = hasKeyword ? index : i;
-						    		  var url = !item.hide && i >= startIndex && i <= endIndex ? item.url : null;
+						    		  var url, path;
+						    		  if (!item.hide && i >= startIndex && i <= endIndex) {
+						    		    url = item.url;
+						    		    path = item.path;
+						    		    if (!path) {
+						    		      var pathIndex = url.indexOf('://');
+	                        if (pathIndex !== -1) {
+	                          pathIndex = url.indexOf('/', pathIndex + 3);
+	                          path = item.path = pathIndex === -1 ? '/' : url.substring(pathIndex);
+	                        } else {
+	                          path = item.path = url;
+	                        }
+						    		    }
+						    		  }
 						    		  
 						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
 						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++index : item.order}</th>			        
-						    		  				<td className="result">{item.result}</td>			        
+						    		  				<td className="result">{item.result}</td>
+						    		  				<td className="method">{item.method}</td>
 						    		  				<td className="protocol">{item.protocol}</td>			        
-						    		  				<td className="method">{item.method}</td>			        
 						    		  				<td className="hostname" title={item.hostname}>{item.hostname}</td>			        
-						    		  				<td className="hostIp" title={item.hostIp}>{item.hostIp}</td>			        
-						    		  				<td className="url" title={url}>{url}</td>			        
+						    		  				<td className="url" title={url}>{path}</td>
+						    		  				<td className="hostIp" title={item.hostIp}>{item.hostIp}</td>
 						    		  				<td className="type" title={item.type}>{item.type}</td>			        
 						    		  				<td className="time">{item.time >= 0 ? item.time  + 'ms' : item.time}</td>			     
 						    		  			</tr>);

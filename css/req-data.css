@@ -2,7 +2,7 @@
 .w-req-data-content {overflow-x: auto; overflow-y: hidden;}
 .w-req-data-content .order {width: 50px;}
 .w-req-data-content .result {width: 60px;}
-.w-req-data-content .protocol, .w-req-data-content .method {width: 72px;}
+.w-req-data-content .protocol, .w-req-data-content .method {width: 78px;}
 .w-req-data-content .time {width: 65px;}
 .w-req-data-content th.time {width: 68px;}
 .w-req-data-content .hostIp, .w-req-data-content .type {width: 100px;}
