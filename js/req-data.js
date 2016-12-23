@@ -256,7 +256,7 @@ var ReqData = React.createClass({
 						          <th className="method" style={{color: columns.method ? '#337ab7' : null}}>Method<Spinner order={columns.method} /></th>
 						          <th className="protocol" style={{color: columns.protocol ? '#337ab7' : null}}>Protocol<Spinner order={columns.protocol} /></th>
 						          <th className="hostname" style={{color: columns.hostname ? '#337ab7' : null}}>Host<Spinner order={columns.hostname} /></th>
-						          <th className="url" style={{color: columns.url ? '#337ab7' : null}}>Url<Spinner order={columns.url} /></th>
+						          <th className="url" style={{color: columns.path ? '#337ab7' : null}}>Url<Spinner order={columns.path} /></th>
 						          <th className="hostIp" style={{color: columns.hostIp ? '#337ab7' : null}}>Host IP<Spinner order={columns.hostIp} /></th>
 						          <th className="type" style={{color: columns.type ? '#337ab7' : null}}>Type<Spinner order={columns.type} /></th>
 						          <th className="time" style={{color: columns.time ? '#337ab7' : null}}>Time<Spinner order={columns.time} /></th>
