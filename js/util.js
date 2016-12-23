@@ -351,7 +351,7 @@ var STATUS_CODES = {
 		};
 
 exports.getStatusMessage = function(res) {
-	return res.statusMessage || STATUS_CODES[res.statusCode] || '';
+	return res.statusMessage || STATUS_CODES[res.statusCode] || 'unknown';
 };
 
 function isUrlEncoded(req) {
