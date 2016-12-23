@@ -199,6 +199,9 @@ var ReqData = React.createClass({
 		if (name == 'order') {
 			columns = {};
 		} else {
+		  if (name === 'url') {
+		    name = 'path';
+		  }
 			var order = columns[name];
 			if (order == 'desc') {
 				columns[name] = 'asc';
@@ -271,15 +274,6 @@ var ReqData = React.createClass({
 						    		  if (!item.hide && i >= startIndex && i <= endIndex) {
 						    		    url = item.url;
 						    		    path = item.path;
-						    		    if (!path) {
-						    		      var pathIndex = url.indexOf('://');
-	                        if (pathIndex !== -1) {
-	                          pathIndex = url.indexOf('/', pathIndex + 3);
-	                          path = item.path = pathIndex === -1 ? '/' : url.substring(pathIndex);
-	                        } else {
-	                          path = item.path = url;
-	                        }
-						    		    }
 						    		  }
 						    		  
 						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 

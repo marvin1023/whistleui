@@ -183,7 +183,7 @@ function startLoadData() {
 				var item = this;
 				var newItem = data[item.id];
 				if (newItem) {
-				  delete item.isHttps;
+//				  delete item.isHttps;
 					$.extend(item, newItem);
 					setReqData(item);
 				} else {
@@ -214,8 +214,9 @@ function startLoadData() {
 }
 
 function setReqData(item) {
-  item.protocol = util.getProtocol(item.url);
-  item.hostname = util.getHostname(item.url);
+  var url = item.url;
+  item.protocol = util.getProtocol(url);
+  item.hostname = util.getHostname(url);
   item.method = item.req.method;
 	var end = item.endTime;
 	var defaultValue = end ? '' : '-';
@@ -225,6 +226,15 @@ function setReqData(item) {
 	item.result = /^[1-9]/.test(result) && parseInt(result, 10) || result;
 	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0].toLowerCase();
 	item.time = end ? end - item.startTime  : defaultValue;
+	if (!item.path) {
+	  var pathIndex = url.indexOf('://');
+    if (pathIndex !== -1) {
+      pathIndex = url.indexOf('/', pathIndex + 3);
+      item.path = pathIndex === -1 ? '/' : url.substring(pathIndex);
+    } else {
+      item.path = url;
+    }
+	}
 }
 
 function getPendingIds() {
