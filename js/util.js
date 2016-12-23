@@ -165,14 +165,21 @@ exports.getContentType = function getContentType(contentType) {
 	return null;
 };
 
+function getHost(url) {
+  var start = url.indexOf(':\/\/');
+  start = start == -1 ? 0 : start + 3;
+  var end = url.indexOf('\/', start);
+  url = end == -1 ? url.substring(start) : url.substring(start, end);
+  return url;
+}
+
 exports.getHostname = function getHostname(url) {
-	var start = url.indexOf(':\/\/');
-	start = start == -1 ? 0 : start + 3;
-	var end = url.indexOf('\/', start);
-	url = end == -1 ? url.substring(start) : url.substring(start, end);
-	end = url.indexOf(':', start);
+	url = getHost(url);
+	var end = url.lastIndexOf(':');
 	return end == -1 ? url : url.substring(0, end);
 };
+
+exports.getHost = getHost;
 
 exports.getProtocol = function getProtocol(url) {
 	var index = url.indexOf(':\/\/');

@@ -215,8 +215,6 @@ function startLoadData() {
 
 function setReqData(item) {
   var url = item.url;
-  item.protocol = util.getProtocol(url);
-  item.hostname = util.getHostname(url);
   item.method = item.req.method;
 	var end = item.endTime;
 	var defaultValue = end ? '' : '-';
@@ -227,6 +225,8 @@ function setReqData(item) {
 	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0].toLowerCase();
 	item.time = end ? end - item.startTime  : defaultValue;
 	if (!item.path) {
+	  item.protocol = util.getProtocol(url);
+	  item.hostname = util.getHost(url);
 	  var pathIndex = url.indexOf('://');
     if (pathIndex !== -1) {
       pathIndex = url.indexOf('/', pathIndex + 3);
