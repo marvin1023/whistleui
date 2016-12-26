@@ -153,17 +153,23 @@ var Index = React.createClass({
 		                          name: 'Export Selected Sessions',
 		                          icon: 'export',
 		                          id: 'showSelected',
-                              title: 'Ctrl[Command] + Shift + E'
+                              title: 'Ctrl + S'
 		                        },
                             {
                               name: 'Export Selected Sessions (Fiddler2)',
                               id: 'exportSazFile2',
-                              title: 'Ctrl[Command] + Shift + 2'
+                              title: 'Ctrl + S'
                             },
                             {
                               name: 'Export Selected Sessions (Fiddler4)',
                               id: 'exportSazFile4',
-                              title: 'Ctrl[Command] + Shift + 4'
+                              title: 'Ctrl + S'
+                            },
+                            {
+                              name: 'Import Sessions',
+                              icon: 'import',
+                              id: 'importSessions',
+                              title: 'Ctrl + I'
                             }
 		                        ];
     protocols.setPlugins(state);
@@ -224,7 +230,7 @@ var Index = React.createClass({
 					e.preventDefault();
 				}
 				
-				if (self.state.name == 'network' && e.shiftKey && e.keyCode == 69) {
+				if (self.state.name == 'network' && e.keyCode == 83) {
 				  self.showSelectedSessions();
 				  e.preventDefault();
 				}
