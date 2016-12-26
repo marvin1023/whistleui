@@ -134,18 +134,18 @@ var Index = React.createClass({
 		state.filterText = modal.filterText;
 		state.networkOptions = [
 		                        {
-		                          name: 'All Sessions',
+		                          name: 'Remove All Sessions',
 		                          icon: 'remove',
 		                          id: 'removeAll',
 		                          title: 'Ctrl[Command] + X'
 		                        },
 		                        {
-		                          name: 'Selected Sessions',
+		                          name: 'Remove Selected Sessions',
 		                          id: 'removeSelected',
                               title: 'Ctrl[Command] + D'
 		                        },
 		                        {
-		                          name: 'Unselected Sessions',
+		                          name: 'Remove Unselected Sessions',
 		                          id: 'removeUnselected',
                               title: 'Ctrl[Command] + Shift + D'
 		                        },
@@ -154,7 +154,17 @@ var Index = React.createClass({
 		                          icon: 'export',
 		                          id: 'showSelected',
                               title: 'Ctrl[Command] + Shift + E'
-		                        }
+		                        },
+                            {
+                              name: 'Export Selected Sessions (Fiddler2)',
+                              id: 'exportSazFile2',
+                              title: 'Ctrl[Command] + Shift + 2'
+                            },
+                            {
+                              name: 'Export Selected Sessions (Fiddler4)',
+                              id: 'exportSazFile4',
+                              title: 'Ctrl[Command] + Shift + 4'
+                            }
 		                        ];
     protocols.setPlugins(state);
 		return state;
