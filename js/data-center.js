@@ -225,8 +225,8 @@ function setReqData(item) {
 	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0].toLowerCase();
 	item.time = end ? end - item.startTime  : defaultValue;
 	if (!item.path) {
-	  item.protocol = util.getProtocol(url);
-	  item.hostname = util.getHost(url);
+	  item.protocol = item.isHttps ? 'HTTP' : util.getProtocol(url);
+	  item.hostname = item.isHttps ? 'Tunnel to' : util.getHost(url);
 	  var pathIndex = url.indexOf('://');
     if (pathIndex !== -1) {
       pathIndex = url.indexOf('/', pathIndex + 3);
