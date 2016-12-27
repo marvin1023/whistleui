@@ -515,8 +515,13 @@ var Index = React.createClass({
       this.exportSessions('fiddler2');
     } else if (item.id == 'exportSazFile4') {
       this.exportSessions('fiddler4');
+    } else if (item.id == 'importSessions') {
+      this.importSessions();
     }
 	  this.hideNetworkOptions();
+	},
+	importSessions: function() {
+	  ReactDOM.findDOMNode(this.refs.importSessions).click();
 	},
 	clearNetwork: function() {
 	  this.clear();
@@ -1556,6 +1561,9 @@ var Index = React.createClass({
 			  <input ref="exportFileType" name="exportFileType" type="hidden" />
 			  <input ref="selectedSessions" name="selectedSessions" type="hidden" />
 			</form>
+			<form ref="importSessionsForm" enctype="multipart/form-data" style={{display: 'none'}}>  
+			  <input ref="importSessions" type="file" name="importSessions" accept=".txt,.saz" />
+      </form>
 			</div>
 		);
 	}
