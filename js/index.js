@@ -152,7 +152,7 @@ var Index = React.createClass({
 		                        {
 		                          name: 'Export Selected Sessions',
 		                          icon: 'export',
-		                          id: 'showSelected',
+		                          id: 'exportWhistleFile',
                               title: 'Ctrl + S'
 		                        },
                             {
@@ -509,19 +509,18 @@ var Index = React.createClass({
 	    modal && modal.removeSelectedItems();
 	  } else if (item.id == 'removeUnselected') {
 	    modal && modal.removeUnselectedItems();
-	  } else if (item.id == 'showSelected') {
-	    this.showSelectedSessions();
-	  }
+	  } else if (item.id == 'exportWhistleFile') {
+      this.exportSessions('txt');
+    } else if (item.id == 'exportSazFile2') {
+      this.exportSessions('fiddler2');
+    } else if (item.id == 'exportSazFile4') {
+      this.exportSessions('fiddler4');
+    }
 	  this.hideNetworkOptions();
 	},
 	clearNetwork: function() {
 	  this.clear();
 	  this.hideNetworkOptions();
-	},
-	showSelectedSessions: function() {
-	  var modal = this.state.network;
-	  var selectedItems = modal && modal.getSelectedList() || [];
-    selectedItems.length && util.openEditor(JSON.stringify(selectedItems, null, '    '));
 	},
 	showAndActiveRules: function(item) {
 	  this.hideRulesOptions();
@@ -1328,6 +1327,17 @@ var Index = React.createClass({
 	    exportFileType: value
 	  });
 	},
+	exportSessions: function(type) {
+	  var modal = this.state.network;
+	  var sessions = modal && modal.getSelectedList();
+	  if (!sessions || !sessions.length) {
+	    return;
+	  }
+	  var form = ReactDOM.findDOMNode(this.refs.exportSessionsForm);
+    ReactDOM.findDOMNode(this.refs.exportFileType).value = type;
+    ReactDOM.findDOMNode(this.refs.selectedSessions).value = JSON.stringify(sessions);
+    form.submit();
+	},
 	render: function() {
 		var state = this.state;
 		var name = state.name;
@@ -1541,6 +1551,11 @@ var Index = React.createClass({
 				    </div>
 				</div>
 			</div>
+			<form ref="exportSessionsForm" action="/cgi-bin/export-selected-sessions" style={{display: 'none'}}
+			  method="post" enctype="multipart/form-data" target="_blank">
+			  <input ref="exportFileType" name="exportFileType" type="hidden" />
+			  <input ref="selectedSessions" name="selectedSessions" type="hidden" />
+			</form>
 			</div>
 		);
 	}
