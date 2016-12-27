@@ -231,7 +231,7 @@ var Index = React.createClass({
 				}
 				
 				if (self.state.name == 'network' && e.keyCode == 83) {
-				  self.showSelectedSessions();
+				  $(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
 				  e.preventDefault();
 				}
 			}
@@ -1491,6 +1491,22 @@ var Index = React.createClass({
 				      </div>
 				    </div>
 			    </div>
+			</div>
+			<div ref="chooseFileType" className="modal fade w-choose-filte-type">
+  			<div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-body">
+              <label className="w-choose-filte-type-label">Save as:
+                <select ref="fileType" className="form-control">
+                  <option value="txt">*.txt (whistle)</option>
+                  <option value="fiddler2">*.saz (Fiddler2)</option>
+                  <option value="fiddler4">*.saz (Fiddler4)</option>
+                </select>
+                <a type="button" className="btn btn-primary">Confirm</a>
+              </label>
+            </div>
+          </div>
+        </div>
 			</div>
 			<div ref="showUpdateTipsDialog" className="modal fade w-show-update-tips-dialog">
 				<div className="modal-dialog">

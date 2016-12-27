@@ -45,3 +45,7 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 
 .w-has-key {cursor: pointer; text-decoration: underline;}
 
+.w-choose-filte-type .modal-dialog {width: 376px}
+.w-choose-filte-type-label {white-space: nowrap;}
+.w-choose-filte-type-label select.form-control {width: auto; margin: 0 10px; width: 200px; display: inline-block;}
+
