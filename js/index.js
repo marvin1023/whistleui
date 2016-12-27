@@ -173,6 +173,7 @@ var Index = React.createClass({
                             }
 		                        ];
     protocols.setPlugins(state);
+    state.exportFileType = localStorage.exportFileType;
 		return state;
 	},
 	createPluginsOptions: function(plugins) {
@@ -230,9 +231,17 @@ var Index = React.createClass({
 					e.preventDefault();
 				}
 				
-				if (self.state.name == 'network' && e.keyCode == 83) {
-				  $(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
+				var modal = self.state.network;
+				if (self.state.name == 'network' && e.keyCode == 83 ) {
 				  e.preventDefault();
+				  if ($('.modal.in').length) {
+				    return;
+				  }
+				  var selectedItems = modal && modal.getSelectedList();
+				  if (!selectedItems || !selectedItems.length) {
+				    return;
+				  }
+				  $(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
 				}
 			}
 		});
@@ -511,7 +520,7 @@ var Index = React.createClass({
 	},
 	showSelectedSessions: function() {
 	  var modal = this.state.network;
-	  var selectedItems = modal && modal.getSelectedList();
+	  var selectedItems = modal && modal.getSelectedList() || [];
     selectedItems.length && util.openEditor(JSON.stringify(selectedItems, null, '    '));
 	},
 	showAndActiveRules: function(item) {
@@ -1312,6 +1321,13 @@ var Index = React.createClass({
 		}
 		
 	},
+	chooseFileType: function(e) {
+	  var value = e.target.value;
+	  localStorage.exportFileType = value;
+	  this.setState({
+	    exportFileType: value
+	  });
+	},
 	render: function() {
 		var state = this.state;
 		var name = state.name;
@@ -1497,13 +1513,13 @@ var Index = React.createClass({
           <div className="modal-content">
             <div className="modal-body">
               <label className="w-choose-filte-type-label">Save as:
-                <select ref="fileType" className="form-control">
+                <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
                   <option value="txt">*.txt (whistle)</option>
                   <option value="fiddler2">*.saz (Fiddler2)</option>
                   <option value="fiddler4">*.saz (Fiddler4)</option>
                 </select>
-                <a type="button" className="btn btn-primary">Confirm</a>
               </label>
+              <a type="button" className="btn btn-primary">Confirm</a>
             </div>
           </div>
         </div>
