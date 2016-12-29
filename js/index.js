@@ -1508,10 +1508,10 @@ var Index = React.createClass({
 				      <div className="modal-body">
 				      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      <div>
-					      	<a className="w-download-rootca" href="http://rootca.pro/" target="_blank">Download RootCA</a>
+					      	<a className="w-download-rootca" title="http://rootca.pro/" href="http://rootca.pro/" target="_blank">Download RootCA</a>
 					      	<a className="w-https-help" href="https://avwo.github.io/whistle/webui/https.html" target="_blank" title="How to intercept HTTPS CONNECTs">Help</a>
 					      </div>
-					      <a title="Download RootCA" href="http://rootca.pro/" target="_blank"><img src="/img/rootca.png" /></a>
+					      <a title="http://rootca.pro/" href="http://rootca.pro/" target="_blank"><img src="/img/rootca.png" /></a>
 					      <div className="w-https-settings">
 					      	<p><label><input checked={state.hideHttpsConnects} onChange={this.hideHttpsConnects} type="checkbox" /> Hide HTTPS CONNECTs</label></p>
 					      	<p><label><input checked={state.interceptHttpsConnects} onChange={this.interceptHttpsConnects} type="checkbox" /> Intercept HTTPS CONNECTs</label></p>
