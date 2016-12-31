@@ -198,6 +198,18 @@ var Index = React.createClass({
 	},
 	componentDidMount: function() {
 		var self = this;
+		var preventDefault = function(e) {
+		  e.preventDefault();
+		};
+		$(document)
+  		.on( 'dragleave', preventDefault)
+  		.on( 'dragenter', preventDefault)
+  		.on( 'dragover', preventDefault)
+  		.on('drop', function(e) {
+  		  e.preventDefault();
+  		  var files = e.originalEvent.dataTransfer.files || [];
+  		  self.uploadSessionsFile(files[0]);
+  		});
 		$(window).on('hashchange', function() {
 			var pageName = getPageName();
 			if (!pageName || pageName.indexOf('rules') != -1) {
@@ -667,7 +679,7 @@ var Index = React.createClass({
 		var plugin;
 		if (name && (plugin = this.state.plugins[name + ':'])) {
 			if (tabs.length >= MAX_PLUGINS_TABS) {
-				alert('You can only open ' + MAX_PLUGINS_TABS + ' tabs');
+				alert('You can only open ' + MAX_PLUGINS_TABS + ' tabs.');
 				return this.showPlugins();
 			}
 			active = name;
@@ -1343,22 +1355,24 @@ var Index = React.createClass({
 	},
 	uploadSessions: function() {
 	  var data = new FormData(ReactDOM.findDOMNode(this.refs.importSessionsForm));
-	  var file = data.get('importSessions');
-	  if (!file || !/\.(txt|saz)$/i.test(file.name)) {
-	    return alert('Only supports txt or saz format files');
-	  }
-	  
-	  if (file.size > MAX_FILE_SIZE) {
-	    return alert('The file size can not exceed 64m');
-	  }
-	  dataCenter.sessions.imports(data, function(data) {
-	    if (!data || data.ec !== 0) {
-	      return alert('TODO');
-	    }
-	    
-	  });
+	  this.uploadSessionsFile(data.get('importSessions'));
 	  ReactDOM.findDOMNode(this.refs.importSessions).value = '';
 	},
+	uploadSessionsFile: function(file) {
+    if (!file || !/\.(txt|saz)$/i.test(file.name)) {
+      return alert('Only supports txt or saz file.');
+    }
+    
+    if (file.size > MAX_FILE_SIZE) {
+      return alert('The file size can not exceed 64m.');
+    }
+    dataCenter.sessions.imports(file, function(data) {
+      if (!data || data.ec !== 0) {
+        return alert('TODO');
+      }
+      
+    });
+  },
 	exportSessions: function(type) {
 	  var modal = this.state.network;
 	  var sessions = modal && modal.getSelectedList();
