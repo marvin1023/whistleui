@@ -515,9 +515,9 @@ var Index = React.createClass({
 	  } else if (item.id == 'exportWhistleFile') {
       this.exportSessions('whistle');
     } else if (item.id == 'exportSazFile2') {
-      this.exportSessions('fiddler2');
+      this.exportSessions('Fiddler2');
     } else if (item.id == 'exportSazFile4') {
-      this.exportSessions('fiddler4');
+      this.exportSessions('Fiddler4');
     } else if (item.id == 'importSessions') {
       this.importSessions();
     }
@@ -1537,8 +1537,8 @@ var Index = React.createClass({
               <label className="w-choose-filte-type-label">Save as:
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
                   <option value="whistle">*.txt (whistle)</option>
-                  <option value="fiddler2">*.saz (Fiddler2)</option>
-                  <option value="fiddler4">*.saz (Fiddler4)</option>
+                  <option value="Fiddler2">*.saz (Fiddler2)</option>
+                  <option value="Fiddler4">*.saz (Fiddler4)</option>
                 </select>
               </label>
               <a type="button" className="btn btn-primary" onClick={this.exportBySave}>Confirm</a>
