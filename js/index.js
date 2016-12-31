@@ -1348,6 +1348,7 @@ var Index = React.createClass({
 	},
 	exportBySave: function() {
 	  this.exportSessions(this.state.exportFileType);
+	  $(ReactDOM.findDOMNode(this.refs.chooseFileType)).modal('hide');
 	},
 	render: function() {
 		var state = this.state;
