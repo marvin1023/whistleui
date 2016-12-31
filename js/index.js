@@ -235,6 +235,9 @@ var Index = React.createClass({
 				if (self.state.name == 'network' && e.keyCode == 83 ) {
 				  e.preventDefault();
 				  if ($('.modal.in').length) {
+				    if ($(ReactDOM.findDOMNode(self.refs.chooseFileType)).is(':visible')) {
+				      self.exportBySave();
+				    }
 				    return;
 				  }
 				  var selectedItems = modal && modal.getSelectedList();
@@ -1340,8 +1343,11 @@ var Index = React.createClass({
 	  }
 	  var form = ReactDOM.findDOMNode(this.refs.exportSessionsForm);
     ReactDOM.findDOMNode(this.refs.exportFileType).value = type;
-    ReactDOM.findDOMNode(this.refs.selectedSessions).value = JSON.stringify(sessions);
+    ReactDOM.findDOMNode(this.refs.sessions).value = JSON.stringify(sessions, null, '  ');
     form.submit();
+	},
+	exportBySave: function() {
+	  this.exportSessions(this.state.exportFileType);
 	},
 	render: function() {
 		var state = this.state;
@@ -1534,7 +1540,7 @@ var Index = React.createClass({
                   <option value="fiddler4">*.saz (Fiddler4)</option>
                 </select>
               </label>
-              <a type="button" className="btn btn-primary">Confirm</a>
+              <a type="button" className="btn btn-primary" onClick={this.exportBySave}>Confirm</a>
             </div>
           </div>
         </div>
@@ -1559,7 +1565,7 @@ var Index = React.createClass({
 			<form ref="exportSessionsForm" action="/cgi-bin/sessions/export" style={{display: 'none'}}
 			  method="post" enctype="multipart/form-data" target="_blank">
 			  <input ref="exportFileType" name="exportFileType" type="hidden" />
-			  <input ref="selectedSessions" name="selectedSessions" type="hidden" />
+			  <input ref="sessions" name="sessions" type="hidden" />
 			</form>
 			<form ref="importSessionsForm" enctype="multipart/form-data" style={{display: 'none'}}>  
 			  <input ref="importSessions" type="file" name="importSessions" accept=".txt,.saz" />
