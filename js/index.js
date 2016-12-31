@@ -1352,8 +1352,12 @@ var Index = React.createClass({
 	    return alert('The file size can not exceed 64m');
 	  }
 	  dataCenter.sessions.imports(data, function(data) {
-	    console.log(data);
+	    if (!data || data.ec !== 0) {
+	      return alert('TODO');
+	    }
+	    
 	  });
+	  ReactDOM.findDOMNode(this.refs.importSessions).value = '';
 	},
 	exportSessions: function(type) {
 	  var modal = this.state.network;
