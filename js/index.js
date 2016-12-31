@@ -513,7 +513,7 @@ var Index = React.createClass({
 	  } else if (item.id == 'removeUnselected') {
 	    modal && modal.removeUnselectedItems();
 	  } else if (item.id == 'exportWhistleFile') {
-      this.exportSessions('txt');
+      this.exportSessions('whistle');
     } else if (item.id == 'exportSazFile2') {
       this.exportSessions('fiddler2');
     } else if (item.id == 'exportSazFile4') {
@@ -1535,7 +1535,7 @@ var Index = React.createClass({
             <div className="modal-body">
               <label className="w-choose-filte-type-label">Save as:
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
-                  <option value="txt">*.txt (whistle)</option>
+                  <option value="whistle">*.txt (whistle)</option>
                   <option value="fiddler2">*.saz (Fiddler2)</option>
                   <option value="fiddler4">*.saz (Fiddler4)</option>
                 </select>
