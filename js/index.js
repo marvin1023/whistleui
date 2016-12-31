@@ -1556,7 +1556,7 @@ var Index = React.createClass({
 				    </div>
 				</div>
 			</div>
-			<form ref="exportSessionsForm" action="/cgi-bin/export-selected-sessions" style={{display: 'none'}}
+			<form ref="exportSessionsForm" action="/cgi-bin/sessions/export" style={{display: 'none'}}
 			  method="post" enctype="multipart/form-data" target="_blank">
 			  <input ref="exportFileType" name="exportFileType" type="hidden" />
 			  <input ref="selectedSessions" name="selectedSessions" type="hidden" />
