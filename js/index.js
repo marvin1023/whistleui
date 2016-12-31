@@ -15,6 +15,7 @@ var util = require('./util');
 var protocols = require('./protocols');
 var events = require('./events');
 var MAX_PLUGINS_TABS = 7;
+var MAX_FILE_SIZE = 1024 * 1024 * 64;
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -232,7 +233,7 @@ var Index = React.createClass({
 				}
 				
 				var modal = self.state.network;
-				if (self.state.name == 'network' && e.keyCode == 83 ) {
+				if (self.state.name === 'network' && e.keyCode === 83) {
 				  e.preventDefault();
 				  if ($('.modal.in').length) {
 				    if ($(ReactDOM.findDOMNode(self.refs.chooseFileType)).is(':visible')) {
@@ -245,6 +246,11 @@ var Index = React.createClass({
 				    return;
 				  }
 				  $(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
+				}
+				
+				if (self.state.name === 'network' && e.keyCode === 73) {
+				  self.importSessions();
+				  e.preventDefault();
 				}
 			}
 		});
@@ -1335,6 +1341,20 @@ var Index = React.createClass({
 	    exportFileType: value
 	  });
 	},
+	uploadSessions: function() {
+	  var data = new FormData(ReactDOM.findDOMNode(this.refs.importSessionsForm));
+	  var file = data.get('importSessions');
+	  if (!file || !/\.(txt|saz)$/i.test(file.name)) {
+	    return alert('Only supports txt or saz format files');
+	  }
+	  
+	  if (file.size > MAX_FILE_SIZE) {
+	    return alert('The file size can not exceed 64m');
+	  }
+	  dataCenter.sessions.imports(data, function(data) {
+	    console.log(data);
+	  });
+	},
 	exportSessions: function(type) {
 	  var modal = this.state.network;
 	  var sessions = modal && modal.getSelectedList();
@@ -1569,7 +1589,7 @@ var Index = React.createClass({
 			  <input ref="sessions" name="sessions" type="hidden" />
 			</form>
 			<form ref="importSessionsForm" enctype="multipart/form-data" style={{display: 'none'}}>  
-			  <input ref="importSessions" type="file" name="importSessions" accept=".txt,.saz" />
+			  <input ref="importSessions" onChange={this.uploadSessions} type="file" name="importSessions" accept=".txt,.saz" />
       </form>
 			</div>
 		);

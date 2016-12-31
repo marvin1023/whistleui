@@ -40,6 +40,14 @@ if (/_lastSvrLogTime=([^;]+)/.test(document.cookie)) {
 	lastSvrLogTime = RegExp.$1;
 }
 
+exports.sessions = createCgi({
+  imports: '/cgi-bin/sessions/import',
+}, $.extend({type: 'post'}, DEFAULT_CONF, {
+  contentType: false,  
+  processData: false,
+  timeout: 30000
+}));
+
 exports.values = createCgi({
 	get: {
 		type: 'get',
