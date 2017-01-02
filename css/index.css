@@ -9,7 +9,7 @@ background: linear-gradient(rgb(239, 238, 238), rgb(211, 212, 213)); padding-rig
 .w-menu .w-online, .w-menu a:hover {color: #337ab7;}
 .w-menu .w-offline {color: #ccc!important; cursor: default;}
 .w-menu .w-disabled {color: #888!important; cursor: default!important;}
-.w-menu .w-menu-enable {color: #337ab7;}
+.w-menu .w-menu-enable {color: #ff6666!important;}
 .w-menu .w-menu-wrapper {display: inline-block; position: relative; height: 30px;}
 
 .w-show-update-tips {font-weight: bold;}

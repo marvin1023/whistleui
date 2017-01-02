@@ -918,13 +918,39 @@ var Index = React.createClass({
 		});	
 	},
 	showEditFilter: function() {
-		var editFilterInput = ReactDOM.findDOMNode(this.refs.editFilterInput);
+	  if (this._setEditFilterPending) {
+	    return;
+	  }
+	  var editFilterInput = ReactDOM.findDOMNode(this.refs.editFilterInput);
 		this.setState({
 			showEditFilter: true
 		}, function() {
 			editFilterInput.select();
 			editFilterInput.focus();
 		});
+	},
+	clearEditFilter: function(e) {
+	  var self = this;
+	  var target = ReactDOM.findDOMNode(self.refs.editFilterInput);
+	  self._setEditFilterPending = true;
+	  if (target.value.trim()) {
+	    dataCenter.setFilter({filter: ''}, function(data) {
+	      if (data && data.ec === 0) {
+	        target.blur();
+	        target.value = '';
+	        self.setState({
+	          filterText: ''
+	        });
+	      } else {
+	        util.showSystemError();
+	      }
+	    });
+	  }
+	  self.setState({
+	    showEditFilter: false
+    }, function() {
+      self._setEditFilterPending = false;
+    });
 	},
 	editRules: function(e) {
 		if (e.keyCode != 13 && e.type != 'click') {
@@ -1491,7 +1517,8 @@ var Index = React.createClass({
 					<a onClick={this.autoRefresh} className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-play"></span>AutoRefresh</a>
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-edit"></span>Composer</a>
-					<a onClick={this.showEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} title={state.filterText} style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
+					<a onClick={this.showEditFilter} onDoubleClick={this.clearEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} title={state.filterText ? 'Double click to clear the text:\n"' + state.filterText + '"' : undefined} 
+					  style={{display: isNetwork ? '' : 'none'}} href="javascript:;"><span className="glyphicon glyphicon-filter"></span>Filter</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideWeinreOptions} className={'w-menu-wrapper' + (showWeinreOptions ? ' w-menu-wrapper-show' : '')}>
