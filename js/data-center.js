@@ -45,7 +45,7 @@ exports.sessions = createCgi({
 }, $.extend({type: 'post'}, DEFAULT_CONF, {
   contentType: false,  
   processData: false,
-  timeout: 30000
+  timeout: 36000
 }));
 
 exports.values = createCgi({

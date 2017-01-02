@@ -1354,11 +1354,11 @@ var Index = React.createClass({
 	  });
 	},
 	uploadSessions: function() {
-	  var data = new FormData(ReactDOM.findDOMNode(this.refs.importSessionsForm));
-	  this.uploadSessionsFile(data.get('importSessions'));
+	  this.uploadSessionsFile(new FormData(ReactDOM.findDOMNode(this.refs.importSessionsForm)));
 	  ReactDOM.findDOMNode(this.refs.importSessions).value = '';
 	},
-	uploadSessionsFile: function(file) {
+	uploadSessionsFile: function(data) {
+	  var file = data.get('importSessions');
     if (!file || !/\.(txt|saz)$/i.test(file.name)) {
       return alert('Only supports txt or saz file.');
     }
@@ -1366,7 +1366,7 @@ var Index = React.createClass({
     if (file.size > MAX_FILE_SIZE) {
       return alert('The file size can not exceed 64m.');
     }
-    dataCenter.sessions.imports(file, function(data) {
+    dataCenter.sessions.imports(data, function(data) {
       if (!data || data.ec !== 0) {
         return alert('TODO');
       }
