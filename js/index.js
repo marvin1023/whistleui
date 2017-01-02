@@ -208,7 +208,9 @@ var Index = React.createClass({
   		.on('drop', function(e) {
   		  e.preventDefault();
   		  var files = e.originalEvent.dataTransfer.files || [];
-  		  self.uploadSessionsFile(files[0]);
+  		  var data = new FormData();
+  		  data.append('importSessions', files[0]);
+  		  self.uploadSessionsForm(data);
   		});
 		$(window).on('hashchange', function() {
 			var pageName = getPageName();
@@ -1354,12 +1356,12 @@ var Index = React.createClass({
 	  });
 	},
 	uploadSessions: function() {
-	  this.uploadSessionsFile(new FormData(ReactDOM.findDOMNode(this.refs.importSessionsForm)));
+	  this.uploadSessionsForm(new FormData(ReactDOM.findDOMNode(this.refs.importSessionsForm)));
 	  ReactDOM.findDOMNode(this.refs.importSessions).value = '';
 	},
-	uploadSessionsFile: function(data) {
-	  var file = data.get('importSessions');
-    if (!file || !/\.(txt|saz)$/i.test(file.name)) {
+	uploadSessionsForm: function(data) {
+    var file = data.get('importSessions');
+	  if (!file || !/\.(txt|saz)$/i.test(file.name)) {
       return alert('Only supports txt or saz file.');
     }
     
