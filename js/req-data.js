@@ -255,8 +255,8 @@ var ReqData = React.createClass({
 						          <th className="result" style={{color: columns.result ? '#337ab7' : null}}>Result<Spinner order={columns.result} /></th>
 						          <th className="method" style={{color: columns.method ? '#337ab7' : null}}>Method<Spinner order={columns.method} /></th>
 						          <th className="protocol" style={{color: columns.protocol ? '#337ab7' : null}}>Protocol<Spinner order={columns.protocol} /></th>
-						          <th className="hostname" style={{color: columns.hostname ? '#337ab7' : null}}>Host<Spinner order={columns.hostname} /></th>
 						          <th className="hostIp" style={{color: columns.hostIp ? '#337ab7' : null}}>Host IP<Spinner order={columns.hostIp} /></th>
+						          <th className="hostname" style={{color: columns.hostname ? '#337ab7' : null}}>Host<Spinner order={columns.hostname} /></th>
 						          <th className="url" style={{color: columns.path ? '#337ab7' : null}}>URL<Spinner order={columns.path} /></th>
 						          <th className="type" style={{color: columns.type ? '#337ab7' : null}}>Type<Spinner order={columns.type} /></th>
 						          <th className="time" style={{color: columns.time ? '#337ab7' : null}}>Time<Spinner order={columns.time} /></th>
@@ -283,9 +283,9 @@ var ReqData = React.createClass({
 						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++index : item.order}</th>			        
 						    		  				<td className="result">{item.result}</td>
 						    		  				<td className="method">{item.method}</td>
-						    		  				<td className="protocol">{item.protocol}</td>			        
-						    		  				<td className="hostname" title={item.hostname}>{item.hostname}</td>
+						    		  				<td className="protocol">{item.protocol}</td>
 						    		  				<td className="hostIp" title={item.hostIp}>{item.hostIp}</td>
+						    		  				<td className="hostname" title={item.hostname}>{item.hostname}</td>
 						    		  				<td className="url" title={url}>{path}</td>
 						    		  				<td className="type" title={item.type}>{item.type}</td>			        
 						    		  				<td className="time">{item.time >= 0 ? item.time  + 'ms' : item.time}</td>			     
