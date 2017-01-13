@@ -157,13 +157,8 @@ var Index = React.createClass({
                               title: 'Ctrl + S'
 		                        },
                             {
-                              name: 'Export Selected Sessions (Fiddler2)',
-                              id: 'exportSazFile2',
-                              title: 'Ctrl + S'
-                            },
-                            {
-                              name: 'Export Selected Sessions (Fiddler4)',
-                              id: 'exportSazFile4',
+                              name: 'Export Selected Sessions (Fiddler)',
+                              id: 'exportSazFile',
                               title: 'Ctrl + S'
                             },
                             {
@@ -534,10 +529,8 @@ var Index = React.createClass({
 	    modal && modal.removeUnselectedItems();
 	  } else if (item.id == 'exportWhistleFile') {
       this.exportSessions('whistle');
-    } else if (item.id == 'exportSazFile2') {
-      this.exportSessions('Fiddler2');
-    } else if (item.id == 'exportSazFile4') {
-      this.exportSessions('Fiddler4');
+    } else if (item.id == 'exportSazFile') {
+      this.exportSessions('Fiddler');
     } else if (item.id == 'importSessions') {
       this.importSessions();
     }
@@ -1604,8 +1597,7 @@ var Index = React.createClass({
               <label className="w-choose-filte-type-label">Save as:
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
                   <option value="whistle">*.txt (whistle)</option>
-                  <option value="Fiddler2">*.saz (Fiddler2)</option>
-                  <option value="Fiddler4">*.saz (Fiddler4)</option>
+                  <option value="Fiddler">*.saz (Fiddler)</option>
                 </select>
               </label>
               <a type="button" className="btn btn-primary" onClick={this.exportBySave}>Confirm</a>
