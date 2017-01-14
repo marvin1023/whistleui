@@ -16,6 +16,7 @@ var curServerInfo;
 var initialData, startedLoad;
 var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
+var dataIndex = 10000;
 var lastRowId;
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
@@ -245,12 +246,31 @@ function setReqData(item) {
 	}
 }
 
-exports.addNetworkData = function(data) {
-  setReqData(data);
-  dataList.push(data);
-  $.each(dataCallbacks, function() {
-    this(networkModal);
+exports.addNetworkList = function(list) {
+  if (!Array.isArray(list) || !list.length) {
+    return;
+  }
+  var hasData;
+  list.forEach(function(data) {
+    if (!data || !(data.startTime >= 0) || !data.req || 
+        !data.req.headers || !data.res) {
+      return;
+    }
+    delete data.active;
+    delete data.selected;
+    delete data.hide;
+    delete data.order;
+    data.lost = true;
+    data.id = data.startTime + '-' + ++dataIndex;
+    setReqData(data);
+    dataList.push(data);
+    hasData = true;
   });
+  if (hasData) {
+    $.each(dataCallbacks, function() {
+      this(networkModal);
+    });
+  }
 };
 
 function getPendingIds() {
