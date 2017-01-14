@@ -245,6 +245,14 @@ function setReqData(item) {
 	}
 }
 
+exports.addNetworkData = function(data) {
+  setReqData(data);
+  dataList.push(data);
+  $.each(dataCallbacks, function() {
+    this(networkModal);
+  });
+};
+
 function getPendingIds() {
 	var pendingIds = [];
 	$.each(dataList, function() {

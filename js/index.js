@@ -16,6 +16,7 @@ var protocols = require('./protocols');
 var events = require('./events');
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
+var dataIndex = 10000;
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -1388,10 +1389,19 @@ var Index = React.createClass({
       return alert('The file size can not exceed 64m.');
     }
     dataCenter.sessions.imports(data, function(data) {
-      if (!data || data.ec !== 0) {
-        return alert('TODO');
+      if (Array.isArray(data)) {
+        data.forEach(function(item) {
+          if (!(item.startTime >= 0)) {
+            return;
+          }
+          delete item.active;
+          delete item.selected;
+          delete item.hide;
+          delete item.order;
+          item.id = item.startTime + '-' + ++dataIndex;
+          dataCenter.addNetworkData(item);
+        });
       }
-      
     });
   },
 	exportSessions: function(type) {
