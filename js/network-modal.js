@@ -292,6 +292,28 @@ proto.update = function(scrollAtBottom, force) {
 	return this._list.length > MAX_LENGTH;
 };
 
+proto.hasSelected = function() {
+  var list = this.list;
+  for (var i = 0, len = list.length; i < len; i++) {
+    var item = list[i];
+    if (!item.hide && item.selected) {
+      return true;
+    }
+  }
+  return false;
+};
+
+proto.hasUnselected = function() {
+  var list = this.list;
+  for (var i = 0, len = list.length; i < len; i++) {
+    var item = list[i];
+    if (!item.hide && !item.selected) {
+      return true;
+    }
+  }
+  return false;
+};
+
 proto.getSelected = function() {
 	
 	return this.getActive();

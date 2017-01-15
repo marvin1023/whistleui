@@ -16,6 +16,7 @@ var protocols = require('./protocols');
 var events = require('./events');
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
+var OPTIONS_WITH_SELECTED = ['removeSelected', 'exportWhistleFile', 'exportSazFile'];
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -138,27 +139,32 @@ var Index = React.createClass({
 		                          name: 'Remove All Sessions',
 		                          icon: 'remove',
 		                          id: 'removeAll',
+		                          disabled: true,
 		                          title: 'Ctrl[Command] + X'
 		                        },
 		                        {
 		                          name: 'Remove Selected Sessions',
 		                          id: 'removeSelected',
+		                          disabled: true,
                               title: 'Ctrl[Command] + D'
 		                        },
 		                        {
 		                          name: 'Remove Unselected Sessions',
 		                          id: 'removeUnselected',
+		                          disabled: true,
                               title: 'Ctrl[Command] + Shift + D'
 		                        },
 		                        {
 		                          name: 'Export Selected Sessions',
 		                          icon: 'export',
 		                          id: 'exportWhistleFile',
+		                          disabled: true,
                               title: 'Ctrl + S'
 		                        },
                             {
                               name: 'Export Selected Sessions (Fiddler)',
                               id: 'exportSazFile',
+                              disabled: true,
                               title: 'Ctrl + S'
                             },
                             {
@@ -1477,7 +1483,27 @@ var Index = React.createClass({
 				showValuesLineNumbers = state.showValuesLineNumbers;
 			}
 		}
-		
+		if (state.network) {
+		  var networkOptions = state.networkOptions;
+	    var hasUnselected = state.network.hasUnselected();
+	    if (state.network.hasSelected()) {
+	      networkOptions.forEach(function(option) {
+	        option.disabled = false;
+	        if (option.id === 'removeUnselected') {
+	          option.disabled = !hasUnselected;
+	        }
+	      });
+	    } else {
+	      networkOptions.forEach(function(option) {
+	        if (OPTIONS_WITH_SELECTED.indexOf(option.id) !== -1) {
+	          option.disabled = true;
+	        } else if (option.id === 'removeUnselected') {
+	          option.disabled = !hasUnselected;
+	        }
+	      });
+	      networkOptions[0].disabled = !hasUnselected;
+	    }
+		}
 		return (
 			<div className="main orient-vertical-box">
 				<div className={'w-menu w-' + name + '-menu-list'}>
