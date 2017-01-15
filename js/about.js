@@ -9,7 +9,28 @@ var dataCenter = require('./data-center');
 var util = require('./util');
 
 function compareVersion(v1, v2) {
-	return formatSemer(v1) > formatSemer(v2);
+  var test1 = '';
+  var test2 = '';
+  var index = v1 && v1.indexOf('-');
+  if (index > -1) {
+    test1 = v1.slice(index + 1);
+    v1 = v1.slice(0, index);
+  }
+  index = v2 && v2.indexOf('-');
+  if (index > -1) {
+    test2 = v2.slice(index + 1);
+    v2 = v2.slice(0, index);
+  }
+  v1 = formatSemer(v1);
+  v2 = formatSemer(v2);
+  if (v1 > v2) {
+    return true;
+  }
+  if (v2 > v1) {
+    return false;
+  }
+  
+  return test1 < test2;
 }
 
 function formatSemer(ver) {
