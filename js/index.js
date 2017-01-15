@@ -256,11 +256,10 @@ var Index = React.createClass({
 				    }
 				    return;
 				  }
-				  var selectedItems = modal && modal.getSelectedList();
-				  if (!selectedItems || !selectedItems.length) {
-				    return;
+				  var hasSelected = modal && modal.hasSelected();
+				  if (hasSelected) {
+				    $(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
 				  }
-				  $(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
 				}
 				
 				if (self.state.name === 'network' && e.keyCode === 73) {
