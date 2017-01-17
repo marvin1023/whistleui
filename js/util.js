@@ -358,6 +358,9 @@ var STATUS_CODES = {
 		};
 
 exports.getStatusMessage = function(res) {
+  if (!res.statusCode) {
+    return '';
+  }
 	return res.statusMessage || STATUS_CODES[res.statusCode] || 'unknown';
 };
 
