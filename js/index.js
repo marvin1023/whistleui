@@ -208,7 +208,13 @@ var Index = React.createClass({
   		.on( 'dragover', preventDefault)
   		.on('drop', function(e) {
   		  e.preventDefault();
-  		  var files = e.originalEvent.dataTransfer.files || [];
+  		  if (self.state.name !== 'network') {
+  		    return;
+  		  }
+  		  var files = e.originalEvent.dataTransfer.files;
+  		  if (!files || !files.length) {
+  		    return;
+  		  }
   		  var data = new FormData();
   		  data.append('importSessions', files[0]);
   		  self.uploadSessionsForm(data);
