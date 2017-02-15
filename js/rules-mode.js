@@ -36,7 +36,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRule(str) {
-				return /^(?:[a-z0-9.+\-]+:\/\/|[a-z]:(?:\\|\/(?!\/))|\/)/i.test(str);
+				return /^(?:[a-z0-9.+\-]+:\/\/|[a-z]:(?:\\|\/(?!\/)))/i.test(str) || (/^\//.test(str) && !/^\/\/[^/]/.test(str));
 			}
 			
 			function notExistRule(str) {
