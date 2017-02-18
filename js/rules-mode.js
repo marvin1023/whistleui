@@ -8,7 +8,7 @@ events.on('updatePlugins', function() {
 
 CodeMirror.defineMode('rules', function() {
 			function isIP(str) {
-				return /^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(?:\:\d+)?$/.test(str) || /^host:\/\//.test(str);
+				return /^(?:\/\/)?(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(?:\:\d+)?$/.test(str) || /^host:\/\//.test(str);
 			}
 			
 			function isHead(str) {
@@ -49,7 +49,7 @@ CodeMirror.defineMode('rules', function() {
 			
 			function isRegExp(str) {
 				
-				return /^\/(.+)\/(i)?$/.test(str);
+				return /^\/[^/](.*)\/i?$/.test(str);
 			}
 			
 			function isParams(str) {
