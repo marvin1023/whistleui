@@ -1513,7 +1513,8 @@ var Index = React.createClass({
 			<div className="main orient-vertical-box">
 				<div className={'w-menu w-' + name + '-menu-list'}>
   				<div onMouseEnter={this.showNetworkOptions} onMouseLeave={this.hideNetworkOptions} className={'w-menu-wrapper' + (showNetworkOptions ? ' w-menu-wrapper-show' : '')}>
-  				  <a onClick={this.showNetwork} onDoubleClick={this.clearNetwork} className="w-network-menu" style={{background: name == 'network' ? '#ddd' : null}} href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
+  				  <a onClick={this.showNetwork} onDoubleClick={this.clearNetwork} className="w-network-menu" title="Double click to remove all sessions" style={{background: name == 'network' ? '#ddd' : null}} 
+					href="javascript:;"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
             <MenuItem ref="networkMenuItem" options={state.networkOptions} className="w-network-menu-item" onClickOption={this.handleNetwork} />
           </div>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
