@@ -162,7 +162,7 @@ var Index = React.createClass({
                               title: 'Ctrl + S'
 		                        },
                             {
-                              name: 'Export Selected Sessions (Fiddler)',
+                              name: 'Export Selected Sessions (For Fiddler)',
                               id: 'exportSazFile',
                               disabled: true,
                               title: 'Ctrl + S'
@@ -1623,8 +1623,8 @@ var Index = React.createClass({
             <div className="modal-body">
               <label className="w-choose-filte-type-label">Save as:
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
-                  <option value="whistle">*.txt (whistle)</option>
-                  <option value="Fiddler">*.saz (Fiddler)</option>
+                  <option value="whistle">*.txt</option>
+                  <option value="Fiddler">*.saz (For Fiddler)</option>
                 </select>
               </label>
               <a type="button" className="btn btn-primary" onClick={this.exportBySave}>Confirm</a>
