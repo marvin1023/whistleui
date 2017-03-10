@@ -177,7 +177,7 @@ CodeMirror.defineMode('rules', function() {
                  type = 'variable-2 js-pac js-type';
                } else if (isRulesFile(str)) {
                  type = 'variable-2 js-rulesFile js-type';
-               } else if (!isIP(str) && isRule(str)) {
+               } else {
 								 type = 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
 							 }
 						}
@@ -185,10 +185,6 @@ CodeMirror.defineMode('rules', function() {
 						return true;
 					 });
 					
-					 if (type) {
-						 return type;
-					 }
-					 
 					 if (isIP(str)) {
 						 return 'number js-number';
 					 }
@@ -197,11 +193,7 @@ CodeMirror.defineMode('rules', function() {
 						 return 'attribute js-attribute';
 					 }
 					 
-					 if (isRule(str)) {
-						 return 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
-					 }
-					 
-					 return null;
+					 return type;
 				 }
 			};
 });
