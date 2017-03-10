@@ -177,7 +177,7 @@ CodeMirror.defineMode('rules', function() {
                  type = 'variable-2 js-pac js-type';
                } else if (isRulesFile(str)) {
                  type = 'variable-2 js-rulesFile js-type';
-               } else {
+               } else if (isRule(str)) {
 								 type = 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
 							 }
 						}
