@@ -234,10 +234,11 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 	return result;
 }
 
-exports.objectToString = function(obj) {
+exports.objectToString = function(obj, rawNames) {
 	var result = [];
+	rawNames = rawNames || {};
 	for (var i in obj) {
-		result.push(i + ': ' + (obj[i] || ''))
+		result.push((rawNames[i] || i) + ': ' + (obj[i] || ''));
 	}
 	return result.join('\r\n');
 };

@@ -40,10 +40,11 @@ var ReqDetail = React.createClass({
 		}
 		var name = btn && btn.name;
 		var modal = this.props.modal;
-		var req, headers, cookies, body, raw, query, form;
+		var req, headers, rawHeaders, cookies, body, raw, query, form;
 		body = raw = '';
 		if (modal) {
 			req = modal.req
+			rawHeaders = req.rawHeaders;
 			body = req.body || '';
 			headers = req.headers;
 			delete headers.Host;
@@ -56,7 +57,7 @@ var ReqDetail = React.createClass({
 			}
 			
 			raw = [req.method, req.method == 'CONNECT' ? headers.host : util.getPath(modal.url), 'HTTP/' + (req.httpVersion || '1.1')].join(' ')
-					+ '\r\n' + util.objectToString(headers) + '\r\n\r\n' + body;
+					+ '\r\n' + util.objectToString(headers, req.rawHeaderNames) + '\r\n\r\n' + body;
 		}
 		this.state.raw = raw;
 		this.state.body = body;
@@ -64,7 +65,7 @@ var ReqDetail = React.createClass({
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
-				{this.state.initedHeaders ? <div className={'fill w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={headers} /></div> : ''}
+				{this.state.initedHeaders ? <div className={'fill w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} /></div> : ''}
 				{this.state.initedTextView ? <Textarea value={body} className="fill w-detail-request-textview" hide={name != BTNS[1].name} /> : ''}
 				{this.state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties modal={cookies} /></div> : ''}
 				{this.state.initedWebForms ? <Divider vertical="true" className={'w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>

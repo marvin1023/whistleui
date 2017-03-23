@@ -222,6 +222,19 @@ function startLoadData() {
 	load();
 }
 
+function setRawHeaders(obj) {
+	var headers = obj.headers;
+	var rawHeaderNames = obj.rawHeaderNames;
+	if (!headers || !rawHeaderNames) {
+		return;
+	}
+	var rawHeaders = {};
+	Object.keys(headers).forEach(function(name) {
+		rawHeaders[rawHeaderNames[name] || name] = headers[name];
+	});
+	obj.rawHeaders = rawHeaders;
+}
+
 function setReqData(item) {
   var url = item.url;
   item.method = item.req.method;
@@ -233,6 +246,8 @@ function setReqData(item) {
 	item.result = /^[1-9]/.test(result) && parseInt(result, 10) || result;
 	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0].toLowerCase();
 	item.time = end ? end - item.startTime  : defaultValue;
+	setRawHeaders(item.req);
+	setRawHeaders(res);
 	if (!item.path) {
 	  item.protocol = item.isHttps ? 'HTTP' : util.getProtocol(url);
 	  item.hostname = item.isHttps ? 'Tunnel to' : util.getHost(url);
