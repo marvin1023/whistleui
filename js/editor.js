@@ -33,7 +33,8 @@ var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', '
 var rules = require('./rules-mode');
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
-var COMMENT_RE = /^\s*#+/;
+var COMMENT_RE = /^\s*#\s*/;
+var NO_SPACE_RE = /[^\s]/;
 
 var Editor = React.createClass({
 	getThemes: function() {
@@ -128,6 +129,7 @@ var Editor = React.createClass({
 					return;
 				}
 				var isShiftKey = e.shiftKey;
+				var isEmpty;
 				var ranges = [];
 				list.forEach(function(range) {
 					var anchor = range.anchor;
@@ -145,47 +147,47 @@ var Editor = React.createClass({
 						var line = editor.getLine(i);
 						if (COMMENT_RE.test(line)) {
 							hasComment = true;
-						} else {
+						} else if (NO_SPACE_RE.test(line)) {
 							hasRule = true;
 						}
 						lines.push(line);
 					}
-	
-					if (hasRule) {
-					  var lastIndex = lines.length - 1;
-					  var firstLine = lines[0];
-					  var lastLine = lines[lastIndex];
-						lines = lines.map(function(line) {
-						  if (COMMENT_RE.test(line)) {
-						    return isShiftKey ? line.replace(COMMENT_RE, '') : line;
-						  }
-						  return '#' + line;
-						});
-						anchor.ch +=  lines[0].length - firstLine.length;
-						if (anchor.ch < 0) {
-						  anchor.ch = 0;
-						}
-						if (head != anchor) {
-						  head.ch += lines[lastIndex].length - lastLine.length;
-						  if (head.ch < 0) {
-                head.ch = 0;
-              } 
-						}
-					} else {
-						var lastLine = lines[lines.length - 1];
-						var hashIndex = lastLine.indexOf('#');
-						if (hashIndex < head.ch) {
-							head.ch -= 1;
-						}
-						if (head != anchor && anchor.ch > 0) {
-							anchor.ch -= 1;
-						}
-		
-						lines = lines.map(function(line) {
-									return line.replace(COMMENT_RE, '');
-								});
+
+					if (isEmpty = !hasComment && !hasRule) {
+						return;
 					}
-					
+					var lastIndex, firstLine, lastLine;
+					if (hasRule) {
+					  lastIndex = lines.length - 1;
+					  firstLine = lines[0];
+					  lastLine = lines[lastIndex];
+						lines = lines.map(function(line) {
+							if (!NO_SPACE_RE.test(line)) {
+								return line;
+							}
+						  if (isShiftKey && COMMENT_RE.test(line)) {
+						    return line.replace(COMMENT_RE, '');
+						  }
+						  return '# ' + line;
+						});
+					} else {
+						firstLine = lines[0];
+						lastIndex = lines.length - 1;
+						lastLine = lines[lastIndex];
+						lines = lines.map(function(line) {
+							return line.replace(COMMENT_RE, '');
+						});
+					}
+					anchor.ch +=  lines[0].length - firstLine.length;
+					if (anchor.ch < 0) {
+						anchor.ch = 0;
+					}
+					if (head != anchor) {
+						head.ch += lines[lastIndex].length - lastLine.length;
+						if (head.ch < 0) {
+							head.ch = 0;
+						} 
+					}
 					if (revert) {
 						editor.replaceRange(lines.join('\n') + '\n', {line: head.line + 1, ch: 0}, {line: anchor.line, ch: 0});
 						ranges.push({anchor: head, head: anchor});
@@ -194,7 +196,9 @@ var Editor = React.createClass({
 						ranges.push({anchor: anchor, head: head});
 					}
 				});
-				editor.setSelections(ranges);
+				if (!isEmpty) {
+					editor.setSelections(ranges);
+				}
 			});
 		}
 	},
