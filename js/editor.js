@@ -178,11 +178,13 @@ var Editor = React.createClass({
 							return line.replace(COMMENT_RE, '');
 						});
 					}
-					anchor.ch +=  lines[0].length - firstLine.length;
-					if (anchor.ch < 0) {
-						anchor.ch = 0;
+					if (anchor.ch != 0) {
+						anchor.ch +=  lines[0].length - firstLine.length;
+						if (anchor.ch < 0) {
+							anchor.ch = 0;
+						}
 					}
-					if (head != anchor) {
+					if (head.ch != 0 && head != anchor) {
 						head.ch += lines[lastIndex].length - lastLine.length;
 						if (head.ch < 0) {
 							head.ch = 0;
