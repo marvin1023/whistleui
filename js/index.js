@@ -856,18 +856,23 @@ var Index = React.createClass({
 		var target = ReactDOM.findDOMNode(self.refs.createValuesInput);
 		var name = $.trim(target.value);
 		if (!name) {
-			alert('Value name can not be empty.');
+			alert('The name can not be empty.');
 			return;
 		}
 		
 		if (/\s/.test(name)) {
-			alert('Name can not have spaces.');
+			alert('The name can not contain spaces.');
+			return;
+		}
+
+		if (/#/.test(name)) {
+			alert('The name can not contain #.');
 			return;
 		}
 		
 		var modal = self.state.values;
 		if (modal.exists(name)) {
-			alert('Value name \'' + name + '\' already exists.');
+			alert('The name \'' + name + '\' already exists.');
 			return;
 		}
 		
