@@ -65,12 +65,12 @@ var ReqDetail = React.createClass({
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
-				{this.state.initedHeaders ? <div className={'fill w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} /></div> : ''}
+				{this.state.initedHeaders ? <div className={'fill w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
 				{this.state.initedTextView ? <Textarea value={body} className="fill w-detail-request-textview" hide={name != BTNS[1].name} /> : ''}
-				{this.state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties modal={cookies} /></div> : ''}
+				{this.state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties modal={cookies} enableViewSource="1" /></div> : ''}
 				{this.state.initedWebForms ? <Divider vertical="true" className={'w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
-					<div className="fill w-detail-request-query"><Properties modal={query} /></div>
-					<div className="fill w-detail-request-form"><Properties modal={form} /></div>
+					<div className="fill w-detail-request-query"><Properties modal={query} enableViewSource="1" /></div>
+					<div className="fill w-detail-request-form"><Properties modal={form} enableViewSource="1" /></div>
 				</Divider> : ''}
 				{this.state.initedRaw ? <Textarea value={raw} className="fill w-detail-request-raw" hide={name != BTNS[4].name} /> : ''}
 			</div>

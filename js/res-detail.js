@@ -99,7 +99,7 @@ var ResDetail = React.createClass({
 			<div className={'fill orient-vertical-box w-detail-content w-detail-response' 
 				+ (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
-				{this.state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} /></div> : ''}
+				{this.state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
 				{this.state.initedTextView ? <Textarea value={body} className="fill w-detail-response-textview" hide={name != BTNS[1].name} /> : ''}
 				{this.state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} modal={cookies} /></div> : ''}
 				{this.state.initedJSON ? <Textarea value={json} className="fill w-detail-response-json" hide={name != BTNS[3].name} /> : ''}
