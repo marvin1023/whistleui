@@ -1,5 +1,5 @@
 .w-properties-wrap { position: relative; }
-.w-properties-wrap:hover .w-properties-btn { display: inline-block; color: #333373; }
+.w-properties-wrap:hover .w-properties-btn { display: inline-block; }
 .w-properties-source { padding: 5px 10px; }
 .w-properties-view-source .w-properties-parsed { display: none; };
 .w-properties-view-parsed .w-properties-source { display: none; };
