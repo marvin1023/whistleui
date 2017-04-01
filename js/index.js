@@ -824,13 +824,13 @@ var Index = React.createClass({
 		var target = ReactDOM.findDOMNode(self.refs.createRulesInput);
 		var name = $.trim(target.value);
 		if (!name) {
-			alert('Rule name can not be empty.');
+			alert('The name can not be empty.');
 			return;
 		}
 		
 		var modal = self.state.rules;
 		if (modal.exists(name)) {
-			alert('Rule name \'' + name + '\' already exists.');
+			alert('The name \'' + name + '\' already exists.');
 			return;
 		}
 		
