@@ -54,7 +54,7 @@ var ResDetail = React.createClass({
 			} else if (json = util.parseJSON(body)) {
 				res.json = {
 					json: json,
-					str: JSON.stringify(json, null, '\t')
+					str: JSON.stringify(json, null, '  ')
 				};
 			}
 			if (headers && headers['set-cookie']) {
