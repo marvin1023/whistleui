@@ -34,7 +34,7 @@ var BtnGroup = React.createClass({
 						 
 						 return <button onClick={function() {
 							 self.handleClick(btn);
-						 }} key={btn.key} type="button" 
+						 }} onDoubleClick={self.props.onDoubleClick} key={btn.key} type="button" 
 							 	className={'btn btn-default' + (btn.active && !disabled ? ' active' : '')}>
 								 {icon}{btn.name}
 								</button>;	

@@ -132,7 +132,7 @@ var Log = React.createClass({
 						<a className="w-auto-scroll-log" href="javascript:;" onClick={this.autoRefresh}>AutoRefresh</a>
 						<a className="w-clear-log" href="javascript:;" onClick={this.clearLogs}>Clear</a>
 					</div>
-					<BtnGroup onClick={this.toggleTabs} btns={BTNS} />
+					<BtnGroup onClick={this.toggleTabs}  onDoubleClick={this.clearLogs} btns={BTNS} />
 					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (isPageLog ? '' : ' hide')}>
 						<ul ref="content">
 							{logs.map(function(log) {
