@@ -7,6 +7,7 @@ var Properties = require('./properties');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
 var Textarea = require('./textarea');
+var JSONViewer = require('./json-viewer');
 var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
 var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires', 'HttpOnly', 'Secure'];
 
@@ -42,13 +43,17 @@ var ResDetail = React.createClass({
 		var name = btn && btn.name;
 		var modal = this.props.modal;
 		var res, rawHeaders, headers, cookies, body, raw, json;
-		body = raw = json = '';
+		body = raw = '';
 		if (modal) {
 			res = modal.res
 			rawHeaders = res.rawHeaders;
 			body = res.body || '';
 			headers = res.headers;
-			json = util.stringify(body);
+			if (res.json) {
+				json = res.json;
+			} else {
+				json = res.json = util.parseJSON(body);
+			}
 			if (headers && headers['set-cookie']) {
 				cookies = headers['set-cookie'];
 				if (!$.isArray(cookies)) {
@@ -102,7 +107,7 @@ var ResDetail = React.createClass({
 				{this.state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
 				{this.state.initedTextView ? <Textarea value={body} className="fill w-detail-response-textview" hide={name != BTNS[1].name} /> : ''}
 				{this.state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} modal={cookies} /></div> : ''}
-				{this.state.initedJSON ? <Textarea value={json} className="fill w-detail-response-json" hide={name != BTNS[3].name} /> : ''}
+				{this.state.initedJSON ? <JSONViewer data={json} hide={name != BTNS[3].name} /> : ''}
 				{this.state.initedRaw ? <Textarea value={raw} className="fill w-detail-response-raw" hide={name != BTNS[4].name} /> : ''}
 			</div>
 		);

@@ -256,18 +256,15 @@ exports.getPath = function(url) {
 	return index == -1 ? '/' : url.substring(index);
 };
 
-exports.stringify = function(str) {
+exports.parseJSON = function(str) {
 	if (!str || !(str = str.trim()) || !/({[\w\W]+}|\[[\w\W]+\])/.test(str)) {
 		return '';
 	}
 	
 	str = RegExp.$1;
 	try {
-		str = JSON.parse(str);
-		return str ? JSON.stringify(str, null, '\t') : '';
+		return JSON.parse(str);
 	} catch(e) {}
-	
-	return '';
 };
 
 exports.unique = function(arr, reverse) {

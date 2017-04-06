@@ -1,0 +1,3 @@
+.w-properties-wrap:hover .w-properties-btn { display: inline-block; }
+.w-json-viewer-str, .w-json-viewer-tree { padding: 5px; }
+.w-json-viewer-tree>ul { background: none!important; font-size: 12px; }
