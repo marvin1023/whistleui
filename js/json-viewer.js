@@ -18,15 +18,12 @@ var JsonViewer = React.createClass({
     if (!data) {
       return state.emptyElem;
     }
-    if (state.data !== data) {
-      state.jsonStr = JSON.stringify(data, null, '\t');
-    }
 		return (
 				<div className={'fill orient-vertical-box w-properties-wrap w-json-viewer' + (props.hide ? ' hide' : '')}>
 					<a onClick={this.toggle} className="w-properties-btn">{ viewSource ? 'view parsed' : 'view source' }</a>
-          <pre className={'fill w-json-viewer-str' + (viewSource ? '' : ' hide')}>{state.jsonStr}</pre>
+          <pre className={'fill w-json-viewer-str' + (viewSource ? '' : ' hide')}>{data.str}</pre>
           <div className={'fill w-json-viewer-tree' + (viewSource ? ' hide' : '')}>
-            <JSONTree data={data} />
+            <JSONTree data={data.json} />
           </div>
 				</div>
 		);
