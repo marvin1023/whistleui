@@ -41,7 +41,7 @@ CodeMirror.defineMode('rules', function() {
 			
 			function notExistRule(str) {
 			  if (!/^(?:[a-z0-9.+\-]+:\/\/)/.test(str)) {
-			    return false;
+			    return true;
 			  }
 			  str = str.substring(0, str.indexOf(':'));
 			  return allRules.indexOf(str) == -1;
