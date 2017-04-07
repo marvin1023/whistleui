@@ -81,8 +81,8 @@ var Timeline = React.createClass({
 							}
 							
 							var total = item.endTime ? item.endTime - item.startTime + 'ms' : '-';
-							var title = 'Stalled: ' + stalled + '\nDNS: ' + dns + '\nRequest: ' + 
-							request + '\nResponse: ' + response + '\nLoad: ' + load + '\nTotal: ' + total;
+							var title = 'Stalled: ' + stalled + '\nDNS Lookup: ' + dns + '\nRequest Sent: ' + 
+							request + '\nResponse: ' + response + '\nContent Load: ' + load + '\nTotal: ' + total;
 							
 							return (
 									<li key={item.id} title={title}>
