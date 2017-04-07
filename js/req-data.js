@@ -276,7 +276,7 @@ var ReqData = React.createClass({
 						    		    path = item.path;
 						    		  }
 						    		  
-						    		  return (<tr ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
+						    		  return (<tr draggable="true" ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
