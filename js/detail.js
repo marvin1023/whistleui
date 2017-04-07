@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/detail.css');
 var React = require('react');
+var $ = require('jquery');
 var util = require('./util');
 var events = require('./events');
 var BtnGroup = require('./btn-group');
@@ -48,11 +49,36 @@ var ReqData = React.createClass({
 			self.toggleTab(TABS[0]);
 		}).on('composer', function() {
 			var modal = self.props.modal;
-			self.state.activeItem = modal && modal.getActive();
-			self.toggleTab(TABS[4], function() {
-				events.trigger('setComposer');
-			});
+			self.showComposer(modal && modal.getActive());
 		});
+	},
+	showComposer: function(item) {
+		if (item) {
+			this.state.activeItem = item;
+		}
+		this.toggleTab(TABS[4], function() {
+			events.trigger('setComposer');
+		});
+	},
+	onDragEnter: function(e) {
+		if (e.dataTransfer.types[0] === 'reqdataid') {
+			this.showComposer();
+			e.preventDefault();
+		}
+	},
+	onDrop: function(e) {
+		var modal = this.props.modal;
+		var id = e.dataTransfer.getData('reqDataId');
+		var list = modal && modal.list;
+		if (!id || !list) {
+			return;
+		}
+		for (var i = 0, len = list.length; i < len; i++) {
+			var data = list[i];
+			if (data && data.id === id) {
+				return this.showComposer(data);
+			}
+		}
 	},
 	toggleTab: function(tab, callback) {
 		this.selectTab(tab);
@@ -81,7 +107,7 @@ var ReqData = React.createClass({
 		var name = curTab && curTab.name;
 		
 		return (
-				<div className="fill orient-vertical-box w-detail">
+				<div className="fill orient-vertical-box w-detail" onDragEnter={this.onDragEnter} onDrop={this.onDrop}>
 				<BtnGroup onClick={this.toggleTab} tabs={TABS} />
 				{this.state.initedOverview ? <Overview modal={activeItem} hide={name != TABS[0].name} /> : ''}
 				{this.state.initedRequest ? <ReqDetail modal={activeItem} hide={name != TABS[1].name} /> : ''}

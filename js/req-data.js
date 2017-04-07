@@ -130,6 +130,10 @@ var ReqData = React.createClass({
 		
 		$(window).on('resize', render);
 	},
+	onDragStart: function(e) {
+		var target = $(e.target).closest('.w-req-data-item');
+		e.dataTransfer.setData('reqDataId', target.attr('data-id'));
+	},
 	onClick: function(e, item, hm) {
 		var self = this;
 		var modal = self.props.modal;
@@ -265,7 +269,7 @@ var ReqData = React.createClass({
 						    </table>
 						</div>
 						<div ref="container" tabIndex="0" className="w-req-data-list fill">
-							<table ref="content" className="table">
+							<table ref="content" className="table" onDragStart={this.onDragStart}>
 						      <tbody>
 						      {
 						    	  list.map(function(item, i) {
