@@ -36,13 +36,10 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRule(str) {
-				return /^(?:[a-z0-9.+\-]+:\/\/|[a-z]:(?:\\|\/(?!\/)))/i.test(str) || (/^\//.test(str) && !/^\/\/[^/]/.test(str));
+				return /^[a-z0-9.+\-]+:\/\//i.test(str);
 			}
 			
 			function notExistRule(str) {
-			  if (!/^(?:[a-z0-9.+\-]+:\/\/)/.test(str)) {
-			    return true;
-			  }
 			  str = str.substring(0, str.indexOf(':'));
 			  return allRules.indexOf(str) == -1;
 			}
@@ -110,6 +107,10 @@ CodeMirror.defineMode('rules', function() {
 			
 			function isPac(str) {
 			  return /^pac:\/\//.test(str);
+			}
+
+			function isLocalPath(str) {
+				return /^[a-z]:(?:\\|\/(?!\/))/i.test(str) || /^\/[^/]/.test(str);
 			}
 			
 			return {
@@ -191,6 +192,10 @@ CodeMirror.defineMode('rules', function() {
 					 
 					 if (isRegExp(str)) {
 						 return 'attribute js-attribute';
+					 }
+
+					 if (isLocalPath(str)) {
+						 return 'builtin js-rule js-type';
 					 }
 					 
 					 return type;
