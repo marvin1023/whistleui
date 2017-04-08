@@ -122,7 +122,7 @@ var ReqData = React.createClass({
 			if (self.state.draggable === draggable) {
 				return;
 			}
-			if (draggable && !getSelectedRows()) {
+			if (!draggable && !getSelectedRows()) {
 				var range = window.getSelection();
 				range && range.removeAllRanges();
 			}
