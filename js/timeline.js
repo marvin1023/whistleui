@@ -101,7 +101,7 @@ var Timeline = React.createClass({
 							
 							return (
 									<li key={item.id} title={title} className="w-detail-timeline-multi">
-										<span title={item.url} className="w-detail-timeline-url">{util.getFilename(item.url)}</span>	
+										<span title={item.url} className="w-detail-timeline-url">{util.getFilename(item)}</span>	
 										<span style={{width: stalledRate}} className="w-detail-timeline-stalled"></span>
 										<span style={{width: dnsRate}} className="w-detail-timeline-dns"></span>
 										<span style={{width: requestRate}} className="w-detail-timeline-request"></span>

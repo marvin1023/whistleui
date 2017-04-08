@@ -287,7 +287,11 @@ exports.unique = function(arr, reverse) {
 	return result;
 };
 
-exports.getFilename = function(url) {
+exports.getFilename = function(item) {
+	var url = item.url;
+	if (item.isHttps) {
+		return url;
+	}
 	url = removeProtocol(url.replace(/[?#].*/, ''));
 	var index = url.lastIndexOf('/');
 	return index != -1 && url.substring(index + 1) || '/';
