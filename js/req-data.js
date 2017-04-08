@@ -98,6 +98,9 @@ function getSelection() {
 }
 
 var ReqData = React.createClass({
+	getInitialState: function() {
+		return { draggable: true };
+	},
 	componentDidMount: function() {
 		var self = this;
 		var timer;
@@ -110,8 +113,16 @@ var ReqData = React.createClass({
 		};
 		self.container = ReactDOM.findDOMNode(self.refs.container);
 		self.content = ReactDOM.findDOMNode(self.refs.content);
+		var toggoleDraggable = function(e) {
+			var draggable = !e.shiftKey;
+			if (self.state.draggable === draggable) {
+				return;
+			}
+			self.setState({ draggable: draggable });
+		};
 		$(self.container).on('keydown', function(e) {
 			var modal = self.props.modal;
+			toggoleDraggable(e);
 			if (!modal) {
 				return;
 			}
@@ -126,7 +137,9 @@ var ReqData = React.createClass({
 				self.onClick(e, item, true);
 				e.preventDefault();
 			}
-		}).on('scroll', render);
+		}).on('scroll', render).on('keyup', toggoleDraggable)
+		.on('mouseover', toggoleDraggable)
+		.on('mouseleave', toggoleDraggable);
 		
 		$(window).on('resize', render);
 	},
@@ -198,7 +211,7 @@ var ReqData = React.createClass({
 			return;
 		}
 		var modal = this.props.modal;
-		var state = this.state || {};
+		var state = this.state;
 		var name = target.className;
 		if (name == 'order') {
 			columns = {};
@@ -233,12 +246,13 @@ var ReqData = React.createClass({
 	},
 	render: function() {
 		var self = this;
-		var state = this.state || {};
+		var state = this.state;
 		var modal = self.props.modal;
 		var list = modal ? modal.list : [];
 		var hasKeyword = modal && modal.hasKeyword();
 		var index = 0;
 		var indeies = self.getVisibleIndex();
+		var draggable = state.draggable;
 		var startIndex, endIndex;
 		if (indeies) {
 			startIndex = indeies[0];
@@ -280,7 +294,7 @@ var ReqData = React.createClass({
 						    		    path = item.path;
 						    		  }
 						    		  
-						    		  return (<tr draggable="true" ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
+						    		  return (<tr draggable={draggable} ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
