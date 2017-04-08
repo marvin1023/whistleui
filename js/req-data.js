@@ -122,10 +122,6 @@ var ReqData = React.createClass({
 			if (self.state.draggable === draggable) {
 				return;
 			}
-			if (!draggable && !getSelectedRows()) {
-				var range = window.getSelection();
-				range && range.removeAllRanges();
-			}
 			self.setState({ draggable: draggable });
 		};
 		$(self.container).on('keydown', function(e) {
@@ -158,6 +154,32 @@ var ReqData = React.createClass({
 	onClick: function(e, item, hm) {
 		var self = this;
 		var modal = self.props.modal;
+		var resetRange = function() {
+			var range = window.getSelection();
+			if (range) {
+				range.removeAllRanges();
+				var target = e.target;
+				var row = $(target).closest('.w-req-data-item')[0];
+				if (row) {
+					var draggable = row.draggable;
+					row.draggable = false;
+					var r = document.createRange();
+					r.selectNodeContents(target);
+					range.addRange(r);
+					if (draggable) {
+						row.draggable = true;
+					}
+				}
+				// select target
+			}
+			return range;
+		};
+		if (e.shiftKey) {
+			var rows = getSelectedRows();
+			!rows && resetRange();
+		} else {
+			resetRange();
+		}
 		var allowMultiSelect = e.ctrlKey || e.metaKey;
 		if (hm || !allowMultiSelect) {
 			self.clearSelection();
