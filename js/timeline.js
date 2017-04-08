@@ -19,7 +19,6 @@ var Timeline = React.createClass({
 			if (!startTime || item.startTime < startTime) {
 				startTime = item.startTime;
 			}
-			
 		});
 		
 		list.forEach(function(item) {
@@ -29,6 +28,7 @@ var Timeline = React.createClass({
 			}
 		});
 		
+		var len = list.length;
 		return (
 				<div className={'fill orient-vertical-box w-detail-content w-detail-timeline' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<ul>
@@ -81,17 +81,32 @@ var Timeline = React.createClass({
 							}
 							
 							var total = item.endTime ? item.endTime - item.startTime + 'ms' : '-';
+							
+							if (len === 1) {
+								return (
+									<li key="w-detail-timeline-one" className="w-detail-timeline-one">
+										<ul>
+											<li><span className="w-detail-timeline-url">URL:</span><span className="w-detail-timeline-full-url" title={item.url}>{item.url}</span></li>
+											<li><span className="w-detail-timeline-url">DNS Lookup:</span><span style={{width: dnsRate}} className="w-detail-timeline-dns"></span><span title= {title} className="w-detail-timeline-time">{dns}</span></li>
+											<li><span className="w-detail-timeline-url">Request Sent:</span><span style={{width: dnsRate}}></span><span style={{width: requestRate}} className="w-detail-timeline-request"> </span><span title= {title} className="w-detail-timeline-time">{request}</span></li>
+											<li><span className="w-detail-timeline-url">Response:</span><span style={{width: dnsRate}}></span><span style={{width: requestRate}}></span><span style={{width: responseRate}} className="w-detail-timeline-response"></span><span title= {title} className="w-detail-timeline-time">{response}</span></li>
+											<li><span className="w-detail-timeline-url">Content Load:</span><span style={{width: dnsRate}}></span><span style={{width: requestRate}}></span><span style={{width: responseRate}}></span><span style={{width: loadRate}} className="w-detail-timeline-load"></span><span title= {title} className="w-detail-timeline-time">{load}</span></li>
+											<li><span className="w-detail-timeline-url">Total:</span><span title= {title} className="w-detail-timeline-time">{total}</span></li>
+										</ul>
+									</li>	
+								);
+							}
 							var title = 'URL: ' + item.url + '\nStalled: ' + stalled + '\nDNS Lookup: ' + dns + '\nRequest Sent: ' + 
 							request + '\nResponse: ' + response + '\nContent Load: ' + load + '\nTotal: ' + total;
 							
 							return (
-									<li key={item.id} title={title}>
+									<li key={item.id} title={title} className="w-detail-timeline-multi">
 										<span title={item.url} className="w-detail-timeline-url">{util.getFilename(item.url)}</span>	
 										<span style={{width: stalledRate}} className="w-detail-timeline-stalled"></span>
 										<span style={{width: dnsRate}} className="w-detail-timeline-dns"></span>
-										<span style={{width: requestRate}} className="w-detail-timeline-request"> </span>
-										<span style={{width: responseRate}} className="w-detail-timeline-response"> </span>
-										<span style={{width: loadRate}} className="w-detail-timeline-load"> </span>
+										<span style={{width: requestRate}} className="w-detail-timeline-request"></span>
+										<span style={{width: responseRate}} className="w-detail-timeline-response"></span>
+										<span style={{width: loadRate}} className="w-detail-timeline-load"></span>
 										<span title= {title} className="w-detail-timeline-time">{total}</span>
 									</li>		
 							);
