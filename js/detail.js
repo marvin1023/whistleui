@@ -61,7 +61,7 @@ var ReqData = React.createClass({
 		});
 	},
 	onDragEnter: function(e) {
-		if (e.dataTransfer.types[0] === 'reqdataid') {
+		if (e.dataTransfer.types.indexOf('reqdataid') != -1) {
 			this.showComposer();
 			e.preventDefault();
 		}
