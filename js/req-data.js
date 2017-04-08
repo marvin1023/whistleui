@@ -118,6 +118,9 @@ var ReqData = React.createClass({
 			if (self.state.draggable === draggable) {
 				return;
 			}
+			if (draggable && !getSelectedRows()) {
+				window.getSelection().removeAllRanges();
+			}
 			self.setState({ draggable: draggable });
 		};
 		$(self.container).on('keydown', function(e) {
