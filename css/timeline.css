@@ -2,7 +2,7 @@
 .w-detail-timeline li {padding: 2px 0 2px; position: relative; white-space: nowrap;}
 .w-detail-timeline span {display: inline-block; font-size: 12px; height: 20px; line-height: 20px; overflow: hidden; text-overflow: ellipsis; cursor: default;}
 .w-detail-timeline-url {padding-right: 5px; width: 20%; text-align: right;}
-.w-detail-timeline-stalled {background: #eee;}
+.w-detail-timeline-stalled {background: #aaa;}
 .w-detail-timeline-dns {background: #8cd2c6;}
 .w-detail-timeline-request {background: #fdfdb2;}
 .w-detail-timeline-response {background: #fbb361;}
