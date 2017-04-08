@@ -78,7 +78,11 @@ function getSelectedRows() {
 	if (!range) {
 		return;
 	}
-	range = range.getRangeAt(0);
+	try {
+		range = range.getRangeAt(0);
+	} catch(e) {
+		return;
+	}
 	var startElem = $(range.startContainer).closest('.w-req-data-item');
 	if (!startElem.length) {
 		return null;
@@ -119,7 +123,8 @@ var ReqData = React.createClass({
 				return;
 			}
 			if (draggable && !getSelectedRows()) {
-				window.getSelection().removeAllRanges();
+				var range = window.getSelection();
+				range && range.removeAllRanges();
 			}
 			self.setState({ draggable: draggable });
 		};
