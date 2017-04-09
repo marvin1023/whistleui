@@ -5,7 +5,7 @@ var util = require('./util');
 
 var JsonViewer = React.createClass({
 	getInitialState: function() {
-		return { emptyElem: <div className="hide"></div> };
+		return {};
 	},
   toggle: function() {
 		this.setState({ viewSource: !this.state.viewSource });
@@ -15,11 +15,14 @@ var JsonViewer = React.createClass({
 		var viewSource = state.viewSource
     var props = this.props;
     var data = props.data;
+		var noData = !data;
     if (!data) {
-      return state.emptyElem;
-    }
+      data = state.lastData;
+    } else {
+			state.lastData = data;
+		}
 		return (
-				<div className={'fill orient-vertical-box w-properties-wrap w-json-viewer' + (props.hide ? ' hide' : '')}>
+				<div className={'fill orient-vertical-box w-properties-wrap w-json-viewer' + ((noData || props.hide) ? ' hide' : '')}>
 					<a onClick={this.toggle} className="w-properties-btn">{ viewSource ? 'view parsed' : 'view source' }</a>
           <pre className={'fill w-json-viewer-str' + (viewSource ? '' : ' hide')}>{data.str}</pre>
           <div className={'fill w-json-viewer-tree' + (viewSource ? ' hide' : '')}>
