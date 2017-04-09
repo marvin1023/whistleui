@@ -45,6 +45,7 @@ var Home = React.createClass({
 									<th className="w-plugins-name">Name</th>
 									<th className="w-plugins-version">Version</th>
 									<th className="w-plugins-operation">Operation</th>
+									<th className="w-plugins-desc">Description</th>
 								</tr>
 							</thead>
 						</table>
@@ -70,13 +71,14 @@ var Home = React.createClass({
 													data-name={name} checked={checked} disabled={disabled} onChange={self.props.onChange} />
 											</td>
 											<td className="w-plugins-date">{new Date(plugin.mtime).toLocaleString()}</td>
-											<td className="w-plugins-name" title={plugin.description}><a href={url} target="_blank" data-name={name} onClick={self.onOpen}>{name}</a></td>
+											<td className="w-plugins-name" title={name}><a href={url} target="_blank" data-name={name} onClick={self.onOpen}>{name}</a></td>
 											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
 											<td className="w-plugins-operation">
-												<a href={url} target="_blank" data-name={name} onClick={self.onOpen}>Open</a>	
+												<a href={url} target="_blank" data-name={name} onClick={self.onOpen}>Option</a>	
 												{(plugin.rules || plugin._rules) ? <a href="javascript:;" data-name={name} onClick={self.showRules}>Rules</a> : <span className="disabled">Rules</span>}
-												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Homepage</a> : <span className="disabled">Homepage</span>}
+												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Help</a> : <span className="disabled">Help</span>}
 											</td>
+											<td className="w-plugins-desc" title={plugin.description}>{plugin.description}</td>
 										</tr>
 									);
 								}) : <tr><td colSpan="5" className="w-empty"><a href="https://github.com/whistle-plugins" target="_blank">no data</a></td></tr>}
