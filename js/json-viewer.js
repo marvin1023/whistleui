@@ -5,7 +5,7 @@ var util = require('./util');
 
 var JsonViewer = React.createClass({
 	getInitialState: function() {
-		return {};
+		return { lastData: {} };
 	},
   toggle: function() {
 		this.setState({ viewSource: !this.state.viewSource });
