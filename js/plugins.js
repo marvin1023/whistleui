@@ -64,7 +64,7 @@ var Home = React.createClass({
 									var disabled = data.disabledAllRules || data.disabledAllPlugins;
 									var url = location.protocol + '//' + name + '.' + data.localUIHost + '/';
 									return (
-										<tr key={name}>
+										<tr key={name} className={disabled ? 'w-plugins-disable' : ''}>
 											<th className="w-plugins-order">{i + 1}</th>
 											<td className="w-plugins-active">
 												<input type="checkbox"  title={disabled ? 'Disabled' : (checked ? 'Disable ' : 'Enable ') + name} 
