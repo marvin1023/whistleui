@@ -6,30 +6,21 @@ var dataCenter = require('./data-center');
 var MAX_LENGTH =1024 * 100;
 
 var Tips = React.createClass({
-	renderNonText: function(type, size) {
-		type = type ? 'Type: ' + type + ',' : '';
-		return <p>Non Text ({type}Size: {size})</p>
-	},
-	renderNonContent: function(statusCode) {
-		statusCode = statusCode ? ' (Status Code: ' + statusCode + ')' : '';
-		return <p>No Content{statusCode}</p>
-	},
-	renderTooLarge: function(size) {
-		return <p>Too Large (Size: {size})</p>
-	},
 	render: function() {
 		var data = this.props.data || { hide: true };
-		var tips;
-		if (data.tooLarge) {
-			tips = this.renderTooLarge(data.size);
-		} else if (data.size) {
-			tips = this.renderNonText(data.type, data.size);
-		} else {
-			tips = this.renderNonContent(data.statusCode);
+		if (data.ws) {
+			return (
+				<div className={'w-textview-tips' + (data.hide ? ' hide' : '')}>
+					<p>WebSocket</p>
+					<a href="https://github.com/whistle-plugins/whistle.websocket" target="_blank">
+						Click here for more information
+					</a>
+				</div>
+			);
 		}
 		return (
 			<div className={'w-textview-tips' + (data.hide ? ' hide' : '')}>
-				{tips}
+				<p>{data.tooLarge ? 'The Text Is Too Large' : (data.noContent ? 'No Content' : 'Non Text')}</p>
 				{data.url ? <a href={data.url} target="_blank">Open the URL in a new window</a> : undefined}
 			</div>
 		);
@@ -45,10 +36,6 @@ var Textarea = React.createClass({
 	},
 	componentDidUpdate: function() {
 		this.updateValue();
-	},
-	shouldComponentUpdate: function(nextProps) {
-		var hide = util.getBoolean(this.props.hide);
-		return hide != util.getBoolean(nextProps.hide) || (!hide && this.props.value != nextProps.value);
 	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();

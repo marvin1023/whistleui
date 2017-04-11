@@ -40,7 +40,7 @@ var ReqDetail = React.createClass({
 		}
 		var name = btn && btn.name;
 		var modal = this.props.modal;
-		var req, headers, rawHeaders, cookies, body, raw, query, form;
+		var req, headers, rawHeaders, cookies, body, raw, query, form, tips;
 		body = raw = '';
 		if (modal) {
 			req = modal.req
@@ -58,6 +58,15 @@ var ReqDetail = React.createClass({
 			
 			raw = [req.method, req.method == 'CONNECT' ? headers.host : util.getPath(modal.url), 'HTTP/' + (req.httpVersion || '1.1')].join(' ')
 					+ '\r\n' + util.objectToString(headers, req.rawHeaderNames) + '\r\n\r\n' + body;
+			if (/^wss?:/.test(modal.url)) {
+				tips = { ws: true };
+			} else if (modal.requestTime) {
+				if (req.size === 0) {
+					tips = { noContent: true };
+				}	else if (!body) {
+					tips = { tooLarge: true };
+				}
+			}
 		}
 		this.state.raw = raw;
 		this.state.body = body;
@@ -66,7 +75,7 @@ var ReqDetail = React.createClass({
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
 				{this.state.initedHeaders ? <div className={'fill w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
-				{this.state.initedTextView ? <Textarea value={body} className="fill w-detail-request-textview" hide={name != BTNS[1].name} /> : ''}
+				{this.state.initedTextView ? <Textarea tips={tips} value={body} className="fill w-detail-request-textview" hide={name != BTNS[1].name} /> : ''}
 				{this.state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties modal={cookies} enableViewSource="1" /></div> : ''}
 				{this.state.initedWebForms ? <Divider vertical="true" className={'w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
 					<div className="fill w-detail-request-query"><Properties modal={query} enableViewSource="1" /></div>

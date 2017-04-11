@@ -35,14 +35,15 @@ var ResDetail = React.createClass({
 		this.state['inited' + btn.name] = true;
 	},
 	render: function() {
-		var btn = this.state.btn;
+		var state = this.state;
+		var btn = state.btn;
 		if (!btn) {
 			btn = BTNS[0];
 			this.selectBtn(btn);
 		}
 		var name = btn && btn.name;
 		var modal = this.props.modal;
-		var res, rawHeaders, headers, cookies, body, raw, json;
+		var res, rawHeaders, headers, cookies, body, raw, json, tips;
 		body = raw = '';
 		if (modal) {
 			res = modal.res
@@ -98,20 +99,40 @@ var ResDetail = React.createClass({
 				raw = ['HTTP/' + (modal.req.httpVersion || '1.1'), res.statusCode, util.getStatusMessage(res)].join(' ')
 					  + '\r\n' + util.objectToString(headers, res.rawHeaderNames) + '\r\n\r\n' + body;
 			}
+			if (/^wss?:/.test(modal.url)) {
+				tips = { ws: true };
+			} else if (headers && !body && modal.responseTime) {
+				if (res.size === 0) {
+					tips = { noContent: true };
+					if (util.hasBody(res)) {
+						tips.url = modal.url;
+					}
+				} else {
+					var nonText = util.getContentType(headers);
+					if (!headers['content-type'] || (nonText && nonText !== 'IMG')) {
+						tips = { tooLarge: true };
+					} else {
+						tips = { size: res.size };
+					}
+					if (!modal.isHttps) {
+						tips.url = modal.url;
+					}
+				}
+			}
 		}
 		
-		this.state.raw = raw;
-		this.state.body = body;
+		state.raw = raw;
+		state.body = body;
 		
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-response' 
 				+ (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
-				{this.state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
-				{this.state.initedTextView ? <Textarea value={body} className="fill w-detail-response-textview" hide={name != BTNS[1].name} /> : ''}
-				{this.state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} modal={cookies} /></div> : ''}
-				{this.state.initedJSON ? <JSONViewer data={json} hide={name != BTNS[3].name} /> : ''}
-				{this.state.initedRaw ? <Textarea value={raw} className="fill w-detail-response-raw" hide={name != BTNS[4].name} /> : ''}
+				{state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
+				{state.initedTextView ? <Textarea tips={tips} value={body} className="fill w-detail-response-textview" hide={name != BTNS[1].name} /> : ''}
+				{state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} modal={cookies} /></div> : ''}
+				{state.initedJSON ? <JSONViewer data={json} hide={name != BTNS[3].name} /> : ''}
+				{state.initedRaw ? <Textarea value={raw} className="fill w-detail-response-raw" hide={name != BTNS[4].name} /> : ''}
 			</div>
 		);
 	}

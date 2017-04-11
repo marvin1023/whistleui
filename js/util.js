@@ -131,38 +131,42 @@ exports.getClasses = function getClasses(obj) {
 };
 
 exports.getContentType = function getContentType(contentType) {
-	if (contentType && typeof contentType != 'string') {
-		contentType = contentType['content-type'] || contentType.contentType;
-	}
-	
-	if (typeof contentType == 'string') {
-		contentType = contentType.toLowerCase();
-		if (contentType.indexOf('javascript') != -1) {
-	        return 'JS';
-	    }
-		
-		if (contentType.indexOf('css') != -1) {
-	        return 'CSS';
-	    }
-		
-		if (contentType.indexOf('html') != -1) {
-	        return 'HTML';
-	    }
-		
-		if (contentType.indexOf('json') != -1) {
-	        return 'JSON';
-	    }
-		
-		if (contentType.indexOf('text/') != -1) {
-	        return 'TEXT';
-	    }
-		
-		if (contentType.indexOf('image') != -1) {
-	        return 'IMG';
-	    } 
-	}
-	
-	return null;
+  if (contentType && typeof contentType != 'string') {
+    contentType = contentType['content-type'] || contentType.contentType;
+  }
+
+  if (typeof contentType == 'string') {
+    contentType = contentType.toLowerCase();
+    if (contentType.indexOf('javascript') != -1) {
+      return 'JS';
+    }
+
+    if (contentType.indexOf('css') != -1) {
+      return 'CSS';
+    }
+
+    if (contentType.indexOf('html') != -1) {
+      return 'HTML';
+    }
+
+    if (contentType.indexOf('json') != -1) {
+      return 'JSON';
+    }
+
+    if (contentType.indexOf('xml') != -1) {
+      return 'XML';
+    }
+
+    if (contentType.indexOf('text/') != -1) {
+      return 'TEXT';
+    }
+
+    if (contentType.indexOf('image') != -1) {
+      return 'IMG';
+    }
+  }
+
+  return null;
 };
 
 function getHost(url) {
@@ -172,6 +176,12 @@ function getHost(url) {
   url = end == -1 ? url.substring(start) : url.substring(start, end);
   return url;
 }
+
+exports.hasBody = function hasBody(res) {
+  var statusCode = res.statusCode;
+  return !(statusCode == 204 || (statusCode >= 300 && statusCode < 400) ||
+		(100 <= statusCode && statusCode <= 199));
+};
 
 exports.getHostname = function getHostname(url) {
 	url = getHost(url);
