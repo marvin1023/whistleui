@@ -13,7 +13,7 @@ var Tips = React.createClass({
 				<div className={'w-textview-tips' + (data.hide ? ' hide' : '')}>
 					<p>WebSocket</p>
 					<a href="https://github.com/whistle-plugins/whistle.websocket" target="_blank">
-						Click here for more information
+						Click here to install the plugin
 					</a>
 				</div>
 			);
