@@ -5,6 +5,37 @@ var util = require('./util');
 var dataCenter = require('./data-center');
 var MAX_LENGTH =1024 * 100;
 
+var Tips = React.createClass({
+	renderNonText: function(type, size) {
+		type = type ? 'Type: ' + type + ',' : '';
+		return <p>Non Text ({type}Size: {size})</p>
+	},
+	renderNonContent: function(statusCode) {
+		statusCode = statusCode ? ' (Status Code: ' + statusCode + ')' : '';
+		return <p>No Content{statusCode}</p>
+	},
+	renderTooLarge: function(size) {
+		return <p>Too Large (Size: {size})</p>
+	},
+	render: function() {
+		var data = this.props.data || { hide: true };
+		var tips;
+		if (data.tooLarge) {
+			tips = this.renderTooLarge(data.size);
+		} else if (data.size) {
+			tips = this.renderNonText(data.type, data.size);
+		} else {
+			tips = this.renderNonContent(data.statusCode);
+		}
+		return (
+			<div className={'w-textview-tips' + (data.hide ? ' hide' : '')}>
+				{tips}
+				{data.url ? <a href={data.url} target="_blank">Open the URL in a new window</a> : undefined}
+			</div>
+		);
+	} 
+});
+
 var Textarea = React.createClass({
 	getInitialState: function() {
 		return {};
@@ -93,6 +124,7 @@ var Textarea = React.createClass({
 		var displayClass = value ? '' : ' hide';
 		return (
 				<div className={'fill orient-vertical-box w-textarea' + (this.props.hide ? ' hide' : '')}>
+					<Tips data={this.props.tips} />
 					<div className="w-textarea-bar">
 						{showAddToValuesBtn ? <a className={'w-add' + displayClass} onClick={this.showAddToValues} href="javascript:;">AddToValues</a> : ''}	
 						<a className={'w-edit' + displayClass} onClick={this.edit} href="javascript:;">Edit</a>
