@@ -104,9 +104,6 @@ var ResDetail = React.createClass({
 			} else if (headers && !body && modal.responseTime) {
 				if (res.size === 0) {
 					tips = { noContent: true };
-					if (util.hasBody(res)) {
-						tips.url = modal.url;
-					}
 				} else {
 					var nonText = util.getContentType(headers);
 					if (!headers['content-type'] || (nonText && nonText !== 'IMG')) {
@@ -114,9 +111,9 @@ var ResDetail = React.createClass({
 					} else {
 						tips = { size: res.size };
 					}
-					if (!modal.isHttps) {
-						tips.url = modal.url;
-					}
+				}
+				if (!modal.isHttps) {
+					tips.url = modal.url;
 				}
 			}
 		}
