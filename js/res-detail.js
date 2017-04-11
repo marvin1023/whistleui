@@ -102,7 +102,7 @@ var ResDetail = React.createClass({
 			if (/^wss?:/.test(modal.url)) {
 				tips = { ws: true };
 			} else if (headers && !body && modal.responseTime) {
-				if (res.size === 0) {
+				if (modal.isHttps || res.size === 0) {
 					tips = { noContent: true };
 				} else {
 					var nonText = util.getContentType(headers);

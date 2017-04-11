@@ -61,7 +61,7 @@ var ReqDetail = React.createClass({
 			if (/^wss?:/.test(modal.url)) {
 				tips = { ws: true };
 			} else if (modal.requestTime) {
-				if (req.size === 0) {
+				if (modal.isHttps || req.size === 0) {
 					tips = { noContent: true };
 				}	else if (!body) {
 					tips = { tooLarge: true };
