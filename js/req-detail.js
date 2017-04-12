@@ -58,13 +58,15 @@ var ReqDetail = React.createClass({
 			
 			raw = [req.method, req.method == 'CONNECT' ? headers.host : util.getPath(modal.url), 'HTTP/' + (req.httpVersion || '1.1')].join(' ')
 					+ '\r\n' + util.objectToString(headers, req.rawHeaderNames) + '\r\n\r\n' + body;
-			if (/^wss?:/.test(modal.url)) {
-				tips = { ws: true };
+			if (modal.isHttps) {
+				tips = { isHttps: true };
+			} else if (/^wss?:/.test(modal.url)) {
+			tips = { ws: true };
 			} else if (modal.requestTime) {
-				if (modal.isHttps || req.size === 0) {
-					tips = { noContent: true };
+				if (req.size === 0) {
+					tips = { message: 'No Content' };
 				}	else if (!body) {
-					tips = { tooLarge: true };
+					tips = { message: 'Request Body Too Large To Display' };
 				}
 			}
 		}

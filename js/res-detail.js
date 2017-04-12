@@ -99,22 +99,23 @@ var ResDetail = React.createClass({
 				raw = ['HTTP/' + (modal.req.httpVersion || '1.1'), res.statusCode, util.getStatusMessage(res)].join(' ')
 					  + '\r\n' + util.objectToString(headers, res.rawHeaderNames) + '\r\n\r\n' + body;
 			}
-			if (/^wss?:/.test(modal.url)) {
+			if (modal.isHttps) {
+				tips = { isHttps: true };
+			} else if (/^wss?:/.test(modal.url)) {
 				tips = { ws: true };
 			} else if (headers && !body && modal.responseTime) {
-				if (modal.isHttps || res.size === 0) {
-					tips = { noContent: true };
+				if (res.size === 0) {
+					tips = { message: 'No Content' };
 				} else {
 					var nonText = util.getContentType(headers);
 					if (!headers['content-type'] || (nonText && nonText !== 'IMG')) {
-						tips = { tooLarge: true };
+						tips = { message: 'Resuest Body Too Large To Display' };
 					} else {
-						tips = { size: res.size };
+						//TODO: xxx
+						tips = { message: 'xxxxxxx.gif (image/gif)' };
 					}
 				}
-				if (!modal.isHttps) {
-					tips.url = modal.url;
-				}
+				tips.url = modal.url;
 			}
 		}
 		

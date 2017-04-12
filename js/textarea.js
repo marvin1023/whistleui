@@ -18,9 +18,19 @@ var Tips = React.createClass({
 				</div>
 			);
 		}
+		if (data.isHttps) {
+			return (
+				<div className={'w-textview-tips' + (data.hide ? ' hide' : '')}>
+					<p>Tunnel</p>
+					<a href="https://avwo.github.io/whistle/webui/https.html" target="_blank">
+						Click here for more information
+					</a>
+				</div>
+			);
+		}
 		return (
 			<div className={'w-textview-tips' + (data.hide ? ' hide' : '')}>
-				<p>{data.tooLarge ? 'The Text Is Too Large' : (data.noContent ? 'No Content' : 'Non Text')}</p>
+				<p>{data.message}</p>
 				{data.url ? <a href={data.url} target="_blank">Open the URL in a new window</a> : undefined}
 			</div>
 		);
