@@ -108,11 +108,11 @@ var ResDetail = React.createClass({
 					tips = { message: 'No Content' };
 				} else {
 					var nonText = util.getContentType(headers);
-					if (!headers['content-type'] || (nonText && nonText !== 'IMG')) {
+					var type = headers['content-type'];
+					if (!type || (nonText && nonText !== 'IMG')) {
 						tips = { message: 'Respose Body Too Large To Display' };
 					} else {
-						//TODO: xxx
-						tips = { message: 'xxxxxxx.gif (image/gif)' };
+						tips = { message: /([^/;]+\/[^;]+)/.test(type) ? RegExp.$1 : 'Non Text' };
 					}
 				}
 				tips.url = modal.url;
