@@ -104,12 +104,12 @@ var ResDetail = React.createClass({
 			} else if (/^wss?:/.test(modal.url)) {
 				tips = { ws: true };
 			} else if (headers && !body && modal.responseTime) {
-				if (res.size === 0) {
+				if (res.size === 0 || util.hasBody(res)) {
 					tips = { message: 'No Content' };
 				} else {
 					var nonText = util.getContentType(headers);
 					if (!headers['content-type'] || (nonText && nonText !== 'IMG')) {
-						tips = { message: 'Resuest Body Too Large To Display' };
+						tips = { message: 'Respose Body Too Large To Display' };
 					} else {
 						//TODO: xxx
 						tips = { message: 'xxxxxxx.gif (image/gif)' };
