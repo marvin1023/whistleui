@@ -104,7 +104,7 @@ var ResDetail = React.createClass({
 			} else if (/^wss?:/.test(modal.url)) {
 				tips = { ws: true };
 			} else if (headers && !body && modal.responseTime) {
-				if (res.size === 0 || util.hasBody(res)) {
+				if (res.size === 0 || !util.hasBody(res)) {
 					tips = { message: 'No Content' };
 				} else {
 					var nonText = util.getContentType(headers);
