@@ -61,11 +61,11 @@ var ReqDetail = React.createClass({
 			if (modal.isHttps) {
 				tips = { isHttps: true };
 			} else if (/^wss?:/.test(modal.url)) {
-			tips = { ws: true };
-			} else if (modal.requestTime) {
+				tips = { ws: true };
+			} else if (modal.requestTime && !body) {
 				if (req.size === 0) {
 					tips = { message: 'No Content' };
-				}	else if (!body) {
+				}	else {
 					tips = { message: 'Request Body Too Large To Display' };
 				}
 			}
