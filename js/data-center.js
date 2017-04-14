@@ -27,10 +27,10 @@ var DEFAULT_CONF = {
 var POST_CONF = $.extend({type: 'post'}, DEFAULT_CONF);
 var GET_CONF = $.extend({cache: false}, DEFAULT_CONF);
 var cgi = createCgi({
-	getLog: '/cgi-bin/log/get',
-	getData: '/cgi-bin/get-data',
-	getServerInfo: '/cgi-bin/server-info',
-	getInitaial: '/cgi-bin/init'
+	getLog: 'cgi-bin/log/get',
+	getData: 'cgi-bin/get-data',
+	getServerInfo: 'cgi-bin/server-info',
+	getInitaial: 'cgi-bin/init'
 }, GET_CONF);
 
 if (/_lastPageLogTime=([^;]+)/.test(document.cookie)) {
@@ -42,7 +42,7 @@ if (/_lastSvrLogTime=([^;]+)/.test(document.cookie)) {
 }
 
 exports.sessions = createCgi({
-  imports: '/cgi-bin/sessions/import',
+  imports: 'cgi-bin/sessions/import',
 }, $.extend({type: 'post'}, DEFAULT_CONF, {
   contentType: false,  
   processData: false,
@@ -52,64 +52,64 @@ exports.sessions = createCgi({
 exports.values = createCgi({
 	get: {
 		type: 'get',
-		url: '/cgi-bin/values/list'
+		url: 'cgi-bin/values/list'
 	},
-	add: '/cgi-bin/values/add',
-	remove: '/cgi-bin/values/remove',
-	rename: '/cgi-bin/values/rename',
-	setCurrent: '/cgi-bin/values/set-current',
-	setFontSize: '/cgi-bin/values/set-font-size',
-	setTheme: '/cgi-bin/values/set-theme',
-	showLineNumbers: '/cgi-bin/values/show-line-numbers',
-	moveUp: '/cgi-bin/values/move-up',
-	moveDown: '/cgi-bin/values/move-down'
+	add: 'cgi-bin/values/add',
+	remove: 'cgi-bin/values/remove',
+	rename: 'cgi-bin/values/rename',
+	setCurrent: 'cgi-bin/values/set-current',
+	setFontSize: 'cgi-bin/values/set-font-size',
+	setTheme: 'cgi-bin/values/set-theme',
+	showLineNumbers: 'cgi-bin/values/show-line-numbers',
+	moveUp: 'cgi-bin/values/move-up',
+	moveDown: 'cgi-bin/values/move-down'
 }, POST_CONF);
 
 exports.plugins = createCgi({
-	disablePlugin: '/cgi-bin/plugins/disable-plugin',
-	disableAllPlugins: '/cgi-bin/plugins/disable-all-plugins',
+	disablePlugin: 'cgi-bin/plugins/disable-plugin',
+	disableAllPlugins: 'cgi-bin/plugins/disable-all-plugins',
 	getPlugins: {
 		type: 'get',
-		url: '/cgi-bin/plugins/get-plugins'
+		url: 'cgi-bin/plugins/get-plugins'
 	}
 }, POST_CONF);
 
 exports.rules = createCgi({
-	disableAllRules: '/cgi-bin/rules/disable-all-rules',
+	disableAllRules: 'cgi-bin/rules/disable-all-rules',
 	get: {
 		type: 'get',
-		get: '/cgi-bin/rules/list'
+		get: 'cgi-bin/rules/list'
 	},
-	add: '/cgi-bin/rules/add',
-	disableDefault: '/cgi-bin/rules/disable-default',
-	enableDefault: '/cgi-bin/rules/enable-default',
-	remove: '/cgi-bin/rules/remove',
-	rename: '/cgi-bin/rules/rename',
-	select: '/cgi-bin/rules/select',
-	setCurrent: '/cgi-bin/rules/set-current',
-	setFontSize: '/cgi-bin/rules/set-font-size',
-	setTheme: '/cgi-bin/rules/set-theme',
-	showLineNumbers: '/cgi-bin/rules/show-line-numbers',
-	unselect: '/cgi-bin/rules/unselect',
-	allowMultipleChoice: '/cgi-bin/rules/allow-multiple-choice',
-	syncWithSysHosts: '/cgi-bin/rules/sync-with-sys-hosts',
-	setSysHosts: '/cgi-bin/rules/set-sys-hosts',
-	getSysHosts: '/cgi-bin/rules/get-sys-hosts',
-	moveUp: '/cgi-bin/rules/move-up',
-	moveDown: '/cgi-bin/rules/move-down'
+	add: 'cgi-bin/rules/add',
+	disableDefault: 'cgi-bin/rules/disable-default',
+	enableDefault: 'cgi-bin/rules/enable-default',
+	remove: 'cgi-bin/rules/remove',
+	rename: 'cgi-bin/rules/rename',
+	select: 'cgi-bin/rules/select',
+	setCurrent: 'cgi-bin/rules/set-current',
+	setFontSize: 'cgi-bin/rules/set-font-size',
+	setTheme: 'cgi-bin/rules/set-theme',
+	showLineNumbers: 'cgi-bin/rules/show-line-numbers',
+	unselect: 'cgi-bin/rules/unselect',
+	allowMultipleChoice: 'cgi-bin/rules/allow-multiple-choice',
+	syncWithSysHosts: 'cgi-bin/rules/sync-with-sys-hosts',
+	setSysHosts: 'cgi-bin/rules/set-sys-hosts',
+	getSysHosts: 'cgi-bin/rules/get-sys-hosts',
+	moveUp: 'cgi-bin/rules/move-up',
+	moveDown: 'cgi-bin/rules/move-down'
 }, POST_CONF);
 
 exports.log = createCgi({
-	set: '/cgi-bin/log/set'
+	set: 'cgi-bin/log/set'
 }, POST_CONF);
 
 $.extend(exports, createCgi({
-	composer: '/cgi-bin/composer',
-	setFilter: '/cgi-bin/set-filter',
-	interceptHttpsConnects: '/cgi-bin/intercept-https-connects',
-	hideHttpsConnects: '/cgi-bin/hide-https-connects',
-	donotShowAgain: '/cgi-bin/do-not-show-again',
-	checkUpdate: '/cgi-bin/check-update'
+	composer: 'cgi-bin/composer',
+	setFilter: 'cgi-bin/set-filter',
+	interceptHttpsConnects: 'cgi-bin/intercept-https-connects',
+	hideHttpsConnects: 'cgi-bin/hide-https-connects',
+	donotShowAgain: 'cgi-bin/do-not-show-again',
+	checkUpdate: 'cgi-bin/check-update'
 }, POST_CONF));
 
 exports.getInitialData = function(callback) {
@@ -367,25 +367,3 @@ exports.on = function(type, callback) {
 		}
 	}
 };
-
-exports.checkExists = function(options, callback) {
-	if (typeof callback != 'function') {
-		return;
-	}
-	
-	$.ajax({
-		url: 'http://' + options.ip + ':' + options.port + '/cgi-bin/server-info?_=' + Date.now(),
-		xhrFields: {
-			withCredentials: true
-		},
-		timeout: 3000,
-		dataType: 'json',
-		success: function(data) {
-			callback(!!data && data.ec === 0 && !!data.server);
-		},
-		error: function() {
-			callback(false);
-		}
-	});
-};
-
