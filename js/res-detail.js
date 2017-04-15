@@ -127,7 +127,7 @@ var ResDetail = React.createClass({
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
 				{state.initedHeaders ? <div className={'fill w-detail-response-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
 				{state.initedTextView ? <Textarea tips={tips} value={body} className="fill w-detail-response-textview" hide={name != BTNS[1].name} /> : ''}
-				{state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Table head={COOKIE_HEADERS} modal={cookies} /></div> : ''}
+				{state.initedCookies ? <div className={'fill w-detail-response-cookies' + (name == BTNS[2].name ? '' : ' hide')}>{cookies && cookies.length ? <Table head={COOKIE_HEADERS} modal={cookies} /> : undefined}</div> : undefined}
 				{state.initedJSON ? <JSONViewer data={json} hide={name != BTNS[3].name} /> : ''}
 				{state.initedRaw ? <Textarea value={raw} className="fill w-detail-response-raw" hide={name != BTNS[4].name} /> : ''}
 			</div>
