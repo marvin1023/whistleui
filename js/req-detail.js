@@ -63,7 +63,7 @@ var ReqDetail = React.createClass({
 			} else if (/^wss?:/.test(modal.url)) {
 				tips = { ws: true };
 			} else if (modal.requestTime && !body) {
-				if (req.size === 0) {
+				if (req.size < 5120) {
 					tips = { message: 'No Content' };
 				}	else {
 					tips = { message: 'Request Body Too Large To Display' };
