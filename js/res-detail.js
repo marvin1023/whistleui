@@ -109,7 +109,7 @@ var ResDetail = React.createClass({
 				} else {
 					var nonText = util.getContentType(headers);
 					if (!headers['content-type'] || (nonText && nonText !== 'IMG')) {
-						tips = { message: res.size < 5120 ? 'No Content' : 'Respose Body Too Large To Display' };
+						tips = { message: res.size < 5120 ? 'No Content' : 'Respose data too large to display' };
 					} else {
 						tips = { message: modal.type || 'Non Text' };
 					}
