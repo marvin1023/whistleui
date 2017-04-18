@@ -230,7 +230,9 @@ function setRawHeaders(obj) {
 	}
 	var rawHeaders = {};
 	Object.keys(headers).forEach(function(name) {
-		rawHeaders[rawHeaderNames[name] || name] = headers[name];
+		if (name.indexOf('x-forwarded-from-whistle-') !== 0) {
+			rawHeaders[rawHeaderNames[name] || name] = headers[name];
+		}
 	});
 	obj.rawHeaders = rawHeaders;
 }
