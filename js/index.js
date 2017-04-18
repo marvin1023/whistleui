@@ -1040,10 +1040,7 @@ var Index = React.createClass({
 		this.openWeinre(options.name);
 	},
 	openWeinre: function(name) {
-		var hostname = location.hostname;
-		hostname = /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname) && this.serverInfo ? 
-				hostname + ':' + this.serverInfo.weinrePort : 'weinre.' + this.state.localUIHost;
-		window.open('http://' + hostname + '/client/#' + (name || 'anonymous'));
+		window.open('weinre/client/#' + (name || 'anonymous'));
 		this.setState({
 			showWeinreOptions: false
 		});
