@@ -48,8 +48,7 @@ var Index = React.createClass({
 		var plugins = modal.plugins;
 		var state = {
 				allowMultipleChoice: modal.rules.allowMultipleChoice,
-				syncWithSysHosts: modal.rules.syncWithSysHosts,
-				localUIHost: modal.localUIHost || 'local.whistlejs.com'
+				syncWithSysHosts: modal.rules.syncWithSysHosts
 		};
 		var pageName = getPageName();
 		if (!pageName || pageName.indexOf('rules') != -1) {
@@ -691,7 +690,7 @@ var Index = React.createClass({
 			active = name;
 			tabs.push({
 				name: name,
-				url: location.protocol + '//' + this.state.localUIHost + '/plugin.' + name
+				url: 'plugin.' + name
 			});
 		}
 		

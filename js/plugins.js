@@ -62,7 +62,7 @@ var Home = React.createClass({
 									name = name.slice(0, -1);
 									var checked = !disabledPlugins[name];
 									var disabled = data.disabledAllRules || data.disabledAllPlugins;
-									var url = location.protocol + '//' + data.localUIHost + '/plugin.' + name;
+									var url = '/plugin.' + name;
 									return (
 										<tr key={name} className={(!disabled && checked) ? '' : 'w-plugins-disable'}>
 											<th className="w-plugins-order">{i + 1}</th>
