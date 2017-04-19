@@ -8,7 +8,7 @@
 
 .w-plugins th, .w-plugins td {font-size: 13px; font-weight: normal; }
 .w-plugins-headers {border-bottom: 1px solid #ccc; overflow: hidden;}
-.w-plugins-headers .table th {border: none!important; padding: 6px; color: #000;}
+.w-plugins-headers .table th {border: none!important; padding: 6px; color: #000; background: #f2f2f2; font-weight: bold;}
 .w-plugins-list {overflow-y: auto; overflow-x: hidden; outline: none;}
 .w-plugins-list th, .w-plugins-list td {border-top: none!important; border-bottom: 1px solid #ddd;
 padding: 5px 6px!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}

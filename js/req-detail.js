@@ -1,7 +1,6 @@
 require('./base-css.js');
 require('../css/req-detail.css');
 var React = require('react');
-var Table = require('./table');
 var Divider = require('./divider');
 var Properties = require('./properties');
 var util = require('./util');

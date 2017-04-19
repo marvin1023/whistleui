@@ -9,7 +9,7 @@ var BtnGroup = require('./btn-group');
 var Textarea = require('./textarea');
 var JSONViewer = require('./json-viewer');
 var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'JSON'}, {name: 'Raw'}];
-var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires', 'HttpOnly', 'Secure'];
+var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires', 'Max-Age', 'HttpOnly', 'Secure'];
 
 var ResDetail = React.createClass({
 	getInitialState: function() {
@@ -65,7 +65,7 @@ var ResDetail = React.createClass({
 				}
 				cookies = cookies.map(function(cookie) {
 							cookie = util.parseQueryString(cookie, /;\s*/, null, decodeURIComponent);
-							var row = ['', '', '', '', '', '', ''];
+							var row = ['', '', '', '', '', '', '', ''];
 							for (var i in cookie) {
 								switch(i.toLowerCase()) {
 									case 'domain':
@@ -75,14 +75,16 @@ var ResDetail = React.createClass({
 										row[3] = cookie[i];
 										break;
 									case 'expires':
-									case 'max-age':
 										row[4] = cookie[i];
 										break;
+									case 'max-age':
+										row[5] = cookie[i];
+										break;
 									case 'httponly':
-										row[5] = '√';
+										row[6] = '√';
 										break;
 									case 'secure':
-										row[6] = '√';
+										row[7] = '√';
 										break;
 									default:
 										if (!row[0]) {
