@@ -691,7 +691,7 @@ var Index = React.createClass({
 			active = name;
 			tabs.push({
 				name: name,
-				url: location.protocol + '//' + name + '.' + this.state.localUIHost + '/'
+				url: location.protocol + '//' + this.state.localUIHost + '/plugin.' + name
 			});
 		}
 		
