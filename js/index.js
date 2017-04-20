@@ -690,7 +690,7 @@ var Index = React.createClass({
 			active = name;
 			tabs.push({
 				name: name,
-				url: 'plugin.' + name
+				url: 'plugin.' + name + '/'
 			});
 		}
 		
