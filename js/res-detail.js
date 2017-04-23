@@ -106,15 +106,10 @@ var ResDetail = React.createClass({
 			} else if (/^wss?:/.test(modal.url)) {
 				tips = { ws: true };
 			} else if (headers && !body && modal.responseTime) {
-				if (res.size === 0 || !util.hasBody(res)) {
-					tips = { message: 'No Content' };
+				if (!res.size || util.isText(headers['content-type'])) {
+					tips = { message: res.size < 5120 ? 'No Content' : 'Respose data too large to display' };
 				} else {
-					var nonText = util.getContentType(headers);
-					if (!headers['content-type'] || (nonText && nonText !== 'IMG')) {
-						tips = { message: res.size < 5120 ? 'No Content' : 'Respose data too large to display' };
-					} else {
-						tips = { message: modal.type || 'Non Text' };
-					}
+					tips = { message: modal.type || 'Non Text' };
 				}
 				tips.url = modal.url;
 			}

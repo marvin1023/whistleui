@@ -130,7 +130,7 @@ exports.getClasses = function getClasses(obj) {
 	return classes.join(' ');
 };
 
-exports.getContentType = function getContentType(contentType) {
+function getContentType(contentType) {
   if (contentType && typeof contentType != 'string') {
     contentType = contentType['content-type'] || contentType.contentType;
   }
@@ -167,7 +167,16 @@ exports.getContentType = function getContentType(contentType) {
   }
 
   return null;
-};
+}
+
+exports.getContentType = getContentType;
+exports.isText = function(contentType) {
+	if (!contentType) {
+		return true;
+	}
+	contentType = getContentType(contentType);
+	return contentType && contentType !== 'IMG';
+}
 
 function getHost(url) {
   var start = url.indexOf(':\/\/');
