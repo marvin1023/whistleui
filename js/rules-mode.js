@@ -66,7 +66,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRulesFile(str) {
-			  return /^rulesFile:\/\//.test(str);
+			  return /^rules?File:\/\//.test(str);
 			}
 			
 			function isDisable(str) {
@@ -86,11 +86,11 @@ CodeMirror.defineMode('rules', function() {
       }
 			
 			function isExports(str) {
-				return /^exports:\/\//.test(str);
+				return /^exports?:\/\//.test(str);
 			}
 			
 			function isExportsUrl(str) {
-				return /^exportsUrl:\/\//.test(str);
+				return /^exports?Url:\/\//.test(str);
 			}
 			
 			function isDispatch(str) {
