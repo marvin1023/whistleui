@@ -230,7 +230,7 @@ function setRawHeaders(obj) {
 	}
 	var rawHeaders = {};
 	Object.keys(headers).forEach(function(name) {
-		if (name.indexOf('x-forwarded-from-whistle-') !== 0) {
+		if (name !== 'x-whistle-https-request' && name.indexOf('x-forwarded-from-whistle-') !== 0) {
 			rawHeaders[rawHeaderNames[name] || name] = headers[name];
 		}
 	});
