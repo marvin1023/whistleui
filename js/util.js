@@ -400,7 +400,7 @@ exports.toString = toString;
 
 
 function openEditor(value) {
-	var win = window.open('/editor.html');
+	var win = window.open('editor.html');
 	win.getValue = function() {
 		return value;
 	};
