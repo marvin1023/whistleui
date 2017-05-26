@@ -1,5 +1,5 @@
 var events = require('./events');
-var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy', 'https2http-proxy', 'http2https-proxy',
+var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy',
                  'socks', 'pac', 'filter', 'ignore', 'enable', 'disable', 'delete', 
                  'plugin', 'dispatch', 'urlParams', 'urlReplace', 'method', 'statusCode', 
                  'replaceStatus', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
@@ -10,7 +10,8 @@ var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy', 'https2h
                   'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace',
                   'reqWrite',  'resWrite', 'reqWriteRaw', 'resWriteRaw', 'exportsUrl', 'exports'];
 
-var rules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile', 'host'].concat(PROTOCOLS.slice(2));
+var rules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile',
+  'host', 'https2http-proxy', 'http2https-proxy'].concat(PROTOCOLS.slice(2));
 var allRules = rules.slice();
 var callbacks = [];
 
