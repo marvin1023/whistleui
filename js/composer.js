@@ -75,7 +75,7 @@ var Composer = React.createClass({
 		          		<option value="UNLOCK">UNLOCK</option>
 		          		<option value="OPTIONS">OPTIONS</option>
 		          	</select>
-					<button onClick={this.execute} className="btn btn-primary w-composer-execute">Execute</button>
+					<button onClick={this.execute} className="btn btn-primary w-composer-execute">Go</button>
 				</div>
 				<Divider vertical="true">
 					<textarea ref="headers" className="fill w-composer-headers" placeholder="headers"></textarea>
