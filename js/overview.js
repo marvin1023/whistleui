@@ -3,7 +3,7 @@ require('../css/overview.css');
 var React = require('react');
 var util = require('./util');
 var Properties = require('./properties');
-var OVERVIEW = ['Url', 'Real Url', 'Method', 'Http Version', 'Status Code', 'Status Message', 'Host IP', 'Client IP', 'Request Length', 'Content Length'
+var OVERVIEW = ['Url', 'Real Url', 'Method', 'Http Version', 'Status Code', 'Status Message', 'Server IP', 'Client IP', 'Request Length', 'Content Length'
                       , 'Start Date', 'DNS Lookup', 'Request Sent', 'Response Headers', 'Content Download'];
 var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.statusCode', 'res.statusMessage', 'res.ip', 'req.ip', 'req.size', 'res.size'];
 /**
