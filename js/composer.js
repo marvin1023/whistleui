@@ -51,12 +51,15 @@ var Composer = React.createClass({
 		});
 		events.trigger('executeComposer');
 	},
+	selectAll: function(e) {
+		e.target.select();
+	},
 	render: function() {
 		
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-composer' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<div className="w-composer-url box">
-					<input ref="url" type="text" maxLength="8192" placeholder="url" className="fill w-composer-input" />
+					<input onFocus={this.selectAll} ref="url" type="text" maxLength="8192" placeholder="url" className="fill w-composer-input" />
 					<select ref="method" className="form-control w-composer-method">
 		          		<option value="GET">GET</option>
 		          		<option value="POST">POST</option>
