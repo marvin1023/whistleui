@@ -1606,7 +1606,7 @@ var Index = React.createClass({
 					      	<a className="w-download-rootca" title="http://rootca.pro/" href="cgi-bin/rootca" target="_blank">Download RootCA</a>
 					      	<a className="w-https-help" href="https://avwo.github.io/whistle/webui/https.html" target="_blank" title="How to intercept HTTPS CONNECTs">Help</a>
 					      </div>
-					      <a title="http://rootca.pro/" href="http://rootca.pro/" target="_blank"><img src="img/rootca.png" /></a>
+					      <a title="http://rootca.pro/" href="cgi-bin/rootca" target="_blank"><img src="img/rootca.png" /></a>
 					      <div className="w-https-settings">
 					      	<p><label><input checked={state.hideHttpsConnects} onChange={this.hideHttpsConnects} type="checkbox" /> Hide HTTPS CONNECTs</label></p>
 					      	<p><label><input checked={state.interceptHttpsConnects} onChange={this.interceptHttpsConnects} type="checkbox" /> Intercept HTTPS CONNECTs</label></p>
