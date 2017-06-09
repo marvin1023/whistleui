@@ -238,39 +238,41 @@ var Index = React.createClass({
 				}
 			}
 		}).on('keydown', function(e) {
-			if (e.ctrlKey || e.metaKey) {
-				if (e.keyCode == 88) {
-					self.clear();
+			if (!e.ctrlKey && !e.metaKey) {
+				return;
+			}
+			var isNetwork = self.state.name === 'network';
+			if (isNetwork && e.keyCode == 88) {
+				self.clear();
+			}
+			
+			if (e.keyCode == 68) {
+				var target = e.target;
+				if ( target.nodeName == 'A' 
+						&& $(target).parent().hasClass('w-list-data')) {
+					self.state.name == 'rules' ? self.removeRules() : self.removeValues();
 				}
-				
-				if (e.keyCode == 68) {
-					var target = e.target;
-					if ( target.nodeName == 'A' 
-							&& $(target).parent().hasClass('w-list-data')) {
-						self.state.name == 'rules' ? self.removeRules() : self.removeValues();
+				e.preventDefault();
+			}
+			
+			var modal = self.state.network;
+			if (isNetwork && e.keyCode === 83) {
+				e.preventDefault();
+				if ($('.modal.in').length) {
+					if ($(ReactDOM.findDOMNode(self.refs.chooseFileType)).is(':visible')) {
+						self.exportBySave();
 					}
-					e.preventDefault();
+					return;
 				}
-				
-				var modal = self.state.network;
-				if (self.state.name === 'network' && e.keyCode === 83) {
-				  e.preventDefault();
-				  if ($('.modal.in').length) {
-				    if ($(ReactDOM.findDOMNode(self.refs.chooseFileType)).is(':visible')) {
-				      self.exportBySave();
-				    }
-				    return;
-				  }
-				  var hasSelected = modal && modal.hasSelected();
-				  if (hasSelected) {
-				    $(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
-				  }
+				var hasSelected = modal && modal.hasSelected();
+				if (hasSelected) {
+					$(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
 				}
-				
-				if (self.state.name === 'network' && e.keyCode === 73) {
-				  self.importSessions();
-				  e.preventDefault();
-				}
+			}
+			
+			if (isNetwork && e.keyCode === 73) {
+				self.importSessions();
+				e.preventDefault();
 			}
 		});
 		
