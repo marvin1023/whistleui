@@ -112,6 +112,10 @@ CodeMirror.defineMode('rules', function() {
 			function isLocalPath(str) {
 				return /^[a-z]:(?:\\|\/(?!\/))/i.test(str) || /^\/[^/]/.test(str);
 			}
+
+			function isWildcard(str) {
+				return /^\*\*?\./.test(str);
+			}
 			
 			return {
 				 token: function(stream, state) {
@@ -190,7 +194,7 @@ CodeMirror.defineMode('rules', function() {
 						 return 'number js-number';
 					 }
 					 
-					 if (isRegExp(str)) {
+					 if (isRegExp(str) || isWildcard(str)) {
 						 return 'attribute js-attribute';
 					 }
 
