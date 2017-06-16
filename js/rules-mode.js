@@ -182,7 +182,9 @@ CodeMirror.defineMode('rules', function() {
                  type = 'variable-2 js-pac js-type';
                } else if (isRulesFile(str)) {
                  type = 'variable-2 js-rulesFile js-type';
-               } else if (isRule(str)) {
+               } else if (isWildcard(str)) {
+								 return 'attribute js-attribute';
+							 } else if (isRule(str)) {
 								 type = 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
 							 }
 						}
