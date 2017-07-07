@@ -355,12 +355,15 @@ var Index = React.createClass({
 		dataCenter.on('plugins', function(data) {
 			var pluginsOptions = self.createPluginsOptions(data.plugins);
 			var oldPluginsOptions = self.state.pluginsOptions;
+			var oldDisabledPlugins = self.state.disabledPlugins;
+			var disabledPlugins = data.disabledPlugins;
 			if (pluginsOptions.length == oldPluginsOptions.length) {
 				var hasUpdate;
 				for (var i = 0, len = pluginsOptions.length; i < len; i++) {
 					var plugin = pluginsOptions[i];
 					var oldPlugin = oldPluginsOptions[i];
-					if (plugin.name != oldPlugin.name || plugin.mtime != oldPlugin.mtime) {
+					if (plugin.name != oldPlugin.name || plugin.mtime != oldPlugin.mtime
+					|| (oldDisabledPlugins[plugin.name] != disabledPlugins[plugin.name])) {
 						hasUpdate = true;
 						break;
 					}
