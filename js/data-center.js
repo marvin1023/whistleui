@@ -3,7 +3,7 @@ var createCgi = require('./cgi');
 var util = require('./util');
 var NetworkModal = require('./network-modal');
 var	MAX_COUNT = NetworkModal.MAX_COUNT;
-var TIMEOUT = 10000;
+var TIMEOUT = 20000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
 var logCallbacks = [];
@@ -29,7 +29,6 @@ var GET_CONF = $.extend({cache: false}, DEFAULT_CONF);
 var cgi = createCgi({
 	getLog: 'cgi-bin/log/get',
 	getData: 'cgi-bin/get-data',
-	getServerInfo: 'cgi-bin/server-info',
 	getInitaial: 'cgi-bin/init'
 }, GET_CONF);
 
@@ -161,6 +160,7 @@ function startLoadData() {
 			count: 60
 		}, function(data) {
 			setTimeout(load, 900);
+			updateServerInfo(data);
 			if (!data || data.ec !== 0) {
 				return;
 			}
@@ -314,39 +314,30 @@ function getStartTime() {
 	return (!lastRowId || util.compareReqId(item.id, lastRowId)) ? item.id : lastRowId;
 }
 
-function startLoadServerInfo() {
-	if (serverInfoCallbacks.length) {
+function updateServerInfo(data) {
+	if (!serverInfoCallbacks.length) {
 		return;
 	}
 	
-	function load() {
-		cgi.getServerInfo(function(data) {
-			setTimeout(load, 6000);
-			if (data == curServerInfo) {
-				return;
-			}
-			if (!(data = data && data.server)) {
-				curServerInfo = data;
-				$.each(serverInfoCallbacks, function() {
-					this(false);
-				});
-				return;
-			}
-			
-			if (curServerInfo && curServerInfo.version == data.version && 
-				curServerInfo.port == data.port && curServerInfo.host == data.host && 
-				curServerInfo.ipv4.sort().join() == data.ipv4.sort().join()
-				&& curServerInfo.ipv6.sort().join() == data.ipv6.sort().join()) {
-				return;
-			}
-			curServerInfo = data;
-			$.each(serverInfoCallbacks, function() {
-				this(data);
-			});
+	if (!(data = data && data.server)) {
+		curServerInfo = data;
+		$.each(serverInfoCallbacks, function() {
+			this(false);
 		});
+		return;
 	}
 	
-	load();
+	if (curServerInfo && curServerInfo.version == data.version && 
+		curServerInfo.port == data.port && curServerInfo.host == data.host && 
+		curServerInfo.ipv4.sort().join() == data.ipv4.sort().join()
+		&& curServerInfo.ipv6.sort().join() == data.ipv6.sort().join()) {
+		return;
+	}
+	curServerInfo = data;
+	$.each(serverInfoCallbacks, function() {
+		this(data);
+	});
+
 }
 
 exports.on = function(type, callback) {
@@ -358,7 +349,6 @@ exports.on = function(type, callback) {
 		}
 	} else if (type == 'serverInfo') {
 		if (typeof callback == 'function') {
-			startLoadServerInfo();
 			serverInfoCallbacks.push(callback);
 		}
 	} else if (type == 'log') {
