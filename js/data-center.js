@@ -6,6 +6,7 @@ var	MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
+var pluginsCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
 var dataList = [];
@@ -164,6 +165,9 @@ function startLoadData() {
 			if (!data || data.ec !== 0) {
 				return;
 			}
+			$.each(pluginsCallbacks, function() {
+				this(data);
+			});
 			var len = data.log.length;
 			var svrLen = data.svrLog.length;
 			if (len || svrLen) {
@@ -341,10 +345,10 @@ function updateServerInfo(data) {
 }
 
 exports.on = function(type, callback) {
+	startLoadData();
 	if (type == 'data') {
 		if (typeof callback == 'function') {
 			dataCallbacks.push(callback);
-			startLoadData();
 			callback(networkModal);
 		}
 	} else if (type == 'serverInfo') {
@@ -354,8 +358,11 @@ exports.on = function(type, callback) {
 	} else if (type == 'log') {
 		if (typeof callback == 'function') {
 			logCallbacks.push(callback);
-			startLoadData();
 			callback(logList, svrLogList);
+		}
+	} else if (type === 'plugins') {
+		if (typeof callback == 'function') {
+			pluginsCallbacks.push(callback);
 		}
 	}
 };
