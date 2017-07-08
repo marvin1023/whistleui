@@ -37,6 +37,19 @@ proto._setBoolProp = function(name, prop, bool) {
 	return item;
 };
 
+proto.getSelectedNames = function() {
+	var list = [];
+	var data = this.data;
+	Object.keys(data)
+			.forEach(function(name) {
+				var item = data[name];
+				if (item && item.selected) {
+					list.push(item.name);
+				}
+			});
+	return list;
+};
+
 proto.exists = function(name) {
 	return this.list.indexOf(name) != -1;
 };

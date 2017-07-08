@@ -6,10 +6,9 @@ var	MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
-var pluginsCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
-var settingsCallbacks = [];
+var directCallbacks = [];
 var dataList = [];
 var logList = [];
 var svrLogList = [];
@@ -166,10 +165,7 @@ function startLoadData() {
 			if (!data || data.ec !== 0) {
 				return;
 			}
-			$.each(settingsCallbacks, function() {
-				this(data);
-			});
-			$.each(pluginsCallbacks, function() {
+			$.each(directCallbacks, function() {
 				this(data);
 			});
 			var len = data.log.length;
@@ -364,13 +360,9 @@ exports.on = function(type, callback) {
 			logCallbacks.push(callback);
 			callback(logList, svrLogList);
 		}
-	} else if (type === 'plugins') {
+	} else if (type === 'plugins' || type === 'settings' || type === 'rules') {
 		if (typeof callback == 'function') {
-			pluginsCallbacks.push(callback);
-		}
-	} else if (type === 'settings') {
-		if (typeof callback == 'function') {
-			settingsCallbacks.push(callback);
+			directCallbacks.push(callback);
 		}
 	}
 };
