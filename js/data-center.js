@@ -9,6 +9,7 @@ var serverInfoCallbacks = [];
 var pluginsCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
+var settingsCallbacks = [];
 var dataList = [];
 var logList = [];
 var svrLogList = [];
@@ -165,6 +166,9 @@ function startLoadData() {
 			if (!data || data.ec !== 0) {
 				return;
 			}
+			$.each(settingsCallbacks, function() {
+				this(data);
+			});
 			$.each(pluginsCallbacks, function() {
 				this(data);
 			});
@@ -363,6 +367,10 @@ exports.on = function(type, callback) {
 	} else if (type === 'plugins') {
 		if (typeof callback == 'function') {
 			pluginsCallbacks.push(callback);
+		}
+	} else if (type === 'settings') {
+		if (typeof callback == 'function') {
+			settingsCallbacks.push(callback);
 		}
 	}
 };

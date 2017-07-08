@@ -316,7 +316,24 @@ var Index = React.createClass({
 		if (self.state.name == 'network') {
 			self.startLoadData();
 		}
-		
+		dataCenter.on('settings', function(data) {
+			var state = self.state;
+			if (state.hideHttpsConnects !== data.hideHttpsConnects
+				|| state.interceptHttpsConnects !== data.interceptHttpsConnects
+				|| state.disabledAllRules !== data.disabledAllRules
+				|| state.allowMultipleChoice !== data.allowMultipleChoice
+				|| state.disabledPluginsRules !== data.disabledPluginsRules
+				|| state.disabledAllPlugins !== data.disabledAllPlugins) {
+				self.setState({
+					hideHttpsConnects: data.hideHttpsConnects,
+					interceptHttpsConnects: data.interceptHttpsConnects,
+					disabledAllRules: data.disabledAllRules,
+					allowMultipleChoice: data.allowMultipleChoice,
+					disabledPluginsRules: data.disabledPluginsRules,
+					disabledAllPlugins: data.disabledAllPlugins
+				});
+			}
+		});
 		dataCenter.on('serverInfo', function(data) {
 			self.serverInfo = data;
 		});
