@@ -22,6 +22,19 @@ function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
 }
 
+function compareSelectedNames(src, target) {
+	var srcLen = src.length;
+	if (srcLen !== target.length) {
+		return false;
+	}
+	for (var i = 0; i < srcLen; i++) {
+		if ($.inArray(src[i], target) === -1) {
+			return false;
+		}
+	}
+	return true;
+}
+
 function getKey(url) {
 	if (url.indexOf('{') == 0) {
 		var index = url.lastIndexOf('}');
@@ -331,6 +344,19 @@ var Index = React.createClass({
 					disabledAllPlugins: data.disabledAllPlugins
 				});
 			}
+		});
+		dataCenter.on('rules', function(data) {
+			var modal = self.state.rules;
+			var newSelectedNames = data.list;
+			if (!data.defaultRulesIsDisabled) {
+				newSelectedNames.unshift('Default');
+			}
+			var selectedNames = modal.getSelectedNames();
+			if (compareSelectedNames(selectedNames, newSelectedNames)) {
+				return;
+			}
+			self.reselectRules(data);
+			self.setState({});
 		});
 		dataCenter.on('serverInfo', function(data) {
 			self.serverInfo = data;
