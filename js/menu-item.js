@@ -36,7 +36,7 @@ var MenuItem = React.createClass({
 								  onClickOption(option);
 								}}  onDoubleClick={function() {
 									onDoubleClickOption(option);
-								}} href="javascript:;">
+								}} href="javascript:;" draggable="false">
 									{option.icon == 'checkbox' ? <input type="checkbox" disabled={disabled} data-name={option.name} onClick={self.stopPropagation} onChange={self.props.onChange} checked={!checkedOptions[option.name]} />
 											: <span className={'glyphicon glyphicon-' + (option.icon || 'asterisk')} style={{visibility: option.icon ? '' : 'hidden'}}></span>}
 									{option.name}
@@ -45,7 +45,7 @@ var MenuItem = React.createClass({
 					})}</div> : ''
 			}
 			{
-				name ? <a onClick={onClick} className="w-menu-open" href="javascript:;"><span className="glyphicon glyphicon-folder-open"></span>{name}</a> : ''
+				name ? <a onClick={onClick} className="w-menu-open" href="javascript:;" draggable="false"><span className="glyphicon glyphicon-folder-open"></span>{name}</a> : ''
 			}
 			</div>
 		);

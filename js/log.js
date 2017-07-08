@@ -129,8 +129,8 @@ var Log = React.createClass({
 		return (
 				<div className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 					<div style={{display: hasLogs ? 'block' : 'none'}} className="w-detail-log-bar">
-						<a className="w-auto-scroll-log" href="javascript:;" onClick={this.autoRefresh}>AutoRefresh</a>
-						<a className="w-clear-log" href="javascript:;" onClick={this.clearLogs}>Clear</a>
+						<a className="w-auto-scroll-log" href="javascript:;" draggable="false" onClick={this.autoRefresh}>AutoRefresh</a>
+						<a className="w-clear-log" href="javascript:;" draggable="false" onClick={this.clearLogs}>Clear</a>
 					</div>
 					<BtnGroup onClick={this.toggleTabs}  onDoubleClick={this.clearLogs} btns={BTNS} />
 					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (isPageLog ? '' : ' hide')}>

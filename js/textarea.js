@@ -123,8 +123,8 @@ var Textarea = React.createClass({
 				<div className={'fill orient-vertical-box w-textarea' + (this.props.hide ? ' hide' : '')}>
 					<Tips data={this.props.tips} />
 					<div className="w-textarea-bar">
-						{showAddToValuesBtn ? <a className={'w-add' + displayClass} onClick={this.showAddToValues} href="javascript:;">AddToValues</a> : ''}	
-						<a className={'w-edit' + displayClass} onClick={this.edit} href="javascript:;">Edit</a>
+						{showAddToValuesBtn ? <a className={'w-add' + displayClass} onClick={this.showAddToValues} href="javascript:;" draggable="false">AddToValues</a> : ''}	
+						<a className={'w-edit' + displayClass} onClick={this.edit} href="javascript:;" draggable="false">Edit</a>
 						<div onMouseDown={this.preventBlur} style={{display: this.state.showAddToValues ? 'block' : 'none'}} className="shadow w-textarea-input"><input ref="valuesNameInput" onKeyDown={this.addToValues} onBlur={this.hideAddValuesInput} type="text" maxLength="64" placeholder="name" /><button type="button" onClick={this.addToValues} className="btn btn-primary">OK</button></div>
 					</div>
 					<textarea ref="textarea" onKeyDown={util.preventDefault} readOnly="readonly" className={this.props.className || ''}></textarea>

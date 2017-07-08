@@ -168,6 +168,7 @@ var List = React.createClass({
 									return <a ref={name} style={{display: item.hide ? 'none' : null}}
 												key={item.key} data-key={item.key}
 												href="javascript:;"
+												draggable="false"
 												onClick={function() {
 													self.onClick(item);
 												}} 
@@ -179,6 +180,7 @@ var List = React.createClass({
 													'w-changed': item.changed,
 													'w-selected': item.selected
 												})} 
+												draggable="false"
 												href="javascript:;">{name}<span className="glyphicon glyphicon-ok"></span></a>;
 								})
 							}

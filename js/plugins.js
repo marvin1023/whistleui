@@ -75,7 +75,7 @@ var Home = React.createClass({
 											<td className="w-plugins-version">{plugin.homepage ? <a href={plugin.homepage} target="_blank">{plugin.version}</a> : plugin.version}</td>
 											<td className="w-plugins-operation">
 												<a href={url} target="_blank" data-name={name} onClick={self.onOpen}>Option</a>	
-												{(plugin.rules || plugin._rules) ? <a href="javascript:;" data-name={name} onClick={self.showRules}>Rules</a> : <span className="disabled">Rules</span>}
+												{(plugin.rules || plugin._rules) ? <a href="javascript:;" draggable="false" data-name={name} onClick={self.showRules}>Rules</a> : <span className="disabled">Rules</span>}
 												{plugin.homepage ? <a href={plugin.homepage} target="_blank">Help</a> : <span className="disabled">Help</span>}
 											</td>
 											<td className="w-plugins-desc" title={plugin.description}>{plugin.description}</td>
@@ -169,10 +169,10 @@ var Tabs = React.createClass({
 		return (
 			<div className="w-nav-tabs fill orient-vertical-box" style={{display: self.props.hide ? 'none' : ''}}>
 				 <ul className="nav nav-tabs">
-				    <li className={'w-nav-home-tab' + (activeName == 'Home' ? ' active' : '')} data-name="Home"  onClick={self.props.onActive}><a href="javascript:;">Home</a></li>
+				    <li className={'w-nav-home-tab' + (activeName == 'Home' ? ' active' : '')} data-name="Home"  onClick={self.props.onActive}><a href="javascript:;" draggable="false">Home</a></li>
 				    {tabs.map(function(tab) {
 				    	return <li className={activeName == tab.name ? ' active' : ''}>
-						    	<a data-name={tab.name}  onClick={self.props.onActive} href="javascript:;">
+						    	<a data-name={tab.name}  onClick={self.props.onActive} href="javascript:;" draggable="false">
 						    		{tab.name}
 						    		<span data-name={tab.name} title="Close" onClick={self.onClose}>&times;</span>
 							    </a>
