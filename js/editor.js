@@ -118,91 +118,91 @@ var Editor = React.createClass({
 				editor.setSize(null, height);
 			}
 		}
-		if (self.props.name == 'rules') {
-			$(elem).on('keydown', function(e) {
-				if (!(e.ctrlKey || e.metaKey) || e.keyCode != 191) {
-					return;
+		var isRulesEditor = self.props.name == 'rules';
+		$(elem).on('keydown', function(e) {
+			if ((!isRulesEditor && self._mode !== 'rules') || 
+				!(e.ctrlKey || e.metaKey) || e.keyCode != 191) {
+				return;
+			}
+
+			var list = editor.listSelections();
+			if (!list || !list.length) {
+				return;
+			}
+			var isShiftKey = e.shiftKey;
+			var isEmpty;
+			var ranges = [];
+			list.forEach(function(range) {
+				var anchor = range.anchor;
+				var head = range.head;
+				var lines = [];
+				var hasComment, hasRule, revert;
+				
+				if (anchor.line > head.line) {
+					revert = anchor;
+					anchor = head;
+					head = revert;
 				}
 
-				var list = editor.listSelections();
-				if (!list || !list.length) {
+				for (var i = anchor.line; i <= head.line; i++) {
+					var line = editor.getLine(i);
+					if (COMMENT_RE.test(line)) {
+						hasComment = true;
+					} else if (NO_SPACE_RE.test(line)) {
+						hasRule = true;
+					}
+					lines.push(line);
+				}
+
+				if (isEmpty = !hasComment && !hasRule) {
 					return;
 				}
-				var isShiftKey = e.shiftKey;
-				var isEmpty;
-				var ranges = [];
-				list.forEach(function(range) {
-					var anchor = range.anchor;
-					var head = range.head;
-					var lines = [];
-					var hasComment, hasRule, revert;
-					
-					if (anchor.line > head.line) {
-						revert = anchor;
-						anchor = head;
-						head = revert;
-					}
-	
-					for (var i = anchor.line; i <= head.line; i++) {
-						var line = editor.getLine(i);
-						if (COMMENT_RE.test(line)) {
-							hasComment = true;
-						} else if (NO_SPACE_RE.test(line)) {
-							hasRule = true;
+				var lastIndex, firstLine, lastLine;
+				if (hasRule) {
+					lastIndex = lines.length - 1;
+					firstLine = lines[0];
+					lastLine = lines[lastIndex];
+					lines = lines.map(function(line) {
+						if (!NO_SPACE_RE.test(line)) {
+							return line;
 						}
-						lines.push(line);
-					}
-
-					if (isEmpty = !hasComment && !hasRule) {
-						return;
-					}
-					var lastIndex, firstLine, lastLine;
-					if (hasRule) {
-					  lastIndex = lines.length - 1;
-					  firstLine = lines[0];
-					  lastLine = lines[lastIndex];
-						lines = lines.map(function(line) {
-							if (!NO_SPACE_RE.test(line)) {
-								return line;
-							}
-						  if (isShiftKey && COMMENT_RE.test(line)) {
-						    return line.replace(COMMENT_RE, '');
-						  }
-						  return '# ' + line;
-						});
-					} else {
-						firstLine = lines[0];
-						lastIndex = lines.length - 1;
-						lastLine = lines[lastIndex];
-						lines = lines.map(function(line) {
+						if (isShiftKey && COMMENT_RE.test(line)) {
 							return line.replace(COMMENT_RE, '');
-						});
-					}
-					if (anchor.ch != 0) {
-						anchor.ch +=  lines[0].length - firstLine.length;
-						if (anchor.ch < 0) {
-							anchor.ch = 0;
 						}
+						return '# ' + line;
+					});
+				} else {
+					firstLine = lines[0];
+					lastIndex = lines.length - 1;
+					lastLine = lines[lastIndex];
+					lines = lines.map(function(line) {
+						return line.replace(COMMENT_RE, '');
+					});
+				}
+				if (anchor.ch != 0) {
+					anchor.ch +=  lines[0].length - firstLine.length;
+					if (anchor.ch < 0) {
+						anchor.ch = 0;
 					}
-					if (head.ch != 0 && head != anchor) {
-						head.ch += lines[lastIndex].length - lastLine.length;
-						if (head.ch < 0) {
-							head.ch = 0;
-						} 
-					}
-					if (revert) {
-						editor.replaceRange(lines.join('\n') + '\n', {line: head.line + 1, ch: 0}, {line: anchor.line, ch: 0});
-						ranges.push({anchor: head, head: anchor});
-					} else {
-						editor.replaceRange(lines.join('\n') + '\n', {line: anchor.line, ch: 0}, {line: head.line + 1, ch: 0});
-						ranges.push({anchor: anchor, head: head});
-					}
-				});
-				if (!isEmpty) {
-					editor.setSelections(ranges);
+				}
+				if (head.ch != 0 && head != anchor) {
+					head.ch += lines[lastIndex].length - lastLine.length;
+					if (head.ch < 0) {
+						head.ch = 0;
+					} 
+				}
+				if (revert) {
+					editor.replaceRange(lines.join('\n') + '\n', {line: head.line + 1, ch: 0}, {line: anchor.line, ch: 0});
+					ranges.push({anchor: head, head: anchor});
+				} else {
+					editor.replaceRange(lines.join('\n') + '\n', {line: anchor.line, ch: 0}, {line: head.line + 1, ch: 0});
+					ranges.push({anchor: anchor, head: head});
 				}
 			});
-		}
+			if (!isEmpty) {
+				editor.setSelections(ranges);
+			}
+		});
 	},
 	_init: function() {
 		this.setMode(this.props.mode);
