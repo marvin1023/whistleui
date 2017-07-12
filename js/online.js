@@ -115,7 +115,8 @@ var Online = React.createClass({
 							<button type="button" className="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span>
 							</button>
-							Proxy Server has been changed, whether to refresh the page to reload the data.
+							The proxy has been modified.
+							<br/>Do you want to reload it.
 						</div>
 						<div className="modal-footer">
 							<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
