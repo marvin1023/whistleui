@@ -291,6 +291,7 @@ var ReqData = React.createClass({
 			startIndex = 0;
 			endIndex = list.length;
 		}
+		var filterText = (state.filterText || '').trim();
 		
 		return (
 				<div className="fill w-req-data-con orient-vertical-box">
@@ -312,7 +313,9 @@ var ReqData = React.createClass({
 						      </thead>
 						    </table>
 						</div>
-						<div ref="container" tabIndex="0" className="w-req-data-list fill">
+						<div ref="container" tabIndex="0"
+							style={{background: filterText ? 'lightyellow' : undefined}}
+							className="w-req-data-list fill">
 							<table ref="content" className="table" onDragStart={this.onDragStart}>
 						      <tbody>
 						      {
