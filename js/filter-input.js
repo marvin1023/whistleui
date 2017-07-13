@@ -30,13 +30,13 @@ var FilterInput = React.createClass({
 		this.setState({filterText: ''});
 	},
 	render: function() {
-		var text = (this.state.filterText || '').trim();
+		var filterText = this.state.filterText || '';
 		return (
 				<div className="w-filter-con">
-					<input type="text" value={text} 
+					<input type="text" value={filterText} 
 					onChange={this.onFilterChange} 
 					onKeyDown={this.onFilterKeyDown}
-					style={{background: text ? '#000' : undefined}}
+					style={{background: filterText.trim() ? '#000' : undefined}}
 					className="w-filter-input" maxLength="128" placeholder="type filter text" />
 					<button onMouseDown={util.preventBlur}
 					onClick={this.clearFilterText}
