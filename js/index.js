@@ -186,6 +186,15 @@ var Index = React.createClass({
                               title: 'Ctrl + I'
                             }
 		                        ];
+		var helpOptions = 'Github,Examples,Network,Rules,Values,Plugins,AutoRefresh,Replay,Componser,Filter,Weinre,Https,Online,Update,Support'.split(',');
+		state.helpOptions = helpOptions.map(function(name) {
+			// TODO: 修改图标及支持链接
+			return {
+				name: name,
+				id: name,
+				icon: 'question-sign'
+			};
+		});
     protocols.setPlugins(state);
     state.exportFileType = localStorage.exportFileType;
 		return state;
@@ -657,6 +666,16 @@ var Index = React.createClass({
   hideNetworkOptions: function() {
     this.setState({
       showNetworkOptions: false
+    });
+  },
+	showHelpOptions: function() {
+	  this.setState({
+			showHelpOptions: true
+		});
+	},
+  hideHelpOptions: function() {
+    this.setState({
+      showHelpOptions: false
     });
   },
 	showRulesOptions: function(e) {
@@ -1481,6 +1500,7 @@ var Index = React.createClass({
 		var showValuesOptions = state.showValuesOptions;
 		var showPluginsOptions = state.showPluginsOptions;
 		var showWeinreOptions = state.showWeinreOptions;
+		var showHelpOptions = state.showHelpOptions;
 		
 		rulesOptions.forEach(function(item) {
 			item.icon = 'checkbox';
@@ -1587,7 +1607,11 @@ var Index = React.createClass({
 						<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} className="w-weinre-menu-item" onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
 					</div>
 					<a onClick={this.showHttpsSettingsDialog} className="w-https-menu" href="javascript:;" draggable="false"><span className="glyphicon glyphicon-lock"></span>Https</a>
-					<a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
+					<div onMouseEnter={this.showHelpOptions} onMouseLeave={this.hideHelpOptions} className={'w-menu-wrapper' + (showHelpOptions ? ' w-menu-wrapper-show' : '')}>
+  				  <a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
+            <MenuItem ref="helpMenuItem" options={state.helpOptions}
+							className="w-help-menu-item" onClickOption={this.openWindow} />
+          </div>
 					<About />
 					<Online />
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="Input the name" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
