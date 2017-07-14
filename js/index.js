@@ -186,7 +186,7 @@ var Index = React.createClass({
                               title: 'Ctrl + I'
                             }
 		                        ];
-		var helpOptions = 'Github,Examples,Network,Rules,Values,Plugins,AutoRefresh,Replay,Componser,Filter,Weinre,Https,Online,Update,Support'.split(',');
+		var helpOptions = 'Github,Network,Rules,Values,Plugins,AutoRefresh,Replay,Componser,Filter,Weinre,Https,Online,Update'.split(',');
 		state.helpOptions = helpOptions.map(function(name) {
 			// TODO: 修改图标及支持链接
 			return {
@@ -669,14 +669,14 @@ var Index = React.createClass({
     });
   },
 	showHelpOptions: function() {
-	  this.setState({
-			showHelpOptions: true
-		});
+	  // this.setState({
+		// 	showHelpOptions: true
+		// });
 	},
   hideHelpOptions: function() {
-    this.setState({
-      showHelpOptions: false
-    });
+    // this.setState({
+    //   showHelpOptions: false
+    // });
   },
 	showRulesOptions: function(e) {
 		var self = this;
