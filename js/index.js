@@ -489,6 +489,12 @@ var Index = React.createClass({
 				result.push(value);
 			}
 		});
+		modal = this.state.values;
+		modal.list.forEach(function(name) {
+			if (/\.rules$/.test(name)) {
+				result.push(modal.get(name).value);
+			}
+		});
 		
 		return activeList.concat(selectedList).concat(result).join('\r\n');
 	},
