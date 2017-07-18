@@ -186,15 +186,63 @@ var Index = React.createClass({
                               title: 'Ctrl + I'
                             }
 		                        ];
-		var helpOptions = 'Github,Network,Rules,Values,Plugins,AutoRefresh,Replay,Componser,Filter,Weinre,Https,Online,Update'.split(',');
-		state.helpOptions = helpOptions.map(function(name) {
-			// TODO: 修改图标及支持链接
-			return {
-				name: name,
-				id: name,
-				icon: 'question-sign'
-			};
-		});
+		state.helpOptions = [
+			{
+				name: 'Get Started',
+				href: 'https://avwo.github.io/whistle/quickstart.html',
+				icon: false,
+			},
+			{
+				name: 'Github',
+				href: 'https://github.com/avwo/whistle',
+				icon: false,
+			},
+			{
+				name: 'Docs',
+				href: 'https://avwo.github.io/whistle/',
+				icon: false,
+			},
+			{
+				name: 'Network',
+				href: 'https://avwo.github.io/whistle/webui/network.html',
+				icon: false,
+			},
+			{
+				name: 'Rules',
+				href: 'https://avwo.github.io/whistle/webui/rules.html',
+				icon: false,
+			},
+			{
+				name: 'Values',
+				href: 'https://avwo.github.io/whistle/webui/values.html',
+				icon: false,
+			},
+			{
+				name: 'Plugins',
+				href: 'https://avwo.github.io/whistle/webui/plugins.html',
+				icon: false,
+			},
+			{
+				name: 'Composer',
+				href: 'https://avwo.github.io/whistle/webui/composer.html',
+				icon: false,
+			},
+			{
+				name: 'Weinre',
+				href: 'https://avwo.github.io/whistle/webui/weinre.html',
+				icon: false,
+			},
+			{
+				name: 'Https',
+				href: 'https://avwo.github.io/whistle/webui/https.html',
+				icon: false,
+			},
+			{
+				name: 'Online',
+				href: 'https://avwo.github.io/whistle/webui/online.html',
+				icon: false,
+			}
+		];
     protocols.setPlugins(state);
     state.exportFileType = localStorage.exportFileType;
 		return state;
@@ -675,14 +723,14 @@ var Index = React.createClass({
     });
   },
 	showHelpOptions: function() {
-	  // this.setState({
-		// 	showHelpOptions: true
-		// });
+	  this.setState({
+			showHelpOptions: true
+		});
 	},
   hideHelpOptions: function() {
-    // this.setState({
-    //   showHelpOptions: false
-    // });
+    this.setState({
+      showHelpOptions: false
+    });
   },
 	showRulesOptions: function(e) {
 		var self = this;
