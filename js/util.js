@@ -17,7 +17,7 @@ exports.preventBlur = function preventDefault(e) {
 $(document).on('mousedown', function(e) {
 	stopDrag();
 	var target = $(e.target);
-	$.each(dragCallbacks, function(selector) {
+	Object.keys(dragCallbacks).forEach(function(selector) {
 		dragTarget = target.closest(selector);
 		if (dragTarget.length) {
 			dragCallback = dragCallbacks[selector];
@@ -35,8 +35,8 @@ $(document).on('mousedown', function(e) {
 	if (!dragTarget) {
 		return;
 	}
-	$.each(dragCallback, function() {
-		this(dragTarget, e.clientX - dragOffset.clientX, 
+	dragCallback.forEach(function(callback) {
+		callback(dragTarget, e.clientX - dragOffset.clientX, 
 				e.clientY - dragOffset.clientY, dragOffset.clientX, dragOffset.clientY);
 	});
 	dragOffset = e;
