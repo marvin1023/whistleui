@@ -165,8 +165,8 @@ function startLoadData() {
 			if (!data || data.ec !== 0) {
 				return;
 			}
-			$.each(directCallbacks, function() {
-				this(data);
+			directCallbacks.forEach(function(cb) {
+				cb(data);
 			});
 			var len = data.log.length;
 			var svrLen = data.svrLog.length;
@@ -181,8 +181,8 @@ function startLoadData() {
 					document.cookie = '_lastSvrLogTime=' + data.svrLog[data.svrLog.length - 1].id;
 				}
 				
-				$.each(logCallbacks, function() {
-					this(logList, svrLogList);
+				logCallbacks.forEach(function(cb) {
+					cb(logList, svrLogList);
 				});
 			}
 			
@@ -192,11 +192,9 @@ function startLoadData() {
 			}
 			var ids = data.newIds;
 			var data = data.data;
-			$.each(dataList, function(i) {
-				var item = this;
+			dataList.forEach(function(item) {
 				var newItem = data[item.id];
 				if (newItem) {
-//				  delete item.isHttps;
 					$.extend(item, newItem);
 					setReqData(item);
 				} else {
@@ -205,8 +203,8 @@ function startLoadData() {
 			});
 			
 			if (ids.length) {
-			  $.each(ids, function() {
-	        var item = data[this];
+			  ids.forEach(function(id) {
+	        var item = data[id];
 	        if (item) {
 	          setReqData(item);
 	          dataList.push(item);
@@ -218,8 +216,8 @@ function startLoadData() {
 					lastRowId = lastRow.id;
 				}
 			}
-			$.each(dataCallbacks, function() {
-				this(networkModal);
+			dataCallbacks.forEach(function(cb) {
+				cb(networkModal);
 			});
 		});
 	}
@@ -288,16 +286,15 @@ exports.addNetworkList = function(list) {
     hasData = true;
   });
   if (hasData) {
-    $.each(dataCallbacks, function() {
-      this(networkModal);
+    dataCallbacks.forEach(function(cb) {
+      cb(networkModal);
     });
   }
 };
 
 function getPendingIds() {
 	var pendingIds = [];
-	$.each(dataList, function() {
-		var item = this;
+	dataList.forEach(function(item) {
 		if (!item.endTime && !item.lost) {
 			pendingIds.push(item.id);
 		}
@@ -325,8 +322,8 @@ function updateServerInfo(data) {
 	
 	if (!(data = data && data.server)) {
 		curServerInfo = data;
-		$.each(serverInfoCallbacks, function() {
-			this(false);
+		serverInfoCallbacks.forEach(function(cb) {
+			cb(false);
 		});
 		return;
 	}
@@ -338,8 +335,8 @@ function updateServerInfo(data) {
 		return;
 	}
 	curServerInfo = data;
-	$.each(serverInfoCallbacks, function() {
-		this(data);
+	serverInfoCallbacks.forEach(function(cb) {
+		cb(data);
 	});
 
 }
