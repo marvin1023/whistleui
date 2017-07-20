@@ -180,10 +180,20 @@ var Index = React.createClass({
                               title: 'Ctrl + S'
                             },
                             {
+                              name: 'Export Historical Sessions',
+                              id: 'exportHistory',
+                              disabled: true
+                            },
+                            {
                               name: 'Import Sessions',
                               icon: 'import',
                               id: 'importSessions',
                               title: 'Ctrl + I'
+                            },
+                            {
+                              name: 'Import Historical Sessions',
+                              id: 'importHistory',
+                              disabled: true
                             }
 		                        ];
 		state.helpOptions = [
