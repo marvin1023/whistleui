@@ -17,6 +17,7 @@ var events = require('./events');
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
 var OPTIONS_WITH_SELECTED = ['removeSelected', 'exportWhistleFile', 'exportSazFile'];
+var HISTORY_OPTIONS = ['exportHistory', 'importHistory']; 
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -1618,6 +1619,9 @@ var Index = React.createClass({
 	    var hasUnselected = state.network.hasUnselected();
 	    if (state.network.hasSelected()) {
 	      networkOptions.forEach(function(option) {
+					if (HISTORY_OPTIONS.indexOf(option.id) !== -1) {
+						return;
+					}
 	        option.disabled = false;
 	        if (option.id === 'removeUnselected') {
 	          option.disabled = !hasUnselected;
@@ -1625,6 +1629,9 @@ var Index = React.createClass({
 	      });
 	    } else {
 	      networkOptions.forEach(function(option) {
+					if (HISTORY_OPTIONS.indexOf(option.id) !== -1) {
+						return;
+					}
 	        if (OPTIONS_WITH_SELECTED.indexOf(option.id) !== -1) {
 	          option.disabled = true;
 	        } else if (option.id === 'removeUnselected') {
