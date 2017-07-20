@@ -323,7 +323,7 @@ var ReqData = React.createClass({
 						    		  i = hasKeyword ? index : i;
 						    		  var url, path;
 						    		  if (!item.hide && i >= startIndex && i <= endIndex) {
-						    		    url = item.url;
+						    		    url = item.shortUrl || item.url;
 						    		    path = item.path;
 						    		  }
 						    		  

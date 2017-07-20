@@ -18,6 +18,7 @@ var initialData, startedLoad;
 var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
 var dataIndex = 10000;
+var MAX_URL_LENGTH = 1024 * 2;
 var lastRowId;
 var DEFAULT_CONF = {
 		timeout: TIMEOUT,
@@ -252,6 +253,9 @@ function setReqData(item) {
 	item.time = end ? end - item.startTime  : defaultValue;
 	setRawHeaders(item.req);
 	setRawHeaders(res);
+	if (url.length > MAX_URL_LENGTH) {
+		item.shortUrl = url = url.substring(0, MAX_URL_LENGTH) + '...';
+	}
 	if (!item.path) {
 	  item.protocol = item.isHttps ? 'HTTP' : util.getProtocol(url);
 	  item.hostname = item.isHttps ? 'Tunnel to' : util.getHost(url);
