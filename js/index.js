@@ -103,13 +103,13 @@ var Index = React.createClass({
 			
 			rulesOptions.push(rulesData.Default);
 			
-			$.each(rules.list, function() {
-				rulesList.push(this.name);
-				item = rulesData[this.name] = {
-					name: this.name,
-					value: this.data,
-					selected: this.selected,
-					active: selectedName === this.name
+			rules.list.forEach(function(item) {
+				rulesList.push(item.name);
+				item = rulesData[item.name] = {
+					name: item.name,
+					value: item.data,
+					selected: item.selected,
+					active: selectedName === item.name
 				};
 				rulesOptions.push(item);
 			});
@@ -120,15 +120,15 @@ var Index = React.createClass({
 			state.valuesTheme = values.theme;
 			state.valuesFontSize = values.fontSize;
 			state.showValuesLineNumbers = values.showLineNumbers;
-			$.each(values.list, function() {
-				valuesList.push(this.name);
-				valuesData[this.name] = {
-					name: this.name,
-					value: this.data,
-					active: selectedName === this.name
+			values.list.forEach(function(item) {
+				valuesList.push(item.name);
+				valuesData[item.name] = {
+					name: item.name,
+					value: item.data,
+					active: selectedName === item.name
 				};
 				valuesOptions.push({
-					name: this.name,
+					name: item.name,
 					icon: 'edit'
 				});
 			});
