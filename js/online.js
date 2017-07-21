@@ -5,6 +5,7 @@ require('bootstrap/dist/js/bootstrap.js');
 var React = require('react');
 var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
+var util = require('./util');
 var dialog;
 
 function createDialog() {
@@ -66,8 +67,13 @@ var Online = React.createClass({
 		  return;
 		}
 		var info = [];
-    if (server.host) {
-      info.push('<h5><strong>Host:</strong> ' + server.host + '</h5>');
+		var username = util.escape(server.username);
+		if (username) {
+      info.push('<h5><strong>User:</strong> ' + username + '</h5>');
+		}
+		var host = util.escape(server.host);
+    if (host) {
+      info.push('<h5><strong>Host:</strong> ' + host + '</h5>');
     }
     if (server.nodeVersion) {
       info.push('<h5><strong>Node:</strong> ' + server.nodeVersion + '</h5>');

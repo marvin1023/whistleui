@@ -424,5 +424,27 @@ function compareReqId(prev, next) {
 
 exports.compareReqId = compareReqId;
 
+var rentity = /['<> "&]/g;
+var entities = {
+		'"': '&quot;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'&': '&amp;',
+		' ': '&nbsp;',
+		'\'': '&#39;'
+};
+var rlf = /\r?\n/g;
+var rspace = /\s/g;
 
+function escapeFn(matched) {
+		return encodeEntities[matched];
+}
+	
+exports.escape = function(str) {
+	if (str == null) {
+		return str;
+	}
+	str = (str + '').replace(rentity, escapeFn);
+	return str.replace(rlf, '<br />').replace(rspace, '&nbsp;');
+};
 
