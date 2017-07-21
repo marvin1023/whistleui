@@ -180,22 +180,23 @@ var Index = React.createClass({
                               disabled: true,
                               title: 'Ctrl + S'
                             },
-                            {
-                              name: 'Export Historical Sessions',
-                              id: 'exportHistory',
-                              disabled: true
-                            },
+                            // {
+                            //   name: 'Export Historical Sessions',
+                            //   id: 'exportHistory',
+                            //   disabled: true
+                            // },
                             {
                               name: 'Import Sessions',
                               icon: 'import',
                               id: 'importSessions',
                               title: 'Ctrl + I'
-                            },
-                            {
-                              name: 'Import Historical Sessions',
-                              id: 'importHistory',
-                              disabled: true
-                            }
+														}
+														// ,
+                            // {
+                            //   name: 'Import Historical Sessions',
+                            //   id: 'importHistory',
+                            //   disabled: true
+                            // }
 		                        ];
 		state.helpOptions = [
 			{
