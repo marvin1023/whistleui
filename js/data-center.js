@@ -332,7 +332,8 @@ function updateServerInfo(data) {
 		return;
 	}
 	
-	if (curServerInfo && curServerInfo.version == data.version && 
+	if (curServerInfo && curServerInfo.version == data.version &&
+		curServerInfo.baseDir == data.baseDir
 		curServerInfo.port == data.port && curServerInfo.host == data.host && 
 		curServerInfo.ipv4.sort().join() == data.ipv4.sort().join()
 		&& curServerInfo.ipv6.sort().join() == data.ipv6.sort().join()) {

@@ -41,10 +41,14 @@ var Online = React.createClass({
 		
 	},
 	checkServerChanged: function(data) {
+		data.mac = data.mac || '';
 		if (this.macAddr === undefined) {
-			this.macAddr = data.mac || '';
+			this.macAddr = data.mac;
 			this.serverPort = data.port;
-		} else if (this.macAddr != (data.mac || '') || this.serverPort != data.port) {
+			this.version = data.version;
+			this.baseDir = data.baseDir;
+		} else if (this.macAddr !== data.mac || this.serverPort !== data.port
+		|| this.version !== data.version || this.baseDir !== data.baseDir) {
 			this.refs.confirmReload.show();
 		} else {
 			this.refs.confirmReload.hide();
