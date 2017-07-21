@@ -69,7 +69,7 @@ var Online = React.createClass({
 		var info = [];
 		var username = util.escape(server.username);
 		if (username) {
-      info.push('<h5><strong>User:</strong> ' + username + '</h5>');
+      info.push('<h5><strong>Username:</strong> ' + username + '</h5>');
 		}
 		var host = util.escape(server.host);
     if (host) {
