@@ -1066,19 +1066,17 @@ var Index = React.createClass({
 	  var self = this;
 	  var target = ReactDOM.findDOMNode(self.refs.editFilterInput);
 	  self._setEditFilterPending = true;
-	  if (target.value.trim()) {
-	    dataCenter.setFilter({filter: ''}, function(data) {
-	      if (data && data.ec === 0) {
-	        target.blur();
-	        target.value = '';
-	        self.setState({
-	          filterText: ''
-	        });
-	      } else {
-	        util.showSystemError();
-	      }
-	    });
-	  }
+	  dataCenter.setFilter({filter: ''}, function(data) {
+			if (data && data.ec === 0) {
+				target.blur();
+				target.value = '';
+				self.setState({
+					filterText: ''
+				});
+			} else {
+				util.showSystemError();
+			}
+		});
 	  self.setState({
 	    showEditFilter: false
     }, function() {
