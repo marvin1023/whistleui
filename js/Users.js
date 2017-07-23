@@ -5,7 +5,7 @@ var Users = React.createClass({
   render: function() {
 
     return (
-      <div>
+      <div style={{display: this.props.hide ? 'none' : undefined}}>
         Add Users
       </div>
     );
