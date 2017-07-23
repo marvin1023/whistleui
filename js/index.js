@@ -5,6 +5,7 @@ var ReactDOM = require('react-dom');
 var List = require('./list');
 var ListModal = require('./list-modal');
 var Network = require('./network');
+var Users = require('./users');
 var About = require('./about');
 var Online = require('./online');
 var MenuItem = require('./menu-item');
@@ -74,6 +75,9 @@ var Index = React.createClass({
 		} else if (pageName.indexOf('plugins') != -1) {
 			state.hasPlugins = true;
 			state.name = 'plugins';
+		} else if (pageName.indexOf('users') != -1) {
+			state.hasUsers = true;
+			state.name = 'users';
 		} else {
 			state.hasNetwork = true;
 			state.name = 'network';
@@ -297,6 +301,8 @@ var Index = React.createClass({
 				self.showValues();
 			} else if (pageName.indexOf('plugins') != -1) {
 				self.showPlugins();
+			} else if (pageName.indexOf('users') != -1) {
+				self.showUsers();
 			} else {
 				self.showNetwork();
 			}
@@ -618,6 +624,25 @@ var Index = React.createClass({
 			name: 'plugins'
 		});
 		location.hash = 'plugins';
+	},
+	showUsers: function(e) {
+		if (this.state.name != 'users') {
+		  this.setMenuOptionsState();
+		  this.hideUsersOptions();
+		} else if (e) {
+      this.showUsersOptions();
+    }
+		this.setState({
+			hasUsers: true,
+			name: 'users'
+		});
+		location.hash = 'users';
+	},
+	showUsersOptions: function() {
+
+	},
+	hideUsersOptions: function() {
+
 	},
 	showNetwork: function(e) {
 		if (this.state.name == 'network') {
@@ -1540,6 +1565,7 @@ var Index = React.createClass({
 		var isRules = name == 'rules';
 		var isValues = name == 'values';
 		var isPlugins = name == 'plugins';
+		var isUsers = name === 'users';
 		var disabledEditBtn = true;
 		var disabledDeleteBtn = true;
 		var disabledPluginHomepageBtn = true;
@@ -1557,6 +1583,7 @@ var Index = React.createClass({
 		var showRulesOptions = state.showRulesOptions;
 		var showValuesOptions = state.showValuesOptions;
 		var showPluginsOptions = state.showPluginsOptions;
+		var showUsersOptions = state.showUsersOptions;
 		var showWeinreOptions = state.showWeinreOptions;
 		var showHelpOptions = state.showHelpOptions;
 		
@@ -1656,21 +1683,22 @@ var Index = React.createClass({
 						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
 							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
 					</div>
-					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '')}>
-						<a onClick={this.showPlugins} className="w-plugins-menu" style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-user"></span>Users</a>
-						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
-							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
+					<div ref="usersMenu" onMouseEnter={this.showUsersOptions} onMouseLeave={this.hideUsersOptions} className={'w-menu-wrapper' + (showUsersOptions ? ' w-menu-wrapper-show' : '')}>
+						<a onClick={this.showUsers} className="w-plugins-menu" style={{background: name == 'users' ? '#ddd' : undefined}}
+						href="javascript:;" draggable="false"><span className="glyphicon glyphicon-user"></span>Users</a>
+						<MenuItem ref="usersMenuItem" name={name == 'users' ? null : 'Open'} options={[]} checkedOptions={state.disabledUsers}
+							className="w-users-menu-item" onClick={this.showUsers} onChange={this.disableUser} onClickOption={this.showAndActiveUsers} />
 					</div>
-					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false" title="Ctrl[Command] + S"><span className="glyphicon glyphicon-save-file"></span>Save</a>
-					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-plus"></span>Create</a>
-					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Rename</a>
+					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false" title="Ctrl[Command] + S"><span className="glyphicon glyphicon-save-file"></span>Save</a>
+					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-plus"></span>Create</a>
+					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Rename</a>
 					<a onClick={this.autoRefresh} className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-play"></span>AutoRefresh</a>
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Composer</a>
 					<a onClick={this.showEditFilter} onDoubleClick={this.clearEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} title={state.filterText ? 'Double click to clear the text:\n' + state.filterText : undefined} 
 					  style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
-					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-trash"></span>Delete</a>
-					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
+					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-trash"></span>Delete</a>
+					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideWeinreOptions} className={'w-menu-wrapper' + (showWeinreOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showAnonymousWeinre} className="w-weinre-menu" href="javascript:;" draggable="false"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 						<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} className="w-weinre-menu-item" onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
@@ -1692,10 +1720,11 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="128" defaultValue={state.filterText} placeholder={state.filterText ? null : 'Input the Substring or RegExp'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
-				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : null}
-				{state.hasValues ? <List theme={valuesTheme} onDoubleClick={this.showEditValuesByDBClick} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : null}
-				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' && name != 'plugins' ? false : true} modal={state.network} /> : null}
-				{state.hasPlugins ? <Plugins {...state} onOpen={this.activePluginTab} onClose={this.closePluginTab} onActive={this.activePluginTab} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : null}
+				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : undefined}
+				{state.hasValues ? <List theme={valuesTheme} onDoubleClick={this.showEditValuesByDBClick} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : undefined}
+				{state.hasNetwork ? <Network ref="network" hide={name != 'rules' && name != 'values' && name != 'plugins' ? false : true} modal={state.network} /> : undefined}
+				{state.hasPlugins ? <Plugins {...state} onOpen={this.activePluginTab} onClose={this.closePluginTab} onActive={this.activePluginTab} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : undefined}
+				{state.hasUsers ? <Users ref="users" hide={name == 'users' ? false : true} /> : undefined}
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">
