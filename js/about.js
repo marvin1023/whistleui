@@ -51,14 +51,27 @@ var About = React.createClass({
 			self.setState({
 				version: data.version,
 				latestVersion: data.latestVersion,
-				hasUpdate: hasNewVersion(data)
+				hasUpdate: self.checkUpdate(hasNewVersion(data))
 			});
 		});
+	},
+	checkUpdate: function(hasUpdate) {
+		if (this.props.onCheckUpdate) {
+			if ((!this._hasUpdate && !hasUpdate) || hasUpdate !== this._hasUpdate) {
+				this._hasUpdate = hasUpdate;
+				this.props.onCheckUpdate(hasUpdate);
+			}
+		}
+		return hasUpdate;
 	},
 	showAboutInfo: function(showTips) {
 		var self = this;
 		var state = self.state || {};
 		self.showDialog();
+		var onClick = self.props.onClick;
+		if (typeof onClick === 'function') {
+			onClick();
+		}
 		
 		dataCenter.checkUpdate(function(data) {
 			if (data && data.ec === 0) {
@@ -68,7 +81,7 @@ var About = React.createClass({
 				self.setState({
 					version: data.version,
 					latestVersion: data.latestVersion,
-					hasUpdate: hasNewVersion(data)
+					hasUpdate: self.checkUpdate(hasNewVersion(data))
 				});
 			}
 		});

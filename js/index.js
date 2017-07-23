@@ -180,23 +180,12 @@ var Index = React.createClass({
                               disabled: true,
                               title: 'Ctrl + S'
                             },
-                            // {
-                            //   name: 'Export Historical Sessions',
-                            //   id: 'exportHistory',
-                            //   disabled: true
-                            // },
                             {
                               name: 'Import Sessions',
                               icon: 'import',
                               id: 'importSessions',
                               title: 'Ctrl + I'
 														}
-														// ,
-                            // {
-                            //   name: 'Import Historical Sessions',
-                            //   id: 'importHistory',
-                            //   disabled: true
-                            // }
 		                        ];
 		state.helpOptions = [
 			{
@@ -743,7 +732,12 @@ var Index = React.createClass({
     this.setState({
       showHelpOptions: false
     });
-  },
+	},
+	showHasNewVersion: function(hasNewVersion) {
+		this.setState({
+      hasNewVersion: hasNewVersion
+    });
+	},
 	showRulesOptions: function(e) {
 		var self = this;
 		var target = $(e.target);
@@ -1662,6 +1656,11 @@ var Index = React.createClass({
 						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
 							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
 					</div>
+					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '')}>
+						<a onClick={this.showPlugins} className="w-plugins-menu" style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-user"></span>Users</a>
+						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
+							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
+					</div>
 					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false" title="Ctrl[Command] + S"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Rename</a>
@@ -1669,7 +1668,7 @@ var Index = React.createClass({
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Composer</a>
 					<a onClick={this.showEditFilter} onDoubleClick={this.clearEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} title={state.filterText ? 'Double click to clear the text:\n' + state.filterText : undefined} 
-					  style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-filter"></span>Filter</a>
+					  style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideWeinreOptions} className={'w-menu-wrapper' + (showWeinreOptions ? ' w-menu-wrapper-show' : '')}>
@@ -1678,11 +1677,14 @@ var Index = React.createClass({
 					</div>
 					<a onClick={this.showHttpsSettingsDialog} className="w-https-menu" href="javascript:;" draggable="false"><span className="glyphicon glyphicon-lock"></span>Https</a>
 					<div onMouseEnter={this.showHelpOptions} onMouseLeave={this.hideHelpOptions} className={'w-menu-wrapper' + (showHelpOptions ? ' w-menu-wrapper-show' : '')}>
-  				  <a className="w-help-menu" href="https://github.com/avwo/whistle#whistle" target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
-            <MenuItem ref="helpMenuItem" options={state.helpOptions}
+						<a className={'w-help-menu' + (state.hasNewVersion ? ' w-menu-enable'  : '')}
+							title={state.hasNewVersion ? 'There is a new version of whistle' : undefined}
+							href={state.hasNewVersion ? 'https://avwo.github.io/whistle/update.html' : 'https://github.com/avwo/whistle#whistle'}
+							target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
+						<MenuItem ref="helpMenuItem" options={state.helpOptions}
+							name={<About onClick={this.hideHelpOptions} onCheckUpdate={this.showHasNewVersion} />}
 							className="w-help-menu-item" onClickOption={this.openWindow} />
           </div>
-					<About />
 					<Online />
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="Input the name" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="Input the key" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>

@@ -47,7 +47,9 @@ var MenuItem = React.createClass({
 					})}</div> : ''
 			}
 			{
-				name ? <a onClick={onClick} className="w-menu-open" href="javascript:;" draggable="false"><span className="glyphicon glyphicon-folder-open"></span>{name}</a> : ''
+				name ? (typeof name === 'string' ? <a onClick={onClick} className="w-menu-open" href="javascript:;" draggable="false">
+					<span className='glyphicon glyphicon-folder-open'></span>{name}
+				</a> : name) : ''
 			}
 			</div>
 		);
