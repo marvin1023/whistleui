@@ -109,6 +109,10 @@ CodeMirror.defineMode('rules', function() {
 			  return /^pac:\/\//.test(str);
 			}
 
+			function isWhistle(str) {
+			  return /^whistle:\/\//.test(str);
+			}
+
 			function isLocalPath(str) {
 				return /^[a-z]:(?:\\|\/(?!\/))/i.test(str) || /^\/[^/]/.test(str);
 			}
@@ -180,7 +184,9 @@ CodeMirror.defineMode('rules', function() {
                  type = 'variable-2 js-socks js-type';
                } else if (isPac(str)) {
                  type = 'variable-2 js-pac js-type';
-               } else if (isRulesFile(str)) {
+               } else if (isWhistle(str)) {
+								 type = 'keyword js-whistle js-type'
+							 } else if (isRulesFile(str)) {
                  type = 'variable-2 js-rulesFile js-type';
                } else if (isWildcard(str)) {
 								 return 'attribute js-attribute';
