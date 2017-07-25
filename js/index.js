@@ -18,7 +18,6 @@ var events = require('./events');
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
 var OPTIONS_WITH_SELECTED = ['removeSelected', 'exportWhistleFile', 'exportSazFile'];
-var HISTORY_OPTIONS = ['exportHistory', 'importHistory']; 
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -1534,8 +1533,8 @@ var Index = React.createClass({
 	},
 	uploadSessionsForm: function(data) {
     var file = data.get('importSessions');
-	  if (!file || !/\.(txt|saz)$/i.test(file.name)) {
-      return alert('Only supports txt or saz file.');
+	  if (!file || !/\.(txt|json|saz)$/i.test(file.name)) {
+      return alert('Only supports .txt .json or .saz file.');
     }
     
     if (file.size > MAX_FILE_SIZE) {
@@ -1639,9 +1638,6 @@ var Index = React.createClass({
 	    var hasUnselected = state.network.hasUnselected();
 	    if (state.network.hasSelected()) {
 	      networkOptions.forEach(function(option) {
-					if (HISTORY_OPTIONS.indexOf(option.id) !== -1) {
-						return;
-					}
 	        option.disabled = false;
 	        if (option.id === 'removeUnselected') {
 	          option.disabled = !hasUnselected;
@@ -1649,9 +1645,6 @@ var Index = React.createClass({
 	      });
 	    } else {
 	      networkOptions.forEach(function(option) {
-					if (HISTORY_OPTIONS.indexOf(option.id) !== -1) {
-						return;
-					}
 	        if (OPTIONS_WITH_SELECTED.indexOf(option.id) !== -1) {
 	          option.disabled = true;
 	        } else if (option.id === 'removeUnselected') {
@@ -1696,7 +1689,7 @@ var Index = React.createClass({
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Composer</a>
 					<a onClick={this.showEditFilter} onDoubleClick={this.clearEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} title={state.filterText ? 'Double click to clear the text:\n' + state.filterText : undefined} 
-					  style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
+					  style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-filter"></span>Filter</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-trash"></span>Delete</a>
 					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideWeinreOptions} className={'w-menu-wrapper' + (showWeinreOptions ? ' w-menu-wrapper-show' : '')}>
@@ -1789,7 +1782,7 @@ var Index = React.createClass({
             <div className="modal-body">
               <label className="w-choose-filte-type-label">Save as:
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
-                  <option value="whistle">*.txt</option>
+                  <option value="whistle">*.txt (*.json)</option>
                   <option value="Fiddler">*.saz (For Fiddler)</option>
                 </select>
               </label>
@@ -1821,7 +1814,7 @@ var Index = React.createClass({
 			  <input ref="sessions" name="sessions" type="hidden" />
 			</form>
 			<form ref="importSessionsForm" enctype="multipart/form-data" style={{display: 'none'}}>  
-			  <input ref="importSessions" onChange={this.uploadSessions} type="file" name="importSessions" accept=".txt,.saz" />
+			  <input ref="importSessions" onChange={this.uploadSessions} type="file" name="importSessions" accept=".txt,.json,.saz" />
       </form>
 			</div>
 		);
