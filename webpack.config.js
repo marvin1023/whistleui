@@ -3,7 +3,8 @@ var path = require('path');
 
 module.exports = {
 	entry : {
-		index : './js/index'
+		index : './js/index',
+		'inject': './js/inject'
 	},
 	output : {
 		path : '../whistle/biz/webui/htdocs/js',
