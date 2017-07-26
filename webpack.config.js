@@ -4,6 +4,9 @@ var path = require('path');
 module.exports = {
 	entry : {
 		index : './js/index',
+		admin : './js/admin',
+		user : './js/user',
+		env : './js/env',
 		'inject': './js/inject'
 	},
 	output : {
