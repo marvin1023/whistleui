@@ -8,6 +8,9 @@ var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
 var util = require('./util');
 
+var PREFIX = dataCenter.PREFIX;
+var VERSION_KEY = PREFIX + '?latestVersion';
+
 function compareVersion(v1, v2) {
   var test1 = '';
   var test2 = '';
@@ -41,7 +44,7 @@ function formatSemer(ver) {
 }
 
 function hasNewVersion(data) {
-	return compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage.latestVersion);
+	return compareVersion(data.latestVersion, data.version) && compareVersion(data.latestVersion, localStorage[VERSION_KEY]);
 }
 
 var About = React.createClass({
@@ -76,7 +79,7 @@ var About = React.createClass({
 		dataCenter.checkUpdate(function(data) {
 			if (data && data.ec === 0) {
 				if (data.latestVersion) {
-					localStorage.latestVersion = data.latestVersion;
+					localStorage[VERSION_KEY] = data.latestVersion;
 				}
 				self.setState({
 					version: data.version,

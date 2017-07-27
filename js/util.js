@@ -254,12 +254,21 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 }
 
 exports.objectToString = function(obj, rawNames) {
+	if (!obj) {
+		return '';
+	}
 	var result = [];
 	rawNames = rawNames || {};
-	for (var i in obj) {
-		result.push((rawNames[i] || i) + ': ' + (obj[i] || ''));
-	}
-	return result.join('\r\n');
+	return Object.keys(obj).map(function(key) {
+		var value = obj[key];
+		key = rawNames[key] || key;
+		if (!Array.isArray(value)) {
+			return key + ': ' + value;
+		}
+		return value.map(function(val) {
+			return key + ': ' + val;
+		}).join('\r\n');
+	}).join('\r\n');
 };
 
 function removeProtocol(url) {

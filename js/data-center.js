@@ -2,7 +2,7 @@ var $ = require('jquery');
 var createCgi = require('./cgi');
 var util = require('./util');
 var NetworkModal = require('./network-modal');
-var	MAX_COUNT = NetworkModal.MAX_COUNT;
+var MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
@@ -19,15 +19,21 @@ var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
 var dataIndex = 10000;
 var MAX_URL_LENGTH = 1024 * 2;
+var PREFIX = location.href.replace(/[?#].*$/, '').replace(/\/index.html$/i, '');
 var lastRowId;
+var FILTER_TEXT_KEY = PREFIX + '?filterText';
 var DEFAULT_CONF = {
-		timeout: TIMEOUT,
-		xhrFields: {
-			withCredentials: true
-		}
+	timeout: TIMEOUT,
+	xhrFields: {
+		withCredentials: true
+	}
 };
-var POST_CONF = $.extend({type: 'post'}, DEFAULT_CONF);
-var GET_CONF = $.extend({cache: false}, DEFAULT_CONF);
+var POST_CONF = $.extend({
+	type: 'post'
+}, DEFAULT_CONF);
+var GET_CONF = $.extend({
+	cache: false
+}, DEFAULT_CONF);
 var cgi = createCgi({
 	getLog: 'cgi-bin/log/get',
 	getData: 'cgi-bin/get-data',
@@ -42,12 +48,39 @@ if (/_lastSvrLogTime=([^;]+)/.test(document.cookie)) {
 	lastSvrLogTime = RegExp.$1;
 }
 
+function toLowerCase(str) {
+	return String(str == null ? '' : str).toLowerCase();
+}
+
+function getFilterText() {
+	var obj = util.parseJSON(localStorage.FILTER_TEXT_KEY || '');
+	if (!obj || obj.disabled) {
+		return;
+	}
+	return {
+		url: toLowerCase(obj.url),
+		status: toLowerCase(obj.status),
+		method: toLowerCase(obj.method),
+		headers: toLowerCase(obj.headers),
+		body: toLowerCase(obj.body)
+	};
+}
+exports.getFilterText = getFilterText;
+
+function setFilterText(filterText) {
+	localStorage.FILTER_TEXT_KEY = text ? JSON.stringify(text) : '';
+}
+exports.setFilterText = setFilterText;
+
+exports.PREFIX = PREFIX;
 exports.sessions = createCgi({
-  imports: 'cgi-bin/sessions/import',
-}, $.extend({type: 'post'}, DEFAULT_CONF, {
-  contentType: false,  
-  processData: false,
-  timeout: 36000
+	imports: 'cgi-bin/sessions/import',
+}, $.extend({
+	type: 'post'
+}, DEFAULT_CONF, {
+	contentType: false,
+	processData: false,
+	timeout: 36000
 }));
 
 exports.values = createCgi({
@@ -113,25 +146,66 @@ $.extend(exports, createCgi({
 	checkUpdate: 'cgi-bin/check-update'
 }, POST_CONF));
 
-exports.getInitialData = function(callback) {
+exports.getInitialData = function (callback) {
 	if (!initialData) {
 		initialData = $.Deferred();
+
 		function load() {
-			cgi.getInitaial(function(data) {
+			cgi.getInitaial(function (data) {
 				data ? initialData.resolve(data) : setTimeout(load, 1000);
 			});
 		}
 		load();
 	}
-	
+
 	initialData.done(callback);
 };
+
+function checkFiled(keyword, text) {
+	if (!keyword) {
+		return true;
+	}
+	if (!text) {
+		return false;
+	}
+	return toLowerCase(text).indexOf(keyword) !== -1;
+}
+
+function filterData(obj, item) {
+	if (!obj) {
+		return true;
+	}
+	if (!checkFiled(obj.url, item.url)) {
+		return false;
+	}
+	if (!checkFiled(obj.status, item.res.statusCode)) {
+		return false;
+	}
+	if (!checkFiled(obj.method, item.req.method)) {
+		return false;
+	}
+	if (!checkFiled(obj.body, item.req.body)
+			|| checkFiled(obj.body, item.res.body)) {
+		return false;
+	}
+	if (obj.headers) {
+		var headers = util.objectToString(item.req.headers).toLowerCase();
+		if (headers.indexOf(obj.headers) === -1) {
+			headers = util.objectToString(item.res.headers).toLowerCase();
+			if (headers.indexOf(obj.headers) === -1) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 
 function startLoadData() {
 	if (startedLoad) {
 		return;
 	}
 	startedLoad = true;
+
 	function load() {
 		var pendingIds = getPendingIds();
 		var startTime = getStartTime();
@@ -139,19 +213,19 @@ function startLoadData() {
 		var svrLen = svrLogList.length;
 		var startLogTime = -1;
 		var startSvrLogTime = -1;
-		
+
 		if (!len) {
 			startLogTime = lastPageLogTime;
 		} else if (len < 120) {
 			startLogTime = logList[len - 1].id;
 		}
-		
+
 		if (!svrLen) {
 			startSvrLogTime = lastSvrLogTime;
 		} else if (svrLen < 120) {
 			startSvrLogTime = svrLogList[svrLen - 1].id;
 		}
-		
+
 		lastPageLogTime = lastSvrLogTime = null;
 		cgi.getData({
 			startLogTime: startLogTime,
@@ -160,13 +234,13 @@ function startLoadData() {
 			startTime: startTime,
 			lastRowId: lastRowId,
 			count: 60
-		}, function(data) {
+		}, function (data) {
 			setTimeout(load, 900);
 			updateServerInfo(data);
 			if (!data || data.ec !== 0) {
 				return;
 			}
-			directCallbacks.forEach(function(cb) {
+			directCallbacks.forEach(function (cb) {
 				cb(data);
 			});
 			var len = data.log.length;
@@ -176,24 +250,24 @@ function startLoadData() {
 					logList.push.apply(logList, data.log);
 					document.cookie = '_lastPageLogTime=' + data.log[data.log.length - 1].id;
 				}
-				
+
 				if (svrLen) {
 					svrLogList.push.apply(svrLogList, data.svrLog);
 					document.cookie = '_lastSvrLogTime=' + data.svrLog[data.svrLog.length - 1].id;
 				}
-				
-				logCallbacks.forEach(function(cb) {
+
+				logCallbacks.forEach(function (cb) {
 					cb(logList, svrLogList);
 				});
 			}
-			
+
 			data = data.data;
 			if (!data.ids.length && !data.newIds.length) {
 				return;
 			}
 			var ids = data.newIds;
 			var data = data.data;
-			dataList.forEach(function(item) {
+			dataList.forEach(function (item) {
 				var newItem = data[item.id];
 				if (newItem) {
 					$.extend(item, newItem);
@@ -202,22 +276,23 @@ function startLoadData() {
 					item.lost = true;
 				}
 			});
-			
+
 			if (ids.length) {
-			  ids.forEach(function(id) {
-	        var item = data[id];
-	        if (item) {
-	          setReqData(item);
-	          dataList.push(item);
-	        }
-	      });
-			  
+				var filterObj = getFilterText();
+				ids.forEach(function (id) {
+					var item = data[id];
+					if (item && filterData(filterObj, item)) {
+						setReqData(item);
+						dataList.push(item);
+					}
+				});
+
 				var lastRow = dataList[dataList.length - 1];
 				if (lastRow && (!lastRowId || util.compareReqId(lastRow.id, lastRowId))) {
 					lastRowId = lastRow.id;
 				}
 			}
-			dataCallbacks.forEach(function(cb) {
+			dataCallbacks.forEach(function (cb) {
 				cb(networkModal);
 			});
 		});
@@ -232,7 +307,7 @@ function setRawHeaders(obj) {
 		return;
 	}
 	var rawHeaders = {};
-	Object.keys(headers).forEach(function(name) {
+	Object.keys(headers).forEach(function (name) {
 		if (name !== 'x-whistle-https-request' && name.indexOf('x-forwarded-from-whistle-') !== 0) {
 			rawHeaders[rawHeaderNames[name] || name] = headers[name];
 		}
@@ -241,64 +316,64 @@ function setRawHeaders(obj) {
 }
 
 function setReqData(item) {
-  var url = item.url;
-  item.method = item.req.method;
+	var url = item.url;
+	item.method = item.req.method;
 	var end = item.endTime;
 	var defaultValue = end ? '' : '-';
 	var res = item.res;
 	item.hostIp = res.ip || defaultValue;
-	var result = res.statusCode == null ? '-' :  res.statusCode;
+	var result = res.statusCode == null ? '-' : res.statusCode;
 	item.result = /^[1-9]/.test(result) && parseInt(result, 10) || result;
 	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0].toLowerCase();
-	item.time = end ? end - item.startTime  : defaultValue;
+	item.time = end ? end - item.startTime : defaultValue;
 	setRawHeaders(item.req);
 	setRawHeaders(res);
 	if (url.length > MAX_URL_LENGTH) {
 		item.shortUrl = url = url.substring(0, MAX_URL_LENGTH) + '...';
 	}
 	if (!item.path) {
-	  item.protocol = item.isHttps ? 'HTTP' : util.getProtocol(url);
-	  item.hostname = item.isHttps ? 'Tunnel to' : util.getHost(url);
-	  var pathIndex = url.indexOf('://');
-    if (pathIndex !== -1) {
-      pathIndex = url.indexOf('/', pathIndex + 3);
-      item.path = pathIndex === -1 ? '/' : url.substring(pathIndex);
-    } else {
-      item.path = url;
-    }
+		item.protocol = item.isHttps ? 'HTTP' : util.getProtocol(url);
+		item.hostname = item.isHttps ? 'Tunnel to' : util.getHost(url);
+		var pathIndex = url.indexOf('://');
+		if (pathIndex !== -1) {
+			pathIndex = url.indexOf('/', pathIndex + 3);
+			item.path = pathIndex === -1 ? '/' : url.substring(pathIndex);
+		} else {
+			item.path = url;
+		}
 	}
 }
 
-exports.addNetworkList = function(list) {
-  if (!Array.isArray(list) || !list.length) {
-    return;
-  }
-  var hasData;
-  list.forEach(function(data) {
-    if (!data || !(data.startTime >= 0) || !data.req || 
-        !data.req.headers || !data.res) {
-      return;
-    }
-    delete data.active;
-    delete data.selected;
-    delete data.hide;
-    delete data.order;
-    data.lost = true;
-    data.id = data.startTime + '-' + ++dataIndex;
-    setReqData(data);
-    dataList.push(data);
-    hasData = true;
-  });
-  if (hasData) {
-    dataCallbacks.forEach(function(cb) {
-      cb(networkModal);
-    });
-  }
+exports.addNetworkList = function (list) {
+	if (!Array.isArray(list) || !list.length) {
+		return;
+	}
+	var hasData;
+	list.forEach(function (data) {
+		if (!data || !(data.startTime >= 0) || !data.req ||
+			!data.req.headers || !data.res) {
+			return;
+		}
+		delete data.active;
+		delete data.selected;
+		delete data.hide;
+		delete data.order;
+		data.lost = true;
+		data.id = data.startTime + '-' + ++dataIndex;
+		setReqData(data);
+		dataList.push(data);
+		hasData = true;
+	});
+	if (hasData) {
+		dataCallbacks.forEach(function (cb) {
+			cb(networkModal);
+		});
+	}
 };
 
 function getPendingIds() {
 	var pendingIds = [];
-	dataList.forEach(function(item) {
+	dataList.forEach(function (item) {
 		if (!item.endTime && !item.lost) {
 			pendingIds.push(item.id);
 		}
@@ -315,7 +390,7 @@ function getStartTime() {
 	if (!item) {
 		return '';
 	}
-	
+
 	return (!lastRowId || util.compareReqId(item.id, lastRowId)) ? item.id : lastRowId;
 }
 
@@ -323,30 +398,30 @@ function updateServerInfo(data) {
 	if (!serverInfoCallbacks.length) {
 		return;
 	}
-	
+
 	if (!(data = data && data.server)) {
 		curServerInfo = data;
-		serverInfoCallbacks.forEach(function(cb) {
+		serverInfoCallbacks.forEach(function (cb) {
 			cb(false);
 		});
 		return;
 	}
-	
+
 	if (curServerInfo && curServerInfo.version == data.version &&
 		curServerInfo.baseDir == data.baseDir && curServerInfo.username == data.username &&
-		curServerInfo.port == data.port && curServerInfo.host == data.host && 
-		curServerInfo.ipv4.sort().join() == data.ipv4.sort().join()
-		&& curServerInfo.ipv6.sort().join() == data.ipv6.sort().join()) {
+		curServerInfo.port == data.port && curServerInfo.host == data.host &&
+		curServerInfo.ipv4.sort().join() == data.ipv4.sort().join() &&
+		curServerInfo.ipv6.sort().join() == data.ipv6.sort().join()) {
 		return;
 	}
 	curServerInfo = data;
-	serverInfoCallbacks.forEach(function(cb) {
+	serverInfoCallbacks.forEach(function (cb) {
 		cb(data);
 	});
 
 }
 
-exports.on = function(type, callback) {
+exports.on = function (type, callback) {
 	startLoadData();
 	if (type == 'data') {
 		if (typeof callback == 'function') {
