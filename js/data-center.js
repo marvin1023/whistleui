@@ -53,7 +53,7 @@ function toLowerCase(str) {
 }
 
 function getFilterText() {
-	var obj = util.parseJSON(localStorage.FILTER_TEXT_KEY || '');
+	var obj = util.parseJSON(localStorage[FILTER_TEXT_KEY] || '');
 	if (!obj || obj.disabled) {
 		return;
 	}
@@ -68,7 +68,7 @@ function getFilterText() {
 exports.getFilterText = getFilterText;
 
 function setFilterText(filterText) {
-	localStorage.FILTER_TEXT_KEY = text ? JSON.stringify(text) : '';
+	localStorage[FILTER_TEXT_KEY] = text ? JSON.stringify(text) : '';
 }
 exports.setFilterText = setFilterText;
 
