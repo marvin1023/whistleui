@@ -49,7 +49,7 @@ if (/_lastSvrLogTime=([^;]+)/.test(document.cookie)) {
 }
 
 function toLowerCase(str) {
-	return String(str == null ? '' : str).toLowerCase();
+	return String(str == null ? '' : str).trim().toLowerCase();
 }
 
 function getFilterText() {
@@ -168,7 +168,18 @@ function checkFiled(keyword, text) {
 	if (!text) {
 		return false;
 	}
-	return toLowerCase(text).indexOf(keyword) !== -1;
+	keyword = keyword.split(/\s+/g);
+	text = toLowerCase(text);
+	if (keword[0] && text.indexOf(keword[0]) === -1) {
+		return false;
+	}
+	if (keword[1] && text.indexOf(keword[1]) === -1) {
+		return false;
+	}
+	if (keword[2] && text.indexOf(keword[2]) === -1) {
+		return false;
+	}
+	return true;
 }
 
 function filterData(obj, item) {
