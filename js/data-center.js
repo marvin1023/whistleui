@@ -61,6 +61,7 @@ function getFilterText() {
 		url: toLowerCase(obj.url),
 		status: toLowerCase(obj.status),
 		method: toLowerCase(obj.method),
+		ip: toLowerCase(obj.ip),
 		headers: toLowerCase(obj.headers),
 		body: toLowerCase(obj.body)
 	};
@@ -184,8 +185,12 @@ function filterData(obj, item) {
 	if (!checkFiled(obj.method, item.req.method)) {
 		return false;
 	}
+	if (!checkFiled(obj.ip, item.req.ip)
+			&& !checkFiled(obj.ip, item.res.ip)) {
+		return false;
+	}
 	if (!checkFiled(obj.body, item.req.body)
-			|| checkFiled(obj.body, item.res.body)) {
+			&& !checkFiled(obj.body, item.res.body)) {
 		return false;
 	}
 	if (obj.headers) {
@@ -279,15 +284,19 @@ function startLoadData() {
 
 			if (ids.length) {
 				var filterObj = getFilterText();
+				var lastRow;
 				ids.forEach(function (id) {
 					var item = data[id];
-					if (item && filterData(filterObj, item)) {
-						setReqData(item);
-						dataList.push(item);
+					if (item) {
+						lastRow = item;
+						if (filterData(filterObj, item)) {
+							setReqData(item);
+							dataList.push(item);
+						}
 					}
 				});
 
-				var lastRow = dataList[dataList.length - 1];
+				lastRow = lastRow || dataList[dataList.length - 1];
 				if (lastRow && (!lastRowId || util.compareReqId(lastRow.id, lastRowId))) {
 					lastRowId = lastRow.id;
 				}

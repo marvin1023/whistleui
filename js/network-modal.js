@@ -50,6 +50,8 @@ proto.filter = function(newList) {
 		switch(this._type) {
 			case 'c':
 			case 'content':
+			case 'b':
+			case 'body':
 				list.forEach(function(item) {
 					var reqBody = item.req.body;
 					var resBody = item.res.body;
