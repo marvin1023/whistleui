@@ -149,7 +149,6 @@ var Index = React.createClass({
 		state.pluginsOptions = this.createPluginsOptions(modal.plugins);
 		dataCenter.valuesModal = state.values = new ListModal(valuesList, valuesData);
 		state.valuesOptions = valuesOptions;
-		state.filterText = modal.filterText;
 		state.networkOptions = [
 		                        {
 		                          name: 'Remove All Sessions',
@@ -903,7 +902,6 @@ var Index = React.createClass({
 				showCreateValues: false,
 				showEditRules: false,
 				showEditValues: false,
-				showEditFilter: false,
 				showValuesSettings: false,
 				showRulesSettings: false
 			
@@ -1067,39 +1065,6 @@ var Index = React.createClass({
 			editValuesInput.select();
 			editValuesInput.focus();
 		});	
-	},
-	showEditFilter: function() {
-	  if (this._setEditFilterPending) {
-	    return;
-	  }
-	  var editFilterInput = ReactDOM.findDOMNode(this.refs.editFilterInput);
-		this.setState({
-			showEditFilter: true
-		}, function() {
-			editFilterInput.select();
-			editFilterInput.focus();
-		});
-	},
-	clearEditFilter: function(e) {
-	  var self = this;
-	  var target = ReactDOM.findDOMNode(self.refs.editFilterInput);
-	  self._setEditFilterPending = true;
-	  dataCenter.setFilter({filter: ''}, function(data) {
-			if (data && data.ec === 0) {
-				target.blur();
-				target.value = '';
-				self.setState({
-					filterText: ''
-				});
-			} else {
-				util.showSystemError();
-			}
-		});
-	  self.setState({
-	    showEditFilter: false
-    }, function() {
-      self._setEditFilterPending = false;
-    });
 	},
 	editRules: function(e) {
 		if (e.keyCode != 13 && e.type != 'click') {
@@ -1270,24 +1235,6 @@ var Index = React.createClass({
 	},
 	composer: function() {
 		events.trigger('composer');
-	},
-	setFilter: function(e) {
-		if (e.keyCode != 13 && e.type != 'click') {
-			return;
-		}
-		var self = this;
-		var target = ReactDOM.findDOMNode(self.refs.editFilterInput);
-		var filter = $.trim(target.value);
-		dataCenter.setFilter({filter: filter}, function(data) {
-			if (data && data.ec === 0) {
-				target.blur();
-				self.setState({
-					filterText: filter
-				});
-			} else {
-				util.showSystemError();
-			}
-		});
 	},
 	clear: function() {
 		var modal = this.state.network;
@@ -1688,10 +1635,8 @@ var Index = React.createClass({
 					<a onClick={this.autoRefresh} className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-play"></span>AutoRefresh</a>
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Composer</a>
-					<a onClick={this.showEditFilter} onDoubleClick={this.clearEditFilter} className={'w-filter-menu' + (state.filterText ? ' w-menu-enable' : '')} title={state.filterText ? 'Double click to clear the text:\n' + state.filterText : undefined} 
-					  style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-filter"></span>Filter</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-trash"></span>Delete</a>
-					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
+					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideWeinreOptions} className={'w-menu-wrapper' + (showWeinreOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showAnonymousWeinre} className="w-weinre-menu" href="javascript:;" draggable="false"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 						<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} className="w-weinre-menu-item" onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
@@ -1711,7 +1656,6 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-values-input"><input ref="createValuesInput" onKeyDown={this.createValues} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="Input the key" /><button type="button" onClick={this.createValues} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64"  /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
-					<div onMouseDown={this.preventBlur} style={{display: state.showEditFilter ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-filter-input"><input ref="editFilterInput" onKeyDown={this.setFilter} onBlur={this.hideOptions} type="text" maxLength="128" defaultValue={state.filterText} placeholder={state.filterText ? null : 'Input the Substring or RegExp'} /><button type="button" onClick={this.setFilter} className="btn btn-primary">OK</button></div>
 				</div>
 				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : undefined}
 				{state.hasValues ? <List theme={valuesTheme} onDoubleClick={this.showEditValuesByDBClick} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : undefined}

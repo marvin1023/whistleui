@@ -140,7 +140,6 @@ exports.log = createCgi({
 
 $.extend(exports, createCgi({
 	composer: 'cgi-bin/composer',
-	setFilter: 'cgi-bin/set-filter',
 	interceptHttpsConnects: 'cgi-bin/intercept-https-connects',
 	hideHttpsConnects: 'cgi-bin/hide-https-connects',
 	donotShowAgain: 'cgi-bin/do-not-show-again',
