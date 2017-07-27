@@ -19,7 +19,7 @@ var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
 var dataIndex = 10000;
 var MAX_URL_LENGTH = 1024 * 2;
-var PREFIX = location.href.replace(/[?#].*$/, '').replace(/\/index.html$/i, '');
+var PREFIX = location.href.replace(/[?#].*$/, '').replace(/\/index.html$/i, '/');
 var lastRowId;
 var FILTER_TEXT_KEY = PREFIX + '?filterText';
 var DEFAULT_CONF = {
