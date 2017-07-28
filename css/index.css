@@ -40,11 +40,19 @@
 .w-https-settings label {font-weight: normal;}
 .w-https-settings p {margin: 10px 0;}
 
-.w-network-settings-dialog fieldset { border: 1px solid #ddd; }
-.w-network-settings-dialog legend { font-size: 13px; border: none; font-weight: 700; width: auto; margin: 0 10px; font-weight: 700; }
-.w-network-settings-dialog div label { font-size: 13px; font-weight: normal; }
+.w-network-settings-dialog fieldset { border: 1px solid #ddd; padding-bottom: 10px; }
+.w-network-settings-dialog legend { border: none;  margin: 0 10px; padding: 0 10px; width: auto; }
+.w-network-settings-dialog legend label { font-size: 13px; width: auto; padding: 0; }
+.w-network-settings-dialog label { 
+  font-size: 13px; font-weight: normal; line-height: 30px; height: 30px;
+  display: inline-block; width: 96px; margin-right: 10px; font-weight: bold; text-align: right;
+}
+.network-settings-columns { margin-top: 20px; }
+.network-settings-columns label { padding-left: 20px; text-align: left; width: 102px; }
 .w-network-settings-dialog .modal-dialog {width: 600px;}
 .w-network-settings-dialog input[type=checkbox] { margin-right: 5px; }
+
+.w-network-settings-dialog div input[type=text] { width: 436px; }
 
 .w-has-key {cursor: pointer; text-decoration: underline;}
 

@@ -52,6 +52,13 @@ function toLowerCase(str) {
 	return String(str == null ? '' : str).trim().toLowerCase();
 }
 
+function decode(str) {
+	try {
+		return str && decodeURIComponent(str);
+	} catch (e) {}
+	return str;
+}
+
 function parseEnv(env) {
 	if (!env || typeof env !== 'string') {
 		return;
@@ -62,8 +69,8 @@ function parseEnv(env) {
 	}
 	env = env.split(':');
 	return {
-		name: env[0],
-		env: env[1]
+		name: decode(env[0]),
+		env: decode(env[1])
 	};
 }
 

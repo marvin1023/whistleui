@@ -1735,27 +1735,33 @@ var Index = React.createClass({
 									<fieldset>
 										<legend>
 											<label>
-												<input type="checkbox" /> Filter
+												<input type="checkbox" />Filter
 											</label>
 										</legend>
+										<label>Env:</label><input type="text" />
+										<label>Url:</label><input type="text" />
+										<label>IP:</label><input type="text" />
+										<label>StatusCode:</label><input type="text" />
+										<label>Method:</label><input type="text" />
+										<label>Header:</label><input type="text" />
+										<label>Body:</label><input type="text" />
 									</fieldset>
-									<fieldset>
+									<fieldset className="network-settings-columns">
 										<legend>
 											<label>Network Columns</label>
 										</legend>
-										<div>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-											<label><input type="checkbox" /> Filter</label>
-										</div>
+										<label><input type="checkbox" />Result</label>
+										<label><input type="checkbox" />Method</label>
+										<label><input type="checkbox" />Protocol</label>
+										<label><input type="checkbox" />ClientIP</label>
+										<label><input type="checkbox" />ServerIP</label>
+										<label><input type="checkbox" />Host</label>
+										<label><input type="checkbox" />URL</label>
+										<label><input type="checkbox" />Body</label>
+										<label><input type="checkbox" />Sent</label>
+										<label><input type="checkbox" />DNS</label>
+										<label><input type="checkbox" />Download</label>
+										<label><input type="checkbox" />Time</label>
 									</fieldset>
 					      </div>
 					      <div className="modal-footer">
