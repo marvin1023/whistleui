@@ -1732,10 +1732,31 @@ var Index = React.createClass({
 				  		<div className="modal-content">
 					      <div className="modal-body">
 					      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						      <EditorSettings theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} 
-							      onThemeChange={this.onValuesThemeChange} 
-							      onFontSizeChange={this.onValuesFontSizeChange} 
-							      onLineNumberChange={this.onValuesLineNumberChange} />
+									<fieldset>
+										<legend>
+											<label>
+												<input type="checkbox" /> Filter
+											</label>
+										</legend>
+									</fieldset>
+									<fieldset>
+										<legend>
+											<label>Network Columns</label>
+										</legend>
+										<div>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+											<label><input type="checkbox" /> Filter</label>
+										</div>
+									</fieldset>
 					      </div>
 					      <div className="modal-footer">
 					        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>

@@ -40,6 +40,12 @@
 .w-https-settings label {font-weight: normal;}
 .w-https-settings p {margin: 10px 0;}
 
+.w-network-settings-dialog fieldset { border: 1px solid #ddd; }
+.w-network-settings-dialog legend { font-size: 13px; border: none; font-weight: 700; width: auto; margin: 0 10px; font-weight: 700; }
+.w-network-settings-dialog div label { font-size: 13px; font-weight: normal; }
+.w-network-settings-dialog .modal-dialog {width: 600px;}
+.w-network-settings-dialog input[type=checkbox] { margin-right: 5px; }
+
 .w-has-key {cursor: pointer; text-decoration: underline;}
 
 .w-choose-filte-type .modal-dialog {width: 376px}
