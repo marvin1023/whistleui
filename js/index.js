@@ -901,10 +901,7 @@ var Index = React.createClass({
 				showCreateRules: false,
 				showCreateValues: false,
 				showEditRules: false,
-				showEditValues: false,
-				showValuesSettings: false,
-				showRulesSettings: false
-			
+				showEditValues: false
 		};
 		if (name) {
 			state[name] = true;
@@ -1300,6 +1297,9 @@ var Index = React.createClass({
 	showValuesSettings: function() {
 		$(ReactDOM.findDOMNode(this.refs.valuesSettingsDialog)).modal('show');
 	},
+	showNetworkSettings: function() {
+		$(ReactDOM.findDOMNode(this.refs.networkSettingsDialog)).modal('show');
+	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
 		var self = this;
@@ -1331,7 +1331,16 @@ var Index = React.createClass({
 		}
 	},
 	showSettings: function(e) {
-		this.state.name == 'rules' ? this.showRulesSettings() : this.showValuesSettings();
+		var pageName = this.state.name;
+		if (pageName === 'rules') {
+			this.showRulesSettings()
+			return;
+		}
+		if (pageName === 'values') {
+			this.showValuesSettings();
+			return;
+		}
+		this.showNetworkSettings();
 	},
 	activeRules: function(item) {
 		dataCenter.rules.setCurrent({name: item.name});
@@ -1684,6 +1693,22 @@ var Index = React.createClass({
 					</div>
 				</div>
 				<div ref="valuesSettingsDialog" className="modal fade w-values-settings-dialog">
+					<div className="modal-dialog"> 
+				  		<div className="modal-content">
+					      <div className="modal-body">
+					      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						      <EditorSettings theme={valuesTheme} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} 
+							      onThemeChange={this.onValuesThemeChange} 
+							      onFontSizeChange={this.onValuesFontSizeChange} 
+							      onLineNumberChange={this.onValuesLineNumberChange} />
+					      </div>
+					      <div className="modal-footer">
+					        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+				    </div>
+				</div>
+				<div ref="networkSettingsDialog" className="modal fade w-network-settings-dialog">
 					<div className="modal-dialog"> 
 				  		<div className="modal-content">
 					      <div className="modal-body">
