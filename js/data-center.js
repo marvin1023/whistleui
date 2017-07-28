@@ -69,11 +69,12 @@ function parseEnv(env) {
 
 function getFilterText() {
 	var obj = util.parseJSON(localStorage[FILTER_TEXT_KEY] || '');
-	if (!obj || obj.disabled) {
+	if (!obj) {
 		return;
 	}
 
 	return {
+		disabled: obj.disabled,
 		url: toLowerCase(obj.url),
 		status: toLowerCase(obj.status),
 		method: toLowerCase(obj.method),
@@ -84,6 +85,22 @@ function getFilterText() {
 	};
 }
 exports.getFilterText = getFilterText;
+
+function hasFilterText() {
+	var filter = getFilterText();
+	if (!filter || filter.disabled) {
+		return false;
+	}
+	delete filter.disabled;
+	for (var i in filter) {
+		if (filter[i]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+exports.hasFilterText = hasFilterText;
 
 function setFilterText(filterText) {
 	localStorage[FILTER_TEXT_KEY] = text ? JSON.stringify(text) : '';
@@ -200,7 +217,7 @@ function checkFiled(keyword, text) {
 }
 
 function filterData(obj, item) {
-	if (!obj) {
+	if (!obj || obj.disabled) {
 		return true;
 	}
 	if (!checkFiled(obj.url, item.url)) {

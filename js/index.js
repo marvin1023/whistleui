@@ -269,11 +269,25 @@ var Index = React.createClass({
 		});
 		return pluginsOptions;
 	},
+	saveSettings: function() {
+
+	},
+	setFilterTextState: function() {
+		if (this.state.name === 'network') {
+			var hasFilterText = dataCenter.hasFilterText();
+			if (hasFilterText !== this.state.hasFilterText) {
+				this.setState({
+					hasFilterText: hasFilterText
+				});
+			}
+		}
+	},
 	componentDidMount: function() {
 		var self = this;
 		var preventDefault = function(e) {
 		  e.preventDefault();
 		};
+		setInterval(this.setFilterTextState, 2000);
 		$(document)
   		.on( 'dragleave', preventDefault)
   		.on( 'dragenter', preventDefault)
@@ -1541,6 +1555,11 @@ var Index = React.createClass({
 		var showUsersOptions = state.showUsersOptions;
 		var showWeinreOptions = state.showWeinreOptions;
 		var showHelpOptions = state.showHelpOptions;
+		var hasFilterText;
+
+		if (isNetwork) {
+			hasFilterText = state.hasFilterText;
+		}
 		
 		rulesOptions.forEach(function(item) {
 			item.icon = 'checkbox';
@@ -1645,7 +1664,7 @@ var Index = React.createClass({
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Composer</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-trash"></span>Delete</a>
-					<a onClick={this.showSettings} className="w-settings-menu" style={{display: (isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
+					<a onClick={this.showSettings} className={'w-settings-menu' + (hasFilterText ? ' w-menu-enable'  : '')} style={{display: (isPlugins || isUsers) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-cog"></span>Settings</a>
 					<div onMouseEnter={this.showWeinreOptions} onMouseLeave={this.hideWeinreOptions} className={'w-menu-wrapper' + (showWeinreOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showAnonymousWeinre} className="w-weinre-menu" href="javascript:;" draggable="false"><span className="glyphicon glyphicon-globe"></span>Weinre</a>
 						<MenuItem ref="weinreMenuItem" name="Anonymous" options={state.weinreOptions} className="w-weinre-menu-item" onClick={this.showAnonymousWeinre} onClickOption={this.showWeinre} />
