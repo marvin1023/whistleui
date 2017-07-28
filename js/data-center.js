@@ -52,18 +52,35 @@ function toLowerCase(str) {
 	return String(str == null ? '' : str).trim().toLowerCase();
 }
 
+function parseEnv(env) {
+	if (!env || typeof env !== 'string') {
+		return;
+	}
+	env = env.trim();
+	if (!env) {
+		return;
+	}
+	env = env.split(':');
+	return {
+		name: env[0],
+		env: env[1]
+	};
+}
+
 function getFilterText() {
 	var obj = util.parseJSON(localStorage[FILTER_TEXT_KEY] || '');
 	if (!obj || obj.disabled) {
 		return;
 	}
+
 	return {
 		url: toLowerCase(obj.url),
 		status: toLowerCase(obj.status),
 		method: toLowerCase(obj.method),
 		ip: toLowerCase(obj.ip),
 		headers: toLowerCase(obj.headers),
-		body: toLowerCase(obj.body)
+		body: toLowerCase(obj.body),
+		env: parseEnv(obj.env)
 	};
 }
 exports.getFilterText = getFilterText;
@@ -210,6 +227,19 @@ function filterData(obj, item) {
 			if (headers.indexOf(obj.headers) === -1) {
 				return false;
 			}
+		}
+	}
+	var env = obj.env;
+	if (env) {
+		var curEnv = parseEnv(item.req.headers['x-whistle-env']);
+		if (!curEnv) {
+			return false;
+		}
+		if (env.name && env.name !== curEnv.name) {
+			return false;
+		}
+		if (env.env && env.env !== curEnv.env) {
+			return false;
 		}
 	}
 	return true;
