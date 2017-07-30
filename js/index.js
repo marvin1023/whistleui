@@ -1738,13 +1738,14 @@ var Index = React.createClass({
 												<input type="checkbox" />Filter
 											</label>
 										</legend>
-										<label>Env:</label><input type="text" />
 										<label>Url:</label><input type="text" />
 										<label>IP:</label><input type="text" />
 										<label>StatusCode:</label><input type="text" />
 										<label>Method:</label><input type="text" />
 										<label>Header:</label><input type="text" />
 										<label>Body:</label><input type="text" />
+										<label>Username:</label><input type="text" />
+										<label>EnvName:</label><input type="text" />
 									</fieldset>
 									<fieldset className="network-settings-columns">
 										<legend>
