@@ -9,6 +9,7 @@ var About = require('./about');
 var Online = require('./online');
 var MenuItem = require('./menu-item');
 var EditorSettings = require('./editor-settings');
+var NetworkSettings = require('./network-settings');
 var Plugins = require('./plugins');
 var dataCenter = require('./data-center');
 var util = require('./util');
@@ -266,9 +267,6 @@ var Index = React.createClass({
 			});
 		});
 		return pluginsOptions;
-	},
-	saveSettings: function() {
-
 	},
 	setFilterTextState: function() {
 		if (this.state.name === 'network') {
@@ -1288,9 +1286,6 @@ var Index = React.createClass({
 	showValuesSettings: function() {
 		$(ReactDOM.findDOMNode(this.refs.valuesSettingsDialog)).modal('show');
 	},
-	showNetworkSettings: function() {
-		$(ReactDOM.findDOMNode(this.refs.networkSettingsDialog)).modal('show');
-	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
 		var self = this;
@@ -1331,7 +1326,7 @@ var Index = React.createClass({
 			this.showValuesSettings();
 			return;
 		}
-		this.showNetworkSettings();
+		this.refs.networkSettings.showDialog();
 	},
 	activeRules: function(item) {
 		dataCenter.rules.setCurrent({name: item.name});
@@ -1695,43 +1690,7 @@ var Index = React.createClass({
 					    </div>
 				    </div>
 				</div>
-				<div ref="networkSettingsDialog" className="modal fade w-network-settings-dialog">
-					<div className="modal-dialog"> 
-				  		<div className="modal-content">
-					      <div className="modal-body">
-					      	<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<fieldset>
-										<legend>
-											<label>
-												<input type="checkbox" />Filter
-											</label>
-										</legend>
-										<textarea ref="filterText" />
-									</fieldset>
-									<fieldset className="network-settings-columns">
-										<legend>
-											<label>Network Columns</label>
-										</legend>
-										<label><input type="checkbox" />Result</label>
-										<label><input type="checkbox" />Method</label>
-										<label><input type="checkbox" />Protocol</label>
-										<label><input type="checkbox" />ClientIP</label>
-										<label><input type="checkbox" />ServerIP</label>
-										<label><input type="checkbox" />Host</label>
-										<label><input type="checkbox" />URL</label>
-										<label><input type="checkbox" />Body</label>
-										<label><input type="checkbox" />Sent</label>
-										<label><input type="checkbox" />DNS</label>
-										<label><input type="checkbox" />Download</label>
-										<label><input type="checkbox" />Time</label>
-									</fieldset>
-					      </div>
-					      <div className="modal-footer">
-					        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-					      </div>
-					    </div>
-				    </div>
-				</div>
+				<NetworkSettings ref="networkSettings" />
 				<div ref="rootCADialog" className="modal fade w-https-dialog">
 				<div className="modal-dialog"> 
 			  		<div className="modal-content">

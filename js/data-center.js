@@ -2,6 +2,8 @@ var $ = require('jquery');
 var createCgi = require('./cgi');
 var util = require('./util');
 var NetworkModal = require('./network-modal');
+var storage = require('./storage');
+
 var MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
@@ -26,6 +28,68 @@ var DEFAULT_CONF = {
 		withCredentials: true
 	}
 };
+
+function setNetworkSettings(settings) {
+	settings = settings || {};
+	storage.set('networkSettings', JSON.stringify({
+		disabledFilterText: settings.disabledFilterText,
+		filterText: settings.filterText,
+		disabledColumns: settings.disabledColumns,
+		columns: settings.columns
+	}));
+}
+exports.setNetworkSettings = setNetworkSettings;
+
+function getNetworkSettings() {
+	return util.parseJSON(storage.get('networkSettings')) || {};
+}
+exports.getNetworkSettings = getNetworkSettings;
+
+function hasFilterText() {
+	var settings = getNetworkSettings();
+	if (!settings || settings.disabledFilterText) {
+		return;
+	}
+	var filterText = settings.filterText;
+	if (typeof filterText !== 'string') {
+		return '';
+	}
+	filterText = filterText.trim();
+	return filterText;
+}
+
+exports.hasFilterText = hasFilterText;
+
+var FILTER_TYPES_RE = /^(m|s|i|h|b):/;
+var FILTER_TYPES = {
+	m: 'method',
+	s: 'statusCode',
+	i: 'ip',
+	h: 'headers',
+	b: 'body'
+};
+function parseFilterText() {
+	var filterText = hasFilterText();
+	if (!filterText) {
+		return;
+	}
+	filterText = filterText.split(/\r|\n/g);
+	var result = {};
+	filterText.forEach(function(line) {
+		line = line.trim();
+		if (FILTER_TYPES_RE.test(line)) {
+			var name = FILTER_TYPES[RegExp.$1];
+			line = line.substring(2);
+			if (line) {
+				result[name] = result[name] ? result[name] + ' ' + line : line;
+			}
+		} else {
+			result.url = result.url ? result.url + ' ' + line : line;
+		}
+	});
+	return result;
+}
+
 var POST_CONF = $.extend({
 	type: 'post'
 }, DEFAULT_CONF);
@@ -166,28 +230,29 @@ function checkFiled(keyword, text) {
 	if (!text) {
 		return false;
 	}
+	keyword = toLowerCase(keyword);
 	keyword = keyword.split(/\s+/g);
 	text = toLowerCase(text);
-	if (keword[0] && text.indexOf(keword[0]) === -1) {
+	if (keyword[0] && text.indexOf(keyword[0]) === -1) {
 		return false;
 	}
-	if (keword[1] && text.indexOf(keword[1]) === -1) {
+	if (keyword[1] && text.indexOf(keyword[1]) === -1) {
 		return false;
 	}
-	if (keword[2] && text.indexOf(keword[2]) === -1) {
+	if (keyword[2] && text.indexOf(keyword[2]) === -1) {
 		return false;
 	}
 	return true;
 }
 
 function filterData(obj, item) {
-	if (!obj || obj.disabled) {
+	if (!obj) {
 		return true;
 	}
 	if (!checkFiled(obj.url, item.url)) {
 		return false;
 	}
-	if (!checkFiled(obj.status, item.res.statusCode)) {
+	if (!checkFiled(obj.statusCode, item.res.statusCode)) {
 		return false;
 	}
 	if (!checkFiled(obj.method, item.req.method)) {
@@ -201,27 +266,9 @@ function filterData(obj, item) {
 			&& !checkFiled(obj.body, item.res.body)) {
 		return false;
 	}
-	if (obj.headers) {
-		var headers = util.objectToString(item.req.headers).toLowerCase();
-		if (headers.indexOf(obj.headers) === -1) {
-			headers = util.objectToString(item.res.headers).toLowerCase();
-			if (headers.indexOf(obj.headers) === -1) {
-				return false;
-			}
-		}
-	}
-	var env = obj.env;
-	if (env) {
-		var curEnv = parseEnv(item.req.headers['x-whistle-env']);
-		if (!curEnv) {
-			return false;
-		}
-		if (env.name && env.name !== curEnv.name) {
-			return false;
-		}
-		if (env.env && env.env !== curEnv.env) {
-			return false;
-		}
+	if (!checkFiled(obj.headers, util.objectToString(item.req.headers))
+			&& !checkFiled(obj.headers, util.objectToString(item.res.headers))) {
+		return false;
 	}
 	return true;
 }
@@ -304,7 +351,7 @@ function startLoadData() {
 			});
 
 			if (ids.length) {
-				var filterObj = {};//getFilterText();
+				var filterObj = parseFilterText();
 				var lastRow;
 				ids.forEach(function (id) {
 					var item = data[id];
@@ -473,9 +520,3 @@ exports.on = function (type, callback) {
 		}
 	}
 };
-
-function hasFilterText() {
-	
-}
-
-exports.hasFilterText = hasFilterText;

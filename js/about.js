@@ -9,8 +9,6 @@ var dataCenter = require('./data-center');
 var util = require('./util');
 var storage = require('./storage');
 
-var PREFIX = dataCenter.PREFIX;
-
 function compareVersion(v1, v2) {
   var test1 = '';
   var test2 = '';
