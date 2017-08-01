@@ -1,1 +1,0 @@
-var renderEnv = require('ejs!./env.tpl');
