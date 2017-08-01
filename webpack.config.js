@@ -3,11 +3,7 @@ var path = require('path');
 
 module.exports = {
 	entry : {
-		index : './js/index',
-		admin : './js/admin',
-		user : './js/user',
-		env : './js/env',
-		'inject': './js/inject'
+		index : './js/index'
 	},
 	output : {
 		path : '../whistle/biz/webui/htdocs/js',
@@ -24,9 +20,6 @@ module.exports = {
 		}, {
 			test : /\.(png|woff|woff2|eot|ttf|svg)$/,
 			loader : 'url-loader?limit=1000000'
-		}, {
-			test: /\.tpl$/,
-			loader: 'ejs-loader'
 		} ]
 	},
 	plugins : [
