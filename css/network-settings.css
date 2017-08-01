@@ -8,6 +8,7 @@
 .network-settings-columns { margin-top: 20px; }
 .network-settings-filter { border: none!important; }
 .network-settings-filter legend { margin: 0; padding: 0; }
+.network-settings-filter legend label { margin-right: 5px; }
 .network-settings-filter textarea[disabled] { background: #f5f5f5; }
 .network-settings-columns label { padding-left: 20px; text-align: left; width: 102px; }
 .w-network-settings-dialog .modal-dialog {width: 600px;}
@@ -15,3 +16,4 @@
 .w-network-settings-dialog textarea { width: 578px; height: 150px; border: 1px solid #ddd; overflow: auto; margin: 0; padding: 5px 10px; }
 
 .w-network-settings-dialog div input[type=text] { width: 436px; }
+.w-network-settings-dialog .w-help-menu { font-size: 14px; color: #000; }

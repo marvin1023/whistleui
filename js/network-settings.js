@@ -14,17 +14,24 @@ var Settings = React.createClass({
 		if (!name) {
 			return;
 		}
-		var settings = this.state;
+    var settings = this.state;
+    var filterTextChanged;
 		switch(name) {
 			case 'filter':
         settings.disabledFilterText = !target.checked;
+        filterTextChanged = true;
 				break;
-			case 'filterText':
+      case 'filterText':
+        var value = target.value.trim();
+        filterTextChanged = (!value && settings.filterText) || (value && !settings.filterText);
 				settings.filterText = target.value;
 				break;
 		}
     dataCenter.setNetworkSettings(settings);
     this.setState(settings);
+    if (filterTextChanged && typeof this.props.onFilterTextChanged === 'function') {
+      this.props.onFilterTextChanged();
+    }
 	},
   showDialog: function() {
     var settings = dataCenter.getNetworkSettings() || {};
@@ -46,6 +53,11 @@ var Settings = React.createClass({
               <label>
                 <input checked={!state.disabledFilterText} data-name="filter" type="checkbox" />Filter
               </label>
+              <a className="w-help-menu"
+                title="Click here to learn how to use the filter"
+                href="https://avwo.github.io/whistle/webui/settings.html" target="_blank">
+                <span className="glyphicon glyphicon-question-sign"></span>
+              </a>
             </legend>
             <textarea disabled={state.disabledFilterText} value={state.filterText} data-name="filterText" placeholder="type filter text" maxLength={300} />
           </fieldset>

@@ -230,6 +230,11 @@ var Index = React.createClass({
 				icon: false,
 			},
 			{
+				name: 'Settings',
+				href: 'https://avwo.github.io/whistle/webui/settings.html',
+				icon: false,
+			},
+			{
 				name: 'Weinre',
 				href: 'https://avwo.github.io/whistle/webui/weinre.html',
 				icon: false,
@@ -1690,7 +1695,7 @@ var Index = React.createClass({
 					    </div>
 				    </div>
 				</div>
-				<NetworkSettings ref="networkSettings" />
+				<NetworkSettings ref="networkSettings" onFilterTextChanged={this.setFilterTextState} />
 				<div ref="rootCADialog" className="modal fade w-https-dialog">
 				<div className="modal-dialog"> 
 			  		<div className="modal-content">
