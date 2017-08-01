@@ -1706,14 +1706,7 @@ var Index = React.createClass({
 												<input type="checkbox" />Filter
 											</label>
 										</legend>
-										<label>Url:</label><input type="text" />
-										<label>IP:</label><input type="text" />
-										<label>StatusCode:</label><input type="text" />
-										<label>Method:</label><input type="text" />
-										<label>Header:</label><input type="text" />
-										<label>Body:</label><input type="text" />
-										<label>Username:</label><input type="text" />
-										<label>EnvName:</label><input type="text" />
+										<textarea ref="filterText" />
 									</fieldset>
 									<fieldset className="network-settings-columns">
 										<legend>

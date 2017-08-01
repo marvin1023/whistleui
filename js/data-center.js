@@ -475,7 +475,7 @@ exports.on = function (type, callback) {
 };
 
 function hasFilterText() {
-	return true;
+	
 }
 
 exports.hasFilterText = hasFilterText;

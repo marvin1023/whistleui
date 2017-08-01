@@ -51,6 +51,7 @@
 .network-settings-columns label { padding-left: 20px; text-align: left; width: 102px; }
 .w-network-settings-dialog .modal-dialog {width: 600px;}
 .w-network-settings-dialog input[type=checkbox] { margin-right: 5px; }
+.w-network-settings-dialog textarea { width: 525px; height: 200px; border: 1px solid #ddd; margin: 0 20px 8px; padding: 5px 10px; }
 
 .w-network-settings-dialog div input[type=text] { width: 436px; }
 
