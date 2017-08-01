@@ -19,9 +19,7 @@ var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
 var dataIndex = 10000;
 var MAX_URL_LENGTH = 1024 * 2;
-var PREFIX = location.href.replace(/[?#].*$/, '').replace(/\/index.html$/i, '/');
 var lastRowId;
-var FILTER_TEXT_KEY = PREFIX + '?filterText';
 var DEFAULT_CONF = {
 	timeout: TIMEOUT,
 	xhrFields: {
@@ -74,47 +72,6 @@ function parseEnv(env) {
 	};
 }
 
-function getFilterText() {
-	var obj = util.parseJSON(localStorage[FILTER_TEXT_KEY] || '');
-	if (!obj) {
-		return;
-	}
-
-	return {
-		disabled: obj.disabled,
-		url: toLowerCase(obj.url),
-		status: toLowerCase(obj.status),
-		method: toLowerCase(obj.method),
-		ip: toLowerCase(obj.ip),
-		headers: toLowerCase(obj.headers),
-		body: toLowerCase(obj.body),
-		env: parseEnv(obj.env)
-	};
-}
-exports.getFilterText = getFilterText;
-
-function hasFilterText() {
-	var filter = getFilterText();
-	if (!filter || filter.disabled) {
-		return false;
-	}
-	delete filter.disabled;
-	for (var i in filter) {
-		if (filter[i]) {
-			return true;
-		}
-	}
-	return false;
-}
-
-exports.hasFilterText = hasFilterText;
-
-function setFilterText(filterText) {
-	localStorage[FILTER_TEXT_KEY] = text ? JSON.stringify(text) : '';
-}
-exports.setFilterText = setFilterText;
-
-exports.PREFIX = PREFIX;
 exports.sessions = createCgi({
 	imports: 'cgi-bin/sessions/import',
 }, $.extend({
@@ -347,7 +304,7 @@ function startLoadData() {
 			});
 
 			if (ids.length) {
-				var filterObj = getFilterText();
+				var filterObj = {};//getFilterText();
 				var lastRow;
 				ids.forEach(function (id) {
 					var item = data[id];
@@ -516,3 +473,9 @@ exports.on = function (type, callback) {
 		}
 	}
 };
+
+function hasFilterText() {
+	return true;
+}
+
+exports.hasFilterText = hasFilterText;

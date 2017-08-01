@@ -14,6 +14,8 @@ var dataCenter = require('./data-center');
 var util = require('./util');
 var protocols = require('./protocols');
 var events = require('./events');
+var storage = require('./storage');
+
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
 var OPTIONS_WITH_SELECTED = ['removeSelected', 'exportWhistleFile', 'exportSazFile'];
@@ -243,7 +245,7 @@ var Index = React.createClass({
 			}
 		];
     protocols.setPlugins(state);
-    state.exportFileType = localStorage.exportFileType;
+    state.exportFileType = storage.get('exportFileType');
 		return state;
 	},
 	createPluginsOptions: function(plugins) {
@@ -1467,7 +1469,7 @@ var Index = React.createClass({
 	},
 	chooseFileType: function(e) {
 	  var value = e.target.value;
-	  localStorage.exportFileType = value;
+		storage.set('exportFileType', value);
 	  this.setState({
 	    exportFileType: value
 	  });
