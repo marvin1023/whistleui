@@ -69,7 +69,7 @@ function getDefaultColumns() {
     {
       title: 'Download',
       name: 'download',
-      className: 'time'
+      className: 'download'
     },
     {
       title: 'Time',
