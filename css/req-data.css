@@ -4,10 +4,14 @@
 .w-req-data-content .result {width: 60px;}
 .w-req-data-content .protocol {width: 75px;} 
 .w-req-data-content .method {width: 72px;}
-.w-req-data-content .time {width: 65px;}
+.w-req-data-content .time, .w-req-data-content .dns
+.w-req-data-content .sent {width: 65px;}
 .w-req-data-content th.time {width: 68px;}
-.w-req-data-content .hostIp, .w-req-data-content .type {width: 100px;}
+.w-req-data-content .dns {width: 65px;}
+.w-req-data-content .hostIp, .w-req-data-content .type,
+.w-req-data-content .body, .w-req-data-content .clientIp {width: 100px;}
 .w-req-data-content .hostname {width: 136px;}
+.w-req-data-content .request, .w-req-data-content .response, 
 .w-req-data-content .download { width: 85px; }
 
 .w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}

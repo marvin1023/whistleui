@@ -25,7 +25,7 @@ function getDefaultColumns() {
     {
       title: 'ClientIP',
       name: 'clientIp',
-      className: 'hostIp'
+      className: 'clientIp'
     },
     {
       title: 'ServerIP',
@@ -41,8 +41,8 @@ function getDefaultColumns() {
     },
     {
       title: 'URL',
-      name: 'url',
-      className: 'url',
+      name: 'path',
+      className: 'path',
       selected: true
     },
     {
@@ -54,17 +54,22 @@ function getDefaultColumns() {
     {
       title: 'Body',
       name: 'body',
-      className: 'hostIp'
-    },
-    {
-      title: 'Sent',
-      name: 'sent',
-      className: 'time'
+      className: 'body'
     },
     {
       title: 'DNS',
       name: 'dns',
-      className: 'time'
+      className: 'dns'
+    },
+    {
+      title: 'Request',
+      name: 'request',
+      className: 'request'
+    },
+    {
+      title: 'Response',
+      name: 'response',
+      className: 'response'
     },
     {
       title: 'Download',

@@ -253,9 +253,6 @@ var ReqData = React.createClass({
 		if (name == 'order') {
 			columnState = {};
 		} else {
-		  if (name === 'url') {
-		    name = 'path';
-		  }
 			var order = columnState[name];
 			if (order == 'desc') {
 				columnState[name] = 'asc';
@@ -285,7 +282,7 @@ var ReqData = React.createClass({
 		var name = col.name;
 		return (
 			<th key={name} className={col.className}
-				style={{color: columnState[name] ? '#337ab7' : null}}>
+				style={{color: columnState[name] ? '#337ab7' : undefined}}>
 				{col.title}<Spinner order={columnState[name]} />
 			</th>
 		);
@@ -331,25 +328,25 @@ var ReqData = React.createClass({
 						      {
 						    	  list.map(function(item, i) {
 						    		  i = hasKeyword ? index : i;
-						    		  var url, path;
-						    		  if (!item.hide && i >= startIndex && i <= endIndex) {
-						    		    url = item.shortUrl || item.url;
-						    		    path = item.path;
-						    		  }
 						    		  
 						    		  return (<tr draggable={draggable} ref={item.id} data-id={item.id} key={item.id} style={{display: item.hide ? 'none' : ''}} 
 						    		  				className={getClassName(item)} 
 						    		  				onClick={function(e) {self.onClick(e, item);}}
 						    		  				onDoubleClick={self.props.onDoubleClick}>
 						    		  				<th className="order" scope="row">{hasKeyword && !item.hide ? ++index : item.order}</th>			        
-						    		  				<td className="result">{item.result}</td>
-						    		  				<td className="method">{item.method}</td>
-						    		  				<td className="protocol">{item.protocol}</td>
-						    		  				<td className="hostIp" title={item.hostIp}>{item.hostIp}</td>
-						    		  				<td className="hostname" title={item.hostname}>{item.hostname}</td>
-						    		  				<td className="url" title={url}>{path}</td>
-						    		  				<td className="type" title={item.type}>{item.type}</td>			        
-						    		  				<td className="time">{item.time >= 0 ? item.time  + 'ms' : item.time}</td>			     
+															{columnList.map(function(col) {
+																var name = col.name;
+																var className = col.className;
+																if (name === 'path') {
+																	var url, path;
+																	if (!item.hide && i >= startIndex && i <= endIndex) {
+																		url = item.shortUrl || item.url;
+																		path = item.path;
+																	}
+																	return <td key={name} className="path" title={url}>{path}</td>;
+																} 
+																return <td key={name} className={className}>{item[name]}</td>;
+															})}
 						    		  			</tr>);
 						    	  })
 						      }	

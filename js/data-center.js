@@ -417,10 +417,25 @@ function setReqData(item) {
 	var defaultValue = end ? '' : '-';
 	var res = item.res;
 	item.hostIp = res.ip || defaultValue;
-	var result = res.statusCode == null ? '-' : res.statusCode;
+	item.clientIp = item.req.ip || '127.0.0.1';
+	item.body = res.size == null ? defaultValue : res.size;
+	var result = res.statusCode == null ? defaultValue : res.statusCode;
 	item.result = /^[1-9]/.test(result) && parseInt(result, 10) || result;
 	item.type = (res.headers && res.headers['content-type'] || defaultValue).split(';')[0].toLowerCase();
-	item.time = end ? end - item.startTime : defaultValue;
+	item.dns = item.request = item.response = item.download = item.time = defaultValue;
+	if (item.dnsTime > 0) {
+		item.dns = item.dnsTime - item.startTime + 'ms';
+		if (item.requestTime > 0) {
+			item.request =  item.requestTime - item.dnsTime + 'ms';
+			if (item.responseTime > 0) {
+				item.response = item.responseTime - item.requestTime + 'ms';
+				if (end > 0) {
+					item.download = end - item.responseTime + 'ms';
+					item.time = end - item.startTime + 'ms';
+				}
+			}
+		}
+	}
 	setRawHeaders(item.req);
 	setRawHeaders(res);
 	if (url.length > MAX_URL_LENGTH) {
