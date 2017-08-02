@@ -4,10 +4,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var util = require('./util');
+var columns = require('./columns');
 var FilterInput = require('./filter-input');
 var Spinner = require('./spinner');
+var events = require('./events');
 var HEIGHT = 24; //每条数据的高度
-var columns = {};
+var columnState = {};
 var NOT_BOLD_RULES = {
     plugin: 1,
     pac: 1,
@@ -103,11 +105,16 @@ function getSelection() {
 
 var ReqData = React.createClass({
 	getInitialState: function() {
-		return { draggable: true };
+		return { draggable: true, columns: columns.getSelectedColumns() };
 	},
 	componentDidMount: function() {
 		var self = this;
 		var timer;
+		events.on('onColumnsChanged', function() {
+			self.setState({
+				columns: columns.getSelectedColumns()
+			});
+		});
 		var update = function() {
 			self.setState({});
 		};
@@ -244,26 +251,26 @@ var ReqData = React.createClass({
 		var state = this.state;
 		var name = target.className;
 		if (name == 'order') {
-			columns = {};
+			columnState = {};
 		} else {
 		  if (name === 'url') {
 		    name = 'path';
 		  }
-			var order = columns[name];
+			var order = columnState[name];
 			if (order == 'desc') {
-				columns[name] = 'asc';
+				columnState[name] = 'asc';
 			} else if (order == 'asc') {
-				columns[name] = null;
+				columnState[name] = null;
 			} else {
-				columns[name] = 'desc';
+				columnState[name] = 'desc';
 			}
 		}
 		
 		if (modal) {
 			var sortColumns = [];
 			var order;
-			Object.keys(columns).forEach(function(name) {
-				if (order = columns[name]) {
+			Object.keys(columnState).forEach(function(name) {
+				if (order = columnState[name]) {
 					sortColumns.push({
 						name: name,
 						order: order
@@ -274,6 +281,15 @@ var ReqData = React.createClass({
 		}
 		this.setState({});
 	},
+	renderColumn: function(col) {
+		var name = col.name;
+		return (
+			<th key={name} className={col.className}
+				style={{color: columnState[name] ? '#337ab7' : null}}>
+				{col.title}<Spinner order={columnState[name]} />
+			</th>
+		);
+	},
 	render: function() {
 		var self = this;
 		var state = this.state;
@@ -283,6 +299,7 @@ var ReqData = React.createClass({
 		var index = 0;
 		var indeies = self.getVisibleIndex();
 		var draggable = state.draggable;
+		var columnList = state.columns;
 		var startIndex, endIndex;
 		if (indeies) {
 			startIndex = indeies[0];
@@ -295,20 +312,13 @@ var ReqData = React.createClass({
 		
 		return (
 				<div className="fill w-req-data-con orient-vertical-box">
-					<div className="w-req-data-content fill orient-vertical-box">
+					<div style={{'min-width': columnList.length * 90 + 50 + 'px'}} className="w-req-data-content fill orient-vertical-box">
 						<div className="w-req-data-headers">
 							<table className="table">
 						      <thead>
 						        <tr onClick={self.orderBy}>
-						          <th className="order">#</th>
-						          <th className="result" style={{color: columns.result ? '#337ab7' : null}}>Result<Spinner order={columns.result} /></th>
-						          <th className="method" style={{color: columns.method ? '#337ab7' : null}}>Method<Spinner order={columns.method} /></th>
-						          <th className="protocol" style={{color: columns.protocol ? '#337ab7' : null}}>Protocol<Spinner order={columns.protocol} /></th>
-						          <th className="hostIp" style={{color: columns.hostIp ? '#337ab7' : null}}>ServerIP<Spinner order={columns.hostIp} /></th>
-						          <th className="hostname" style={{color: columns.hostname ? '#337ab7' : null}}>Host<Spinner order={columns.hostname} /></th>
-						          <th className="url" style={{color: columns.path ? '#337ab7' : null}}>URL<Spinner order={columns.path} /></th>
-						          <th className="type" style={{color: columns.type ? '#337ab7' : null}}>Type<Spinner order={columns.type} /></th>
-						          <th className="time" style={{color: columns.time ? '#337ab7' : null}}>Time<Spinner order={columns.time} /></th>
+											<th className="order">#</th>
+											{columnList.map(this.renderColumn)}
 						        </tr>
 						      </thead>
 						    </table>

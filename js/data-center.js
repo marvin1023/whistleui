@@ -29,24 +29,26 @@ var DEFAULT_CONF = {
 	}
 };
 
-function setNetworkSettings(settings) {
+function setFilterText(settings) {
 	settings = settings || {};
-	storage.set('networkSettings', JSON.stringify({
+	storage.set('filterText', JSON.stringify({
 		disabledFilterText: settings.disabledFilterText,
-		filterText: settings.filterText,
-		disabledColumns: settings.disabledColumns,
-		columns: settings.columns
+		filterText: settings.filterText
 	}));
 }
-exports.setNetworkSettings = setNetworkSettings;
+exports.setFilterText = setFilterText;
 
-function getNetworkSettings() {
-	return util.parseJSON(storage.get('networkSettings')) || {};
+function getFilterText() {
+	var settings = util.parseJSON(storage.get('filterText'));
+	return settings ? {
+		disabledFilterText: settings.disabledFilterText,
+		filterText: settings.filterText
+	} : {};
 }
-exports.getNetworkSettings = getNetworkSettings;
+exports.getFilterText = getFilterText;
 
 function hasFilterText() {
-	var settings = getNetworkSettings();
+	var settings = getFilterText();
 	if (!settings || settings.disabledFilterText) {
 		return;
 	}
@@ -59,6 +61,22 @@ function hasFilterText() {
 }
 
 exports.hasFilterText = hasFilterText;
+
+function setNetworkColumns(settings) {
+	settings = settings || {};
+	storage.set('networkColumns', JSON.stringify({
+		disabledColumns: settings.disabledColumns,
+		columns: settings.columns
+	}));
+}
+
+exports.setNetworkColumns = setNetworkColumns;
+
+function getNetworkColumns() {
+	return util.parseJSON(storage.get('networkColumns')) || {};
+}
+
+exports.getNetworkColumns = getNetworkColumns;
 
 var FILTER_TYPES_RE = /^(m|s|i|h|b):/;
 var FILTER_TYPES = {

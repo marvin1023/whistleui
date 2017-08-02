@@ -1,12 +1,21 @@
 require('./base-css.js');
 require('../css/network-settings.css');
+var $ = require('jquery');
 var React = require('react');
 var Dialog = require('./dialog');
+var columns = require('./columns');
 var dataCenter = require('./data-center');
+var events = require('./events');
 
 var Settings = React.createClass({
   getInitialState: function() {
-    return dataCenter.getNetworkSettings() || {};
+    return this.getNetworkSettings();
+  },
+  getNetworkSettings: function() {
+    return $.extend(dataCenter.getFilterText(), {
+      disabledColumns: columns.isDisabled(),
+      columns: columns.getAllColumns()
+    });
   },
   onNetworkSettingsChange: function(e) {
 		var target = e.target;
@@ -29,23 +38,30 @@ var Settings = React.createClass({
         break;
       case 'networkColumns':
         settings.disabledColumns = !target.checked;
+        columns.disable(settings.disabledColumns);
         columnsChanged = true;
         break;
       default:
+        columns.setselected(name, target.checked);
         columnsChanged = true;
     }
-    dataCenter.setNetworkSettings(settings);
     if (filterTextChanged) {
+      dataCenter.setFilterText(settings);
       if (typeof this.props.onFilterTextChanged === 'function') {
         this.props.onFilterTextChanged();
       }
-    } else if (columnsChanged && typeof this.props.onColumnsChanged === 'function') {
-      this.props.onColumnsChanged();
+      this.setState(settings);
+    } else if (columnsChanged) {
+      if (typeof this.props.onColumnsChanged === 'function') {
+        console.log(columns.getSelectedColumns())
+        this.props.onColumnsChanged();
+      }
+      events.trigger('onColumnsChanged');
+      this.setState(settings);
     }
-    this.setState(settings);
 	},
   showDialog: function() {
-    var settings = dataCenter.getNetworkSettings() || {};
+    var settings = this.getNetworkSettings();
     this.setState(settings);
 		this.refs.networkSettingsDialog.show();
 	},
@@ -55,6 +71,7 @@ var Settings = React.createClass({
   render: function() {
     var state = this.state;
     var disabledColumns = state.disabledColumns;
+    var columns = state.columns;
 
     return (
       <Dialog ref="networkSettingsDialog" wstyle="w-network-settings-dialog">
@@ -79,18 +96,13 @@ var Settings = React.createClass({
                 <input checked={!disabledColumns} data-name="networkColumns" onChange={this.change} type="checkbox" />Network Columns
               </label>
             </legend>
-            <label><input disabled={disabledColumns} data-name="result" type="checkbox" />Result</label>
-            <label><input disabled={disabledColumns} data-name="method" type="checkbox" />Method</label>
-            <label><input disabled={disabledColumns} data-name="protocol" type="checkbox" />Protocol</label>
-            <label><input disabled={disabledColumns} data-name="clientIP" type="checkbox" />ClientIP</label>
-            <label><input disabled={disabledColumns} data-name="serverIP" type="checkbox" />ServerIP</label>
-            <label><input disabled={disabledColumns} data-name="host" type="checkbox" />Host</label>
-            <label><input disabled={disabledColumns} data-name="url" type="checkbox" />URL</label>
-            <label><input disabled={disabledColumns} data-name="body" type="checkbox" />Body</label>
-            <label><input disabled={disabledColumns} data-name="sent" type="checkbox" />Sent</label>
-            <label><input disabled={disabledColumns} data-name="DNS" type="checkbox" />DNS</label>
-            <label><input disabled={disabledColumns} data-name="download" type="checkbox" />Download</label>
-            <label><input disabled={disabledColumns} data-name="time" type="checkbox" />Time</label>
+            {columns.map(function(col) {
+              return (
+                <label>
+                  <input disabled={disabledColumns} checked={col.selected} data-name={col.name} type="checkbox" />{col.title}
+                </label>
+              );
+            })}
           </fieldset>
         </div>
         <div className="modal-footer">
