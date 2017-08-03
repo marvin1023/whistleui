@@ -1,3 +1,4 @@
+var $ = require('jquery');
 var dataCenter = require('./data-center');
 var util = require('./util');
 
@@ -92,12 +93,14 @@ function filterSelected(item) {
 }
 
 var columnsMap = {};
+var namesMap = {};
 var curColumns = getDefaultColumns();
 var DEFAULT_COLUMNS = getDefaultColumns();
 var DEFAULT_SELECTED_COLUMNS = DEFAULT_COLUMNS.filter(filterSelected);
 
 DEFAULT_COLUMNS.forEach(function(col) {
   columnsMap[col.name] = col;
+  namesMap[col.name.toLowerCase()] = col.name;
 });
 
 if (Array.isArray(settings.columns)) {
@@ -142,8 +145,10 @@ function moveTo(name, targetName) {
   if (!col || !target) {
     return;
   }
-  curColumns.splice(curColumns.indexOf(col), 1);
-  curColumns.splice(curColumns.indexOf(target), 0, col);
+  var fromIndex = curColumns.indexOf(col);
+  var toIndex = curColumns.indexOf(target);
+  curColumns.splice(fromIndex, 1);
+  curColumns.splice(toIndex, 0, col);
   save();
 }
 
@@ -189,16 +194,16 @@ function getTarget(e) {
 function getDragInfo(e) {
   var target = getTarget(e);
   var name = target && target.getAttribute('data-name');
-  console.log(name)
   if (!name) {
     return;
   }
+  name = name.toLowerCase();
   var fromName = getNameFromTypes(e);
   if (fromName && name !== fromName) {
     return {
       target: target,
-      fromName: fromName,
-      toName: name
+      fromName: namesMap[fromName],
+      toName: namesMap[name]
     };
   }
 }
@@ -212,15 +217,26 @@ function getNameFromTypes(e) {
   });
   return type && type.substring(COLUMN_TYPE_PREFIX.length);
 }
+var curTarget;
+
+$(document).on('drop', function() {
+  if (curTarget) {
+    curTarget.style.background = '';
+  }
+  curTarget = null;
+});
 
 exports.dragger = {
   onDragStart: function(e) {
+    var target = getTarget(e);
+    var name = target && target.getAttribute('data-name');
     e.dataTransfer.setData(COLUMN_TYPE_PREFIX + name, 1);
   },
   onDragEnter: function(e) {
    var info = getDragInfo(e);
     if (info) {
-      info.target.style.background = '#eee';
+      curTarget = info.target;
+      curTarget.style.background = '#ddd';
     }
   },
   onDragLeave: function(e) {
@@ -232,8 +248,13 @@ exports.dragger = {
   onDrop: function(e) {
     var info = getDragInfo(e);
     if (info) {
-     moveTo(info.formName, info.toName);
-     this.setState({});
+     moveTo(info.fromName, info.toName);
+     info.target.style.background = '';
+     if (typeof this.onColumnsResort === 'function') {
+       this.onColumnsResort();
+     } else {
+       this.setState({});
+     }
     }
   }
 };

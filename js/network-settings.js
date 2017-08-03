@@ -9,13 +9,19 @@ var events = require('./events');
 
 var Settings = React.createClass({
   getInitialState: function() {
-    return this.getNetworkSettings();
+    var dragger = columns.dragger;
+    dragger.onDrop = dragger.onDrop.bind(this);
+    return $.extend(this.getNetworkSettings(), { dragger: dragger });
   },
   getNetworkSettings: function() {
     return $.extend(dataCenter.getFilterText(), {
       disabledColumns: columns.isDisabled(),
       columns: columns.getAllColumns()
     });
+  },
+  onColumnsResort: function() {
+    events.trigger('onColumnsChanged');
+    this.setState({});
   },
   onNetworkSettingsChange: function(e) {
 		var target = e.target;
@@ -52,10 +58,6 @@ var Settings = React.createClass({
       }
       this.setState(settings);
     } else if (columnsChanged) {
-      if (typeof this.props.onColumnsChanged === 'function') {
-        console.log(columns.getSelectedColumns())
-        this.props.onColumnsChanged();
-      }
       events.trigger('onColumnsChanged');
       this.setState(settings);
     }
@@ -99,7 +101,7 @@ var Settings = React.createClass({
             {columnList.map(function(col) {
               return (
                 <label
-                  {...columns.dragger}
+                  {...state.dragger}
                   data-name={col.name}
                   draggable={!disabledColumns}
                   >

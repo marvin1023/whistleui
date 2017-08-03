@@ -105,7 +105,13 @@ function getSelection() {
 
 var ReqData = React.createClass({
 	getInitialState: function() {
-		return { draggable: true, columns: columns.getSelectedColumns() };
+		var dragger = columns.dragger;
+    dragger.onDrop = dragger.onDrop.bind(this);
+		return {
+			draggable: true,
+			columns: columns.getSelectedColumns(),
+			dragger: dragger
+		};
 	},
 	componentDidMount: function() {
 		var self = this;
@@ -282,7 +288,9 @@ var ReqData = React.createClass({
 		var name = col.name;
 		var disabledColumns = columns.isDisabled();
 		return (
-			<th draggable={!disabledColumns} key={name} className={col.className}
+			<th {...this.state.dragger} data-name={name}
+				draggable={!disabledColumns}
+				key={name} className={col.className}
 				style={{color: columnState[name] ? '#337ab7' : undefined}}>
 				{col.title}<Spinner order={columnState[name]} />
 			</th>
