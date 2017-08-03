@@ -23,6 +23,10 @@ var Settings = React.createClass({
     events.trigger('onColumnsChanged');
     this.setState({ columns: columns.getAllColumns() });
   },
+  resetColumns: function() {
+    columns.reset();
+    this.onColumnsResort();
+  },
   onNetworkSettingsChange: function(e) {
 		var target = e.target;
 		var name = target.getAttribute('data-name');
@@ -97,6 +101,7 @@ var Settings = React.createClass({
               <label>
                 <input checked={!disabledColumns} data-name="networkColumns" onChange={this.change} type="checkbox" />Network Columns
               </label>
+              <label onClick={this.resetColumns} className="btn btn-default">Reset</label>
             </legend>
             {columnList.map(function(col) {
               return (
@@ -105,7 +110,7 @@ var Settings = React.createClass({
                   data-name={col.name}
                   draggable={!disabledColumns}
                   >
-                  <input disabled={disabledColumns} checked={col.selected} data-name={col.name} type="checkbox" />{col.title}
+                  <input disabled={disabledColumns} checked={!!col.selected} data-name={col.name} type="checkbox" />{col.title}
                 </label>
               );
             })}

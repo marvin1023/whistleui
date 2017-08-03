@@ -92,17 +92,22 @@ function filterSelected(item) {
   return item.selected;
 }
 
-var columnsMap = {};
-var namesMap = {};
-var curColumns = getDefaultColumns();
-var DEFAULT_COLUMNS = getDefaultColumns();
-var DEFAULT_SELECTED_COLUMNS = DEFAULT_COLUMNS.filter(filterSelected);
+var columnsMap;
+var namesMap;
+var curColumns;
+var DEFAULT_SELECTED_COLUMNS = getDefaultColumns().filter(filterSelected);
 
-DEFAULT_COLUMNS.forEach(function(col) {
-  columnsMap[col.name] = col;
-  namesMap[col.name.toLowerCase()] = col.name;
-});
+function reset() {
+  columnsMap = {};
+  namesMap = {};
+  curColumns = getDefaultColumns();
+  curColumns.forEach(function(col) {
+    columnsMap[col.name] = col;
+    namesMap[col.name.toLowerCase()] = col.name;
+  });
+}
 
+reset();
 if (Array.isArray(settings.columns)) {
   var flagMap = {};
   var checkColumn = function(col) {
@@ -125,10 +130,11 @@ if (Array.isArray(settings.columns)) {
 
 settings = {
   disabledColumns: !!settings.disabledColumns,
-  columns: curColumns,
+  columns: curColumns
 };
 
 function save() {
+  settings.columns = curColumns;
   dataCenter.setNetworkColumns(settings);
 }
 
@@ -159,6 +165,10 @@ exports.disable = function(disabled) {
 
 exports.getAllColumns = function() {
   return curColumns;
+};
+exports.reset = function() {
+  reset();
+  save();
 };
 exports.setselected = function(name, selected) {
   var col = columnsMap[name];
