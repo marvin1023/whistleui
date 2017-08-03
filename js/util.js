@@ -457,3 +457,15 @@ exports.escape = function(str) {
 	return str.replace(rlf, '<br />').replace(rspace, '&nbsp;');
 };
 
+function findArray(arr, cb) {
+  if (typeof arr.find === 'function') {
+    return arr.find(cb);
+  }
+  for (var i = 0, len = arr.length; i < len; i++) {
+    var val = arr[i];
+    if (cb(val, i, arr)) {
+      return val;
+    }
+  }
+}
+exports.findArray = findArray;

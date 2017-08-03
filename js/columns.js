@@ -1,4 +1,6 @@
 var dataCenter = require('./data-center');
+var util = require('./util');
+
 var settings = dataCenter.getNetworkColumns();
 
 function getDefaultColumns() {
@@ -131,7 +133,7 @@ exports.isDisabled = function() {
   return settings.disabledColumns;
 }
 
-exports.moveTo = function(name, targetName) {
+function moveTo(name, targetName) {
   if (settings.disabledColumns || name === targetName) {
     return;
   }
@@ -165,4 +167,73 @@ exports.getSelectedColumns = function() {
     return DEFAULT_SELECTED_COLUMNS;
   }
   return curColumns.filter(filterSelected);;
+};
+
+var COLUMN_TYPE_PREFIX = 'networkcolumn$';
+
+function getTarget(e) {
+  var target = e.target;
+  var nodeName = target.nodeName;
+  if (nodeName === 'TH' || nodeName === 'LABEL') {
+    return target;
+  }
+  target = target.parentNode;
+  if (target) {
+    nodeName = target.nodeName;
+    if (nodeName === 'TH' || nodeName === 'LABEL') {
+      return target;
+    }
+  }
+}
+
+function getDragInfo(e) {
+  var target = getTarget(e);
+  var name = target && target.getAttribute('data-name');
+  console.log(name)
+  if (!name) {
+    return;
+  }
+  var fromName = getNameFromTypes(e);
+  if (fromName && name !== fromName) {
+    return {
+      target: target,
+      fromName: fromName,
+      toName: name
+    };
+  }
+}
+
+function getNameFromTypes(e) {
+  var types = e.dataTransfer.types;
+  var type = util.findArray(e.dataTransfer.types, function(type) {
+    if (type.indexOf(COLUMN_TYPE_PREFIX) === 0) {
+      return true;
+    }
+  });
+  return type && type.substring(COLUMN_TYPE_PREFIX.length);
+}
+
+exports.dragger = {
+  onDragStart: function(e) {
+    e.dataTransfer.setData(COLUMN_TYPE_PREFIX + name, 1);
+  },
+  onDragEnter: function(e) {
+   var info = getDragInfo(e);
+    if (info) {
+      info.target.style.background = '#eee';
+    }
+  },
+  onDragLeave: function(e) {
+    var info = getDragInfo(e);
+    if (info) {
+      info.target.style.background = '';
+    }
+  },
+  onDrop: function(e) {
+    var info = getDragInfo(e);
+    if (info) {
+     moveTo(info.formName, info.toName);
+     this.setState({});
+    }
+  }
 };

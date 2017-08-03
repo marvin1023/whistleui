@@ -71,7 +71,7 @@ var Settings = React.createClass({
   render: function() {
     var state = this.state;
     var disabledColumns = state.disabledColumns;
-    var columns = state.columns;
+    var columnList = state.columns;
 
     return (
       <Dialog ref="networkSettingsDialog" wstyle="w-network-settings-dialog">
@@ -96,9 +96,13 @@ var Settings = React.createClass({
                 <input checked={!disabledColumns} data-name="networkColumns" onChange={this.change} type="checkbox" />Network Columns
               </label>
             </legend>
-            {columns.map(function(col) {
+            {columnList.map(function(col) {
               return (
-                <label draggable={!disabledColumns}>
+                <label
+                  {...columns.dragger}
+                  data-name={col.name}
+                  draggable={!disabledColumns}
+                  >
                   <input disabled={disabledColumns} checked={col.selected} data-name={col.name} type="checkbox" />{col.title}
                 </label>
               );
