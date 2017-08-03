@@ -306,10 +306,11 @@ var ReqData = React.createClass({
 			endIndex = list.length;
 		}
 		var filterText = (state.filterText || '').trim();
+		var minWidth = {'min-width': columnList.length * 90 + 50 + 'px'};
 		
 		return (
 				<div className="fill w-req-data-con orient-vertical-box">
-					<div style={{'min-width': columnList.length * 90 + 50 + 'px'}} className="w-req-data-content fill orient-vertical-box">
+					<div style={minWidth} className="w-req-data-content fill orient-vertical-box">
 						<div className="w-req-data-headers">
 							<table className="table">
 						      <thead>
@@ -354,7 +355,7 @@ var ReqData = React.createClass({
 						    </table>	
 						</div>
 					</div>
-					<FilterInput onChange={this.onFilterChange} />
+					<FilterInput onChange={this.onFilterChange} wStyle={minWidth} />
 			</div>
 		);
 	}

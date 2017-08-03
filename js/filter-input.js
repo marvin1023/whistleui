@@ -32,7 +32,7 @@ var FilterInput = React.createClass({
 	render: function() {
 		var filterText = this.state.filterText || '';
 		return (
-				<div className="w-filter-con">
+				<div className="w-filter-con" style={this.props.wStyle}>
 					<input type="text" value={filterText} 
 					onChange={this.onFilterChange} 
 					onKeyDown={this.onFilterKeyDown}
