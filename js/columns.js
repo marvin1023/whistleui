@@ -226,35 +226,36 @@ $(document).on('drop', function() {
   curTarget = null;
 });
 
-exports.dragger = {
-  onDragStart: function(e) {
-    var target = getTarget(e);
-    var name = target && target.getAttribute('data-name');
-    e.dataTransfer.setData(COLUMN_TYPE_PREFIX + name, 1);
-  },
-  onDragEnter: function(e) {
-   var info = getDragInfo(e);
-    if (info) {
-      curTarget = info.target;
-      curTarget.style.background = '#ddd';
-    }
-  },
-  onDragLeave: function(e) {
+exports.getDragger = function() {
+  
+  return {
+    onDragStart: function(e) {
+      var target = getTarget(e);
+      var name = target && target.getAttribute('data-name');
+      e.dataTransfer.setData(COLUMN_TYPE_PREFIX + name, 1);
+    },
+    onDragEnter: function(e) {
     var info = getDragInfo(e);
-    if (info) {
+      if (info) {
+        curTarget = info.target;
+        curTarget.style.background = '#ddd';
+      }
+    },
+    onDragLeave: function(e) {
+      var info = getDragInfo(e);
+      if (info) {
+        info.target.style.background = '';
+      }
+    },
+    onDrop: function(e) {
+      var info = getDragInfo(e);
+      if (info) {
+      moveTo(info.fromName, info.toName);
       info.target.style.background = '';
+      if (typeof this.onColumnsResort === 'function') {
+        this.onColumnsResort();
+      }
+      }
     }
-  },
-  onDrop: function(e) {
-    var info = getDragInfo(e);
-    if (info) {
-     moveTo(info.fromName, info.toName);
-     info.target.style.background = '';
-     if (typeof this.onColumnsResort === 'function') {
-       this.onColumnsResort();
-     } else {
-       this.setState({});
-     }
-    }
-  }
+  };
 };

@@ -9,7 +9,7 @@ var events = require('./events');
 
 var Settings = React.createClass({
   getInitialState: function() {
-    var dragger = columns.dragger;
+    var dragger = columns.getDragger();
     dragger.onDrop = dragger.onDrop.bind(this);
     return $.extend(this.getNetworkSettings(), { dragger: dragger });
   },
@@ -21,7 +21,7 @@ var Settings = React.createClass({
   },
   onColumnsResort: function() {
     events.trigger('onColumnsChanged');
-    this.setState({});
+    this.setState({ columns: columns.getAllColumns() });
   },
   onNetworkSettingsChange: function(e) {
 		var target = e.target;

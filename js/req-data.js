@@ -105,7 +105,7 @@ function getSelection() {
 
 var ReqData = React.createClass({
 	getInitialState: function() {
-		var dragger = columns.dragger;
+		var dragger = columns.getDragger();
     dragger.onDrop = dragger.onDrop.bind(this);
 		return {
 			draggable: true,
@@ -284,6 +284,9 @@ var ReqData = React.createClass({
 		}
 		this.setState({});
 	},
+	onColumnsResort: function() {
+    this.setState({ columns: columns.getSelectedColumns() });
+  },
 	renderColumn: function(col) {
 		var name = col.name;
 		var disabledColumns = columns.isDisabled();
