@@ -10,7 +10,7 @@
 .network-settings-filter legend { margin: 0; padding: 0; }
 .network-settings-filter legend label { margin-right: 5px; }
 .network-settings-filter textarea[disabled] { background: #f5f5f5; }
-.network-settings-columns label { padding-left: 20px; text-align: left; width: 102px; }
+.network-settings-columns label { padding-left: 10px; margin-left: 10px; text-align: left; width: 92px; }
 .w-network-settings-dialog .modal-dialog {width: 600px;}
 .w-network-settings-dialog input[type=checkbox] { margin-right: 5px; }
 .w-network-settings-dialog textarea { width: 578px; height: 150px; border: 1px solid #ddd; overflow: auto; margin: 0; padding: 5px 10px; }

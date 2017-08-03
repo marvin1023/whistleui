@@ -280,8 +280,9 @@ var ReqData = React.createClass({
 	},
 	renderColumn: function(col) {
 		var name = col.name;
+		var disabledColumns = columns.isDisabled();
 		return (
-			<th key={name} className={col.className}
+			<th draggable={!disabledColumns} key={name} className={col.className}
 				style={{color: columnState[name] ? '#337ab7' : undefined}}>
 				{col.title}<Spinner order={columnState[name]} />
 			</th>

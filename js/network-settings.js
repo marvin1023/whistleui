@@ -98,7 +98,7 @@ var Settings = React.createClass({
             </legend>
             {columns.map(function(col) {
               return (
-                <label>
+                <label draggable={!disabledColumns}>
                   <input disabled={disabledColumns} checked={col.selected} data-name={col.name} type="checkbox" />{col.title}
                 </label>
               );
