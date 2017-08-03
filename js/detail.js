@@ -95,9 +95,39 @@ var ReqData = React.createClass({
 	render: function() {
 		var modal = this.props.modal;
 		var selectedList = modal && modal.getSelectedList();
-		var activeItem = modal && modal.getActive();
+		var activeItem;
+		var overview;
+		if (selectedList && selectedList.length > 1) {
+			overview = {
+				req: {
+					size: 0,
+					headers: {}
+				},
+				res: {
+					size: 0,
+					headers: {}
+				}
+			};
+			var startTime;
+			selectedList.forEach(function(item) {
+				if (overview.startTime == null || overview.startTime > item.startTime) {
+					overview.startTime = item.startTime;
+				}
+				if (overview.endTime == null || overview.endTime < item.endTime) {
+					overview.endTime = item.endTime;
+				}
+				if (item.req.size > 0) {
+					overview.req.size += item.req.size > 0;
+				}
+				if (item.res.size > 0) {
+					overview.res.size += item.res.size > 0;
+				}
+			});
+		} else {
+			overview = activeItem = modal && modal.getActive();
+		}
 		var curTab = this.state.tab;
-		if (!curTab && activeItem) {
+		if (!curTab && overview) {
 			curTab = TABS[0];
 			TABS.forEach(function(tab) {
 				tab.active = false;
@@ -109,7 +139,7 @@ var ReqData = React.createClass({
 		return (
 				<div className="fill orient-vertical-box w-detail" onDragEnter={this.onDragEnter} onDrop={this.onDrop}>
 				<BtnGroup onClick={this.toggleTab} tabs={TABS} />
-				{this.state.initedOverview ? <Overview modal={activeItem} hide={name != TABS[0].name} /> : ''}
+				{this.state.initedOverview ? <Overview modal={overview} hide={name != TABS[0].name} /> : ''}
 				{this.state.initedRequest ? <ReqDetail modal={activeItem} hide={name != TABS[1].name} /> : ''}
 				{this.state.initedResponse ? <ResDetail modal={activeItem} hide={name != TABS[2].name} /> : ''}
 				{this.state.initedTimeline ? <Timeline modal={modal} hide={name != TABS[3].name} /> : ''}
