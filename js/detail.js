@@ -117,10 +117,10 @@ var ReqData = React.createClass({
 					overview.endTime = item.endTime;
 				}
 				if (item.req.size > 0) {
-					overview.req.size += item.req.size > 0;
+					overview.req.size += item.req.size;
 				}
 				if (item.res.size > 0) {
-					overview.res.size += item.res.size > 0;
+					overview.res.size += item.res.size;
 				}
 			});
 		} else {
