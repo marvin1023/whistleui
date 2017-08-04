@@ -228,6 +228,10 @@ var List = React.createClass({
 			var fromName = e.dataTransfer.getData('-' + NAME_PREFIX);
 			info.target.style.background = '';
 			if (this.props.modal.moveTo(fromName, info.toName)) {
+				dataCenter[this.props.name === 'rules' ? 'rules' : 'values'].moveTo({
+					from: fromName,
+					to: info.toName
+				});
 				this.setState({});
 			}
 		}

@@ -165,6 +165,10 @@ exports.sessions = createCgi({
 }));
 
 exports.values = createCgi({
+	moveTo: {
+		mode: 'chain',
+		url: 'cgi-bin/values/move-to'
+	},
 	get: {
 		type: 'get',
 		url: 'cgi-bin/values/list'
@@ -191,6 +195,10 @@ exports.plugins = createCgi({
 
 exports.rules = createCgi({
 	disableAllRules: 'cgi-bin/rules/disable-all-rules',
+	moveTo: {
+		mode: 'chain',
+		url: 'cgi-bin/rules/move-to'
+	},
 	get: {
 		type: 'get',
 		get: 'cgi-bin/rules/list'
