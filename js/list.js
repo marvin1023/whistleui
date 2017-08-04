@@ -167,9 +167,11 @@ var List = React.createClass({
 	},
 	onDragStart: function(e) {
 		var target = getTarget(e);
-		var name = getName(target && target.getAttribute('data-name'));
-		e.dataTransfer.setData(NAME_PREFIX + name, 1);
-		e.dataTransfer.setData('-' + NAME_PREFIX, name);
+		var name = target && target.getAttribute('data-name');
+		if (name) {
+			e.dataTransfer.setData(NAME_PREFIX + name, 1);
+			e.dataTransfer.setData('-' + NAME_PREFIX, name);
+		}
 	},
 	onDragEnter: function(e) {
 		var info = getDragInfo(e);
@@ -187,7 +189,7 @@ var List = React.createClass({
 	onDrop: function(e) {
 		var info = getDragInfo(e);
 		if (info) {
-			var fromName = e.dataTransfer.getData('-' + NAME_PREFIX);
+			var fromName = getName(e.dataTransfer.getData('-' + NAME_PREFIX));
 			info.target.style.background = '';
 			if (this.props.modal.moveTo(fromName, info.toName)) {
 				dataCenter[this.props.name === 'rules' ? 'rules' : 'values'].moveTo({
