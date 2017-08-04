@@ -35,7 +35,7 @@ function getName(name) {
 
 function getDragInfo(e) {
   var target = getTarget(e);
-  var name = getName(target && target.getAttribute('data-name'));
+  var name = target && target.getAttribute('data-name');
   if (!name) {
     return;
   }
@@ -43,7 +43,7 @@ function getDragInfo(e) {
   if (fromName && name.toLowerCase() !== fromName) {
     return {
       target: target,
-      toName: name
+      toName: getName(name)
     };
   }
 }
@@ -55,7 +55,7 @@ function getNameFromTypes(e) {
       return true;
     }
 	});
-	return getName(type && type.substring(NAME_PREFIX.length));
+	return type && type.substring(NAME_PREFIX.length);
 }
 
 $(document).on('drop', function() {
