@@ -8,6 +8,62 @@ var Divider = require('./divider');
 var Editor = require('./editor');
 var FilterInput = require('./filter-input');
 var dataCenter = require('./data-center');
+var NAME_PREFIX = 'listmodal$';
+var curTarget;
+
+function getTarget(e) {
+  var target = e.target;
+  var nodeName = target.nodeName;
+  if (nodeName === 'A') {
+    return target;
+  }
+  target = target.parentNode;
+  if (target) {
+    nodeName = target.nodeName;
+    if (nodeName === 'A') {
+      return target;
+    }
+  }
+}
+
+function getName(name) {
+	if (typeof name !== 'string') {
+		return '';
+	}
+	return name.substring(name.indexOf('_') + 1);
+}
+
+function getDragInfo(e) {
+  var target = getTarget(e);
+  var name = target && target.getAttribute('data-name');
+  if (!name) {
+    return;
+  }
+  var fromName = getNameFromTypes(e);
+  if (fromName && name.toLowerCase() !== fromName) {
+    return {
+      target: target,
+      toName: getName(name)
+    };
+  }
+}
+
+function getNameFromTypes(e) {
+  var types = e.dataTransfer.types;
+  var type = util.findArray(e.dataTransfer.types, function(type) {
+    if (type.indexOf(NAME_PREFIX) === 0) {
+      return true;
+    }
+	});
+	return getName(type);
+}
+
+$(document).on('drop', function() {
+  if (curTarget) {
+    curTarget.style.background = '';
+  }
+  curTarget = null;
+});
 
 function getSuffix(name) {
 	if (typeof name != 'string') {
@@ -147,6 +203,35 @@ var List = React.createClass({
 	getItemByKey: function(key) {
 		return this.props.modal.getByKey(key);
 	},
+	onDragStart: function(e) {
+		var target = getTarget(e);
+		var name = getName(target && target.getAttribute('data-name'));
+		e.dataTransfer.setData(NAME_PREFIX + name, 1);
+		e.dataTransfer.setData('-' + NAME_PREFIX, name);
+	},
+	onDragEnter: function(e) {
+		var info = getDragInfo(e);
+		if (info) {
+			curTarget = info.target;
+			curTarget.style.background = '#ddd';
+		}
+	},
+	onDragLeave: function(e) {
+		var info = getDragInfo(e);
+		if (info) {
+			info.target.style.background = '';
+		}
+	},
+	onDrop: function(e) {
+		var info = getDragInfo(e);
+		if (info) {
+			var fromName = e.dataTransfer.getData('-' + NAME_PREFIX);
+			info.target.style.background = '';
+			if (this.props.modal.moveTo(fromName, info.toName)) {
+				this.setState({});
+			}
+		}
+	},
 	render: function() {
 		var self = this;
 		var modal = self.props.modal;
@@ -156,39 +241,56 @@ var List = React.createClass({
 		if (!activeItem && list[0] && (activeItem = data[list[0]])) {
 		  activeItem.active = true;
 		}
+		var isRules = self.props.name == 'rules';
+		var draggable = false;
+		
+		if (isRules) {
+			draggable = list.length > 2;
+		} else if (list.length > 1) {
+			draggable = true;
+		}
+
 		//不设置height为0，滚动会有问题
 		return (
 				<Divider hide={this.props.hide} leftWidth="200">
 				<div className="fill orient-vertical-box w-list-left">	
-					<div ref="list" tabIndex="0" className={'fill orient-vertical-box w-list-data ' + (this.props.className || '') + (this.props.disabled ? ' w-disabled' : '')}>
+					<div ref="list" tabIndex="0"
+						className={'fill orient-vertical-box w-list-data ' + (this.props.className || '') + (this.props.disabled ? ' w-disabled' : '')}
+						>
 							{
-								list.map(function(name) {
+								list.map(function(name, i) {
 									var item = data[name];
+									var isDefaultRule = isRules && i === 0;
 									
-									return <a ref={name} style={{display: item.hide ? 'none' : null}}
-												key={item.key} data-key={item.key}
-												href="javascript:;"
-												draggable="false"
-												onClick={function() {
-													self.onClick(item);
-												}} 
-												onDoubleClick={function() {
-													self.onDoubleClick(item);
-												}} 
-												className={util.getClasses({
-													'w-active': item.active,
-													'w-changed': item.changed,
-													'w-selected': item.selected
-												})} 
-												draggable="false"
-												href="javascript:;">{name}<span className="glyphicon glyphicon-ok"></span></a>;
+									return <a ref={name}
+														data-name={i + '_' + name}
+														onDragStart={isDefaultRule ? undefined : self.onDragStart}
+														onDragEnter={isDefaultRule ? undefined : self.onDragEnter}
+														onDragLeave={isDefaultRule ? undefined : self.onDragLeave}
+														onDrop={isDefaultRule ? undefined : self.onDrop}
+														style={{display: item.hide ? 'none' : null}}
+														key={item.key} data-key={item.key}
+														href="javascript:;"
+														draggable={isDefaultRule ? false : draggable}
+														onClick={function() {
+															self.onClick(item);
+														}} 
+														onDoubleClick={function() {
+															self.onDoubleClick(item);
+														}} 
+														className={util.getClasses({
+															'w-active': item.active,
+															'w-changed': item.changed,
+															'w-selected': item.selected
+														})} 
+														href="javascript:;">{name}<span className="glyphicon glyphicon-ok"></span></a>;
 								})
 							}
 						</div>
 						<FilterInput onChange={this.onFilterChange} />
 					</div>
 					<Editor {...self.props} onChange={self.onChange} readOnly={!activeItem} value={activeItem ? activeItem.value : ''} 
-					mode={self.props.name == 'rules' ? 'rules' : getSuffix(activeItem && activeItem.name)} />
+					mode={isRules ? 'rules' : getSuffix(activeItem && activeItem.name)} />
 				</Divider>
 		);
 	}

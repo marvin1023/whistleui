@@ -98,6 +98,17 @@ proto.setSelected = function(name, selected) {
 	return this._setBoolProp(name, 'selected', selected);
 };
 
+proto.moveTo = function(fromName, toName) {
+	var list = this.list;
+	var fromIndex = list.indexOf(fromName);
+	var toIndex = list.indexOf(toName);
+	if (fromIndex !== -1 && toIndex !== -1) {
+		list.splice(fromIndex, 1);
+		list.splice(toIndex, 0, fromName);
+		return true;
+	}
+};
+
 proto.getSelectedList = function() {
 	
 	return this._getList('selected');

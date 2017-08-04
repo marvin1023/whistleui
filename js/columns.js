@@ -93,17 +93,14 @@ function filterSelected(item) {
 }
 
 var columnsMap;
-var namesMap;
 var curColumns;
 var DEFAULT_SELECTED_COLUMNS = getDefaultColumns().filter(filterSelected);
 
 function reset() {
   columnsMap = {};
-  namesMap = {};
   curColumns = getDefaultColumns();
   curColumns.forEach(function(col) {
     columnsMap[col.name] = col;
-    namesMap[col.name.toLowerCase()] = col.name;
   });
 }
 
@@ -185,6 +182,7 @@ exports.getSelectedColumns = function() {
 };
 
 var COLUMN_TYPE_PREFIX = 'networkcolumn$';
+var curTarget;
 
 function getTarget(e) {
   var target = e.target;
@@ -207,13 +205,11 @@ function getDragInfo(e) {
   if (!name) {
     return;
   }
-  name = name.toLowerCase();
   var fromName = getNameFromTypes(e);
-  if (fromName && name !== fromName) {
+  if (fromName && name.toLowerCase() !== fromName) {
     return {
       target: target,
-      fromName: namesMap[fromName],
-      toName: namesMap[name]
+      toName: name
     };
   }
 }
@@ -227,7 +223,6 @@ function getNameFromTypes(e) {
   });
   return type && type.substring(COLUMN_TYPE_PREFIX.length);
 }
-var curTarget;
 
 $(document).on('drop', function() {
   if (curTarget) {
@@ -243,9 +238,10 @@ exports.getDragger = function() {
       var target = getTarget(e);
       var name = target && target.getAttribute('data-name');
       e.dataTransfer.setData(COLUMN_TYPE_PREFIX + name, 1);
+      e.dataTransfer.setData('-' + COLUMN_TYPE_PREFIX, name);
     },
     onDragEnter: function(e) {
-    var info = getDragInfo(e);
+      var info = getDragInfo(e);
       if (info) {
         curTarget = info.target;
         curTarget.style.background = '#ddd';
@@ -260,11 +256,12 @@ exports.getDragger = function() {
     onDrop: function(e) {
       var info = getDragInfo(e);
       if (info) {
-      moveTo(info.fromName, info.toName);
-      info.target.style.background = '';
-      if (typeof this.onColumnsResort === 'function') {
-        this.onColumnsResort();
-      }
+        var fromName = e.dataTransfer.getData('-' + COLUMN_TYPE_PREFIX);
+        moveTo(fromName, info.toName);
+        info.target.style.background = '';
+        if (typeof this.onColumnsResort === 'function') {
+          this.onColumnsResort();
+        }
       }
     }
   };
