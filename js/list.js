@@ -35,7 +35,7 @@ function getName(name) {
 
 function getDragInfo(e) {
   var target = getTarget(e);
-  var name = target && target.getAttribute('data-name');
+  var name = getName(target && target.getAttribute('data-name'));
   if (!name) {
     return;
   }
