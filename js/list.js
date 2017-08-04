@@ -43,7 +43,7 @@ function getDragInfo(e) {
   if (fromName && name.toLowerCase() !== fromName) {
     return {
       target: target,
-      toName: getName(name)
+      toName: name
     };
   }
 }
@@ -55,7 +55,7 @@ function getNameFromTypes(e) {
       return true;
     }
 	});
-	return getName(type);
+	return getName(type && type.substring(NAME_PREFIX.length));
 }
 
 $(document).on('drop', function() {
