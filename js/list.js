@@ -8,6 +8,8 @@ var Divider = require('./divider');
 var Editor = require('./editor');
 var FilterInput = require('./filter-input');
 var dataCenter = require('./data-center');
+var events = require('./events');
+
 var NAME_PREFIX = 'listmodal$';
 var curTarget;
 
@@ -94,46 +96,6 @@ var List = React.createClass({
 		
 		var listCon = $(ReactDOM.findDOMNode(self.refs.list)).focus().on('keydown', function(e) {
 			var item;
-			if (e.ctrlKey || e.metaKey) {
-				if (pending) {
-					return;
-				}
-				if (e.keyCode == 38) { //up
-					if (item = modal.up()) {
-						pending = true;
-						dataCenter[isRules ? 'rules' : 'values'].moveUp({
-							name: item.name
-						}, function(data) {
-							if (!data || data.ec !== 0) {
-								modal.down();
-								self.setState({});
-								util.showSystemError();
-							}
-							pending = false;
-						});
-					}
-					e.preventDefault();
-					self.setState({});
-				} else if (e.keyCode == 40) {//down
-					if (item = modal.down()) {
-						pending = true;
-						dataCenter[isRules ? 'rules' : 'values'].moveDown({
-							name: item.name
-						}, function(data) {
-							if (!data || data.ec !== 0) {
-								modal.up();
-								self.setState({});
-								util.showSystemError();
-							}
-							pending = false;
-						});
-					}
-					e.preventDefault();
-					self.setState({});
-				}
-				return;
-			}
-			
 			if (e.keyCode == 38) { //up
 				item =  modal.prev();
 			} else if (e.keyCode == 40) {//down
@@ -231,6 +193,14 @@ var List = React.createClass({
 				dataCenter[this.props.name === 'rules' ? 'rules' : 'values'].moveTo({
 					from: fromName,
 					to: info.toName
+				}, function(data) {
+					if (!data) {
+						util.showSystemError();
+						return;
+					}
+					if (data.ec === 2) {
+						events.trigger('serverDataChanged');
+					}
 				});
 				this.setState({});
 			}

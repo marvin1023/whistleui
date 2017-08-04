@@ -6,6 +6,8 @@ var React = require('react');
 var Dialog = require('./dialog');
 var dataCenter = require('./data-center');
 var util = require('./util');
+var events = require('./events');
+
 var dialog;
 
 function createDialog() {
@@ -39,7 +41,9 @@ var Online = React.createClass({
 			data && self.checkServerChanged(data);
 			self.setState({server: data});
 		});
-		
+		events.on('serverDataChanged', function() {
+			self.refs.confirmReload.show();
+		});
 	},
 	checkServerChanged: function(data) {
 		data.mac = data.mac || '';
