@@ -29,7 +29,7 @@ function createCgi(url, settings) {
 			if (mode == 'cancel') {
 				jqXhr.abort();
 			} else if (mode == 'chain') {
-				queue.push([data, callback, options]);
+				return queue.push([data, callback, options]);
 			}
 		}
 		
