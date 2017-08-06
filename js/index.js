@@ -288,6 +288,7 @@ var Index = React.createClass({
 		var preventDefault = function(e) {
 		  e.preventDefault();
 		};
+		this.setFilterTextState();
 		setInterval(this.setFilterTextState, 5000);
 		$(document)
   		.on( 'dragleave', preventDefault)

@@ -99,10 +99,10 @@ function parseFilterText() {
 			var name = FILTER_TYPES[RegExp.$1];
 			line = line.substring(2);
 			if (line) {
-				result[name] = result[name] ? result[name] + ' ' + line : line;
+				result[name] = result[name] ? result[name] + '\n' + line : line;
 			}
-		} else {
-			result.url = result.url ? result.url + ' ' + line : line;
+		} else if (line) {
+			result.url = result.url ? result.url + '\n' + line : line;
 		}
 	});
 	return result;
@@ -253,18 +253,26 @@ function checkFiled(keyword, text) {
 		return false;
 	}
 	keyword = toLowerCase(keyword);
-	keyword = keyword.split(/\s+/g);
+	keyword = keyword.split(/\n/g);
 	text = toLowerCase(text);
-	if (keyword[0] && text.indexOf(keyword[0]) === -1) {
-		return false;
-	}
-	if (keyword[1] && text.indexOf(keyword[1]) === -1) {
-		return false;
-	}
-	if (keyword[2] && text.indexOf(keyword[2]) === -1) {
-		return false;
-	}
-	return true;
+	var check = function(kw) {
+		if (!kw) {
+			return false;
+		}
+		kw = kw.split(/\s+/g);
+		if (kw[0] && text.indexOf(kw[0]) === -1) {
+			return false;
+		}
+		if (kw[1] && text.indexOf(kw[1]) === -1) {
+			return false;
+		}
+		if (kw[2] && text.indexOf(kw[2]) === -1) {
+			return false;
+		}
+		return true;
+	};
+
+	return check(keyword[0]) || check(keyword[1]) || check(keyword[2]);
 }
 
 function filterData(obj, item) {
