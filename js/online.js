@@ -52,8 +52,8 @@ var Online = React.createClass({
 			this.serverPort = data.port;
 			this.version = data.version;
 			this.baseDir = data.baseDir;
-		} else if (this.macAddr !== data.mac || this.serverPort !== data.port
-		|| this.version !== data.version || this.baseDir !== data.baseDir) {
+		} else if (this.macAddr !== data.mac || this.version !== data.version
+			|| this.baseDir !== data.baseDir) {
 			this.refs.confirmReload.show();
 		} else {
 			this.refs.confirmReload.hide();
