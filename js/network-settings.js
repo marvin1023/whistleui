@@ -70,7 +70,14 @@ var Settings = React.createClass({
   onFilterKeyDown: function(e) {
 		if ((e.ctrlKey || e.metaKey)) {
 			if (e.keyCode == 68) {
-				this.setState({ filterText: '' });
+        if (settings.filterText) {
+          settings.filterText = '';
+          dataCenter.setFilterText(settings);
+          if (typeof this.props.onFilterTextChanged === 'function') {
+            this.props.onFilterTextChanged();
+          }
+        }
+        this.setState({ filterText: '' });
 				e.preventDefault();
 				e.stopPropagation();
 			} else if (e.keyCode == 88) {
