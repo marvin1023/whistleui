@@ -54,12 +54,24 @@ var Composer = React.createClass({
 	selectAll: function(e) {
 		e.target.select();
 	},
+	onKeyDown: function(e) {
+		if ((e.ctrlKey || e.metaKey)) {
+			if (e.keyCode == 68) {
+				e.target.value = '';
+				e.preventDefault();
+				e.stopPropagation();
+			} else if (e.keyCode == 88) {
+				e.stopPropagation();
+			}
+		}
+		
+	},
 	render: function() {
 		
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-composer' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<div className="w-composer-url box">
-					<input onFocus={this.selectAll} ref="url" type="text" maxLength="8192" placeholder="url" className="fill w-composer-input" />
+					<input onKeyDown={this.onKeyDown} onFocus={this.selectAll} ref="url" type="text" maxLength="8192" placeholder="url" className="fill w-composer-input" />
 					<select ref="method" className="form-control w-composer-method">
 		          		<option value="GET">GET</option>
 		          		<option value="POST">POST</option>
@@ -81,8 +93,8 @@ var Composer = React.createClass({
 					<button onClick={this.execute} className="btn btn-primary w-composer-execute">Go</button>
 				</div>
 				<Divider vertical="true">
-					<textarea ref="headers" className="fill w-composer-headers" placeholder="headers"></textarea>
-					<textarea ref="body" className="fill w-composer-body" placeholder="body"></textarea>
+					<textarea onKeyDown={this.onKeyDown} ref="headers" className="fill w-composer-headers" placeholder="headers"></textarea>
+					<textarea onKeyDown={this.onKeyDown} ref="body" className="fill w-composer-body" placeholder="body"></textarea>
 				</Divider>
 			</div>
 		);
