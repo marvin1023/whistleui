@@ -118,7 +118,7 @@ var Settings = React.createClass({
           </fieldset>
         </div>
         <div className="modal-footer">
-          <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </Dialog>
     );
