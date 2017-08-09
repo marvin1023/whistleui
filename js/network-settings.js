@@ -70,6 +70,7 @@ var Settings = React.createClass({
   onFilterKeyDown: function(e) {
 		if ((e.ctrlKey || e.metaKey)) {
 			if (e.keyCode == 68) {
+        var settings = this.state;
         if (settings.filterText) {
           settings.filterText = '';
           dataCenter.setFilterText(settings);
