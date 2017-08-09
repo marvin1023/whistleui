@@ -66,6 +66,18 @@ var Settings = React.createClass({
       events.trigger('onColumnsChanged');
     }
     this.setState(settings);
+  },
+  onFilterKeyDown: function(e) {
+		if ((e.ctrlKey || e.metaKey)) {
+			if (e.keyCode == 68) {
+				this.setState({ filterText: '' });
+				e.preventDefault();
+				e.stopPropagation();
+			} else if (e.keyCode == 88) {
+				e.stopPropagation();
+			}
+		}
+		
 	},
   showDialog: function() {
     var settings = this.getNetworkSettings();
@@ -95,7 +107,10 @@ var Settings = React.createClass({
                 <span className="glyphicon glyphicon-question-sign"></span>
               </a>
             </legend>
-            <textarea disabled={state.disabledFilterText} value={state.filterText} data-name="filterText" placeholder="type filter text" maxLength={300} />
+            <textarea disabled={state.disabledFilterText}
+              onKeyDown={this.onFilterKeyDown}
+              value={state.filterText} data-name="filterText"
+              placeholder="type filter text" maxLength={300} />
           </fieldset>
           <fieldset className="network-settings-columns">
             <legend>
