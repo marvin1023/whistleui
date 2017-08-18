@@ -91,9 +91,9 @@ var Index = React.createClass({
 			var selectedName = rules.current;
 			var DEFAULT = 'Default';
 			var selected = !rules.defaultRulesIsDisabled;
-			state.rulesTheme = rules.theme;
-			state.rulesFontSize = rules.fontSize;
-			state.showRulesLineNumbers = rules.showLineNumbers;
+			state.rulesTheme = storage.get('rulesTheme') || rules.theme;
+			state.rulesFontSize = storage.get('rulesFontSize') ||rules.fontSize;
+			state.showRulesLineNumbers = storage.get('showRulesLineNumbers') ||rules.showLineNumbers;
 			rulesList.push(DEFAULT);
 			var item = rulesData.Default = {
 					name: DEFAULT,
@@ -120,9 +120,9 @@ var Index = React.createClass({
 		
 		if (values) {
 			var selectedName = values.current;
-			state.valuesTheme = values.theme;
-			state.valuesFontSize = values.fontSize;
-			state.showValuesLineNumbers = values.showLineNumbers;
+			state.valuesTheme = storage.get('valuesTheme') || values.theme;
+			state.valuesFontSize = storage.get('valuesFontSize') || values.fontSize;
+			state.showValuesLineNumbers = storage.get('showValuesLineNumbers') || values.showLineNumbers;
 			values.list.forEach(function(item) {
 				valuesList.push(item.name);
 				valuesData[item.name] = {
@@ -1348,42 +1348,42 @@ var Index = React.createClass({
 	},
 	onRulesThemeChange: function(e) {
 		var theme = e.target.value;
-		dataCenter.rules.setTheme({theme: theme});
+		storage.set('rulesTheme', them);
 		this.setState({
 			rulesTheme: theme
 		});
 	},
 	onValuesThemeChange: function(e) {
 		var theme = e.target.value;
-		dataCenter.values.setTheme({theme: theme});
+		storage.set('valuesTheme', them);
 		this.setState({
 			valuesTheme: theme
 		});
 	},
 	onRulesFontSizeChange: function(e) {
 		var fontSize = e.target.value;
-		dataCenter.rules.setFontSize({fontSize: fontSize});
+		storage.set('rulesFontSize', fontSize);
 		this.setState({
 			rulesFontSize: fontSize
 		});
 	},
 	onValuesFontSizeChange: function(e) {
 		var fontSize = e.target.value;
-		dataCenter.values.setFontSize({fontSize: fontSize});
+		storage.set('valuesFontSize', fontSize);
 		this.setState({
 			valuesFontSize: fontSize
 		});
 	},
 	onRulesLineNumberChange: function(e) {
 		var checked = e.target.checked;
-		dataCenter.rules.showLineNumbers({showLineNumbers: checked ? 1 : 0});
+		storage.set('showRulesLineNumbers', checked);
 		this.setState({
 			showRulesLineNumbers: checked
 		});
 	},
 	onValuesLineNumberChange: function(e) {
 		var checked = e.target.checked;
-		dataCenter.values.showLineNumbers({showLineNumbers: checked ? 1 : 0});
+		storage.set('showValuesLineNumbers', checked);
 		this.setState({
 			showValuesLineNumbers: checked
 		});
