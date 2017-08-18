@@ -1348,14 +1348,14 @@ var Index = React.createClass({
 	},
 	onRulesThemeChange: function(e) {
 		var theme = e.target.value;
-		storage.set('rulesTheme', them);
+		storage.set('rulesTheme', theme);
 		this.setState({
 			rulesTheme: theme
 		});
 	},
 	onValuesThemeChange: function(e) {
 		var theme = e.target.value;
-		storage.set('valuesTheme', them);
+		storage.set('valuesTheme', theme);
 		this.setState({
 			valuesTheme: theme
 		});
