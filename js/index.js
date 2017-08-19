@@ -92,8 +92,8 @@ var Index = React.createClass({
 			var DEFAULT = 'Default';
 			var selected = !rules.defaultRulesIsDisabled;
 			state.rulesTheme = storage.get('rulesTheme') || rules.theme;
-			state.rulesFontSize = storage.get('rulesFontSize') ||rules.fontSize;
-			state.showRulesLineNumbers = storage.get('showRulesLineNumbers') ||rules.showLineNumbers;
+			state.rulesFontSize = storage.get('rulesFontSize') || rules.fontSize;
+			state.showRulesLineNumbers = storage.get('showRulesLineNumbers') || rules.showLineNumbers;
 			rulesList.push(DEFAULT);
 			var item = rulesData.Default = {
 					name: DEFAULT,
