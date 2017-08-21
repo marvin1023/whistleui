@@ -86,14 +86,27 @@ var Index = React.createClass({
 		var valuesList = [];
 		var valuesOptions = [];
 		var valuesData = {};
-		
+
+		var rulesTheme = storage.get('rulesTheme');
+		var valuesTheme = storage.get('valuesTheme');
+		var rulesFontSize = storage.get('rulesFontSize');
+		var valuesFontSize = storage.get('valuesFontSize');
+		var showRulesLineNumbers = storage.get('showRulesLineNumbers');
+		var showValuesLineNumbers = storage.get('showValuesLineNumbers');
+
 		if (rules) {
 			var selectedName = rules.current;
 			var DEFAULT = 'Default';
 			var selected = !rules.defaultRulesIsDisabled;
-			state.rulesTheme = storage.get('rulesTheme') || rules.theme;
-			state.rulesFontSize = storage.get('rulesFontSize') || rules.fontSize;
-			state.showRulesLineNumbers = storage.get('showRulesLineNumbers') || rules.showLineNumbers;
+			if (!rulesTheme) {
+				rulesTheme = rules.theme;
+			}
+			if (!rulesFontSize) {
+				rulesFontSize = rules.fontSize;
+			}
+			if (!showRulesLineNumbers) {
+				showRulesLineNumbers = rules.showLineNumbers ? 1 : 0;
+			}
 			rulesList.push(DEFAULT);
 			var item = rulesData.Default = {
 					name: DEFAULT,
@@ -120,9 +133,15 @@ var Index = React.createClass({
 		
 		if (values) {
 			var selectedName = values.current;
-			state.valuesTheme = storage.get('valuesTheme') || values.theme;
-			state.valuesFontSize = storage.get('valuesFontSize') || values.fontSize;
-			state.showValuesLineNumbers = storage.get('showValuesLineNumbers') || values.showLineNumbers;
+			if (!valuesTheme) {
+				valuesTheme = values.theme;
+			}
+			if (!valuesFontSize) {
+				valuesFontSize = values.fontSize;
+			}
+			if (!showValuesLineNumbers) {
+				showValuesLineNumbers = values.showLineNumbers ? 1 : 0;
+			}
 			values.list.forEach(function(item) {
 				valuesList.push(item.name);
 				valuesData[item.name] = {
@@ -137,6 +156,12 @@ var Index = React.createClass({
 			});
 		}
 		
+		state.rulesTheme = rulesTheme;
+		state.valuesTheme = valuesTheme;
+		state.rulesFontSize = rulesFontSize;
+		state.valuesFontSize = valuesFontSize;
+		state.showRulesLineNumbers = showRulesLineNumbers == 1;
+		state.showValuesLineNumbers = showValuesLineNumbers == 1;
 		state.plugins = modal.plugins;
 		state.disabledPlugins = modal.disabledPlugins;
 		state.disabledAllRules = modal.disabledAllRules;
@@ -1376,14 +1401,14 @@ var Index = React.createClass({
 	},
 	onRulesLineNumberChange: function(e) {
 		var checked = e.target.checked;
-		storage.set('showRulesLineNumbers', checked);
+		storage.set('showRulesLineNumbers', checked ? 1 : 0);
 		this.setState({
 			showRulesLineNumbers: checked
 		});
 	},
 	onValuesLineNumberChange: function(e) {
 		var checked = e.target.checked;
-		storage.set('showValuesLineNumbers', checked);
+		storage.set('showValuesLineNumbers', checked ? 1 : 0);
 		this.setState({
 			showValuesLineNumbers: checked
 		});
