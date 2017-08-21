@@ -105,7 +105,7 @@ var Index = React.createClass({
 				rulesFontSize = rules.fontSize;
 			}
 			if (!showRulesLineNumbers) {
-				showRulesLineNumbers = rules.showLineNumbers ? 1 : 0;
+				showRulesLineNumbers = rules.showLineNumbers ? 'true' : 'false';
 			}
 			rulesList.push(DEFAULT);
 			var item = rulesData.Default = {
@@ -140,7 +140,7 @@ var Index = React.createClass({
 				valuesFontSize = values.fontSize;
 			}
 			if (!showValuesLineNumbers) {
-				showValuesLineNumbers = values.showLineNumbers ? 1 : 0;
+				showValuesLineNumbers = values.showLineNumbers ? 'true' : 'false';
 			}
 			values.list.forEach(function(item) {
 				valuesList.push(item.name);
@@ -160,8 +160,8 @@ var Index = React.createClass({
 		state.valuesTheme = valuesTheme;
 		state.rulesFontSize = rulesFontSize;
 		state.valuesFontSize = valuesFontSize;
-		state.showRulesLineNumbers = showRulesLineNumbers == 1;
-		state.showValuesLineNumbers = showValuesLineNumbers == 1;
+		state.showRulesLineNumbers = showRulesLineNumbers === 'true';
+		state.showValuesLineNumbers = showValuesLineNumbers === 'true';
 		state.plugins = modal.plugins;
 		state.disabledPlugins = modal.disabledPlugins;
 		state.disabledAllRules = modal.disabledAllRules;
@@ -1401,14 +1401,14 @@ var Index = React.createClass({
 	},
 	onRulesLineNumberChange: function(e) {
 		var checked = e.target.checked;
-		storage.set('showRulesLineNumbers', checked ? 1 : 0);
+		storage.set('showRulesLineNumbers', checked);
 		this.setState({
 			showRulesLineNumbers: checked
 		});
 	},
 	onValuesLineNumberChange: function(e) {
 		var checked = e.target.checked;
-		storage.set('showValuesLineNumbers', checked ? 1 : 0);
+		storage.set('showValuesLineNumbers', checked);
 		this.setState({
 			showValuesLineNumbers: checked
 		});

@@ -7,6 +7,11 @@ function getKey(key) {
 
 exports.set = function(key, value) {
   key = getKey(key);
+  if (value == null) {
+    value = '';
+  } else {
+    value += '';
+  }
   cache[key] = value;
   try {
     localStorage[key] = value;
