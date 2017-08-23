@@ -95,7 +95,7 @@ var Index = React.createClass({
 		var showValuesLineNumbers = storage.get('showValuesLineNumbers');
 
 		if (rules) {
-			var selectedName = rules.current;
+			var selectedName = storage.get('activeRules') || rules.current;
 			var DEFAULT = 'Default';
 			var selected = !rules.defaultRulesIsDisabled;
 			if (!rulesTheme) {
@@ -132,7 +132,7 @@ var Index = React.createClass({
 		}
 		
 		if (values) {
-			var selectedName = values.current;
+			var selectedName = storage.get('activeValues') || values.current;
 			if (!valuesTheme) {
 				valuesTheme = values.theme;
 			}
@@ -1365,13 +1365,13 @@ var Index = React.createClass({
 		this.refs.networkSettings.showDialog();
 	},
 	activeRules: function(item) {
-		dataCenter.rules.setCurrent({name: item.name});
+		storage.set('activeRules', item.name);
 		this.setState({
 			activeRules: item
 		});
 	},
 	activeValues: function(item) {
-		dataCenter.values.setCurrent({name: item.name});
+		storage.set('activeValues', item.name);
 		this.setState({
 			activeValues: item
 		});
