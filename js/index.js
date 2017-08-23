@@ -273,6 +273,11 @@ var Index = React.createClass({
 				name: 'Online',
 				href: 'https://avwo.github.io/whistle/webui/online.html',
 				icon: false,
+			},
+			{
+				name: 'Update',
+				href: 'https://avwo.github.io/whistle/update.html',
+				icon: false,
 			}
 		];
     protocols.setPlugins(state);
