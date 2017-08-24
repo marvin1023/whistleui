@@ -336,7 +336,7 @@ function startLoadData() {
 		}, function (data) {
 			setTimeout(load, 900);
 			updateServerInfo(data);
-			if (!data || data.ec !== 0) {
+			if (!data || data.ec !== 0 || !data.mtime) {
 				return;
 			}
 			if (initialData.clientId !== data.mclient &&
