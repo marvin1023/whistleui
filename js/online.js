@@ -42,11 +42,26 @@ var Online = React.createClass({
 			self.setState({server: data});
 		});
 		dataCenter.on('dataChanged', function() {
-			self.refs.confirmReload.show();
+			self.shouldReloadPage = true;
+			self.showReloadDialog();
 		});
 		events.on('serverDataChanged', function() {
 			self.refs.confirmReload.show();
 		});
+	},
+	showReloadDialog: function() {
+		if (!this.shouldReloadPage) {
+			return;
+		}
+		var name = this.props.name;
+		if (name !== 'rules' && name !== 'values') {
+			return;
+		}
+		this.shouldReloadPage = false;
+		this.refs.confirmReload.show();
+	},
+	componentDidUpdate: function() {
+		this.showReloadDialog();
 	},
 	checkServerChanged: function(data) {
 		data.mac = data.mac || '';
