@@ -8,6 +8,7 @@ var MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
+var dataChangedCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
 var directCallbacks = [];
@@ -16,7 +17,7 @@ var logList = [];
 var svrLogList = [];
 var networkModal = new NetworkModal(dataList);
 var curServerInfo;
-var initialData, startedLoad;
+var initialDataPromise, initialData, startedLoad;
 var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
 var dataIndex = 10000;
@@ -225,18 +226,19 @@ $.extend(exports, createCgi({
 }, POST_CONF));
 
 exports.getInitialData = function (callback) {
-	if (!initialData) {
-		initialData = $.Deferred();
+	if (!initialDataPromise) {
+		initialDataPromise = $.Deferred();
 
 		function load() {
 			cgi.getInitaial(function (data) {
-				data ? initialData.resolve(data) : setTimeout(load, 1000);
+				initialData = data;
+				data ? initialDataPromise.resolve(data) : setTimeout(load, 1000);
 			});
 		}
 		load();
 	}
 
-	initialData.done(callback);
+	initialDataPromise.done(callback);
 };
 
 function checkFiled(keyword, text) {
@@ -336,6 +338,14 @@ function startLoadData() {
 			updateServerInfo(data);
 			if (!data || data.ec !== 0) {
 				return;
+			}
+			if (initialData.clientId !== data.mclient &&
+				(initialData.mclient !== data.mclient || initialData.mtime !== data.mtime)) {
+				initialData.mclient = data.mclient;
+				initialData.mtime = data.mtime;
+				dataChangedCallbacks.forEach(function (cb) {
+					cb(data);
+				});
 			}
 			directCallbacks.forEach(function (cb) {
 				cb(data);
@@ -547,6 +557,10 @@ exports.on = function (type, callback) {
 	} else if (type == 'serverInfo') {
 		if (typeof callback == 'function') {
 			serverInfoCallbacks.push(callback);
+		}
+	} else if (type == 'dataChanged') {
+		if (typeof callback == 'function') {
+			dataChangedCallbacks.push(callback);
 		}
 	} else if (type == 'log') {
 		if (typeof callback == 'function') {

@@ -41,6 +41,9 @@ var Online = React.createClass({
 			data && self.checkServerChanged(data);
 			self.setState({server: data});
 		});
+		dataCenter.on('dataChanged', function() {
+			self.refs.confirmReload.show();
+		});
 		events.on('serverDataChanged', function() {
 			self.refs.confirmReload.show();
 		});
