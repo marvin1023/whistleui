@@ -27,7 +27,8 @@ var DEFAULT_CONF = {
 	timeout: TIMEOUT,
 	xhrFields: {
 		withCredentials: true
-	}
+	},
+	data: {}
 };
 
 function setFilterText(settings) {
@@ -232,6 +233,7 @@ exports.getInitialData = function (callback) {
 		function load() {
 			cgi.getInitaial(function (data) {
 				initialData = data;
+				DEFAULT_CONF.data.clientId = data.clientId;
 				data ? initialDataPromise.resolve(data) : setTimeout(load, 1000);
 			});
 		}

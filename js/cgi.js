@@ -20,7 +20,7 @@ function createCgi(url, settings) {
 			opts.data = data;
 		}
 		
-		options = $.extend({}, settings, options, opts);
+		options = $.extend(true, {}, settings, options, opts);
 		if (jqXhr) {
 			var mode = options.mode;
 			if (mode == 'ignore') {
