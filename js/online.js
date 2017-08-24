@@ -46,6 +46,7 @@ var Online = React.createClass({
 			self.showReloadDialog();
 		});
 		events.on('serverDataChanged', function() {
+			self.initConfigChanged = false;
 			self.refs.confirmReload.show();
 		});
 	},
@@ -58,6 +59,7 @@ var Online = React.createClass({
 			return;
 		}
 		this.shouldReloadPage = false;
+		this.initConfigChanged = false;
 		this.refs.confirmReload.show();
 	},
 	componentDidUpdate: function() {
@@ -72,8 +74,9 @@ var Online = React.createClass({
 			this.baseDir = data.baseDir;
 		} else if (this.macAddr !== data.mac || this.version !== data.version
 			|| this.baseDir !== data.baseDir) {
+			this.initConfigChanged = true;
 			this.refs.confirmReload.show();
-		} else {
+		} else if (this.initConfigChanged) {
 			this.refs.confirmReload.hide();
 		}
 	},
