@@ -31,6 +31,9 @@ var Dialog = React.createClass({
 		document.body.removeChild(this.container[0]);
 	},
 	show: function() {
+		if (this.container.is(':visible')) {
+			return;
+		}
 		this.container.modal('show');
 	},
 	hide: function() {
