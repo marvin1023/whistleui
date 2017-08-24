@@ -1309,11 +1309,11 @@ var Index = React.createClass({
 		}
 	},
 	setRulesActive: function(name) {
-		dataCenter.rules.setCurrent({name: name});
+		storage.set('activeRules', name);
 		this.state.rules.setActive(name);
 	},
 	setValuesActive: function(name) {
-		dataCenter.values.setCurrent({name: name});
+		storage.set('activeValues', name);
 		this.state.values.setActive(name);
 	},
 	showRulesSettings: function() {

@@ -177,8 +177,7 @@ exports.values = createCgi({
 	},
 	add: 'cgi-bin/values/add',
 	remove: 'cgi-bin/values/remove',
-	rename: 'cgi-bin/values/rename',
-	setCurrent: 'cgi-bin/values/set-current'
+	rename: 'cgi-bin/values/rename'
 }, POST_CONF);
 
 exports.plugins = createCgi({
@@ -206,7 +205,6 @@ exports.rules = createCgi({
 	remove: 'cgi-bin/rules/remove',
 	rename: 'cgi-bin/rules/rename',
 	select: 'cgi-bin/rules/select',
-	setCurrent: 'cgi-bin/rules/set-current',
 	unselect: 'cgi-bin/rules/unselect',
 	allowMultipleChoice: 'cgi-bin/rules/allow-multiple-choice',
 	syncWithSysHosts: 'cgi-bin/rules/sync-with-sys-hosts',
