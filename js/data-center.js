@@ -3,13 +3,12 @@ var createCgi = require('./cgi');
 var util = require('./util');
 var NetworkModal = require('./network-modal');
 var storage = require('./storage');
+var events = require('./events');
 
 var MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
-var rulesChangedCallbacks = [];
-var valuesChangedCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
 var directCallbacks = [];
@@ -317,17 +316,13 @@ function checkDataChanged(data, mclientName, mtimeName) {
 
 function emitRulesChanged(data) {
 	if (checkDataChanged(data, 'mrulesClientId', 'mrulesTime')) {
-		rulesChangedCallbacks.forEach(function (cb) {
-			cb(data);
-		});
+		events.trigger('rulesChanged');
 	}
 }
 
 function emitValuesChanged(data) {
 	if (checkDataChanged(data, 'mvaluesClientId', 'mvaluesTime')) {
-		valuesChangedCallbacks.forEach(function (cb) {
-			cb(data);
-		});
+		events.trigger('valuesChanged');
 	}
 }
 
@@ -583,14 +578,6 @@ exports.on = function (type, callback) {
 	} else if (type == 'serverInfo') {
 		if (typeof callback == 'function') {
 			serverInfoCallbacks.push(callback);
-		}
-	} else if (type == 'dataChanged') {
-		if (typeof callback == 'function') {
-			rulesChangedCallbacks.push(callback);
-		}
-	} else if (type == 'dataChanged') {
-		if (typeof callback == 'function') {
-			valuesChangedCallbacks.push(callback);
 		}
 	} else if (type == 'log') {
 		if (typeof callback == 'function') {

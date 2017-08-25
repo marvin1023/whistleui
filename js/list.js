@@ -202,7 +202,7 @@ var List = React.createClass({
 						return;
 					}
 					if (data.ec === 2) {
-						events.trigger(name + 'DataChanged');
+						events.trigger(name + 'Changed');
 					}
 				});
 				this.setState({});
