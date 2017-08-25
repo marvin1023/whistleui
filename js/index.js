@@ -314,12 +314,19 @@ var Index = React.createClass({
 			}
 		}
 	},
+	showReloadRules: function() {
+		this.refs.confirmReload.show();
+	},
+	showReloadValues: function() {
+		this.refs.confirmReload.show();
+	},
 	componentDidMount: function() {
 		var self = this;
 		var preventDefault = function(e) {
 		  e.preventDefault();
 		};
-
+		events.on('rulesChanged', this.showReloadRules);
+		events.on('valuesChanged', this.showReloadValues);
 		this.setFilterTextState();
 		setInterval(this.setFilterTextState, 5000);
 		$(document)

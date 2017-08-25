@@ -127,7 +127,7 @@ var Online = React.createClass({
 								<span aria-hidden="true">&times;</span>
 							</button>
 							The proxy has been modified.
-							<br/>Do you want to reload it.
+							<br/>Do you want to reload page.
 						</div>
 						<div className="modal-footer">
 							<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>

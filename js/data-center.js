@@ -300,17 +300,17 @@ function filterData(obj, item) {
 }
 
 function checkDataChanged(data, mclientName, mtimeName) {
-	if (!data['mtimeName'] || initialData.clientId === data[mclientName]) {
+	if (!data[mtimeName] || initialData.clientId === data[mclientName]) {
 		return false;
 	}
 	
 	var mclient = data[mclientName];
 	var mtime = data[mtimeName];
-	if (initialData.mclient === mclient && initialData.mtime === mtime) {
+	if (initialData[mclientName] === mclient && initialData[mtimeName] === mtime) {
 		return false;
 	}
-	initialData.mclient = mclient;
-	initialData.mtime = mtime;
+	initialData[mclientName] = mclient;
+	initialData[mtimeName] = mtime;
 	return true;
 }
 
