@@ -18,10 +18,10 @@ exports.set = function(key, value) {
   } catch(e) {}
 }
 
-exports.get = function(key) {
+exports.get = function(key, noCache) {
   key = getKey(key);
   try {
-    return cache[key] || localStorage[key];
+    return noCache ? localStorage[key] : (cache[key] || localStorage[key]);
   } catch(e) {}
   return cache[key];
 };

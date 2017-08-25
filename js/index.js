@@ -325,7 +325,7 @@ var Index = React.createClass({
 				return;
 			}
 			if (isRules) {
-				var selectedName = storage.get('activeRules') || rules.current;
+				var selectedName = storage.get('activeRules', true) || rules.current;
 				var rulesList = [];
 				var rulesData = {};
 				rulesList.push(DEFAULT);
@@ -349,7 +349,7 @@ var Index = React.createClass({
 				self.state.rules.reset(rulesList, rulesData)
 				self.setState({});
 			} else {
-				var selectedName = storage.get('activeValues') || data.current;
+				var selectedName = storage.get('activeValues', true) || data.current;
 				var valuesList = [];
 				var valuesData = {};
 				data.list.forEach(function(item) {
