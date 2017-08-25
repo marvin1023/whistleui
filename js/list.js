@@ -192,7 +192,8 @@ var List = React.createClass({
 			var fromName = getName(e.dataTransfer.getData('-' + NAME_PREFIX));
 			info.target.style.background = '';
 			if (this.props.modal.moveTo(fromName, info.toName)) {
-				dataCenter[this.props.name === 'rules' ? 'rules' : 'values'].moveTo({
+				var name = this.props.name === 'rules' ? 'rules' : 'values';
+				dataCenter[name].moveTo({
 					from: fromName,
 					to: info.toName
 				}, function(data) {
@@ -201,7 +202,7 @@ var List = React.createClass({
 						return;
 					}
 					if (data.ec === 2) {
-						events.trigger('serverDataChanged');
+						events.trigger(name + 'DataChanged');
 					}
 				});
 				this.setState({});

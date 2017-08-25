@@ -8,7 +8,8 @@ var MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
-var dataChangedCallbacks = [];
+var rulesChangedCallbacks = [];
+var valuesChangedCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
 var directCallbacks = [];
@@ -299,6 +300,37 @@ function filterData(obj, item) {
 	return true;
 }
 
+function checkDataChanged(data, mclientName, mtimeName) {
+	if (!data['mtimeName'] || initialData.clientId === data[mclientName]) {
+		return false;
+	}
+	
+	var mclient = data[mclientName];
+	var mtime = data[mtimeName];
+	if (initialData.mclient === mclient && initialData.mtime === mtime) {
+		return false;
+	}
+	initialData.mclient = mclient;
+	initialData.mtime = mtime;
+	return true;
+}
+
+function emitRulesChanged(data) {
+	if (checkDataChanged(data, 'mrulesClientId', 'mrulesTime')) {
+		rulesChangedCallbacks.forEach(function (cb) {
+			cb(data);
+		});
+	}
+}
+
+function emitValuesChanged(data) {
+	if (checkDataChanged(data, 'mvaluesClientId', 'mvaluesTime')) {
+		valuesChangedCallbacks.forEach(function (cb) {
+			cb(data);
+		});
+	}
+}
+
 function startLoadData() {
 	if (startedLoad) {
 		return;
@@ -336,17 +368,11 @@ function startLoadData() {
 		}, function (data) {
 			setTimeout(load, 900);
 			updateServerInfo(data);
-			if (!data || data.ec !== 0 || !data.mtime) {
+			if (!data || data.ec !== 0) {
 				return;
 			}
-			if (initialData.clientId !== data.mclient &&
-				(initialData.mclient !== data.mclient || initialData.mtime !== data.mtime)) {
-				initialData.mclient = data.mclient;
-				initialData.mtime = data.mtime;
-				dataChangedCallbacks.forEach(function (cb) {
-					cb(data);
-				});
-			}
+			emitRulesChanged(data);
+			emitValuesChanged(data);
 			directCallbacks.forEach(function (cb) {
 				cb(data);
 			});
@@ -560,7 +586,11 @@ exports.on = function (type, callback) {
 		}
 	} else if (type == 'dataChanged') {
 		if (typeof callback == 'function') {
-			dataChangedCallbacks.push(callback);
+			rulesChangedCallbacks.push(callback);
+		}
+	} else if (type == 'dataChanged') {
+		if (typeof callback == 'function') {
+			valuesChangedCallbacks.push(callback);
 		}
 	} else if (type == 'log') {
 		if (typeof callback == 'function') {

@@ -41,29 +41,6 @@ var Online = React.createClass({
 			data && self.checkServerChanged(data);
 			self.setState({server: data});
 		});
-		dataCenter.on('dataChanged', function() {
-			self.shouldReloadPage = true;
-			self.showReloadDialog();
-		});
-		events.on('serverDataChanged', function() {
-			self.initConfigChanged = false;
-			self.refs.confirmReload.show();
-		});
-	},
-	showReloadDialog: function() {
-		if (!this.shouldReloadPage) {
-			return;
-		}
-		var name = this.props.name;
-		if (name !== 'rules' && name !== 'values') {
-			return;
-		}
-		this.shouldReloadPage = false;
-		this.initConfigChanged = false;
-		this.refs.confirmReload.show();
-	},
-	componentDidUpdate: function() {
-		this.showReloadDialog();
 	},
 	checkServerChanged: function(data) {
 		data.mac = data.mac || '';
@@ -74,9 +51,8 @@ var Online = React.createClass({
 			this.baseDir = data.baseDir;
 		} else if (this.macAddr !== data.mac || this.version !== data.version
 			|| this.baseDir !== data.baseDir) {
-			this.initConfigChanged = true;
 			this.refs.confirmReload.show();
-		} else if (this.initConfigChanged) {
+		} else {
 			this.refs.confirmReload.hide();
 		}
 	},
