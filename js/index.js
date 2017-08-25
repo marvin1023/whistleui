@@ -315,10 +315,19 @@ var Index = React.createClass({
 		}
 	},
 	showReloadRules: function() {
-		this.refs.confirmReload.show();
+		this.showReloadDialog('The rules has been modified.<br/>Do you want to reload it.', true);
 	},
 	showReloadValues: function() {
-		this.refs.confirmReload.show();
+		this.showReloadDialog('The values has been modified.<br/>Do you want to reload it.');
+	},
+	showReloadDialog: function(msg, existsUnsaved) {
+		var confirmReload = this.refs.confirmReload;
+		confirmReload.show();
+		var dialog = $(ReactDOM.findDOMNode(confirmReload));
+		if (existsUnsaved) {
+			msg += '<p class="w-confim-reload-note">Note: There are unsaved changes.</p>';
+		}
+		$('.w-reload-data-tips').html(msg).attr('data-name', this.state.name);
 	},
 	componentDidMount: function() {
 		var self = this;
@@ -1794,13 +1803,11 @@ var Index = React.createClass({
 					<button type="button" className="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					The data has been modified.
-					<br/>Do you want to reload it.
-					<p ref="unsavedChangesTips" className="w-confim-reload-note">(Note: There are unsaved changes.)</p>
+					<div className="w-reload-data-tips"></div>
 				</div>
 				<div className="modal-footer">
-					<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" className="btn btn-primary" onClick={this.reloadData}>Confirm</button>
+					<button type="button" className="btn btn-default" data-dismiss="modal">No</button>
+					<button type="button" className="btn btn-primary" onClick={this.reloadData}>Yes</button>
 				</div>
 			</Dialog>
 			<form ref="exportSessionsForm" action="cgi-bin/sessions/export" style={{display: 'none'}}
