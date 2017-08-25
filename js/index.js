@@ -16,6 +16,7 @@ var util = require('./util');
 var protocols = require('./protocols');
 var events = require('./events');
 var storage = require('./storage');
+var Dialog = require('./dialog');
 
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
@@ -318,6 +319,7 @@ var Index = React.createClass({
 		var preventDefault = function(e) {
 		  e.preventDefault();
 		};
+
 		this.setFilterTextState();
 		setInterval(this.setFilterTextState, 5000);
 		$(document)
@@ -1780,6 +1782,20 @@ var Index = React.createClass({
 				    </div>
 				</div>
 			</div>
+			<Dialog ref="confirmReload" wstyle="w-confirm-reload-dialog">
+				<div className="modal-body w-confirm-reload">
+					<button type="button" className="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					The data has been modified.
+					<br/>Do you want to reload it.
+					<p ref="unsavedChangesTips" className="w-confim-reload-note">(Note: There are unsaved changes.)</p>
+				</div>
+				<div className="modal-footer">
+					<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" className="btn btn-primary" onClick={this.reloadData}>Confirm</button>
+				</div>
+			</Dialog>
 			<form ref="exportSessionsForm" action="cgi-bin/sessions/export" style={{display: 'none'}}
 			  method="post" enctype="multipart/form-data" target="_blank">
 			  <input ref="exportFileType" name="exportFileType" type="hidden" />
