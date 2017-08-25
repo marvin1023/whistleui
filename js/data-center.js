@@ -171,7 +171,7 @@ exports.values = createCgi({
 		mode: 'chain',
 		url: 'cgi-bin/values/move-to'
 	},
-	get: {
+	list: {
 		type: 'get',
 		url: 'cgi-bin/values/list'
 	},
@@ -195,9 +195,9 @@ exports.rules = createCgi({
 		mode: 'chain',
 		url: 'cgi-bin/rules/move-to'
 	},
-	get: {
+	list: {
 		type: 'get',
-		get: 'cgi-bin/rules/list'
+		url: 'cgi-bin/rules/list'
 	},
 	add: 'cgi-bin/rules/add',
 	disableDefault: 'cgi-bin/rules/disable-default',

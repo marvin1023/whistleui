@@ -18,6 +18,7 @@ var events = require('./events');
 var storage = require('./storage');
 var Dialog = require('./dialog');
 
+var DEFAULT = 'Default';
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
 var OPTIONS_WITH_SELECTED = ['removeSelected', 'exportWhistleFile', 'exportSazFile'];
@@ -97,7 +98,6 @@ var Index = React.createClass({
 
 		if (rules) {
 			var selectedName = storage.get('activeRules') || rules.current;
-			var DEFAULT = 'Default';
 			var selected = !rules.defaultRulesIsDisabled;
 			if (!rulesTheme) {
 				rulesTheme = rules.theme;
@@ -315,12 +315,59 @@ var Index = React.createClass({
 		}
 	},
 	reloadData: function() {
+		var self = this;
 		var dialog = $('.w-reload-data-tips').closest('.w-confirm-reload-dialog');
 		var name = dialog.find('.w-reload-data-tips').attr('data-name');
-		if (name === 'rules') {
-
+		var isRules = name === 'rules';
+		var handleResponse = function(data) {
+			if (!data) {
+				util.showSystemError();
+				return;
+			}
+			if (isRules) {
+				var selectedName = storage.get('activeRules') || rules.current;
+				var rulesList = [];
+				var rulesData = {};
+				rulesList.push(DEFAULT);
+				rulesData.Default = {
+						name: DEFAULT,
+						fixed: true,
+						value: data.defaultRules,
+						selected: !data.defaultRulesIsDisabled,
+						isDefault: true,
+						active: selectedName === DEFAULT
+				};
+				data.list.forEach(function(item) {
+					rulesList.push(item.name);
+					item = rulesData[item.name] = {
+						name: item.name,
+						value: item.data,
+						selected: item.selected,
+						active: selectedName === item.name
+					};
+				});
+				self.state.rules.reset(rulesList, rulesData)
+				self.setState({});
+			} else {
+				var selectedName = storage.get('activeValues') || data.current;
+				var valuesList = [];
+				var valuesData = {};
+				data.list.forEach(function(item) {
+					valuesList.push(item.name);
+					valuesData[item.name] = {
+						name: item.name,
+						value: item.data,
+						active: selectedName === item.name
+					};
+				});
+				self.state.values.reset(valuesList, valuesData)
+				self.setState({});
+			}
+		};
+		if (isRules) {
+			dataCenter.rules.list(handleResponse);
 		} else {
-
+			dataCenter.values.list(handleResponse);
 		}
 	},
 	showReloadRules: function() {
@@ -1834,7 +1881,7 @@ var Index = React.createClass({
 				</div>
 				<div className="modal-footer">
 					<button type="button" className="btn btn-default" data-dismiss="modal">No</button>
-					<button type="button" className="btn btn-primary" onClick={this.reloadData}>Yes</button>
+					<button type="button" className="btn btn-primary" onClick={this.reloadData}  data-dismiss="modal">Yes</button>
 				</div>
 			</Dialog>
 			<form ref="exportSessionsForm" action="cgi-bin/sessions/export" style={{display: 'none'}}

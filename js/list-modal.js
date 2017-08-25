@@ -2,6 +2,12 @@ var $ = require('jquery');
 var util = require('./util');
 
 function ListModal(list, data) {
+	this.reset(list, data, true);
+}
+
+var proto = ListModal.prototype;
+
+proto.reset = function(list, data, init) {
 	var self = this;
 	self.list = Array.isArray(list) ? list : [];
 	data = data || {};
@@ -11,9 +17,10 @@ function ListModal(list, data) {
 		item.key = item.key || util.getKey();
 		item.name = name;
 	});
-}
-
-var proto = ListModal.prototype;
+	if (!init) {
+		self.filter();
+	}
+};
 
 proto._getList = function(prop) {
 	var list = [];
