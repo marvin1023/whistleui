@@ -314,11 +314,32 @@ var Index = React.createClass({
 			}
 		}
 	},
+	reloadData: function() {
+		var dialog = $('.w-reload-data-tips').closest('.w-confirm-reload-dialog');
+		var name = dialog.find('.w-reload-data-tips').attr('data-name');
+		if (name === 'rules') {
+
+		} else {
+
+		}
+	},
 	showReloadRules: function() {
-		this.showReloadDialog('The rules has been modified.<br/>Do you want to reload it.', true);
+		if (this.state.name === 'rules' && this.rulesChanged) {
+			this.rulesChanged = false;
+			var hasChanged = this.state.rules.hasChanged();
+			this.showReloadDialog('The rules has been modified.<br/>Do you want to reload it.', hasChanged);
+		}
 	},
 	showReloadValues: function() {
-		this.showReloadDialog('The values has been modified.<br/>Do you want to reload it.');
+		if (this.state.name === 'values' && this.valuesChanged) {
+			this.valuesChanged = false;
+			var hasChanged = this.state.values.hasChanged();
+			this.showReloadDialog('The values has been modified.<br/>Do you want to reload it.', hasChanged);
+		}
+	},
+	componentDidUpdate: function() {
+		this.showReloadRules();
+		this.showReloadValues();
 	},
 	showReloadDialog: function(msg, existsUnsaved) {
 		var confirmReload = this.refs.confirmReload;
@@ -334,8 +355,14 @@ var Index = React.createClass({
 		var preventDefault = function(e) {
 		  e.preventDefault();
 		};
-		events.on('rulesChanged', this.showReloadRules);
-		events.on('valuesChanged', this.showReloadValues);
+		events.on('rulesChanged', function() {
+			self.rulesChanged = true;
+			self.showReloadRules();
+		});
+		events.on('valuesChanged', function() {
+			self.valuesChanged = true;
+			self.showReloadValues();
+		});
 		this.setFilterTextState();
 		setInterval(this.setFilterTextState, 5000);
 		$(document)

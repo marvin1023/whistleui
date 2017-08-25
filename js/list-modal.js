@@ -28,6 +28,14 @@ proto._getList = function(prop) {
 	return list;
 };
 
+proto.hasChanged = function() {
+	var data = this.data;
+	return Object.keys(data).some(function(name) {
+		var item = data[name];
+		return item && item.changed;
+	});
+};
+
 proto._setBoolProp = function(name, prop, bool) {
 	var item = this.get(name);
 	if (item) {
