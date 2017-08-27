@@ -5,8 +5,7 @@ var ImageView = React.createClass({
   render: function() {
     var props = this.props;
     return (
-      <div className={'fill orient-vertical-box w-image-view' + (props.hide ? ' hide' : '')}>
-        <i className="fill" />
+      <div className={'fill w-image-view' + (props.hide ? ' hide' : '')}>
         <img src={props.imgSrc} />
       </div>
     );

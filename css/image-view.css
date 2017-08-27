@@ -2,14 +2,8 @@
   font-size: 0;
   white-space: nowrap;
   overflow: auto;
-}
-.w-image-view i {
-  display: block;
-  width: 0;
+  text-align: center;
 }
 .w-image-view img {
   max-width: 100%;
-}
-.w-image-view i, .w-image-view img {
-  vertical-align: middle;
 }
