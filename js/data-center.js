@@ -455,6 +455,8 @@ function setReqData(item) {
 	var res = item.res;
 	item.hostIp = res.ip || defaultValue;
 	item.clientIp = item.req.ip || '127.0.0.1';
+	item.clientPort = item.req.port;
+	item.serverPort = item.res.port;
 	item.body = res.size == null ? defaultValue : res.size;
 	var result = res.statusCode == null ? defaultValue : res.statusCode;
 	item.result = /^[1-9]/.test(result) && parseInt(result, 10) || result;

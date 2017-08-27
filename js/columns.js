@@ -37,6 +37,16 @@ function getDefaultColumns() {
       selected: true
     },
     {
+      title: 'ClientPort',
+      name: 'clientPort',
+      className: 'clientPort'
+    },
+    {
+      title: 'ServerPort',
+      name: 'serverPort',
+      className: 'serverPort'
+    },
+    {
       title: 'Host',
       name: 'hostname',
       className: 'hostname',
