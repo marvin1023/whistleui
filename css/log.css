@@ -24,4 +24,5 @@
 .w-detail-log-bar a:hover {color: #337ab7;}
 
 .w-detail-page-log, .w-detail-svr-log {overflow: auto;}
-.w-detail-svr-log {background: #002240;}
+.w-detail-svr-log .w-detail-log-content {background: #002240;}
+.w-detail-log-content { overflow: auto; }

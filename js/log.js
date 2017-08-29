@@ -6,6 +6,8 @@ var ReactDOM = require('react-dom');
 var BtnGroup = require('./btn-group');
 var util = require('./util');
 var dataCenter = require('./data-center');
+var FilterInput = require('./filter-input');
+
 var BTNS = [{
 	name: 'Console',
 	icon: 'file',
@@ -14,6 +16,13 @@ var BTNS = [{
 	name: 'Server',
 	icon: 'exclamation-sign'
 }];
+
+function checkLogText(text, keyword) {
+	if (keyword && typeof text === 'string' && text.indexOf(keyword) === -1) {
+		return ' hide';
+	}
+	return '';
+}
 
 var Log = React.createClass({
 	componentDidMount: function() {
@@ -119,12 +128,24 @@ var Log = React.createClass({
 	isPageLog: function() {
 		return BTNS[0].active;
 	},
+	onConsoleFilterChange: function(keyword) {
+		this.setState({
+			consoleFilterText: keyword.trim()
+		});
+	},
+	onServerFilterChange: function(keyword) {
+		this.setState({
+			serverFilterText: keyword.trim()
+		});
+	},
 	render: function() {
 		var state = this.state || {};
 		var logs = state.logs || [];
 		var svrLogs = state.svrLogs || [];
 		var isPageLog = this.isPageLog();
 		var hasLogs = isPageLog ? logs.length : svrLogs.length;
+		var consoleFilterText = state.consoleFilterText;
+		var serverFilterText = state.serverFilterText;
 		
 		return (
 				<div className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
@@ -133,33 +154,39 @@ var Log = React.createClass({
 						<a className="w-clear-log" href="javascript:;" draggable="false" onClick={this.clearLogs}>Clear</a>
 					</div>
 					<BtnGroup onClick={this.toggleTabs}  onDoubleClick={this.clearLogs} btns={BTNS} />
-					<div ref="container" className={'fill orient-vertical-box w-detail-page-log' + (isPageLog ? '' : ' hide')}>
-						<ul ref="content">
-							{logs.map(function(log) {
-								
-								return (
-									<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level}>
-										<pre>
-											{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
-										</pre>
-									</li>		
-								);
-							})}
-						</ul>
+					<div className={'fill orient-vertical-box w-detail-page-log' + (isPageLog ? '' : ' hide')}>
+						<div ref="container" className="fill w-detail-log-content">
+							<ul ref="content">
+								{logs.map(function(log) {
+									var hide = checkLogText(log.text, consoleFilterText);
+									return (
+										<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level + hide}>
+											<pre>
+												{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
+											</pre>
+										</li>		
+									);
+								})}
+							</ul>
+						</div>
+						<FilterInput onChange={this.onConsoleFilterChange} />
 					</div>
-					<div ref="svrContainer" className={'fill orient-vertical-box w-detail-svr-log' + (!this.isPageLog() ? '' : ' hide')}>
-						<ul ref="svrContent">
-							{svrLogs.map(function(log) {
-								
-								return (
-									<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level}>
-										<pre>
-											{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
-										</pre>
-									</li>		
-								);
-							})}
-						</ul>
+					<div className={'fill orient-vertical-box w-detail-svr-log' + (!isPageLog ? '' : ' hide')}>
+						<div ref="svrContainer" className="fill w-detail-log-content">
+							<ul ref="svrContent">
+								{svrLogs.map(function(log) {
+									var hide = checkLogText(log.text, serverFilterText);
+									return (
+										<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level + hide}>
+											<pre>
+												{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
+											</pre>
+										</li>		
+									);
+								})}
+							</ul>
+						</div>
+						<FilterInput onChange={this.onServerFilterChange} />
 					</div>
 			</div>
 		);
