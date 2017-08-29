@@ -158,11 +158,12 @@ var Log = React.createClass({
 						<div ref="container" className="fill w-detail-log-content">
 							<ul ref="content">
 								{logs.map(function(log) {
-									var hide = checkLogText(log.text, consoleFilterText);
+									var text = 'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text;
+									var hide = checkLogText(text, consoleFilterText);
 									return (
 										<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level + hide}>
 											<pre>
-												{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
+												{text}
 											</pre>
 										</li>		
 									);
@@ -175,11 +176,12 @@ var Log = React.createClass({
 						<div ref="svrContainer" className="fill w-detail-log-content">
 							<ul ref="svrContent">
 								{svrLogs.map(function(log) {
-									var hide = checkLogText(log.text, serverFilterText);
+									var text = 'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text;
+									var hide = checkLogText(text, serverFilterText);
 									return (
 										<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level + hide}>
 											<pre>
-												{'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text}
+												{text}
 											</pre>
 										</li>		
 									);
