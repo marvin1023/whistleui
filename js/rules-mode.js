@@ -66,7 +66,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRulesFile(str) {
-			  return /^rules?File:\/\//.test(str);
+			  return /^rules?(?:File|Script):\/\//.test(str);
 			}
 			
 			function isDisable(str) {
