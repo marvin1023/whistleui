@@ -17,9 +17,35 @@ var BTNS = [{
 	icon: 'exclamation-sign'
 }];
 
+function parseKeyword(keyword) {
+	keyword = keyword.trim().toLowerCase().split(/\s+/g);
+	var result = {};
+	var index = 0;
+	for (var i = 0; i <= 3; i++) {
+		var key = keyword[i];
+		if (key && key.indexOf('level:') === 0) {
+			result.level = key.substring(6)
+		} else if (index < 3) {
+			++index;
+			result['key' + index] = key;
+		}
+	}
+	return result;
+}
+
 function checkLogText(text, keyword) {
-	if (keyword && typeof text === 'string' && text.toLowerCase().indexOf(keyword) === -1) {
-		return ' hide';
+	if (!keyword.key1) {
+		return '';
+	}
+	text = text.toLowerCase();
+	if (text.indexOf(keyword.key1) === -1) {
+		return ' hide'; 
+	}
+	if (keyword.key2 && text.indexOf(keyword.key2) === -1) {
+		return ' hide'; 
+	}
+	if (keyword.key3 && text.indexOf(keyword.key3) === -1) {
+		return ' hide'; 
 	}
 	return '';
 }
@@ -130,12 +156,12 @@ var Log = React.createClass({
 	},
 	onConsoleFilterChange: function(keyword) {
 		this.setState({
-			consoleFilterText: keyword.toLowerCase().trim()
+			consoleKeyword: parseKeyword(keyword)
 		});
 	},
 	onServerFilterChange: function(keyword) {
 		this.setState({
-			serverFilterText: keyword.toLowerCase().trim()
+			serverKeyword: parseKeyword(keyword)
 		});
 	},
 	render: function() {
@@ -144,8 +170,8 @@ var Log = React.createClass({
 		var svrLogs = state.svrLogs || [];
 		var isPageLog = this.isPageLog();
 		var hasLogs = isPageLog ? logs.length : svrLogs.length;
-		var consoleFilterText = state.consoleFilterText;
-		var serverFilterText = state.serverFilterText;
+		var consoleKeyword = state.consoleKeyword;
+		var serverKeyword = state.serverKeyword;
 		
 		return (
 				<div className={'fill orient-vertical-box w-detail-log' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
@@ -159,7 +185,15 @@ var Log = React.createClass({
 							<ul ref="content">
 								{logs.map(function(log) {
 									var text = 'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text;
-									var hide = checkLogText(text, consoleFilterText);
+									var hide = '';
+									if (consoleKeyword) {
+										var level = consoleKeyword.level;
+										if (level && log.level !== level) {
+											hide = ' hide';
+										} else {
+											hide = checkLogText(text, consoleKeyword);
+										}
+									}
 									return (
 										<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level + hide}>
 											<pre>
@@ -177,7 +211,15 @@ var Log = React.createClass({
 							<ul ref="svrContent">
 								{svrLogs.map(function(log) {
 									var text = 'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text;
-									var hide = checkLogText(text, serverFilterText);
+									var hide = '';
+									if (serverKeyword) {
+										var level = serverKeyword.level;
+										if (level && log.level !== level) {
+											hide = ' hide';
+										} else {
+											hide = checkLogText(text, serverKeyword);
+										}
+									}
 									return (
 										<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level + hide}>
 											<pre>
