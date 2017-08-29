@@ -18,7 +18,7 @@ var BTNS = [{
 }];
 
 function checkLogText(text, keyword) {
-	if (keyword && typeof text === 'string' && text.indexOf(keyword) === -1) {
+	if (keyword && typeof text === 'string' && text.toLowerCase().indexOf(keyword) === -1) {
 		return ' hide';
 	}
 	return '';
@@ -130,12 +130,12 @@ var Log = React.createClass({
 	},
 	onConsoleFilterChange: function(keyword) {
 		this.setState({
-			consoleFilterText: keyword.trim()
+			consoleFilterText: keyword.toLowerCase().trim()
 		});
 	},
 	onServerFilterChange: function(keyword) {
 		this.setState({
-			serverFilterText: keyword.trim()
+			serverFilterText: keyword.toLowerCase().trim()
 		});
 	},
 	render: function() {
