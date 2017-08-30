@@ -325,7 +325,7 @@ var Index = React.createClass({
 				return;
 			}
 			if (isRules) {
-				var selectedName = storage.get('activeRules', true) || rules.current;
+				var selectedName = storage.get('activeRules', true) || data.current;
 				var rulesList = [];
 				var rulesData = {};
 				rulesList.push(DEFAULT);
