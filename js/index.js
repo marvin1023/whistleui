@@ -22,6 +22,54 @@ var DEFAULT = 'Default';
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
 var OPTIONS_WITH_SELECTED = ['removeSelected', 'exportWhistleFile', 'exportSazFile'];
+var RULES_ACTIONS = [
+	{
+		name: 'Export Selected Rules',
+		icon: 'export',
+		id: 'exportRules',
+		disabled: true
+	},
+	{
+		name: 'Export All Rules',
+		id: 'exportAllRules',
+		disabled: true
+	},
+	{
+		name: 'Import New Rules',
+		icon: 'import',
+		id: 'importNewRules',
+		title: 'This operation will not affect the existing rules'
+	},
+	{
+		name: 'Import All Rules',
+		id: 'importAllRules',
+		title: 'This operation will overrides the existing rules'
+	}
+];
+var VALUES_ACTIONS = [
+	{
+		name: 'Export Selected Values',
+		icon: 'export',
+		id: 'exportValues',
+		disabled: true
+	},
+	{
+		name: 'Export All Values',
+		id: 'exportAllValues',
+		disabled: true
+	},
+	{
+		name: 'Import New Values',
+		icon: 'import',
+		id: 'importNewValues',
+		title: 'This does not overwrite existing rules'
+	},
+	{
+		name: 'Import All Values',
+		id: 'importAllValues',
+		title: 'This will overwrite existing rules'
+	}
+];
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -883,10 +931,15 @@ var Index = React.createClass({
 		var target = $(e.target);
 		var rules = self.state.rules;
 		var data = rules.data;
-		var rulesOptions = [];
-		rules.list.forEach(function(name) {
-			rulesOptions.push(data[name]);
-		});
+		var rulesOptions;
+		if (self.state.name === 'rules') {
+			rulesOptions = RULES_ACTIONS;
+		} else {
+			rulesOptions = [];
+			rules.list.forEach(function(name) {
+				rulesOptions.push(data[name]);
+			});
+		}
 		self.setState({
 			rulesOptions: rulesOptions,
 			showRulesOptions: true
@@ -899,21 +952,27 @@ var Index = React.createClass({
 	},
 	showValuesOptions: function(e) {
 		var self = this;
-		var valuesList = this.state.values.list;
-		var list = self.getValuesFromRules() || [];
-		list = util.unique(valuesList.concat(list));
-		var valuesOptions = [];
-		var newValues = [];
-		list.forEach(function(name) {
-			var exists = valuesList.indexOf(name) != -1;
-			var item = {
-					name: name,
-					icon: exists ? 'edit' : 'plus'
-				};
-			exists ? valuesOptions.push(item) : newValues.push(item);
-		});
-		self.state.valuesOptions = newValues.concat(valuesOptions);
+		var valuesOptions;
+		if (self.state.name === 'values') {
+			valuesOptions = VALUES_ACTIONS;
+		} else {
+			valuesOptions = [];
+			var valuesList = this.state.values.list;
+			var list = self.getValuesFromRules() || [];
+			list = util.unique(valuesList.concat(list));
+			var newValues = [];
+			list.forEach(function(name) {
+				var exists = valuesList.indexOf(name) != -1;
+				var item = {
+						name: name,
+						icon: exists ? 'edit' : 'plus'
+					};
+				exists ? valuesOptions.push(item) : newValues.push(item);
+			});
+			valuesOptions = newValues.concat(valuesOptions);
+		}
 		self.setState({
+			valuesOptions: valuesOptions,
 			showValuesOptions: true
 		});
 	},
@@ -1659,12 +1718,14 @@ var Index = React.createClass({
 			hasFilterText = state.hasFilterText;
 		}
 		
-		rulesOptions.forEach(function(item) {
-			item.icon = 'checkbox';
-			if (!item.selected) {
-				uncheckedRules[item.name] = 1;
-			}
-		});
+		if (rulesOptions[0].name === DEFAULT) {
+			rulesOptions.forEach(function(item) {
+				item.icon = 'checkbox';
+				if (!item.selected) {
+					uncheckedRules[item.name] = 1;
+				}
+			});
+		}
 		
 		if (isRules) {
 			var data = state.rules.data;
@@ -1735,12 +1796,14 @@ var Index = React.createClass({
 					href="javascript:;"  draggable="false"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
             <MenuItem ref="networkMenuItem" options={state.networkOptions} className="w-network-menu-item" onClickOption={this.handleNetwork} />
           </div>
-					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions} className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '')}>
+					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions}
+						className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '') + (isRules ? ' w-menu-auto' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" style={{background: name == 'rules' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-list"></span>Rules</a>
 						<MenuItem ref="rulesMenuItem"  name={name == 'rules' ? null : 'Open'} options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
 						className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules}  onChange={this.selectRulesByOptions} />
 					</div>
-					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideValuesOptions} className={'w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '')}>
+					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideValuesOptions}
+						className={'w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '') + (isValues ? ' w-menu-auto' : '')}>
 						<a onClick={this.showValues} className="w-values-menu" style={{background: name == 'values' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 						<MenuItem ref="valuesMenuItem" name={name == 'values' ? null : 'Open'} options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					</div>
