@@ -38,12 +38,12 @@ var RULES_ACTIONS = [
 		name: 'Import New Rules',
 		icon: 'import',
 		id: 'importNewRules',
-		title: 'This operation will not affect the existing rules'
+		title: 'This dose not affect the existing rules'
 	},
 	{
 		name: 'Import All Rules',
 		id: 'importAllRules',
-		title: 'This operation will overrides the existing rules'
+		title: 'This will overrides the existing rules'
 	}
 ];
 var VALUES_ACTIONS = [
