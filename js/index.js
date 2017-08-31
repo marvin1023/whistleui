@@ -26,13 +26,11 @@ var RULES_ACTIONS = [
 	{
 		name: 'Export Selected Rules',
 		icon: 'export',
-		id: 'exportRules',
-		disabled: true
+		id: 'exportRules'
 	},
 	{
 		name: 'Export All Rules',
-		id: 'exportAllRules',
-		disabled: true
+		id: 'exportAllRules'
 	},
 	{
 		name: 'Import New Rules',
@@ -62,12 +60,12 @@ var VALUES_ACTIONS = [
 		name: 'Import New Values',
 		icon: 'import',
 		id: 'importNewValues',
-		title: 'This does not overwrite existing rules'
+		title: 'This will only import new rules'
 	},
 	{
 		name: 'Import All Values',
 		id: 'importAllValues',
-		title: 'This will overwrite existing rules'
+		title: 'This operation may overwrite existing rules'
 	}
 ];
 
@@ -932,11 +930,15 @@ var Index = React.createClass({
 		var rules = self.state.rules;
 		var data = rules.data;
 		var rulesOptions;
+		var rulesList = rules.list;
 		if (self.state.name === 'rules') {
+			var len = rulesList.length;
+			RULES_ACTIONS[0].disabled = len < 2;
+			RULES_ACTIONS[1].disabled = len < 1;
 			rulesOptions = RULES_ACTIONS;
 		} else {
 			rulesOptions = [];
-			rules.list.forEach(function(name) {
+			rulesList.forEach(function(name) {
 				rulesOptions.push(data[name]);
 			});
 		}
@@ -953,11 +955,14 @@ var Index = React.createClass({
 	showValuesOptions: function(e) {
 		var self = this;
 		var valuesOptions;
+		var valuesList = this.state.values.list;
 		if (self.state.name === 'values') {
+			var len = valuesList.length;
+			VALUES_ACTIONS[0].disabled = len < 2;
+			VALUES_ACTIONS[1].disabled = len < 1;
 			valuesOptions = VALUES_ACTIONS;
 		} else {
 			valuesOptions = [];
-			var valuesList = this.state.values.list;
 			var list = self.getValuesFromRules() || [];
 			list = util.unique(valuesList.concat(list));
 			var newValues = [];
