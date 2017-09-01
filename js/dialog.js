@@ -17,9 +17,9 @@ var Dialog = React.createClass({
 		        this.getDialogElement(), this.container[0]);
 	},
 	getDialogElement: function() {
-		
+		var className = this.props.wclassName;
 		return (
-				<div className="modal-dialog">
+				<div className={'modal-dialog' + (className ? ' ' + className : '')}>
 				  	<div className="modal-content">
 				  		{this.props.children}
 				    </div>

@@ -17,6 +17,7 @@ var protocols = require('./protocols');
 var events = require('./events');
 var storage = require('./storage');
 var Dialog = require('./dialog');
+var ListDialog = require('./list-dialog');
 
 var DEFAULT = 'Default';
 var MAX_PLUGINS_TABS = 7;
@@ -30,7 +31,7 @@ var RULES_ACTIONS = [
 	},
 	{
 		name: 'Export All Rules',
-		id: 'exportAllRules'
+		href: 'cgi-bin/rules/export'
 	},
 	{
 		name: 'Import New Rules',
@@ -48,13 +49,11 @@ var VALUES_ACTIONS = [
 	{
 		name: 'Export Selected Values',
 		icon: 'export',
-		id: 'exportValues',
-		disabled: true
+		id: 'exportValues'
 	},
 	{
 		name: 'Export All Values',
-		id: 'exportAllValues',
-		disabled: true
+		href: 'cgi-bin/values/export'
 	},
 	{
 		name: 'Import New Values',
@@ -844,9 +843,22 @@ var Index = React.createClass({
 	  this.hideNetworkOptions();
 	},
 	showAndActiveRules: function(item) {
+		if (this.state.name === 'rules') {
+			switch(item.id) {
+				case 'exportRules':
+					this.refs.selectRulesDialog.show();
+					break;
+				case 'importNewRules':
+					
+				case 'importAllRules':
+
+					break;
+			}
+		} else {
+			this.setRulesActive(item.name);
+			this.showRules();
+		}
 	  this.hideRulesOptions();
-	  this.setRulesActive(item.name);
-		this.showRules();
 	},
 	showRules: function(e) {
 		if (this.state.name != 'rules') {
@@ -863,26 +875,39 @@ var Index = React.createClass({
 	},
 	showAndActiveValues: function(item) {
 		var self = this;
-		var modal = self.state.values;
-		var name = item.name;
-		self.hideValuesOptions();
-		if (!modal.exists(name)) {
-			dataCenter.values.add({name: name}, function(data) {
-				if (data && data.ec === 0) {
-					var item = modal.add(name);
-					self.setValuesActive(name);
-					self.setState({
-						activeValues: item
-					});
-				} else {
-					util.showSystemError();
-				}
-			});
+		if (self.state.name === 'values') {
+			switch(item.id) {
+				case 'exportValues':
+					self.refs.selectValuesDialog.show();
+					break;
+				case 'importNewValues':
+					
+				case 'importAllValues':
+					break;
+			}
 		} else {
-			self.setValuesActive(name);
+			var modal = self.state.values;
+			var name = item.name;
+			
+			if (!modal.exists(name)) {
+				dataCenter.values.add({name: name}, function(data) {
+					if (data && data.ec === 0) {
+						var item = modal.add(name);
+						self.setValuesActive(name);
+						self.setState({
+							activeValues: item
+						});
+					} else {
+						util.showSystemError();
+					}
+				});
+			} else {
+				self.setValuesActive(name);
+			}
+			
+			this.showValues();
 		}
-		
-		this.showValues();
+		self.hideValuesOptions();
 	},
 	showValues: function(e) {
 		if (this.state.name != 'values') {
@@ -1837,7 +1862,7 @@ var Index = React.createClass({
 							target="_blank"><span className="glyphicon glyphicon-question-sign"></span>Help</a>
 						<MenuItem ref="helpMenuItem" options={state.helpOptions}
 							name={<About onClick={this.hideHelpOptions} onCheckUpdate={this.showHasNewVersion} />}
-							className="w-help-menu-item" onClickOption={this.openWindow} />
+							className="w-help-menu-item" />
           </div>
 					<Online name={name} />
 					<div onMouseDown={this.preventBlur} style={{display: state.showCreateRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-create-rules-input"><input ref="createRulesInput" onKeyDown={this.createRules} onBlur={this.hideOptions} type="text" maxLength="64" placeholder="Input the name" /><button type="button" onClick={this.createRules} className="btn btn-primary">OK</button></div>
@@ -1952,6 +1977,8 @@ var Index = React.createClass({
 					<button type="button" className="btn btn-primary" onClick={this.reloadData}  data-dismiss="modal">Yes</button>
 				</div>
 			</Dialog>
+			<ListDialog ref="selectRulesDialog" url="cgi-bin/rules/export?rules=" list={state.rules.list} />
+			<ListDialog ref="selectValuesDialog" url="cgi-bin/values/export?values=" list={state.values.list} />
 			<form ref="exportSessionsForm" action="cgi-bin/sessions/export" style={{display: 'none'}}
 			  method="post" enctype="multipart/form-data" target="_blank">
 			  <input ref="exportFileType" name="exportFileType" type="hidden" />
