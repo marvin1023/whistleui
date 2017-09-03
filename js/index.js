@@ -22,7 +22,7 @@ var ListDialog = require('./list-dialog');
 var DEFAULT = 'Default';
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
-var MAX_OBJECT_SIZE = 1024 * 1024 * 12;
+var MAX_OBJECT_SIZE = 1024 * 1024 * 6;
 var OPTIONS_WITH_SELECTED = ['removeSelected', 'exportWhistleFile', 'exportSazFile'];
 var RULES_ACTIONS = [
 	{
@@ -861,7 +861,7 @@ var Index = React.createClass({
     }
     
     if (file.size > MAX_OBJECT_SIZE) {
-      return alert('The file size can not exceed 12m.');
+      return alert('The file size can not exceed 6m.');
 		}
 		var self = this;
     dataCenter.upload.importRules(data, function(data) {
@@ -873,6 +873,7 @@ var Index = React.createClass({
 				alert(data.em);
 			}
 		});
+		ReactDOM.findDOMNode(this.refs.importRules).value = '';
 	},
 	uploadValues: function() {
 		var data = new FormData(ReactDOM.findDOMNode(this.refs.importValuesForm));
@@ -882,7 +883,7 @@ var Index = React.createClass({
     }
     
     if (file.size > MAX_OBJECT_SIZE) {
-      return alert('The file size can not exceed 12m.');
+      return alert('The file size can not exceed 6m.');
 		}
 		var self = this;
     dataCenter.upload.importValues(data, function(data) {
@@ -894,6 +895,7 @@ var Index = React.createClass({
 				alert(data.em);
 			}
 		});
+		ReactDOM.findDOMNode(this.refs.importValues).value = '';
 	},
 	clearNetwork: function() {
 	  this.clear();
@@ -907,7 +909,7 @@ var Index = React.createClass({
 					break;
 					case 'importNewRules':
 						ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '';
-						this.importValues();
+						this.importRules();
 						break;
 					case 'importAllRules':
 						ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '1';

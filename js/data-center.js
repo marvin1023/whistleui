@@ -156,18 +156,6 @@ function parseEnv(env) {
 	};
 }
 
-exports.upload = createCgi({
-	importSessions: 'cgi-bin/sessions/import',
-	importRules: 'cgi-bin/rules/import',
-	importValues: 'cgi-bin/values/import'
-}, $.extend({
-	type: 'post'
-}, DEFAULT_CONF, {
-	contentType: false,
-	processData: false,
-	timeout: 36000
-}));
-
 exports.values = createCgi({
 	moveTo: {
 		mode: 'chain',
@@ -232,9 +220,24 @@ exports.getInitialData = function (callback) {
 
 		function load() {
 			cgi.getInitaial(function (data) {
-				initialData = data;
-				DEFAULT_CONF.data.clientId = data.clientId;
-				data ? initialDataPromise.resolve(data) : setTimeout(load, 1000);
+				if (data) {
+					initialData = data;
+					DEFAULT_CONF.data.clientId = data.clientId;
+					exports.upload = createCgi({
+						importSessions: 'cgi-bin/sessions/import?clientId=' + data.clientId,
+						importRules: 'cgi-bin/rules/import?clientId=' + data.clientId,
+						importValues: 'cgi-bin/values/import?clientId=' + data.clientId
+					}, $.extend({
+						type: 'post'
+					}, DEFAULT_CONF, {
+						contentType: false,
+						processData: false,
+						timeout: 36000
+					}));
+					initialDataPromise.resolve(data)
+				} else {
+					setTimeout(load, 1000);
+				}
 			});
 		}
 		load();
