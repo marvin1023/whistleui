@@ -37,7 +37,7 @@ var RULES_ACTIONS = [
 		name: 'Import New Rules',
 		icon: 'import',
 		id: 'importNewRules',
-		title: 'This dose not affect the existing rules'
+		title: 'This will import only the rules that the whislte does not exist'
 	},
 	{
 		name: 'Import All Rules',
@@ -1986,8 +1986,16 @@ var Index = React.createClass({
 			</form>
 			<form ref="importSessionsForm" enctype="multipart/form-data" style={{display: 'none'}}>  
 			  <input ref="importSessions" onChange={this.uploadSessions} type="file" name="importSessions" accept=".txt,.json,.saz" />
-      </form>
-			</div>
+			</form>
+			<form ref="importRulesForm" style={{display: 'none'}} enctype="multipart/form-data" >
+				<input ref="replaceAllRules" name="replaceAll" type="hidden" />
+				<input ref="importRules" name="rules" type="hidden" />
+			</form>
+			<form ref="importValuesForm" style={{display: 'none'}} enctype="multipart/form-data" >
+				<input ref="replaceAllValues" name="replaceAll" type="hidden" />
+				<input ref="importValues" name="values" type="hidden" />
+			</form>
+		</div>
 		);
 	}
 });
