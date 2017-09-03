@@ -156,8 +156,10 @@ function parseEnv(env) {
 	};
 }
 
-exports.sessions = createCgi({
-	imports: 'cgi-bin/sessions/import',
+exports.upload = createCgi({
+	importSessions: 'cgi-bin/sessions/import',
+	importRules: 'cgi-bin/rules/import',
+	importValues: 'cgi-bin/values/import'
 }, $.extend({
 	type: 'post'
 }, DEFAULT_CONF, {

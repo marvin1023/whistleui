@@ -22,6 +22,7 @@ var ListDialog = require('./list-dialog');
 var DEFAULT = 'Default';
 var MAX_PLUGINS_TABS = 7;
 var MAX_FILE_SIZE = 1024 * 1024 * 64;
+var MAX_OBJECT_SIZE = 1024 * 1024 * 12;
 var OPTIONS_WITH_SELECTED = ['removeSelected', 'exportWhistleFile', 'exportSazFile'];
 var RULES_ACTIONS = [
 	{
@@ -42,7 +43,7 @@ var RULES_ACTIONS = [
 	{
 		name: 'Import All Rules',
 		id: 'importAllRules',
-		title: 'This will overrides the existing rules'
+		title: 'This may overwrite the existing rules'
 	}
 ];
 var VALUES_ACTIONS = [
@@ -59,7 +60,7 @@ var VALUES_ACTIONS = [
 		name: 'Import New Values',
 		icon: 'import',
 		id: 'importNewValues',
-		title: 'This will only import new rules'
+		title: 'This may overwrite the existing values'
 	},
 	{
 		name: 'Import All Values',
@@ -359,6 +360,48 @@ var Index = React.createClass({
 			}
 		}
 	},
+	reloadRules: function(data) {
+		var self = this;
+		var selectedName = storage.get('activeRules', true) || data.current;
+		var rulesList = [];
+		var rulesData = {};
+		rulesList.push(DEFAULT);
+		rulesData.Default = {
+				name: DEFAULT,
+				fixed: true,
+				value: data.defaultRules,
+				selected: !data.defaultRulesIsDisabled,
+				isDefault: true,
+				active: selectedName === DEFAULT
+		};
+		data.list.forEach(function(item) {
+			rulesList.push(item.name);
+			item = rulesData[item.name] = {
+				name: item.name,
+				value: item.data,
+				selected: item.selected,
+				active: selectedName === item.name
+			};
+		});
+		self.state.rules.reset(rulesList, rulesData)
+		self.setState({});
+	},
+	reloadValues: function(data) {
+		var self = this;
+		var selectedName = storage.get('activeValues', true) || data.current;
+		var valuesList = [];
+		var valuesData = {};
+		data.list.forEach(function(item) {
+			valuesList.push(item.name);
+			valuesData[item.name] = {
+				name: item.name,
+				value: item.data,
+				active: selectedName === item.name
+			};
+		});
+		self.state.values.reset(valuesList, valuesData)
+		self.setState({});
+	},
 	reloadData: function() {
 		var self = this;
 		var dialog = $('.w-reload-data-tips').closest('.w-confirm-reload-dialog');
@@ -370,43 +413,9 @@ var Index = React.createClass({
 				return;
 			}
 			if (isRules) {
-				var selectedName = storage.get('activeRules', true) || data.current;
-				var rulesList = [];
-				var rulesData = {};
-				rulesList.push(DEFAULT);
-				rulesData.Default = {
-						name: DEFAULT,
-						fixed: true,
-						value: data.defaultRules,
-						selected: !data.defaultRulesIsDisabled,
-						isDefault: true,
-						active: selectedName === DEFAULT
-				};
-				data.list.forEach(function(item) {
-					rulesList.push(item.name);
-					item = rulesData[item.name] = {
-						name: item.name,
-						value: item.data,
-						selected: item.selected,
-						active: selectedName === item.name
-					};
-				});
-				self.state.rules.reset(rulesList, rulesData)
-				self.setState({});
+				self.reloadRules(data);
 			} else {
-				var selectedName = storage.get('activeValues', true) || data.current;
-				var valuesList = [];
-				var valuesData = {};
-				data.list.forEach(function(item) {
-					valuesList.push(item.name);
-					valuesData[item.name] = {
-						name: item.name,
-						value: item.data,
-						active: selectedName === item.name
-					};
-				});
-				self.state.values.reset(valuesList, valuesData)
-				self.setState({});
+				self.reloadValues(data);
 			}
 		};
 		if (isRules) {
@@ -838,6 +847,51 @@ var Index = React.createClass({
 	importSessions: function() {
 	  ReactDOM.findDOMNode(this.refs.importSessions).click();
 	},
+	importRules: function() {
+		ReactDOM.findDOMNode(this.refs.importRules).click();
+	},
+	importValues: function() {
+		ReactDOM.findDOMNode(this.refs.importValues).click();
+	},
+	uploadRules: function() {
+		var data = new FormData(ReactDOM.findDOMNode(this.refs.importRulesForm));
+		var file = data.get('rules');
+	  if (!file || !/\.(txt|json)$/i.test(file.name)) {
+      return alert('Only supports .txt or .json file.');
+    }
+    
+    if (file.size > MAX_OBJECT_SIZE) {
+      return alert('The file size can not exceed 12m.');
+		}
+		var self = this;
+    dataCenter.upload.importRules(data, function(data) {
+			if (data && data.ec === 0) {
+				console.log(data)
+				self.reloadRules(data);
+			} else {
+				util.showSystemError();
+			}
+		});
+	},
+	uploadValues: function() {
+		var data = new FormData(ReactDOM.findDOMNode(this.refs.importValuesForm));
+		var file = data.get('values');
+	  if (!file || !/\.(txt|json)$/i.test(file.name)) {
+      return alert('Only supports .txt or .json file.');
+    }
+    
+    if (file.size > MAX_OBJECT_SIZE) {
+      return alert('The file size can not exceed 12m.');
+		}
+		var self = this;
+    dataCenter.upload.importValues(data, function(data) {
+			if (data && data.ec === 0) {
+				self.reloadValues(data);
+			} else {
+				util.showSystemError();
+			}
+		});
+	},
 	clearNetwork: function() {
 	  this.clear();
 	  this.hideNetworkOptions();
@@ -846,13 +900,16 @@ var Index = React.createClass({
 		if (this.state.name === 'rules') {
 			switch(item.id) {
 				case 'exportRules':
-					this.refs.selectRulesDialog.show();
+					self.refs.selectRulesDialog.show();
 					break;
-				case 'importNewRules':
-					
-				case 'importAllRules':
-
-					break;
+					case 'importNewRules':
+						ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '';
+						this.importValues();
+						break;
+					case 'importAllRules':
+						ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '1';
+						this.refs.confirmImportRules.show();
+						break;
 			}
 		} else {
 			this.setRulesActive(item.name);
@@ -880,10 +937,14 @@ var Index = React.createClass({
 				case 'exportValues':
 					self.refs.selectValuesDialog.show();
 					break;
-				case 'importNewValues':
-					
-				case 'importAllValues':
-					break;
+					case 'importNewValues':
+						ReactDOM.findDOMNode(this.refs.replaceAllValues).value = '';
+						this.importValues();
+						break;
+					case 'importAllValues':
+						ReactDOM.findDOMNode(this.refs.replaceAllValues).value = '1';
+						this.refs.confirmImportValues.show();
+						break;
 			}
 		} else {
 			var modal = self.state.values;
@@ -1699,8 +1760,8 @@ var Index = React.createClass({
     if (file.size > MAX_FILE_SIZE) {
       return alert('The file size can not exceed 64m.');
     }
-    dataCenter.sessions.imports(data, dataCenter.addNetworkList);
-  },
+    dataCenter.upload.importSessions(data, dataCenter.addNetworkList);
+	},
 	exportSessions: function(type) {
 	  var modal = this.state.network;
 	  var sessions = modal && modal.getSelectedList();
@@ -1977,6 +2038,30 @@ var Index = React.createClass({
 					<button type="button" className="btn btn-primary" onClick={this.reloadData}  data-dismiss="modal">Yes</button>
 				</div>
 			</Dialog>
+			<Dialog ref="confirmImportRules" wstyle="w-confirm-import-dialog">
+				<div className="modal-body w-confirm-import">
+					<button type="button" className="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					This may overwrite the existing rules.
+				</div>
+				<div className="modal-footer">
+					<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" className="btn btn-primary" onClick={this.importRules}  data-dismiss="modal">Continue</button>
+				</div>
+			</Dialog>
+			<Dialog ref="confirmImportValues" wstyle="w-confirm-import-dialog">
+				<div className="modal-body w-confirm-import">
+					<button type="button" className="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					This may overwrite the existing values.
+				</div>
+				<div className="modal-footer">
+					<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" className="btn btn-primary" onClick={this.importValues}  data-dismiss="modal">Continue</button>
+				</div>
+			</Dialog>
 			<ListDialog ref="selectRulesDialog" url="cgi-bin/rules/export?rules=" list={state.rules.list} />
 			<ListDialog ref="selectValuesDialog" url="cgi-bin/values/export?values=" list={state.values.list} />
 			<form ref="exportSessionsForm" action="cgi-bin/sessions/export" style={{display: 'none'}}
@@ -1987,13 +2072,13 @@ var Index = React.createClass({
 			<form ref="importSessionsForm" enctype="multipart/form-data" style={{display: 'none'}}>  
 			  <input ref="importSessions" onChange={this.uploadSessions} type="file" name="importSessions" accept=".txt,.json,.saz" />
 			</form>
-			<form ref="importRulesForm" style={{display: 'none'}} enctype="multipart/form-data" >
+			<form ref="importRulesForm" enctype="multipart/form-data" style={{display: 'none'}}>
 				<input ref="replaceAllRules" name="replaceAll" type="hidden" />
-				<input ref="importRules" name="rules" type="hidden" />
+				<input ref="importRules" onChange={this.uploadRules} name="rules" type="hidden" type="file" accept=".txt,.json" />
 			</form>
-			<form ref="importValuesForm" style={{display: 'none'}} enctype="multipart/form-data" >
+			<form ref="importValuesForm" enctype="multipart/form-data" style={{display: 'none'}}>
 				<input ref="replaceAllValues" name="replaceAll" type="hidden" />
-				<input ref="importValues" name="values" type="hidden" />
+				<input ref="importValues" onChange={this.uploadValues} name="values" type="hidden" type="file" accept=".txt,.json" />
 			</form>
 		</div>
 		);

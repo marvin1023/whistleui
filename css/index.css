@@ -46,3 +46,4 @@
 .w-choose-filte-type-label {white-space: nowrap;}
 .w-choose-filte-type-label select.form-control {width: auto; margin: 0 10px; width: 200px; display: inline-block;}
 
+.w-confirm-import-dialog .modal-dialog { width: 320px; font-weight: bold; }
