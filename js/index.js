@@ -865,11 +865,12 @@ var Index = React.createClass({
 		}
 		var self = this;
     dataCenter.upload.importRules(data, function(data) {
-			if (data && data.ec === 0) {
-				console.log(data)
-				self.reloadRules(data);
-			} else {
+			if (!data) {
 				util.showSystemError();
+			} else if (data.ec === 0) {
+				self.reloadRules(data);
+			} else  {
+				alert(data.em);
 			}
 		});
 	},
@@ -885,10 +886,12 @@ var Index = React.createClass({
 		}
 		var self = this;
     dataCenter.upload.importValues(data, function(data) {
-			if (data && data.ec === 0) {
+			if (!data) {
+				util.showSystemError();
+			} if (data.ec === 0) {
 				self.reloadValues(data);
 			} else {
-				util.showSystemError();
+				alert(data.em);
 			}
 		});
 	},
