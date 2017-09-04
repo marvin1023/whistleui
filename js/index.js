@@ -471,17 +471,23 @@ var Index = React.createClass({
   		.on( 'dragenter', preventDefault)
   		.on( 'dragover', preventDefault)
   		.on('drop', function(e) {
-  		  e.preventDefault();
-  		  if (self.state.name !== 'network') {
-  		    return;
-  		  }
+				e.preventDefault();
   		  var files = e.originalEvent.dataTransfer.files;
   		  if (!files || !files.length) {
   		    return;
-  		  }
-  		  var data = new FormData();
-  		  data.append('importSessions', files[0]);
-  		  self.uploadSessionsForm(data);
+				}
+				var name = self.state.name;
+				if (name === 'network') {
+					var data = new FormData();
+					data.append('importSessions', files[0]);
+					self.uploadSessionsForm(data);
+				} if ($(e.target).closest('.w-divider-left').length) {
+					if (name === 'rules') {
+						
+					} else if (name === 'values') {
+						
+					}
+				}
   		});
 		$(window).on('hashchange', function() {
 			var pageName = getPageName();
@@ -905,16 +911,16 @@ var Index = React.createClass({
 		if (this.state.name === 'rules') {
 			switch(item.id) {
 				case 'exportRules':
-					self.refs.selectRulesDialog.show();
+					this.refs.selectRulesDialog.show();
 					break;
-					case 'importNewRules':
-						ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '';
-						this.importRules();
-						break;
-					case 'importAllRules':
-						ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '1';
-						this.refs.confirmImportRules.show();
-						break;
+				case 'importNewRules':
+					ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '';
+					this.importRules();
+					break;
+				case 'importAllRules':
+					ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '1';
+					this.refs.confirmImportRules.show();
+					break;
 			}
 		} else {
 			this.setRulesActive(item.name);
