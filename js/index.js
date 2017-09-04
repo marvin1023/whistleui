@@ -35,15 +35,9 @@ var RULES_ACTIONS = [
 		href: 'cgi-bin/rules/export'
 	},
 	{
-		name: 'Import New Rules',
+		name: 'Import Rules',
 		icon: 'import',
-		id: 'importNewRules',
-		title: 'This will import only the rules that the whislte does not exist'
-	},
-	{
-		name: 'Import All Rules',
-		id: 'importAllRules',
-		title: 'This may overwrite the existing rules'
+		id: 'importRules'
 	}
 ];
 var VALUES_ACTIONS = [
@@ -57,15 +51,9 @@ var VALUES_ACTIONS = [
 		href: 'cgi-bin/values/export'
 	},
 	{
-		name: 'Import New Values',
+		name: 'Import Values',
 		icon: 'import',
-		id: 'importNewValues',
-		title: 'This may overwrite the existing values'
-	},
-	{
-		name: 'Import All Values',
-		id: 'importAllValues',
-		title: 'This operation may overwrite existing rules'
+		id: 'importValues'
 	}
 ];
 
@@ -483,9 +471,15 @@ var Index = React.createClass({
 					self.uploadSessionsForm(data);
 				} if ($(e.target).closest('.w-divider-left').length) {
 					if (name === 'rules') {
-						
+						var data = new FormData();
+						data.append('rules', files[0]);
+						self.rulesForm = data;
+						self.refs.confirmImportRules.show();
 					} else if (name === 'values') {
-						
+						var data = new FormData();
+						data.append('values', files[0]);
+						self.valuesForm = data;
+						self.refs.confirmImportValues.show();
 					}
 				}
   		});
@@ -859,8 +853,12 @@ var Index = React.createClass({
 	importValues: function() {
 		ReactDOM.findDOMNode(this.refs.importValues).click();
 	},
-	uploadRules: function() {
-		var data = new FormData(ReactDOM.findDOMNode(this.refs.importRulesForm));
+	uploadRules: function(e) {
+		var data = this.rulesForm;
+		this.rulesForm = null;
+		if (!data) {
+			return;
+		}
 		var file = data.get('rules');
 	  if (!file || !/\.(txt|json)$/i.test(file.name)) {
       return alert('Only supports .txt or .json file.');
@@ -868,6 +866,9 @@ var Index = React.createClass({
     
     if (file.size > MAX_OBJECT_SIZE) {
       return alert('The file size can not exceed 6m.');
+		}
+		if ($(e.target).hasClass('btn-danger')) {
+			data.append('replaceAll', '1');
 		}
 		var self = this;
     dataCenter.upload.importRules(data, function(data) {
@@ -881,8 +882,12 @@ var Index = React.createClass({
 		});
 		ReactDOM.findDOMNode(this.refs.importRules).value = '';
 	},
-	uploadValues: function() {
-		var data = new FormData(ReactDOM.findDOMNode(this.refs.importValuesForm));
+	uploadValues: function(e) {
+		var data = this.valuesForm;
+		this.valuesForm = null;
+		if (!data) {
+			return;
+		}
 		var file = data.get('values');
 	  if (!file || !/\.(txt|json)$/i.test(file.name)) {
       return alert('Only supports .txt or .json file.');
@@ -890,6 +895,9 @@ var Index = React.createClass({
     
     if (file.size > MAX_OBJECT_SIZE) {
       return alert('The file size can not exceed 6m.');
+		}
+		if ($(e.target).hasClass('btn-danger')) {
+			data.append('replaceAll', '1');
 		}
 		var self = this;
     dataCenter.upload.importValues(data, function(data) {
@@ -903,6 +911,14 @@ var Index = React.createClass({
 		});
 		ReactDOM.findDOMNode(this.refs.importValues).value = '';
 	},
+	uploadRulesForm: function() {
+		this.rulesForm = new FormData(ReactDOM.findDOMNode(this.refs.importRulesForm));
+		this.refs.confirmImportRules.show();
+	},
+	uploadValuesForm: function() {
+		this.valuesForm = new FormData(ReactDOM.findDOMNode(this.refs.importValuesForm));
+		this.refs.confirmImportValues.show();
+	},
 	clearNetwork: function() {
 	  this.clear();
 	  this.hideNetworkOptions();
@@ -913,13 +929,8 @@ var Index = React.createClass({
 				case 'exportRules':
 					this.refs.selectRulesDialog.show();
 					break;
-				case 'importNewRules':
-					ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '';
+				case 'importRules':
 					this.importRules();
-					break;
-				case 'importAllRules':
-					ReactDOM.findDOMNode(this.refs.replaceAllRules).value = '1';
-					this.refs.confirmImportRules.show();
 					break;
 			}
 		} else {
@@ -948,14 +959,9 @@ var Index = React.createClass({
 				case 'exportValues':
 					self.refs.selectValuesDialog.show();
 					break;
-					case 'importNewValues':
-						ReactDOM.findDOMNode(this.refs.replaceAllValues).value = '';
-						this.importValues();
-						break;
-					case 'importAllValues':
-						ReactDOM.findDOMNode(this.refs.replaceAllValues).value = '1';
-						this.refs.confirmImportValues.show();
-						break;
+				case 'importValues':
+					this.importValues();
+					break;
 			}
 		} else {
 			var modal = self.state.values;
@@ -2054,11 +2060,13 @@ var Index = React.createClass({
 					<button type="button" className="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					This may overwrite the existing rules.
+					Whether to replace the existing rules?
 				</div>
 				<div className="modal-footer">
-					<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" className="btn btn-primary" onClick={this.importRules}  data-dismiss="modal">Continue</button>
+					<button type="button" className="btn btn-danger"
+						onClick={this.uploadRules} data-dismiss="modal">Replace</button>
+					<button type="button" className="btn btn-primary"
+						onClick={this.uploadRules} data-dismiss="modal">Reserve</button>
 				</div>
 			</Dialog>
 			<Dialog ref="confirmImportValues" wstyle="w-confirm-import-dialog">
@@ -2066,11 +2074,13 @@ var Index = React.createClass({
 					<button type="button" className="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					This may overwrite the existing values.
+					Whether to replace the existing values?
 				</div>
 				<div className="modal-footer">
-					<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" className="btn btn-primary" onClick={this.importValues}  data-dismiss="modal">Continue</button>
+					<button type="button" className="btn btn-danger"
+						onClick={this.uploadValues} data-dismiss="modal">Replace</button>
+					<button type="button" className="btn btn-primary"
+						onClick={this.uploadValues} data-dismiss="modal">Reserve</button>
 				</div>
 			</Dialog>
 			<ListDialog ref="selectRulesDialog" url="cgi-bin/rules/export?rules=" list={state.rules.list} />
@@ -2084,12 +2094,10 @@ var Index = React.createClass({
 			  <input ref="importSessions" onChange={this.uploadSessions} type="file" name="importSessions" accept=".txt,.json,.saz" />
 			</form>
 			<form ref="importRulesForm" enctype="multipart/form-data" style={{display: 'none'}}>
-				<input ref="replaceAllRules" name="replaceAll" type="hidden" />
-				<input ref="importRules" onChange={this.uploadRules} name="rules" type="hidden" type="file" accept=".txt,.json" />
+				<input ref="importRules" onChange={this.uploadRulesForm} name="rules" type="hidden" type="file" accept=".txt,.json" />
 			</form>
 			<form ref="importValuesForm" enctype="multipart/form-data" style={{display: 'none'}}>
-				<input ref="replaceAllValues" name="replaceAll" type="hidden" />
-				<input ref="importValues" onChange={this.uploadValues} name="values" type="hidden" type="file" accept=".txt,.json" />
+				<input ref="importValues" onChange={this.uploadValuesForm} name="values" type="hidden" type="file" accept=".txt,.json" />
 			</form>
 		</div>
 		);
