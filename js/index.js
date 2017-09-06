@@ -1911,9 +1911,9 @@ var Index = React.createClass({
 		return (
 			<div className="main orient-vertical-box">
 				<div className={'w-menu w-' + name + '-menu-list'}>
-					<a onClick={this.toggleLeftMenu} href="javascript:;" draggable="false"
+					<a onClick={this.toggleLeftMenu} href="javascript:;" draggable="false" className="w-show-left-menu"
 						style={{background: showLeftMenu ? '#ddd' : undefined}} title="Ctrl[Command] + M">
-						<span className="glyphicon glyphicon-save-file"></span>
+						<span className={'glyphicon glyphicon-chevron-' + (showLeftMenu ? 'down' : 'right')}></span>
 					</a>
   				<div onMouseEnter={this.showNetworkOptions} onMouseLeave={this.hideNetworkOptions} className={'w-menu-wrapper' + (showNetworkOptions ? ' w-menu-wrapper-show' : '')}>
   				  <a onClick={this.showNetwork} onDoubleClick={this.clearNetwork} className="w-network-menu" title="Double click to remove all sessions" style={{background: name == 'network' ? '#ddd' : null}} 
