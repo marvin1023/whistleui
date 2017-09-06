@@ -316,7 +316,8 @@ var Index = React.createClass({
 			}
 		];
     protocols.setPlugins(state);
-    state.exportFileType = storage.get('exportFileType');
+		state.exportFileType = storage.get('exportFileType');
+		state.showLeftMenu = storage.get('showLeftMenu');
 		return state;
 	},
 	createPluginsOptions: function(plugins) {
@@ -505,6 +506,9 @@ var Index = React.createClass({
 		}).on('keydown', function(e) {
 			if (!e.ctrlKey && !e.metaKey) {
 				return;
+			}
+			if (e.keyCode === 77) {
+				self.toggleLeftMenu();
 			}
 			var isNetwork = self.state.name === 'network';
 			if (isNetwork && e.keyCode == 88) {
@@ -1581,6 +1585,13 @@ var Index = React.createClass({
 	showValuesSettings: function() {
 		$(ReactDOM.findDOMNode(this.refs.valuesSettingsDialog)).modal('show');
 	},
+	toggleLeftMenu: function() {
+		var showLeftMenu = !this.state.showLeftMenu;
+		this.setState({
+			showLeftMenu: showLeftMenu
+		});
+		storage.set('showLeftMenu', showLeftMenu ? 1 : '');
+	},
 	onClickMenu: function(e) {
 		var target = $(e.target).closest('a');
 		var self = this;
@@ -1896,9 +1907,14 @@ var Index = React.createClass({
 	      networkOptions[0].disabled = !hasUnselected;
 	    }
 		}
+		var showLeftMenu = state.showLeftMenu;
 		return (
 			<div className="main orient-vertical-box">
 				<div className={'w-menu w-' + name + '-menu-list'}>
+					<a onClick={this.toggleLeftMenu} href="javascript:;" draggable="false"
+						style={{background: showLeftMenu ? '#ddd' : undefined}} title="Ctrl[Command] + M">
+						<span className="glyphicon glyphicon-save-file"></span>
+					</a>
   				<div onMouseEnter={this.showNetworkOptions} onMouseLeave={this.hideNetworkOptions} className={'w-menu-wrapper' + (showNetworkOptions ? ' w-menu-wrapper-show' : '')}>
   				  <a onClick={this.showNetwork} onDoubleClick={this.clearNetwork} className="w-network-menu" title="Double click to remove all sessions" style={{background: name == 'network' ? '#ddd' : null}} 
 					href="javascript:;"  draggable="false"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
@@ -1948,10 +1964,15 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditRules ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-rules-input"><input ref="editRulesInput" onKeyDown={this.editRules} onBlur={this.hideOptions} type="text" maxLength="64"  /><button type="button" onClick={this.editRules} className="btn btn-primary">OK</button></div>
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 				</div>
-				{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : undefined}
-				{state.hasValues ? <List theme={valuesTheme} onDoubleClick={this.showEditValuesByDBClick} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : undefined}
-				{state.hasNetwork ? <Network ref="network" hide={name === 'rules' || name === 'values' || name === 'plugins'} modal={state.network} /> : undefined}
-				{state.hasPlugins ? <Plugins {...state} onOpen={this.activePluginTab} onClose={this.closePluginTab} onActive={this.activePluginTab} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : undefined}
+				<div className="w-container box fill">
+					<div className={'w-left-menu' + (showLeftMenu ? '' : ' hide')}>
+
+					</div>
+					{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : undefined}
+					{state.hasValues ? <List theme={valuesTheme} onDoubleClick={this.showEditValuesByDBClick} fontSize={valuesFontSize} lineNumbers={showValuesLineNumbers} onSelect={this.saveValues} onActive={this.activeValues} modal={state.values} hide={name == 'values' ? false : true} className="w-values-list" /> : undefined}
+					{state.hasNetwork ? <Network ref="network" hide={name === 'rules' || name === 'values' || name === 'plugins'} modal={state.network} /> : undefined}
+					{state.hasPlugins ? <Plugins {...state} onOpen={this.activePluginTab} onClose={this.closePluginTab} onActive={this.activePluginTab} onChange={this.disablePlugin} ref="plugins" hide={name == 'plugins' ? false : true} /> : undefined}
+				</div>
 				<div ref="rulesSettingsDialog" className="modal fade w-rules-settings-dialog">
 					<div className="modal-dialog">
 					  	<div className="modal-content">
