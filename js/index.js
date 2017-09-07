@@ -2016,7 +2016,7 @@ var Index = React.createClass({
 					</a>
 					<div onMouseEnter={this.showRemoveOptions} onMouseLeave={this.hideRemoveOptions}
 						style={{display: isNetwork ? '' : 'none'}}
-						className={'w-menu-wrapper w-menu-auto' + (state.showRemoveOptions ? ' w-menu-wrapper-show' : '')}>
+						className={'w-menu-wrapper w-remove-menu-list w-menu-auto' + (state.showRemoveOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.clear} className="w-remove-menu" title="Ctrl[Command] + X"
 							href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-remove"></span>Clear
