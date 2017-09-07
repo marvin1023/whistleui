@@ -52,3 +52,6 @@
 .w-left-menu { background: #f2f2f2; width: 90px; border: 1px solid #ccc; border-bottom: none; display: none; }
 .w-show-left-menu .w-left-menu { display: block; }
 .w-show-left-menu .w-nav-menu { display: none; }
+.w-left-menu a { display: block; padding: 10px 5px; text-decoration: none!important; color: #000; }
+.w-left-menu a:hover { color: #337ab7; }
+.w-left-menu a span { margin-right: 5px; }
