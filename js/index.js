@@ -56,6 +56,21 @@ var VALUES_ACTIONS = [
 		id: 'importValues'
 	}
 ];
+var REMOVE_OPTIONS = [
+	{
+		name: 'Remove Selected Sessions',
+		icon: 'remove',
+		id: 'removeSelected',
+		disabled: true,
+		title: 'Ctrl[Command] + D'
+	},
+	{
+		name: 'Remove Unselected Sessions',
+		id: 'removeUnselected',
+		disabled: true,
+		title: 'Ctrl[Command] + Shift + D'
+	}
+];
 
 function getPageName() {
 	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
@@ -1028,7 +1043,17 @@ var Index = React.createClass({
     this.setState({
       showNetworkOptions: false
     });
-  },
+	},
+	showRemoveOptions: function() {
+		this.setState({
+      showRemoveOptions: true
+    });
+	},
+	hideRemoveOptions: function() {
+		this.setState({
+      showRemoveOptions: false
+    });
+	},
 	showHelpOptions: function() {
 	  this.setState({
 			showHelpOptions: true
@@ -1908,6 +1933,12 @@ var Index = React.createClass({
 	        if (option.id === 'removeUnselected') {
 	          option.disabled = !hasUnselected;
 	        }
+				});
+				REMOVE_OPTIONS.forEach(function(option) {
+	        option.disabled = false;
+	        if (option.id === 'removeUnselected') {
+	          option.disabled = !hasUnselected;
+	        }
 	      });
 	    } else {
 	      networkOptions.forEach(function(option) {
@@ -1917,7 +1948,14 @@ var Index = React.createClass({
 	          option.disabled = !hasUnselected;
 	        }
 	      });
-	      networkOptions[0].disabled = !hasUnselected;
+				networkOptions[0].disabled = !hasUnselected;
+				REMOVE_OPTIONS.forEach(function(option) {
+	        if (OPTIONS_WITH_SELECTED.indexOf(option.id) !== -1) {
+	          option.disabled = true;
+	        } else if (option.id === 'removeUnselected') {
+	          option.disabled = !hasUnselected;
+	        }
+	      });
 	    }
 		}
 		var showLeftMenu = state.showLeftMenu;
@@ -1964,11 +2002,13 @@ var Index = React.createClass({
 					</div>
 					<div onMouseEnter={this.showRemoveOptions} onMouseLeave={this.hideRemoveOptions}
 						style={{display: isNetwork ? '' : 'none'}}
-						className={'w-menu-wrapper' + (state.showRemoveOptions ? ' w-menu-wrapper-show' : '')}>
-						<a onClick={this.clear} className="w-remove-menu" href="javascript:;" draggable="false">
+						className={'w-menu-wrapper w-menu-auto' + (state.showRemoveOptions ? ' w-menu-wrapper-show' : '')}>
+						<a onClick={this.clear} className="w-remove-menu" title="Ctrl[Command] + X"
+							href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-remove"></span>Clear
 						</a>
-						<MenuItem options={pluginsOptions} className="w-remove-menu-item" onClickOption={this.removeSessions} />
+						<MenuItem options={REMOVE_OPTIONS} className="w-remove-menu-item"
+							onClickOption={this.removeSessions} />
 					</div>
 					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false" title="Ctrl[Command] + S"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-plus"></span>Create</a>
