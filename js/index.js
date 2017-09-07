@@ -1908,32 +1908,30 @@ var Index = React.createClass({
 	    }
 		}
 		var showLeftMenu = state.showLeftMenu;
-		var hideClass = showLeftMenu ? ' hide' : '';
-		var showClass = showLeftMenu ? '' : ' hide';
 		return (
-			<div className="main orient-vertical-box">
+			<div className={'main orient-vertical-box' + (showLeftMenu ? ' w-show-left-menu' : '')}>
 				<div className={'w-menu w-' + name + '-menu-list'}>
-					<a onClick={this.toggleLeftMenu} href="javascript:;" draggable="false" className="w-show-left-menu"
+					<a onClick={this.toggleLeftMenu} href="javascript:;" draggable="false" className="w-show-left-menu-btn"
 						style={{background: showLeftMenu ? '#ddd' : undefined}} title="Ctrl[Command] + M">
 						<span className={'glyphicon glyphicon-chevron-' + (showLeftMenu ? 'down' : 'right')}></span>
 					</a>
-  				<div onMouseEnter={this.showNetworkOptions} onMouseLeave={this.hideNetworkOptions} className={'w-menu-wrapper' + (showNetworkOptions ? ' w-menu-wrapper-show' : '') + hideClass}>
+  				<div onMouseEnter={this.showNetworkOptions} onMouseLeave={this.hideNetworkOptions} className={'w-nav-menu w-menu-wrapper' + (showNetworkOptions ? ' w-menu-wrapper-show' : '')}>
   				  <a onClick={this.showNetwork} onDoubleClick={this.clearNetwork} className="w-network-menu" title="Double click to remove all sessions" style={{background: name == 'network' ? '#ddd' : null}} 
 					href="javascript:;"  draggable="false"><span className="glyphicon glyphicon-align-justify"></span>Network</a>
             <MenuItem ref="networkMenuItem" options={state.networkOptions} className="w-network-menu-item" onClickOption={this.handleNetwork} />
           </div>
 					<div onMouseEnter={this.showRulesOptions} onMouseLeave={this.hideRulesOptions}
-						className={'w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '') + (isRules ? ' w-menu-auto' : '') + hideClass}>
+						className={'w-nav-menu w-menu-wrapper' + (showRulesOptions ? ' w-menu-wrapper-show' : '') + (isRules ? ' w-menu-auto' : '')}>
 						<a onClick={this.showRules} className="w-rules-menu" style={{background: name == 'rules' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-list"></span>Rules</a>
 						<MenuItem ref="rulesMenuItem"  name={name == 'rules' ? null : 'Open'} options={rulesOptions} checkedOptions={uncheckedRules} disabled={state.disabledAllRules} 
 						className="w-rules-menu-item" onClick={this.showRules} onClickOption={this.showAndActiveRules}  onChange={this.selectRulesByOptions} />
 					</div>
 					<div onMouseEnter={this.showValuesOptions} onMouseLeave={this.hideValuesOptions}
-						className={'w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '') + (isValues ? ' w-menu-auto' : '') + hideClass}>
+						className={'w-nav-menu w-menu-wrapper' + (showValuesOptions ? ' w-menu-wrapper-show' : '') + (isValues ? ' w-menu-auto' : '')}>
 						<a onClick={this.showValues} className="w-values-menu" style={{background: name == 'values' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-folder-open"></span>Values</a>
 						<MenuItem ref="valuesMenuItem" name={name == 'values' ? null : 'Open'} options={state.valuesOptions} className="w-values-menu-item" onClick={this.showValues} onClickOption={this.showAndActiveValues} />
 					</div>
-					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '') + hideClass}>
+					<div ref="pluginsMenu" onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-nav-menu w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '')}>
 						<a onClick={this.showPlugins} className="w-plugins-menu" style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-list-alt"></span>Plugins</a>
 						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
 							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
@@ -1967,7 +1965,7 @@ var Index = React.createClass({
 					<div onMouseDown={this.preventBlur} style={{display: state.showEditValues ? 'block' : 'none'}} className="shadow w-input-menu-item w-edit-values-input"><input ref="editValuesInput" onKeyDown={this.editValues} onBlur={this.hideOptions} type="text" maxLength="64" /><button type="button" onClick={this.editValues} className="btn btn-primary">OK</button></div>
 				</div>
 				<div className="w-container box fill">
-					<div className={'w-left-menu' + showClass}>
+					<div className="w-left-menu">
 
 					</div>
 					{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : undefined}

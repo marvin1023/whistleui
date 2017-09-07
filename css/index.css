@@ -48,5 +48,7 @@
 
 .w-confirm-import-dialog .modal-dialog { width: 320px; font-weight: bold; }
 
-.w-show-left-menu { padding-left: 8px!important; padding-right: 5px!important; }
-.w-left-menu { background: #f2f2f2; width: 90px; border: 1px solid #ccc; border-bottom: none; }
+.w-show-left-menu-btn { padding-left: 8px!important; padding-right: 5px!important; }
+.w-left-menu { background: #f2f2f2; width: 90px; border: 1px solid #ccc; border-bottom: none; display: none; }
+.w-show-left-menu .w-left-menu { display: block; }
+.w-show-left-menu .w-nav-menu { display: none; }
