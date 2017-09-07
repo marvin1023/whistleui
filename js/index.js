@@ -1936,16 +1936,26 @@ var Index = React.createClass({
 						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
 							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
 					</div>
-					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false" title="Ctrl[Command] + S"><span className="glyphicon glyphicon-save-file"></span>Import</a>
-					<div onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '')}>
-						<a onClick={this.showPlugins} className="w-plugins-menu" style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-list-alt"></span>Export</a>
-						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
-							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
+					<a onClick={this.onClickMenu} className="w-import-menu"
+						style={{display: isPlugins ? 'none' : ''}} href="javascript:;"
+						draggable="false" title="Ctrl[Command] + I">
+						<span className="glyphicon glyphicon-import"></span>Import
+					</a>
+					<div onMouseEnter={this.showExportOptions} onMouseLeave={this.hideExportOptions}
+						style={{display: isPlugins ? 'none' : ''}}
+						className={'w-menu-wrapper' + (state.showExportOptions ? ' w-menu-wrapper-show' : '')}>
+						<a onClick={this.clickMenu} className="w-export-menu" href="javascript:;" draggable="false">
+							<span className="glyphicon glyphicon-export"></span>Export
+						</a>
+						<MenuItem options={pluginsOptions} className="w-export-menu-item" onClickOption={this.clickExportItem} />
 					</div>
-					<div onMouseEnter={this.showPluginsOptions} onMouseLeave={this.hidePluginsOptions} className={'w-menu-wrapper' + (showPluginsOptions ? ' w-menu-wrapper-show' : '')}>
-						<a onClick={this.showPlugins} className="w-plugins-menu" style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-list-alt"></span>Clear</a>
-						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
-							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
+					<div onMouseEnter={this.showRemoveOptions} onMouseLeave={this.hideRemoveOptions}
+						style={{display: isNetwork ? '' : 'none'}}
+						className={'w-menu-wrapper' + (state.showRemoveOptions ? ' w-menu-wrapper-show' : '')}>
+						<a onClick={this.clear} className="w-remove-menu" href="javascript:;" draggable="false">
+							<span className="glyphicon glyphicon-remove"></span>Clear
+						</a>
+						<MenuItem options={pluginsOptions} className="w-remove-menu-item" onClickOption={this.removeSessions} />
 					</div>
 					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false" title="Ctrl[Command] + S"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-plus"></span>Create</a>
