@@ -15,11 +15,15 @@
 .w-input-menu-item input {width: 246px; height: 32px; border: 1px solid #ccc; border-radius: 2px; padding: 0 5px; vertical-align: middle;}
 .w-input-menu-item .btn {height: 32px; padding: 0 12px; vertical-align: middle; border-radius: 0; border-right-top-radius: 2px; border-right-bottom-radius: 2px;}
 
-.w-create-rules-input {left: 305px;}
-.w-create-values-input {left: 295px;}
-.w-edit-rules-input {left: 377px;}
-.w-edit-values-input {left: 367px;}
-.w-edit-filter-input {left: 520px;} 
+.w-create-rules-input {left: 310px;}
+.w-create-values-input {left: 300px;}
+.w-edit-rules-input {left: 382px;}
+.w-edit-values-input {left: 372px;}
+
+.w-show-left-menu .w-create-rules-input {left: 270px;}
+.w-show-left-menu .w-create-values-input {left: 260px;}
+.w-show-left-menu .w-edit-rules-input {left: 342px;}
+.w-show-left-menu .w-edit-values-input {left: 332px;}
 
 .w-menu-wrapper .w-menu-item {display: none!important;}
 .w-menu-wrapper-show .w-menu-item {display: block!important;}
