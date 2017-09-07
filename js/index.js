@@ -848,6 +848,19 @@ var Index = React.createClass({
     }
 	  this.hideNetworkOptions();
 	},
+	importData: function() {
+		switch(this.state.name) {
+			case 'network':
+				this.importSessions();
+				break;
+			case 'rules':
+				this.importRules();
+				break;
+			case 'values':
+				this.importValues();
+				break;
+		}
+	},
 	importSessions: function() {
 	  ReactDOM.findDOMNode(this.refs.importSessions).click();
 	},
@@ -1936,7 +1949,7 @@ var Index = React.createClass({
 						<MenuItem ref="pluginsMenuItem" name={name == 'plugins' ? null : 'Open'} options={pluginsOptions} checkedOptions={state.disabledPlugins} disabled={state.disabledAllRules || state.disabledAllPlugins} 
 							className="w-plugins-menu-item" onClick={this.showPlugins} onChange={this.disablePlugin} onClickOption={this.showAndActivePlugins} />
 					</div>
-					<a onClick={this.onClickMenu} className="w-import-menu"
+					<a onClick={this.importData} className="w-import-menu"
 						style={{display: isPlugins ? 'none' : ''}} href="javascript:;"
 						draggable="false" title="Ctrl[Command] + I">
 						<span className="glyphicon glyphicon-import"></span>Import
