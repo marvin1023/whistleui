@@ -876,6 +876,23 @@ var Index = React.createClass({
 				break;
 		}
 	},
+	exportData: function() {
+		switch(this.state.name) {
+			case 'network':
+				var modal = this.state.network;
+				var hasSelected = modal && modal.hasSelected();
+				if (hasSelected) {
+					$(ReactDOM.findDOMNode(this.refs.chooseFileType)).modal('show');
+				}
+				break;
+			case 'rules':
+				this.showAndActiveRules({ id: 'exportRules' });
+				break;
+			case 'values':
+				this.showAndActiveValues({ id: 'exportValues' });
+				break;
+		}
+	},
 	importSessions: function() {
 	  ReactDOM.findDOMNode(this.refs.importSessions).click();
 	},
@@ -1993,14 +2010,9 @@ var Index = React.createClass({
 						draggable="false" title="Ctrl[Command] + I">
 						<span className="glyphicon glyphicon-import"></span>Import
 					</a>
-					<div onMouseEnter={this.showExportOptions} onMouseLeave={this.hideExportOptions}
-						style={{display: isPlugins ? 'none' : ''}}
-						className={'w-menu-wrapper' + (state.showExportOptions ? ' w-menu-wrapper-show' : '')}>
-						<a onClick={this.clickMenu} className="w-export-menu" href="javascript:;" draggable="false">
-							<span className="glyphicon glyphicon-export"></span>Export
-						</a>
-						<MenuItem options={pluginsOptions} className="w-export-menu-item" onClickOption={this.clickExportItem} />
-					</div>
+					<a onClick={this.exportData} className="w-export-menu" href="javascript:;" draggable="false">
+						<span className="glyphicon glyphicon-export"></span>Export
+					</a>
 					<div onMouseEnter={this.showRemoveOptions} onMouseLeave={this.hideRemoveOptions}
 						style={{display: isNetwork ? '' : 'none'}}
 						className={'w-menu-wrapper w-menu-auto' + (state.showRemoveOptions ? ' w-menu-wrapper-show' : '')}>
@@ -2120,7 +2132,7 @@ var Index = React.createClass({
             <div className="modal-body">
               <label className="w-choose-filte-type-label">Save as:
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
-                  <option value="whistle">*.txt (*.json)</option>
+                  <option value="whistle">*.txt</option>
                   <option value="Fiddler">*.saz (For Fiddler)</option>
                 </select>
               </label>
