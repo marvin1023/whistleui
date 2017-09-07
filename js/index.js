@@ -1041,6 +1041,7 @@ var Index = React.createClass({
 	},
   hideNetworkOptions: function() {
     this.setState({
+			showRemoveOptions: false,
       showNetworkOptions: false
     });
 	},
@@ -2007,8 +2008,7 @@ var Index = React.createClass({
 							href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-remove"></span>Clear
 						</a>
-						<MenuItem options={REMOVE_OPTIONS} className="w-remove-menu-item"
-							onClickOption={this.removeSessions} />
+						<MenuItem options={REMOVE_OPTIONS} className="w-remove-menu-item" onClickOption={this.handleNetwork} />
 					</div>
 					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false" title="Ctrl[Command] + S"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-plus"></span>Create</a>
