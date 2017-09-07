@@ -2010,7 +2010,8 @@ var Index = React.createClass({
 						draggable="false" title="Ctrl[Command] + I">
 						<span className="glyphicon glyphicon-import"></span>Import
 					</a>
-					<a onClick={this.exportData} className="w-export-menu" href="javascript:;" draggable="false">
+					<a onClick={this.exportData} className="w-export-menu" href="javascript:;"
+					style={{display: isPlugins ? 'none' : ''}} draggable="false">
 						<span className="glyphicon glyphicon-export"></span>Export
 					</a>
 					<div onMouseEnter={this.showRemoveOptions} onMouseLeave={this.hideRemoveOptions}
