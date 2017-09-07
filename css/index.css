@@ -20,10 +20,10 @@
 .w-edit-rules-input {left: 382px;}
 .w-edit-values-input {left: 372px;}
 
-.w-show-left-menu .w-create-rules-input {left: 270px;}
-.w-show-left-menu .w-create-values-input {left: 260px;}
-.w-show-left-menu .w-edit-rules-input {left: 342px;}
-.w-show-left-menu .w-edit-values-input {left: 332px;}
+.w-show-left-menu .w-create-rules-input {left: 210px;}
+.w-show-left-menu .w-create-values-input {left: 200px;}
+.w-show-left-menu .w-edit-rules-input {left: 282px;}
+.w-show-left-menu .w-edit-values-input {left: 272px;}
 
 .w-menu-wrapper .w-menu-item {display: none!important;}
 .w-menu-wrapper-show .w-menu-item {display: block!important;}
