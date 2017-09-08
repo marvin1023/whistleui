@@ -92,7 +92,8 @@ function getDefaultColumns() {
     {
       title: 'Time',
       name: 'time',
-      className: 'time'
+      className: 'time',
+      selected: true
     }
   ];
 }
