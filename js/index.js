@@ -2007,7 +2007,7 @@ var Index = React.createClass({
 					</div>
 					<a onClick={this.importData} className="w-import-menu"
 						style={{display: isPlugins ? 'none' : ''}} href="javascript:;"
-						draggable="false" title="Ctrl[Command] + I">
+						draggable="false">
 						<span className="glyphicon glyphicon-import"></span>Import
 					</a>
 					<a onClick={this.exportData} className="w-export-menu" href="javascript:;"
