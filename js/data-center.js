@@ -261,19 +261,23 @@ function checkFiled(keyword, text) {
 			return false;
 		}
 		kw = kw.split(/\s+/g);
-		if (kw[0] && text.indexOf(kw[0]) === -1) {
-			return false;
-		}
-		if (kw[1] && text.indexOf(kw[1]) === -1) {
-			return false;
-		}
-		if (kw[2] && text.indexOf(kw[2]) === -1) {
-			return false;
-		}
-		return true;
+		return checkKeyword(text, kw[0]) && checkKeyword(text, kw[1]) && checkKeyword(text, kw[2]);
 	};
 
 	return check(keyword[0]) || check(keyword[1]) || check(keyword[2]);
+}
+
+function checkKeyword(text, kw) {
+	if (!kw || kw === '!:') {
+		return true;
+	}
+	var not;
+	if (kw.indexOf('!:') === 0) {
+		not = true;
+		kw = kw.substring(2);
+	}
+	kw = text.indexOf(kw);
+	return not ? kw === -1 : kw !== -1;
 }
 
 function filterData(obj, item) {
