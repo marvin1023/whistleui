@@ -268,13 +268,13 @@ function checkFiled(keyword, text) {
 }
 
 function checkKeyword(text, kw) {
-	if (!kw || kw === '!:') {
+	if (!kw || kw === '!') {
 		return true;
 	}
 	var not;
-	if (kw.indexOf('!:') === 0) {
+	if (kw[0] === '!') {
 		not = true;
-		kw = kw.substring(2);
+		kw = kw.substring(1);
 	}
 	kw = text.indexOf(kw);
 	return not ? kw === -1 : kw !== -1;
