@@ -280,6 +280,17 @@ function checkKeyword(text, kw) {
 	return not ? kw === -1 : kw !== -1;
 }
 
+function joinString(str1, str2) {
+	var result = [];
+	if (str1 != null || str) {
+		result.push(str1);
+	}
+	if (str2 == null || str) {
+		result.push(str2);
+	}
+	return result.join('\n');
+}
+
 function filterData(obj, item) {
 	if (!obj) {
 		return true;
@@ -293,16 +304,14 @@ function filterData(obj, item) {
 	if (!checkFiled(obj.method, item.req.method)) {
 		return false;
 	}
-	if (!checkFiled(obj.ip, item.req.ip)
-			&& !checkFiled(obj.ip, item.res.ip)) {
+	if (!checkFiled(obj.ip, joinString(item.req.ip, item.res.ip))) {
 		return false;
 	}
-	if (!checkFiled(obj.body, item.req.body)
-			&& !checkFiled(obj.body, item.res.body)) {
+	if (!checkFiled(obj.body, joinString(item.req.body, item.res.body))) {
 		return false;
 	}
-	if (!checkFiled(obj.headers, util.objectToString(item.req.headers))
-			&& !checkFiled(obj.headers, util.objectToString(item.res.headers))) {
+	if (!checkFiled(obj.headers, joinString(util.objectToString(item.req.headers),
+		util.objectToString(item.res.headers))) {
 		return false;
 	}
 	return true;
