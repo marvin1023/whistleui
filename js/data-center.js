@@ -282,10 +282,10 @@ function checkKeyword(text, kw) {
 
 function joinString(str1, str2) {
 	var result = [];
-	if (str1 != null || str) {
+	if (str1 != null || str1) {
 		result.push(str1);
 	}
-	if (str2 == null || str) {
+	if (str2 == null || str2) {
 		result.push(str2);
 	}
 	return result.join('\n');
@@ -310,6 +310,7 @@ function filterData(obj, item) {
 	if (!checkFiled(obj.body, joinString(item.req.body, item.res.body))) {
 		return false;
 	}
+
 	if (!checkFiled(obj.headers, joinString(util.objectToString(item.req.headers),
 		util.objectToString(item.res.headers)))) {
 		return false;
