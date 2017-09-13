@@ -311,7 +311,7 @@ function filterData(obj, item) {
 		return false;
 	}
 	if (!checkFiled(obj.headers, joinString(util.objectToString(item.req.headers),
-		util.objectToString(item.res.headers))) {
+		util.objectToString(item.res.headers)))) {
 		return false;
 	}
 	return true;
