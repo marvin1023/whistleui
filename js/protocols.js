@@ -11,7 +11,7 @@ var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy',
                   'reqWrite',  'resWrite', 'reqWriteRaw', 'resWriteRaw', 'exportsUrl', 'exports'];
 
 var rules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile',
-  'host', 'https2http-proxy', 'http2https-proxy'].concat(PROTOCOLS.slice(2));
+  'host', 'https2http-proxy', 'http2https-proxy', 'reqHost'].concat(PROTOCOLS.slice(2));
 var allRules = rules.slice();
 var callbacks = [];
 
