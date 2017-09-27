@@ -331,7 +331,7 @@ var Index = React.createClass({
 			}
 		];
     protocols.setPlugins(state);
-		state.exportFileType = storage.get('exportFileType') || 'Fiddler';
+		state.exportFileType = storage.get('exportFileType');
 		state.showLeftMenu = storage.get('showLeftMenu');
 		return state;
 	},
