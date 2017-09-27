@@ -5,8 +5,10 @@ var Divider = require('./divider');
 var Properties = require('./properties');
 var util = require('./util');
 var BtnGroup = require('./btn-group');
+var JSONViewer = require('./json-viewer');
 var Textarea = require('./textarea');
-var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'Raw'}];
+
+var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'JSON'}, {name: 'Raw'}];
 
 var ReqDetail = React.createClass({
 	getInitialState: function() {
@@ -15,6 +17,7 @@ var ReqDetail = React.createClass({
 			initedTextView: false,
 			initedCookies: false,
 			initedWebForms: false,
+			initedJSON: false,
 			initedRaw: false
 		};
 	},
@@ -32,20 +35,29 @@ var ReqDetail = React.createClass({
 		this.state['inited' + btn.name] = true;
 	},
 	render: function() {
-		var btn = this.state.btn;
+		var state = this.state;
+		var btn = state.btn;
 		if (!btn) {
 			btn = BTNS[0];
 			this.selectBtn(btn);
 		}
 		var name = btn && btn.name;
 		var modal = this.props.modal;
-		var req, headers, rawHeaders, cookies, body, raw, query, form, tips;
+		var req, headers, rawHeaders, cookies, body, raw, query, form, tips, json;
 		body = raw = '';
 		if (modal) {
 			req = modal.req
 			rawHeaders = req.rawHeaders;
 			body = req.body || '';
 			headers = req.headers;
+			if (req.json) {
+				json = req.json;
+			} else if (json = util.parseJSON(body)) {
+				json = req.json = {
+					json: json,
+					str: JSON.stringify(json, null, '    ')
+				};
+			}
 			delete headers.Host;
 			cookies = util.parseQueryString(headers.cookie, /;\s*/g, null, decodeURIComponent);
 			var url = modal.url;
@@ -69,20 +81,21 @@ var ReqDetail = React.createClass({
 				}
 			}
 		}
-		this.state.raw = raw;
-		this.state.body = body;
+		state.raw = raw;
+		state.body = body;
 		
 		return (
 			<div className={'fill orient-vertical-box w-detail-content w-detail-request' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<BtnGroup onClick={this.onClickBtn} btns={BTNS} />
-				{this.state.initedHeaders ? <div className={'fill w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
-				{this.state.initedTextView ? <Textarea tips={tips} value={body} className="fill w-detail-request-textview" hide={name != BTNS[1].name} /> : ''}
-				{this.state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties modal={cookies} enableViewSource="1" /></div> : ''}
-				{this.state.initedWebForms ? <Divider vertical="true" className={'w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
+				{state.initedHeaders ? <div className={'fill w-detail-request-headers' + (name == BTNS[0].name ? '' : ' hide')}><Properties modal={rawHeaders || headers} enableViewSource="1" /></div> : ''}
+				{state.initedTextView ? <Textarea tips={tips} value={body} className="fill w-detail-request-textview" hide={name != BTNS[1].name} /> : ''}
+				{state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[2].name ? '' : ' hide')}><Properties modal={cookies} enableViewSource="1" /></div> : ''}
+				{state.initedWebForms ? <Divider vertical="true" className={'w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
 					<div className="fill w-detail-request-query"><Properties modal={query} enableViewSource="1" /></div>
 					<div className="fill w-detail-request-form"><Properties modal={form} enableViewSource="1" /></div>
 				</Divider> : ''}
-				{this.state.initedRaw ? <Textarea value={raw} className="fill w-detail-request-raw" hide={name != BTNS[4].name} /> : ''}
+				{state.initedJSON ? <JSONViewer data={json} hide={name != BTNS[4].name} /> : undefined}
+				{state.initedRaw ? <Textarea value={raw} className="fill w-detail-request-raw" hide={name != BTNS[5].name} /> : ''}
 			</div>
 		);
 	}
