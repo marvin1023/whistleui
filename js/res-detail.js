@@ -73,7 +73,7 @@ var ResDetail = React.createClass({
 					cookies = typeof cookies == 'string' ? [cookies] : [];
 				}
 				cookies = cookies.map(function(cookie) {
-							cookie = util.parseQueryString(cookie, /;\s*/, null, decodeURIComponent);
+							cookie = util.parseQueryString(cookie, /;\s*/, null, decodeURIComponent, true);
 							var row = ['', '', '', '', '', '', '', ''];
 							for (var i in cookie) {
 								switch(i.toLowerCase()) {

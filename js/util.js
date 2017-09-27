@@ -224,7 +224,7 @@ exports.ensureVisible = function(elem, container) {
 	}
 };
 
-exports.parseQueryString = function(str, delimiter, seperator, decode) {
+exports.parseQueryString = function(str, delimiter, seperator, decode, donotAllowRepeat) {
 	var result = {};
 	if (!str || !(str = (str + '').trim())) {
 		return result;
@@ -246,8 +246,16 @@ exports.parseQueryString = function(str, delimiter, seperator, decode) {
 				value = decode ? decode(val) : value;
 				key = decode ? decode(k) : key;
 			} catch(e) {}
-			
-			result[key] = value;
+			if (!donotAllowRepeat && (key in result)) {
+				var curVal = result[key];
+				if (Array.isArray(curVal)) {
+					curVal.push(value);
+				} else {
+					result[key] = [curVal, value];
+				}
+			} else {
+				result[key] = value;
+			}
 		}
 	});
 	return result;
