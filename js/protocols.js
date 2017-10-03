@@ -13,7 +13,6 @@ var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy',
 var rules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile',
   'host', 'https2http-proxy', 'http2https-proxy', 'reqHost'].concat(PROTOCOLS.slice(2));
 var allRules = rules.slice();
-var callbacks = [];
 
 exports.setPlugins = function(pluginsState) {
   var pluginsOptions = pluginsState.pluginsOptions;

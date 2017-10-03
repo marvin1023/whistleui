@@ -19,10 +19,6 @@ CodeMirror.defineMode('rules', function() {
 				return /^weinre:\/\//.test(str);
 			}
 			
-			function isProxy(str) {
-				return /^proxy:\/\//.test(str);
-			}
-			
 			function isReq(str) {
 				return /^(?:req|hostname|reqHost|accept|etag|referer|auth|ua|reqCookies|reqDelay|reqSpeed|reqCors|reqHeaders|method|reqType|reqCharset|reqBody|reqPrepend|reqAppend|reqReplace|reqWrite|reqWriteRaw):\/\//.test(str);
 			}
