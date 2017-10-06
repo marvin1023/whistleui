@@ -292,7 +292,7 @@ exports.getPath = function(url) {
 	return index == -1 ? '/' : url.substring(index);
 };
 
-exports.parseJSON = function(str) {
+function parseJSON(str) {
 	if (!str || !(str = str.trim()) || !/({[\w\W]+}|\[[\w\W]+\])/.test(str)) {
 		return '';
 	}
@@ -300,6 +300,16 @@ exports.parseJSON = function(str) {
 	str = RegExp.$1;
 	try {
 		return JSON.parse(str);
+	} catch(e) {}
+}
+
+exports.parseJSON = function(str, decode) {
+	var result = parseJSON(str);
+	if (result || !str || !decode) {
+		return result;
+	}
+	try {
+		return parseJSON(decode(str));
 	} catch(e) {}
 };
 

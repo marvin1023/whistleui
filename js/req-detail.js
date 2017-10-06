@@ -52,7 +52,7 @@ var ReqDetail = React.createClass({
 			headers = req.headers;
 			if (req.json) {
 				json = req.json;
-			} else if (json = util.parseJSON(body)) {
+			} else if (json = util.parseJSON(body, decodeURIComponent)) {
 				json = req.json = {
 					json: json,
 					str: JSON.stringify(json, null, '    ')
