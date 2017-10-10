@@ -2058,22 +2058,22 @@ var Index = React.createClass({
 							style={{background: name == 'network' ? '#ddd' : null}} 
 							href="javascript:;"  draggable="false">
 								<span className="glyphicon glyphicon-align-justify"></span>
-								<span className="w-left-menu-tips">Network</span>
+								<span className="w-left-menu-tips" style={{display:  name == 'network' ? 'none' : undefined}}>Network</span>
 						</a>
 						<a onClick={this.showRules} className="w-rules-menu"
 							style={{background: name == 'rules' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-list"></span>
-							<span className="w-left-menu-tips">Rules</span>
+							<span className="w-left-menu-tips" style={{display:  name == 'rules' ? 'none' : undefined}}>Rules</span>
 						</a>
 						<a onClick={this.showValues} className="w-values-menu"
 							style={{background: name == 'values' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-folder-open"></span>
-							<span className="w-left-menu-tips">Values</span>
+							<span className="w-left-menu-tips" style={{display:  name == 'values' ? 'none' : undefined}}>Values</span>
 						</a>
 						<a onClick={this.showPlugins} className="w-plugins-menu"
 							style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-list-alt"></span>
-							<span className="w-left-menu-tips">Plugins</span>
+							<span className="w-left-menu-tips" style={{display:  name == 'plugins' ? 'none' : undefined}}>Plugins</span>
 						</a>
 					</div>
 					{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : undefined}
