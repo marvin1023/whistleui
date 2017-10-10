@@ -2053,23 +2053,27 @@ var Index = React.createClass({
 				</div>
 				<div className="w-container box fill">
 					<div className="w-left-menu">
-						<a onClick={this.showNetwork} onDoubleClick={this.clearNetwork} title="Network"
+						<a onClick={this.showNetwork} onDoubleClick={this.clearNetwork}
 							className="w-network-menu"
 							style={{background: name == 'network' ? '#ddd' : null}} 
 							href="javascript:;"  draggable="false">
 								<span className="glyphicon glyphicon-align-justify"></span>
+								<span className="w-left-menu-tips">Network</span>
 						</a>
-						<a onClick={this.showRules} className="w-rules-menu" title="Rules"
+						<a onClick={this.showRules} className="w-rules-menu"
 							style={{background: name == 'rules' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-list"></span>
+							<span className="w-left-menu-tips">Rules</span>
 						</a>
-						<a onClick={this.showValues} className="w-values-menu" title="Values"
+						<a onClick={this.showValues} className="w-values-menu"
 							style={{background: name == 'values' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-folder-open"></span>
+							<span className="w-left-menu-tips">Values</span>
 						</a>
-						<a onClick={this.showPlugins} className="w-plugins-menu" title="Plugins"
+						<a onClick={this.showPlugins} className="w-plugins-menu"
 							style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-list-alt"></span>
+							<span className="w-left-menu-tips">Plugins</span>
 						</a>
 					</div>
 					{state.hasRules ? <List ref="rules" disabled={state.disabledAllRules} theme={rulesTheme} fontSize={rulesFontSize} lineNumbers={showRulesLineNumbers} onSelect={this.selectRules} onUnselect={this.unselectRules} onActive={this.activeRules} modal={state.rules} hide={name == 'rules' ? false : true} name="rules" /> : undefined}
