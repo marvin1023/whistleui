@@ -33,7 +33,8 @@ var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', '
 var rules = require('./rules-mode');
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
-var COMMENT_RE = /^\s*#\s*/;
+var RULES_COMMENT_RE = /^\s*#\s*/;
+var JS_COMMENT_RE = /^\/\/\s?/;
 var NO_SPACE_RE = /[^\s]/;
 
 var Editor = React.createClass({
@@ -120,8 +121,9 @@ var Editor = React.createClass({
 		}
 		var isRulesEditor = self.props.name == 'rules';
 		$(elem).on('keydown', function(e) {
-			if ((!isRulesEditor && self._mode !== 'rules') || 
-				!(e.ctrlKey || e.metaKey) || e.keyCode != 191) {
+			var isRules = isRulesEditor || self._mode === 'rules';
+			var isJS = self._mode == 'javascript';
+			if ((!isRules && !isJS) || !(e.ctrlKey || e.metaKey) || e.keyCode != 191) {
 				return;
 			}
 
@@ -129,6 +131,7 @@ var Editor = React.createClass({
 			if (!list || !list.length) {
 				return;
 			}
+			var commentRE = isRules ? RULES_COMMENT_RE : JS_COMMENT_RE;
 			var isShiftKey = e.shiftKey;
 			var isEmpty;
 			var ranges = [];
@@ -146,7 +149,7 @@ var Editor = React.createClass({
 
 				for (var i = anchor.line; i <= head.line; i++) {
 					var line = editor.getLine(i);
-					if (COMMENT_RE.test(line)) {
+					if (commentRE.test(line)) {
 						hasComment = true;
 					} else if (NO_SPACE_RE.test(line)) {
 						hasRule = true;
@@ -166,17 +169,17 @@ var Editor = React.createClass({
 						if (!NO_SPACE_RE.test(line)) {
 							return line;
 						}
-						if (isShiftKey && COMMENT_RE.test(line)) {
-							return line.replace(COMMENT_RE, '');
+						if (isShiftKey && commentRE.test(line)) {
+							return line.replace(commentRE, '');
 						}
-						return '# ' + line;
+						return (isRules ? '# ' : '// ') + line;
 					});
 				} else {
 					firstLine = lines[0];
 					lastIndex = lines.length - 1;
 					lastLine = lines[lastIndex];
 					lines = lines.map(function(line) {
-						return line.replace(COMMENT_RE, '');
+						return line.replace(commentRE, '');
 					});
 				}
 				if (anchor.ch != 0) {
