@@ -33,8 +33,8 @@ var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', '
 var rules = require('./rules-mode');
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
-var RULES_COMMENT_RE = /^\s*#\s*/;
-var JS_COMMENT_RE = /^\/\/\s?/;
+var RULES_COMMENT_RE = /^()\s*#\s*/;
+var JS_COMMENT_RE = /^(\s*)\/\/+\s?/;
 var NO_SPACE_RE = /[^\s]/;
 
 var Editor = React.createClass({
@@ -170,7 +170,7 @@ var Editor = React.createClass({
 							return line;
 						}
 						if (isShiftKey && commentRE.test(line)) {
-							return line.replace(commentRE, '');
+							return line.replace(commentRE, '$1');
 						}
 						return (isRules ? '# ' : '// ') + line;
 					});
@@ -179,7 +179,7 @@ var Editor = React.createClass({
 					lastIndex = lines.length - 1;
 					lastLine = lines[lastIndex];
 					lines = lines.map(function(line) {
-						return line.replace(commentRE, '');
+						return line.replace(commentRE, '$1');
 					});
 				}
 				if (anchor.ch != 0) {
