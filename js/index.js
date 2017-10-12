@@ -576,7 +576,7 @@ var Index = React.createClass({
 		}
 		
 		$(document.body).on('mouseenter', '.cm-js-type', function(e) {
-			if (!(e.ctrlKey || e.metaKey)) {
+			if (self.state.name !== 'rules' || !(e.ctrlKey || e.metaKey)) {
 				return;
 			}
 			var elem = $(this);
@@ -584,8 +584,13 @@ var Index = React.createClass({
 				elem.addClass('w-has-key');
 			}
 		}).on('mouseleave', '.cm-js-type', function(e) {
-			$(this).removeClass('w-has-key');
+			if (self.state.name === 'rules') {
+				$(this).removeClass('w-has-key');
+			}
 		}).on('mousedown', '.cm-js-type', function(e) {
+			if (self.state.name !== 'rules') {
+				return;
+			}
 			var elem = $(this);
 			if (!e.ctrlKey && !e.metaKey && !elem.hasClass('w-has-key')) {
 				return;
