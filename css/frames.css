@@ -1,12 +1,10 @@
 .w-frames {
   font-size: 12px;
 }
-.w-frames-action, .w-frames-commposer {
-  line-height: 23px;
-  height: 24px;
+.w-frames-action {
   background: #f2f2f2;
-  border-bottom: 1px solid #ccc;
   position: relative;
+  border-bottom: 1px solid #ccc;
 }
 .w-frames-action label {
   font-weight: normal;
@@ -22,7 +20,8 @@
   text-decoration: none!important;
   color: #000;
   position: absolute;
-  right: 110px;
+  right: 65px;
+  top: 7px;
 }
 .w-frames-action a:last-child {
   right: 10px;
@@ -59,6 +58,10 @@
   margin-left: 5px;
 }
 
+.w-frames-action .w-filter-con {
+  margin-right: 160px;
+}
+
 .w-frames-send {
   background: #e2f7da;
 }
@@ -67,20 +70,18 @@
   color: #fff;
 }
 
-.w-frames-composer {
-  line-height: 19px;
-  height: 20px;
-  background: #f2f2f2;
-}
 .w-frames-composer-action {
   border-bottom: 1px solid #ccc;
-  border: 1px solid #ccc;
   position: relative;
   text-indent: 10px;
+  line-height: 22px;
+  height: 23px;
+  background: #f2f2f2;
 }
 
-.w-frames-composer-action btn {
+.w-frames-composer-action .btn {
   position: absolute;
-  top: 0;
+  top: 1px;
   right: 10px;
+  padding: 0 5px;
 }
