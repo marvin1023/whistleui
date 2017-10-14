@@ -1,0 +1,86 @@
+.w-frames {
+  font-size: 12px;
+}
+.w-frames-action, .w-frames-commposer {
+  line-height: 23px;
+  height: 24px;
+  background: #f2f2f2;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+.w-frames-action label {
+  font-weight: normal;
+  margin-left: 10px;
+  color: #000;
+}
+.w-frames-action label input {
+  vertical-align: top;
+}
+
+.w-frames-action a {
+  margin-left: 10px;
+  text-decoration: none!important;
+  color: #000;
+  position: absolute;
+  right: 110px;
+}
+.w-frames-action a:last-child {
+  right: 10px;
+}
+.w-frames-action a:hover,
+.w-frames-action label:hover {
+  color: #337ab7;
+}
+
+.w-frames-list {
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 5px;
+}
+
+.w-frames-list li {
+  margin: 0;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 24px;
+  line-height: 23px;
+  list-style: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.w-frames-action label:first-child {
+  background: #e2f7da;
+  display: inline-block;
+  padding: 0 5px;
+  margin-left: 5px;
+}
+
+.w-frames-send {
+  background: #e2f7da;
+}
+.w-frames-selected {
+  background: #337ab7;
+  color: #fff;
+}
+
+.w-frames-composer {
+  line-height: 19px;
+  height: 20px;
+  background: #f2f2f2;
+}
+.w-frames-composer-action {
+  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc;
+  position: relative;
+  text-indent: 10px;
+}
+
+.w-frames-composer-action btn {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}

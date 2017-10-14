@@ -22,11 +22,12 @@ var BtnGroup = React.createClass({
 	render: function() {
 		var self = this;
 		var tabs = self.props.tabs;
+		var isSmall = self.props.type === 's';
 		var list = tabs || self.props.btns;
 		var disabled = util.getBoolean(self.props.disabled);
 		
 		return (
-				<div className={'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm')}>
+				<div className={'btn-group btn-group-sm ' + (tabs ? 'w-tabs-sm' : 'w-btn-group-sm') + (isSmall ? ' small' : '')}>
 					{list.map(function(btn, i) {
 						 btn.disabled = disabled;
 						 var icon = btn.icon ? <span className={'glyphicon glyphicon-' + btn.icon}></span> : '';
