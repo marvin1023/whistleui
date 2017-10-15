@@ -477,7 +477,8 @@ var Index = React.createClass({
   		.on('drop', function(e) {
 				e.preventDefault();
   		  var files = e.originalEvent.dataTransfer.files;
-  		  if (!files || !files.length) {
+				if (!files || !files.length 
+						|| $(e.target).closest('.w-frames-composer').length) {
   		    return;
 				}
 				var name = self.state.name;
