@@ -125,7 +125,7 @@ var Textarea = React.createClass({
 		textarea.value = '';
 		self._timeout = setTimeout(function() {
 			textarea.value = value;
-		}, 200);
+		}, 120);
 	},
 	render: function() {
 		var value = this.props.value || '';
