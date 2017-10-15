@@ -8,7 +8,7 @@ var FrameServer = React.createClass({
           <a href="javascript:;">Click here</a> or drag a file to here to send to the server
           <button type="button" className="btn btn-primary btn-sm">Send</button>
         </div>
-        <textarea placeholder="xxx" className="fill"></textarea>
+        <textarea placeholder="请输入要发送到服务器的文本，按住 Ctrl[Command] + Enter，或点击右上角的发送按钮发送" className="fill"></textarea>
       </div>
     );
   }

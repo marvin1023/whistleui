@@ -60,6 +60,7 @@
 
 .w-frames-action .w-filter-con {
   margin-right: 160px;
+  border-right: 1px solid #ccc;
 }
 
 .w-frames-send {
