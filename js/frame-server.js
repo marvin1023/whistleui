@@ -5,10 +5,10 @@ var FrameServer = React.createClass({
     return (
       <div className={'fill orient-vertical-box w-frames-composer' + (this.props.hide ? ' hide' : '')}>
         <div className="w-frames-composer-action">
-          <a href="javascript">Click here</a> or drag a file to here to send to the server
+          <a href="javascript:;">Click here</a> or drag a file to here to send to the server
           <button type="button" className="btn btn-primary btn-sm">Send</button>
         </div>
-        <textarea className="fill"></textarea>
+        <textarea placeholder="xxx" className="fill"></textarea>
       </div>
     );
   }

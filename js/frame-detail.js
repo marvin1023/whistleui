@@ -31,7 +31,7 @@ var FrameDetail = React.createClass({
 			this.selectBtn(btn);
 		}
     return (
-      <div className="fill orient-vertical-box w-frames-detail">
+      <div className={'fill orient-vertical-box w-frames-detail' + (this.props.hide ? ' hide' : '')}>
         <BtnGroup onClick={this.onClickBtn} btns={BTNS} />
         {state.initedDetail ? <FrameData hide={btn.name !== 'Detail'} /> : undefined}
         {state.initedClient ? <FrameClient hide={btn.name !== 'Client'} /> : undefined}
