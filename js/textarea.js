@@ -103,16 +103,17 @@ var Textarea = React.createClass({
 	updateValue: function() {
 		var self = this;
 		var value = self.state.value || '';
-		if (value === self.curValue) {
-			return;
-		}
-		clearTimeout(self._timeout);
 		var textarea = ReactDOM.findDOMNode(self.refs.textarea);
 		if (self.props.hide) {
 			textarea.value = '';
 			self.curValue = '';
+			clearTimeout(self._timeout);
 			return;
 		}
+		if (value === self.curValue) {
+			return;
+		}
+		clearTimeout(self._timeout);
 		if (textarea.value === value) {
 			return;
 		}
