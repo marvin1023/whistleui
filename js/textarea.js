@@ -3,7 +3,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var util = require('./util');
 var dataCenter = require('./data-center');
-var MAX_LENGTH =1024 * 64;
+var MAX_LENGTH =1024 * 100;
 
 var Tips = React.createClass({
 	render: function() {
