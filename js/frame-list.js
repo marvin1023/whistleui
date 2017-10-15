@@ -2,7 +2,14 @@ var React = require('react');
 var FilterInput = require('./filter-input');
 
 var FrameList = React.createClass({
-  onFilterChange: function() {
+  onFilterChange: function(keyword) {
+    keyword = keyword.trim();
+    if (keyword) {
+      keyword = keyword.split(/\s+/g);
+    }
+    this.setState({ keyword: keyword });
+  },
+  filter: function(item) {
 
   },
   autoRefresh: function() {

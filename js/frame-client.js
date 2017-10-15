@@ -3,8 +3,8 @@ var ReactDOM = require('react-dom');
 
 var FrameClient = React.createClass({
   componentDidMount: function() {
-    this.wsDataField = ReactDOM.findDOMNode(this.refs.uploadWSData);
-    this.wsDataForm = ReactDOM.findDOMNode(this.refs.uploadWSDataForm);
+    this.dataField = ReactDOM.findDOMNode(this.refs.uploadData);
+    this.dataForm = ReactDOM.findDOMNode(this.refs.uploadDataForm);
   },
   onDrop: function(e) {
     e.stopPropagation();
@@ -13,17 +13,20 @@ var FrameClient = React.createClass({
     if (!files || !files.length) {
       return;
     }
-    alert(files[0])
+    var data = new FormData();
+    data.append('data', files[0]);
+    this.uploadForm(data);
   },
   selectFile: function() {
-    this.wsDataField.click();
+    this.dataField.click();
   },
   onFormChange: function() {
-    this.uploadForm(new FormData(this.wsDataForm));
-	  this.wsDataField.value = '';
+    this.uploadForm(new FormData(this.dataForm));
+	  this.dataField.value = '';
   },
-  uploadForm: function(form) {
-
+  uploadForm: function(data) {
+    data.append('target', 'client');
+    console.log(data);
   },
   render: function() {
     return (
@@ -33,8 +36,8 @@ var FrameClient = React.createClass({
           <button type="button" className="btn btn-primary btn-sm">Send</button>
         </div>
         <textarea placeholder="Input the text to be sent to the client, press Ctrl [Command] + Enter, or click the send button in the upper right corner" className="fill"></textarea>
-        <form ref="uploadWSDataForm" enctype="multipart/form-data" style={{display: 'none'}}>  
-          <input ref="uploadWSData" onChange={this.onFormChange} type="file" name="uploadWSData" />
+        <form ref="uploadDataForm" enctype="multipart/form-data" style={{display: 'none'}}>  
+          <input ref="uploadData" onChange={this.onFormChange} type="file" name="data" />
         </form>
       </div>
     );
