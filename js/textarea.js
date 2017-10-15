@@ -103,10 +103,22 @@ var Textarea = React.createClass({
 	updateValue: function() {
 		var self = this;
 		clearTimeout(self._timeout);
-		var value = self.state.value;
+		var value = self.state.value || '';
+		var textarea = ReactDOM.findDOMNode(self.refs.textarea);
+		if (self.props.hide) {
+			textarea.value = '';
+			return;
+		}
+		if (textarea.value === value) {
+			return;
+		}
+		if (value.length < 10240) {
+			textarea.value = value;
+			return;
+		}
 		self._timeout = setTimeout(function() {
-			ReactDOM.findDOMNode(self.refs.textarea).value = value;
-		}, Math.ceil((value && value.length || 0) / 1024));
+			textarea.value = value;
+		}, 120);
 	},
 	render: function() {
 		var value = this.props.value || '';
