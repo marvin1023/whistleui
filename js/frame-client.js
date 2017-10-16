@@ -54,11 +54,11 @@ var FrameClient = React.createClass({
           <a href="javascript:;" onClick={this.selectFile}>Click here</a> or drag a file to here to send to the client
           <div className="btn-group">
             <button onMouseDown={this.preventDefault} onClick={this.onSend} type="button" className="btn btn-primary btn-sm">Send</button>
-            <button onMouseDown={this.preventDefault} type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu">
-              <li><a onMouseDown={this.preventDefault} onClick={this.onSend} href="javascript:;">Send With Binary</a></li>
+              <li><a onClick={this.onSend} href="javascript:;">Send With Binary</a></li>
             </ul>
           </div>
         </div>
