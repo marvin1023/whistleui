@@ -35,17 +35,17 @@ var FrameClient = React.createClass({
     dataCenter.socket.upload(data);
   },
   onSend: function(e) {
-    var textarea = ReactDOM.findDOMNode(this.refs.textarea);
-    var value = textarea.value;
+    var value = this.state.data;
     if (!value) {
       return;
     }
+    var self = this;
     dataCenter.socket.send({
       target: 'client',
       type: e.target.nodeName === 'A' ? 'bin' : 'text/plain',
       data: value
     }, function(data) {
-      textarea.value = '';
+      self.setState({ data: '' });
     });
   },
   onTextareaChange: function(e) {
@@ -58,7 +58,8 @@ var FrameClient = React.createClass({
   },
   render: function() {
     var state = this.state;
-    var noData = !(state && state.data);
+    var data = state && state.data;
+    var noData = !data;
     return (
       <div onDrop={this.onDrop} className={'fill orient-vertical-box w-frames-composer' + (this.props.hide ? ' hide' : '')}>
         <div className="w-frames-composer-action">
@@ -73,7 +74,7 @@ var FrameClient = React.createClass({
             </ul>
           </div>
         </div>
-        <textarea onChange={this.onTextareaChange} ref="textarea" placeholder="Input the text to be sent to the client, and press Ctrl [Command] + Enter, or click the send button" className="fill"></textarea>
+        <textarea value={data} onChange={this.onTextareaChange} ref="textarea" placeholder="Input the text to be sent to the client, and press Ctrl [Command] + Enter, or click the send button" className="fill"></textarea>
         <form ref="uploadDataForm" enctype="multipart/form-data" style={{display: 'none'}}>  
           <input ref="uploadData" onChange={this.onFormChange} type="file" name="data" />
         </form>
