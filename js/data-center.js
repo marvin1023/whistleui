@@ -214,8 +214,7 @@ $.extend(exports, createCgi({
 	checkUpdate: 'cgi-bin/check-update'
 }, POST_CONF));
 
-exports.socket = createCgi({
-	send: 'cgi-bin/socket/data',
+exports.socket = $.extend(createCgi({
 	upload: 'cgi-bin/socket/upload'
 }, $.extend({
 	type: 'post'
@@ -223,7 +222,9 @@ exports.socket = createCgi({
 	contentType: false,
 	processData: false,
 	timeout: 36000
-}));
+})), createCgi({
+	send: 'cgi-bin/socket/data'
+}, POST_CONF));
 
 exports.getInitialData = function (callback) {
 	if (!initialDataPromise) {

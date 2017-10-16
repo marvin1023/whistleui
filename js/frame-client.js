@@ -34,23 +34,35 @@ var FrameClient = React.createClass({
     data.append('target', 'client');
     dataCenter.socket.upload(data);
   },
+  onSend: function(e) {
+    var textarea = ReactDOM.findDOMNode(this.refs.textarea);
+    dataCenter.socket.send({
+      target: 'client',
+      type: e.target.nodeName === 'A' ? 'bin' : 'text/plain',
+      data: textarea.value
+    }, function(data) {
+      textarea.value = '';
+    });
+  },
+  preventDefault: function(e) {
+    e.preventDefault();
+  },
   render: function() {
     return (
       <div onDrop={this.onDrop} className={'fill orient-vertical-box w-frames-composer' + (this.props.hide ? ' hide' : '')}>
         <div className="w-frames-composer-action">
           <a href="javascript:;" onClick={this.selectFile}>Click here</a> or drag a file to here to send to the client
           <div className="btn-group">
-            <button type="button" className="btn btn-primary btn-sm">Send</button>
-            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button onMouseDown={this.preventDefault} onClick={this.onSend} type="button" className="btn btn-primary btn-sm">Send</button>
+            <button onMouseDown={this.preventDefault} type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span className="caret"></span>
-              <span className="sr-only">Toggle Dropdown</span>
             </button>
             <ul className="dropdown-menu">
-              <li><a href="javascript:;">Send With Binary</a></li>
+              <li><a onMouseDown={this.preventDefault} onClick={this.onSend} href="javascript:;">Send With Binary</a></li>
             </ul>
           </div>
         </div>
-        <textarea placeholder="Input the text to be sent to the client, and press Ctrl [Command] + Enter, or click the send button in the upper right corner" className="fill"></textarea>
+        <textarea ref="textarea" placeholder="Input the text to be sent to the client, and press Ctrl [Command] + Enter, or click the send button in the upper right corner" className="fill"></textarea>
         <form ref="uploadDataForm" enctype="multipart/form-data" style={{display: 'none'}}>  
           <input ref="uploadData" onChange={this.onFormChange} type="file" name="data" />
         </form>
