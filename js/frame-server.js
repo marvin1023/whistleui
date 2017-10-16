@@ -35,11 +35,11 @@ var FrameServer = React.createClass({
     ataCenter.socket.upload(data);
   },
   onSend: function(e) {
-    var textarea = ReactDOM.findDOMNode(this.refs.textarea);
-    var value = textarea.value;
+    var value = this.state.value;
     if (!value) {
       return;
     }
+    var textarea = ReactDOM.findDOMNode(this.refs.textarea);
     dataCenter.socket.send({
       target: 'server',
       type: e.target.nodeName === 'A' ? 'bin' : 'text/plain',
@@ -48,17 +48,24 @@ var FrameServer = React.createClass({
       textarea.value = '';
     });
   },
+  onTextareaChange: function(e) {
+    this.setState({
+      data: e.target.value
+    });
+  },
   preventDefault: function(e) {
     e.preventDefault();
   },
   render: function() {
+    var state = this.state;
+    var noData = !(state && state.data);
     return (
       <div onDrop={this.onDrop} className={'fill orient-vertical-box w-frames-composer' + (this.props.hide ? ' hide' : '')}>
         <div className="w-frames-composer-action">
           <a href="javascript:;" onClick={this.selectFile}>Click here</a> or drag a file to here to send to the server
           <div className="btn-group">
-            <button onMouseDown={this.preventDefault} onClick={this.onSend} type="button" className="btn btn-primary btn-sm">Send</button>
-            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button disabled={noData} onMouseDown={this.preventDefault} onClick={this.onSend} type="button" className="btn btn-primary btn-sm">Send</button>
+            <button disabled={noData} type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu">
@@ -66,7 +73,7 @@ var FrameServer = React.createClass({
             </ul>
           </div>
         </div>
-        <textarea ref="textarea" placeholder="Input the text to be sent to the server, and press Ctrl [Command] + Enter, or click the send button in the upper right corner" className="fill"></textarea>
+        <textarea onChange={this.onTextareaChange} ref="textarea" placeholder="Input the text to be sent to the server, and press Ctrl [Command] + Enter, or click the send button" className="fill"></textarea>
         <form ref="uploadDataForm" enctype="multipart/form-data" style={{display: 'none'}}>  
           <input ref="uploadData" onChange={this.onFormChange} type="file" name="data" />
         </form>
