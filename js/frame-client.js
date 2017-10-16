@@ -36,10 +36,14 @@ var FrameClient = React.createClass({
   },
   onSend: function(e) {
     var textarea = ReactDOM.findDOMNode(this.refs.textarea);
+    var value = textarea.value;
+    if (!value) {
+      return;
+    }
     dataCenter.socket.send({
       target: 'client',
       type: e.target.nodeName === 'A' ? 'bin' : 'text/plain',
-      data: textarea.value
+      data: value
     }, function(data) {
       textarea.value = '';
     });
