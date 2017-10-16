@@ -1,8 +1,7 @@
 var React = require('react');
 var BtnGroup = require('./btn-group');
 var FrameData = require('./frame-data');
-var FrameClient = require('./frame-client');
-var FramesServer = require('./frame-server');
+var FrameComposer = require('./frame-composer');
 
 var BTNS = [{name: 'Detail'}, {name: 'Client'}, {name: 'Server'}];
 
@@ -34,8 +33,8 @@ var FrameDetail = React.createClass({
       <div className={'fill orient-vertical-box w-frames-detail' + (this.props.hide ? ' hide' : '')}>
         <BtnGroup onClick={this.onClickBtn} btns={BTNS} />
         {state.initedDetail ? <FrameData hide={btn.name !== 'Detail'} /> : undefined}
-        {state.initedClient ? <FrameClient hide={btn.name !== 'Client'} /> : undefined}
-        {state.initedServer ? <FramesServer hide={btn.name !== 'Server'} /> : undefined}
+        {state.initedClient ? <FrameComposer name="client" hide={btn.name !== 'Client'} /> : undefined}
+        {state.initedServer ? <FrameComposer hide={btn.name !== 'Server'} /> : undefined}
       </div>
     );
   }
