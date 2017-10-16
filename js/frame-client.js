@@ -62,7 +62,7 @@ var FrameClient = React.createClass({
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu">
-              <li><a onClick={this.onSend} href="javascript:;">Send With Binary</a></li>
+              <li><a onClick={this.onSend} href="javascript:;">Send to client with binary</a></li>
             </ul>
           </div>
         </div>
