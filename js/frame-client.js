@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var dataCenter = require('./data-center');
 
 var FrameClient = React.createClass({
   componentDidMount: function() {
@@ -26,7 +27,7 @@ var FrameClient = React.createClass({
   },
   uploadForm: function(data) {
     data.append('target', 'client');
-    console.log(data);
+    dataCenter.socket.upload(data);
   },
   render: function() {
     return (
@@ -35,7 +36,7 @@ var FrameClient = React.createClass({
           <a href="javascript:;" onClick={this.selectFile}>Click here</a> or drag a file to here to send to the client
           <button type="button" className="btn btn-primary btn-sm">Send</button>
         </div>
-        <textarea placeholder="Input the text to be sent to the client, press Ctrl [Command] + Enter, or click the send button in the upper right corner" className="fill"></textarea>
+        <textarea placeholder="Input the text to be sent to the client, and press Ctrl [Command] + Enter, or click the send button in the upper right corner" className="fill"></textarea>
         <form ref="uploadDataForm" enctype="multipart/form-data" style={{display: 'none'}}>  
           <input ref="uploadData" onChange={this.onFormChange} type="file" name="data" />
         </form>

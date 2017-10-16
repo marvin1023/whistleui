@@ -214,6 +214,17 @@ $.extend(exports, createCgi({
 	checkUpdate: 'cgi-bin/check-update'
 }, POST_CONF));
 
+exports.socket = createCgi({
+	send: 'cgi-bin/socket/data',
+	upload: 'cgi-bin/socket/upload'
+}, $.extend({
+	type: 'post'
+}, DEFAULT_CONF, {
+	contentType: false,
+	processData: false,
+	timeout: 36000
+}));
+
 exports.getInitialData = function (callback) {
 	if (!initialDataPromise) {
 		initialDataPromise = $.Deferred();
