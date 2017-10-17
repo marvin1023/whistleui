@@ -35,8 +35,8 @@ var FrameList = React.createClass({
       <ul className="fill w-frames-list">
         {list.map(function(item) {
           return (
-            <li className={item.isSend ? 'w-frames-send' : undefined}>
-              <span className={'glyphicon glyphicon-' + (item.isSend ? 'send' : 'flash')}></span>
+            <li className={item.isClient ? 'w-frames-send' : undefined}>
+              <span className={'glyphicon glyphicon-' + (item.isClient ? 'send' : 'flash')}></span>
               {item.text}
             </li>
           );

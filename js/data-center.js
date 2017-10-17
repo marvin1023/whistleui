@@ -2,6 +2,7 @@ var $ = require('jquery');
 var createCgi = require('./cgi');
 var util = require('./util');
 var NetworkModal = require('./network-modal');
+var FrameModal = require('./frame-modal');
 var storage = require('./storage');
 var events = require('./events');
 
@@ -12,10 +13,12 @@ var serverInfoCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
 var directCallbacks = [];
+var frameCallbacks = [];
 var dataList = [];
 var logList = [];
 var svrLogList = [];
 var networkModal = new NetworkModal(dataList);
+var FrameModal = new FrameModal();
 var curServerInfo;
 var initialDataPromise, initialData, startedLoad;
 var lastPageLogTime = -2;
@@ -620,6 +623,11 @@ exports.on = function (type, callback) {
 	} else if (type === 'plugins' || type === 'settings' || type === 'rules') {
 		if (typeof callback == 'function') {
 			directCallbacks.push(callback);
+		}
+	} else if (type == 'frame') {
+		if (typeof callback == 'function') {
+			frameCallbacks.push(callback);
+			callback(frameModal);
 		}
 	}
 };

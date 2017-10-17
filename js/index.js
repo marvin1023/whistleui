@@ -816,9 +816,20 @@ var Index = React.createClass({
 		function scrollToBottom() {
 			con.scrollTop = body.offsetHeight;
 		}
+
+		$(document).on('dbclick', '.w-network-menu-list', function(e) {
+			if ($(e.target).hasClass('w-network-menu-list')) {
+				con.scrollTop = 0;
+			}
+		});
 		
 		self._updateNetwork = update;
 		self.autoRefresh = scrollToBottom;
+		self.stopAutoRefresh = function() {
+			if (atBottom()) {
+				con.scrollTop = con.scrollTop - 10;
+			}
+		};
 		self.scrollerAtBottom = atBottom;
 		
 		function atBottom() {
@@ -2032,7 +2043,8 @@ var Index = React.createClass({
 					<a onClick={this.onClickMenu} className="w-save-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false" title="Ctrl[Command] + S"><span className="glyphicon glyphicon-save-file"></span>Save</a>
 					<a onClick={this.onClickMenu} className="w-create-menu" style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-plus"></span>Create</a>
 					<a onClick={this.onClickMenu} className={'w-edit-menu' + (disabledEditBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Rename</a>
-					<a onClick={this.autoRefresh} className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-play"></span>AutoRefresh</a>
+					<a onClick={this.autoRefresh} onDoubleClick={this.stopAutoRefresh} title={'Click to scroll to the bottom\nDouble click to stop scroll'}
+						className="w-scroll-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-play"></span>AutoRefresh</a>
 					<a onClick={this.replay} className="w-replay-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-repeat"></span>Replay</a>
 					<a onClick={this.composer} className="w-composer-menu" style={{display: isNetwork ? '' : 'none'}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-edit"></span>Composer</a>
 					<a onClick={this.onClickMenu} className={'w-delete-menu' + (disabledDeleteBtn ? ' w-disabled' : '')} style={{display: (isNetwork || isPlugins) ? 'none' : ''}} href="javascript:;" draggable="false"><span className="glyphicon glyphicon-trash"></span>Delete</a>
