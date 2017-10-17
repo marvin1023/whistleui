@@ -817,7 +817,7 @@ var Index = React.createClass({
 			con.scrollTop = body.offsetHeight;
 		}
 
-		$(document).on('dbclick', '.w-network-menu-list', function(e) {
+		$(document).on('dblclick', '.w-network-menu-list', function(e) {
 			if ($(e.target).hasClass('w-network-menu-list')) {
 				con.scrollTop = 0;
 			}
