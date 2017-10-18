@@ -91,7 +91,7 @@ proto.clear = function() {
 };
 
 proto.reset = function(list) {
-	if (this.list === list) {
+	if (!list || this.list === list) {
 		return;
 	}
 	this.list = list || [];

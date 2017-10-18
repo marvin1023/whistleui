@@ -12,7 +12,6 @@ var serverInfoCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
 var directCallbacks = [];
-var frameCallbacks = [];
 var dataList = [];
 var logList = [];
 var svrLogList = [];
@@ -363,7 +362,8 @@ function startLoadData() {
 		return;
 	}
 	startedLoad = true;
-
+// TODO: remove
+var index = 0;
 	function load() {
 		var pendingIds = getPendingIds();
 		var startTime = getStartTime();
@@ -385,6 +385,7 @@ function startLoadData() {
 		}
 
 		lastPageLogTime = lastSvrLogTime = null;
+		var curActiveItem = networkModal.getActive();
 		cgi.getData({
 			startLogTime: startLogTime,
 			startSvrLogTime: startSvrLogTime,
@@ -422,8 +423,21 @@ function startLoadData() {
 			}
 
 			data = data.data;
-			if (!data.ids.length && !data.newIds.length) {
+			// TODO: remove
+			if (isSocket(curActiveItem)) {
+				data.frames = [{
+					isClient: ++index % 2 === 0,
+					text: index % 2 === 0 ? 'sfsdddddddddddddddddddddd' : '',
+					bin: index % 2 !== 0 ? 'a asfd asdf dsa fdsa ' : ''
+				}];
+			}
+			var hasFrames = data.frames && data.frames.length;
+			if (!hasFrames && !data.ids.length && !data.newIds.length) {
 				return;
+			}
+			if (hasFrames) {
+				var curFrames = curActiveItem.frames;
+				curFrames.push.apply(curFrames, data.frames);
 			}
 			var ids = data.newIds;
 			var data = data.data;
@@ -480,11 +494,13 @@ function setRawHeaders(obj) {
 }
 
 function isSocket(item) {
+	if (!item) {
+		return false;
+	}
+	if (/^wss?:\/\//.test(item.url)) {
+		return true;
+	}
 	return /^tunnel:\/\//.test(item.url) && item.req.headers['x-whistle-policy'] === 'tunnel';
-}
-
-function isWebsocket(item) {
-	return /^wss?:\/\//.test(item.url);
 }
 
 function setReqData(item) {
@@ -531,7 +547,7 @@ function setReqData(item) {
 			item.path = url;
 		}
 	}
-	if (!item.frames && (isWebsocket(item) || isSocket(item))) {
+	if (!item.frames && isSocket(item)) {
 		item.frames = [];
 	}
 }
@@ -632,10 +648,6 @@ exports.on = function (type, callback) {
 	} else if (type === 'plugins' || type === 'settings' || type === 'rules') {
 		if (typeof callback == 'function') {
 			directCallbacks.push(callback);
-		}
-	} else if (type == 'frame') {
-		if (typeof callback == 'function') {
-			frameCallbacks.push(callback);
 		}
 	}
 };

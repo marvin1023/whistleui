@@ -1,13 +1,7 @@
 var React = require('react');
 var FilterInput = require('./filter-input');
-var FrameModal = require('./frame-modal');
 
 var FrameList = React.createClass({
-  getInitialState: function() {
-    return {
-      modal: new FrameModal()
-    };
-  },
   onFilterChange: function(keyword) {
     keyword = keyword.trim();
     if (keyword) {
@@ -25,8 +19,9 @@ var FrameList = React.createClass({
 
   },
   render: function() {
-    const modal = this.state.modal;
-    modal.reset(this.props.list);
+    var props = this.props;
+    var onClickFrame = props.onClickFrame;
+    var modal = this.props.modal;
     return (<div className="fill orient-vertical-box w-frames-list">
       <div className="w-frames-action">
         <FilterInput onChange={this.onFilterChange} />
@@ -41,10 +36,18 @@ var FrameList = React.createClass({
       </div>
       <ul className="fill w-frames-list">
         {modal.getList().map(function(item) {
+          if (!item.data) {
+            item.data = item.text || item.bin || '';
+            if (item.data.length > 3072) {
+              item.data = item.data.substring(0, 3072) + '...';
+            }
+          }
           return (
-            <li className={item.isClient ? 'w-frames-send' : undefined}>
+            <li onClick={function() {
+              onClickFrame && onClickFrame(item);
+            }} className={item.isClient ? 'w-frames-send' : undefined}>
               <span className={'glyphicon glyphicon-' + (item.isClient ? 'send' : 'flash')}></span>
-              {item.text}
+              {item.data}
             </li>
           );
         })}
