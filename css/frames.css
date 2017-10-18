@@ -39,6 +39,10 @@
   padding: 0 0 5px;
 }
 
+.w-frames-list .glyphicon {
+  margin-right: 5px;
+}
+
 .w-frames-list li {
   margin: 0;
   padding: 0 10px;
