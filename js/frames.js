@@ -14,7 +14,7 @@ var ImageView = React.createClass({
     var props = this.props;
     var frames = props.frames;
     return (
-      <div className={'fill orient-vertical-box w-frames' + (props.hide ? ' hide' : '')}>
+      <div className={'fill orient-vertical-box w-frames' + (frames ? '' : ' hide')}>
         <Divider vertical="true" rightWidth="180">
           <FrameList />
           <FrameDetail />

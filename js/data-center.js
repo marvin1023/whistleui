@@ -2,7 +2,6 @@ var $ = require('jquery');
 var createCgi = require('./cgi');
 var util = require('./util');
 var NetworkModal = require('./network-modal');
-var FrameModal = require('./frame-modal');
 var storage = require('./storage');
 var events = require('./events');
 
@@ -18,7 +17,6 @@ var dataList = [];
 var logList = [];
 var svrLogList = [];
 var networkModal = new NetworkModal(dataList);
-var FrameModal = new FrameModal();
 var curServerInfo;
 var initialDataPromise, initialData, startedLoad;
 var lastPageLogTime = -2;
@@ -481,6 +479,14 @@ function setRawHeaders(obj) {
 	obj.rawHeaders = rawHeaders;
 }
 
+function isSocket(item) {
+	return /^tunnel:\/\//.test(item.url) && item.req.headers['x-whistle-policy'] === 'tunnel';
+}
+
+function isWebsocket(item) {
+	return /^wss?:\/\//.test(item.url);
+}
+
 function setReqData(item) {
 	var url = item.url;
 	item.method = item.req.method;
@@ -524,6 +530,9 @@ function setReqData(item) {
 		} else {
 			item.path = url;
 		}
+	}
+	if (!item.frames && (isWebsocket(item) || isSocket(item))) {
+		item.frames = [];
 	}
 }
 
@@ -627,7 +636,6 @@ exports.on = function (type, callback) {
 	} else if (type == 'frame') {
 		if (typeof callback == 'function') {
 			frameCallbacks.push(callback);
-			callback(frameModal);
 		}
 	}
 };
