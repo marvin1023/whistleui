@@ -53,8 +53,8 @@ var FrameClient = React.createClass({
           } else {
             bin.push(code);
           }
-          data.bin = bin.join('').substring(1).replace(/%/g, ' ');
         }
+        bin = data.bin = bin.join('').substring(1).replace(/%/g, ' ');
       }
     }
     return (
