@@ -1,4 +1,4 @@
-var MAX_LENGTH = 100;
+var MAX_FRAMES_LENGTH = require('./data-center').MAX_FRAMES_LENGTH;
 
 var filterItem = function(keyword, item) {
 	var text = item.text || item.bin;
@@ -59,18 +59,6 @@ proto.setActive = function(item, active) {
 	item.active = active !== false;
 };
 
-proto.add = function(item) {
-	if (!item) {
-		return;
-	}
-	this.list.push(item);
-	this.filter();
-	var len = this.list.length - MAX_LENGTH;
-	if (len > 0) {
-		this.list.splice(0, len);
-	}
-};
-
 proto.getActive = function() {
 	var list = this.list;
 	for (var i = 0, len = list.length; i < len; i++) {
@@ -85,6 +73,13 @@ proto.getList = function() {
 	return this.list;
 };
 
+proto.update = function() {
+	var len = this.list.length - MAX_FRAMES_LENGTH;
+	if (len > 0) {
+		this.list.splice(0, len);
+	}
+};
+
 proto.clear = function() {
 	this.list.splice(0, this.list.length);
 	return this;
@@ -93,6 +88,10 @@ proto.clear = function() {
 proto.reset = function(list) {
 	if (!list || this.list === list) {
 		return;
+	}
+	var len = this.list.length - 20;
+	if (len > 0) {
+		this.list.splice(0, len);
 	}
 	this.list = list || [];
 	this.filter();

@@ -5,12 +5,19 @@ var Divider = require('./divider');
 var FrameList = require('./frame-list');
 var FrameDetail = require('./frame-detail');
 var FrameModal = require('./frame-modal');
+var dataCenter = require('./data-center');
 
 var ImageView = React.createClass({
   getInitialState: function() {
     return {
       modal: new FrameModal()
     };
+  },
+  componentDidMount: function() {
+    var self = this;
+    dataCenter.on('framesUpdate', function() {
+      self.setState({});
+    });
   },
   shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);

@@ -5,10 +5,12 @@ var NetworkModal = require('./network-modal');
 var storage = require('./storage');
 var events = require('./events');
 
+var MAX_FRAMES_LENGTH = exports.MAX_FRAMES_LENGTH = 100;
 var MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
 var serverInfoCallbacks = [];
+var framesUpdateCallbacks = [];
 var logCallbacks = [];
 var svrLogCallbacks = [];
 var directCallbacks = [];
@@ -386,12 +388,23 @@ var index = 0;
 
 		lastPageLogTime = lastSvrLogTime = null;
 		var curActiveItem = networkModal.getActive();
+		var curFrames = curActiveItem && curActiveItem.frames;
+		var lastFrameId, curReqId;
+		if (curFrames) {
+			var framesLen = curFrames.length - 1;
+			if (framesLen < MAX_FRAMES_LENGTH) {
+				curReqId = curActiveItem.id;
+				lastFrameId = curFrames[framesLen] && curFrames[framesLen].id;
+			}
+		}
 		cgi.getData({
 			startLogTime: startLogTime,
 			startSvrLogTime: startSvrLogTime,
 			ids: pendingIds.join(),
 			startTime: startTime,
 			lastRowId: lastRowId,
+			curReqId: curReqId,
+			lastFrameId: lastFrameId,
 			count: 60
 		}, function (data) {
 			setTimeout(load, 900);
@@ -432,12 +445,16 @@ var index = 0;
 				}];
 			}
 			var hasFrames = data.frames && data.frames.length;
-			if (!hasFrames && !data.ids.length && !data.newIds.length) {
-				return;
-			}
 			if (hasFrames) {
-				var curFrames = curActiveItem.frames;
 				curFrames.push.apply(curFrames, data.frames);
+			}
+			if (!data.ids.length && !data.newIds.length) {
+				if (hasFrames) {
+					framesUpdateCallbacks.forEach(function(cb) {
+						cb();
+					});
+				}
+				return;
 			}
 			var ids = data.newIds;
 			var data = data.data;
@@ -648,6 +665,10 @@ exports.on = function (type, callback) {
 	} else if (type === 'plugins' || type === 'settings' || type === 'rules') {
 		if (typeof callback == 'function') {
 			directCallbacks.push(callback);
+		}
+	} else if (type == 'framesUpdate') {
+		if (typeof callback == 'function') {
+			framesUpdateCallbacks.push(callback);
 		}
 	}
 };
