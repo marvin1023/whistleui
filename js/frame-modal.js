@@ -41,16 +41,26 @@ proto.filter = function(newList) {
 		return;
 	}
 	list.forEach(function(item) {
+		item.hide = false;
 		if (!filterItem(keyword.k0, item) || !filterItem(keyword.k1, item)
 			|| !filterItem(keyword.k2, item)) {
 			item.hide = true;
 			return;
 		}
-		if (!filterItem(keyword.c, item) && !filterItem(keyword.s, item)) {
-			item.hide = true;
+		var hasClientKeyword = 'c' in keyword;
+		var hasServerKeyword = 's' in keyword;
+		if (!hasClientKeyword && !hasServerKeyword) {
 			return;
 		}
-		item.hide = false;
+		if (hasClientKeyword && hasServerKeyword) {
+			item.hide = !filterItem(keyword[item.isClient ? 'c' : 's'], item);
+			return;
+		}
+		if (hasClientKeyword) {
+			item.hide = !item.isClient || !filterItem(keyword.c, item);
+			return;
+		}
+		item.hide = item.isClient || !filterItem(keyword.s, item);
 	});
 }
 
