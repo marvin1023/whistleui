@@ -87,6 +87,9 @@ proto.getList = function() {
 };
 
 proto.update = function() {
+	if (this._keyword) {
+		return;
+	}
 	var len = this.list.length - MAX_FRAMES_LENGTH;
 	if (len > 0) {
 		this.list.splice(0, len);
