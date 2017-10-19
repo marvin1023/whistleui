@@ -19,8 +19,8 @@ proto.search = function(keyword) {
 	if (keyword) {
 		var k = this._keyword = {};
 		var i = 0;
-		keyword.split(/\s+/g).forEach(function(key) {
-			if (/^(c|s):([^\s]*)$/i.test(keyword)) {
+		keyword.split(/\s+/g).slice(0, 3).forEach(function(key) {
+			if (/^(c|s):([^\s]*)$/i.test(key)) {
 				k[RegExp.$1.toLowerCase()] = RegExp.$2;
 			} else {
 				k['k' + i++] = key; 
