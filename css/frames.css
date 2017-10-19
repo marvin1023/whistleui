@@ -57,6 +57,7 @@
   line-height: 23px;
   list-style: none;
   border-bottom: 1px solid #ccc;
+  background: #fff;
 }
 
 .w-frames-action label:first-child {
@@ -71,10 +72,10 @@
   border-right: 1px solid #ccc;
 }
 
-.w-frames-send {
+.w-frames-list .w-frames-send {
   background: #e2f7da;
 }
-.w-frames-selected {
+.w-frames-list .w-frames-selected {
   background: #337ab7;
   color: #fff;
 }

@@ -6,7 +6,7 @@ var FilterInput = require('./filter-input');
 var FrameList = React.createClass({
   onFilterChange: function(keyword) {
     this.props.modal.search(keyword);
-    this.setState({});
+    this.setState({ keyword: keyword.trim() });
   },
   componentWillUpdate: function() {
     this.atBottom = this.shouldScrollToBottom();
@@ -47,6 +47,7 @@ var FrameList = React.createClass({
     var props = self.props;
     var onClickFrame = props.onClickFrame;
     var modal = self.props.modal;
+    var keyword = this.state && this.state.keyword;
     return (<div className="fill orient-vertical-box w-frames-list">
       <div className="w-frames-action">
         <FilterInput onChange={self.onFilterChange} />
@@ -59,7 +60,9 @@ var FrameList = React.createClass({
           <span className="glyphicon glyphicon-remove"></span>Clear
         </a>
       </div>
-      <div onScroll={self.shouldScrollToBottom} ref={self.setContainer} className="fill w-frames-list">
+      <div
+        style={{background: keyword ? '#ffffe0' : undefined}}
+        onScroll={self.shouldScrollToBottom} ref={self.setContainer} className="fill w-frames-list">
         <ul ref={self.setContent}>
           {modal.getList().map(function(item) {
             if (!item.data) {
