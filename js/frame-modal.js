@@ -5,7 +5,6 @@ var filterItem = function(keyword, item) {
 	if (!keyword) {
 		return true;
 	}
-	console.log(keyword)
 	return text.indexOf(keyword) !== -1;
 }
 
@@ -30,7 +29,6 @@ proto.search = function(keyword) {
 	} else {
 		this._keyword = '';
 	}
-	this.filter();
 };
 
 proto.filter = function(newList) {
@@ -43,12 +41,12 @@ proto.filter = function(newList) {
 		return;
 	}
 	list.forEach(function(item) {
-		if (!filterItem(keyword.k1, item) || !filterItem(keyword.k2, item)
-			|| !filterItem(keyword.k3, item)) {
+		if (!filterItem(keyword.k0, item) || !filterItem(keyword.k1, item)
+			|| !filterItem(keyword.k2, item)) {
 			item.hide = true;
 			return;
 		}
-		if (!filterItem(keyword.c, item) && filterItem(keyword.s, item)) {
+		if (!filterItem(keyword.c, item) && !filterItem(keyword.s, item)) {
 			item.hide = true;
 			return;
 		}
@@ -74,6 +72,7 @@ proto.getActive = function() {
 };
 
 proto.getList = function() {
+	this.filter();
 	return this.list;
 };
 
