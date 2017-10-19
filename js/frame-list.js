@@ -15,25 +15,29 @@ var FrameList = React.createClass({
     var con = this.container;
     var ctn =this.content;
     var modal = this.props.modal;
-    var scrollToBottom = con.scrollTop + con.offsetHeight + 5 > ctn.offsetHeight;
-    this.scrollToBottom = scrollToBottom;
-    if (scrollToBottom) {
+    var atBottom = con.scrollTop + con.offsetHeight + 5 > ctn.offsetHeight;
+    this.atBottom = atBottom;
+    if (atBottom) {
       modal.update();
     }
   },
   componentDidUpdate: function() {
-    if (this.scrollToBottom) {
-      this.container.scrollTop = 100000000;
+    if (this.atBottom) {
+      this.autoRefresh();
     }
+  },
+  stopRefresh: function() {
+    this.container.scrollTop = this.container.scrollTop - 10;
+  },
+  autoRefresh: function() {
+    this.container.scrollTop = 100000000;
   },
   filter: function(item) {
 
   },
-  autoRefresh: function() {
-
-  },
   clear: function() {
-
+    this.props.modal.clear();
+    this.setState({});
   },
   setContainer: function(container) {
     this.container = ReactDOM.findDOMNode(container);
@@ -49,7 +53,7 @@ var FrameList = React.createClass({
     return (<div className="fill orient-vertical-box w-frames-list">
       <div className="w-frames-action">
         <FilterInput onChange={self.onFilterChange} />
-        <a onClick={self.autoRefresh} className="w-remove-menu"
+        <a onClick={self.autoRefresh} onDoubleClick={self.stopRefresh} className="w-remove-menu"
           href="javascript:;" draggable="false">
           <span className="glyphicon glyphicon-play"></span>AutoRefresh
         </a>

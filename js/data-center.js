@@ -437,7 +437,7 @@ var index = 0;
 
 			data = data.data;
 			// TODO: remove
-			if (isSocket(curActiveItem)) {
+			if (curReqId) {
 				data.frames = [{
 					isClient: ++index % 2 === 0,
 					text: index % 2 === 0 ? index + ' sfsdddddddddddddddddddddd' : '',
