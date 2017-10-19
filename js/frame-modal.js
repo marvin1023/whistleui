@@ -92,7 +92,19 @@ proto.update = function() {
 	}
 	var len = this.list.length - MAX_FRAMES_LENGTH;
 	if (len > 0) {
-		this.list.splice(0, len);
+		if (this._keyword) {
+			for (var i = 0; i < len; i++) {
+				var item = list[i];
+				if (!item.hide) {
+					if (i > 0) {
+						list.splice(0, i);
+					}
+					break;
+				}
+			}
+		} else {
+			list.splice(0, len);
+		}
 	}
 };
 

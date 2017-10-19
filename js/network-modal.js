@@ -283,9 +283,19 @@ proto.next = function() {
 proto.update = function(scrollAtBottom, force) {
 	updateOrder(this._list, force);
 	if (scrollAtBottom) {
-		var exceed = this._list.length - MAX_LENGTH;
-		if (exceed > 0) {
-			this._list.splice(0, Math.min(exceed, 100));
+		var exceed = Math.min(this._list.length - MAX_LENGTH, 100);
+		if (this.hasKeyword()) {
+			for (var i = 0; i < exceed; i++) {
+				var item = this._list[i];
+				if (!item.hide) {
+					if (i > 0) {
+						this._list.splice(0, i);
+					}
+					break;
+				}
+			}
+		} if (exceed > 0) {
+			this._list.splice(0,exceed);
 		}
 	}
 	
