@@ -285,7 +285,7 @@ proto.update = function(scrollAtBottom, force) {
 	if (scrollAtBottom) {
 		var exceed = this._list.length - MAX_LENGTH;
 		if (exceed > 0) {
-			this._list.splice(0, Math.min(exceed, MAX_LENGTH - 1));
+			this._list.splice(0, Math.min(exceed, 100));
 		}
 	}
 	
