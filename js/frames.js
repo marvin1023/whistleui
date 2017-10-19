@@ -37,7 +37,7 @@ var ImageView = React.createClass({
       <div className={'fill orient-vertical-box w-frames' + ((frames && !props.hide) ? '' : ' hide')}>
         <Divider vertical="true" rightWidth="180">
           <FrameList modal={modal} onClickFrame={this.onClickFrame} />
-          <FrameDetail />
+          <FrameDetail data={modal.getActive()} />
         </Divider>
       </div>
     );

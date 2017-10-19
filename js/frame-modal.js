@@ -5,6 +5,7 @@ var filterItem = function(keyword, item) {
 	if (!keyword) {
 		return true;
 	}
+	console.log(keyword)
 	return text.indexOf(keyword) !== -1;
 }
 
@@ -43,7 +44,7 @@ proto.filter = function(newList) {
 	}
 	list.forEach(function(item) {
 		if (!filterItem(keyword.k1, item) || !filterItem(keyword.k2, item)
-			|| !filterItem(keyword.k2, item)) {
+			|| !filterItem(keyword.k3, item)) {
 			item.hide = true;
 			return;
 		}
@@ -56,6 +57,9 @@ proto.filter = function(newList) {
 }
 
 proto.setActive = function(item, active) {
+	this.list.forEach(function(item) {
+		item.active = false;
+	});
 	item.active = active !== false;
 };
 

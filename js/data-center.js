@@ -440,7 +440,7 @@ var index = 0;
 			if (curReqId) {
 				data.frames = [{
 					isClient: ++index % 2 === 0,
-					text: index % 2 === 0 ? index + ' sfsdddddddddddddddddddddd' : '',
+					text: index % 2 === 0 ? index + ' sfsddddddddd{"a": 123}ddddddddddddd' : '',
 					bin: index % 2 !== 0 ? index + ' a asfd asdf dsa fdsa ' : ''
 				}];
 			}

@@ -5,21 +5,11 @@ var FilterInput = require('./filter-input');
 
 var FrameList = React.createClass({
   onFilterChange: function(keyword) {
-    keyword = keyword.trim();
-    if (keyword) {
-      keyword = keyword.split(/\s+/g);
-    }
-    this.setState({ keyword: keyword });
+    this.props.modal.search(keyword);
+    this.setState({});
   },
   componentWillUpdate: function() {
-    var con = this.container;
-    var ctn =this.content;
-    var modal = this.props.modal;
-    var atBottom = con.scrollTop + con.offsetHeight + 5 > ctn.offsetHeight;
-    this.atBottom = atBottom;
-    if (atBottom) {
-      modal.update();
-    }
+    this.atBottom = this.shouldScrollToBottom();
   },
   componentDidUpdate: function() {
     if (this.atBottom) {
@@ -32,12 +22,19 @@ var FrameList = React.createClass({
   autoRefresh: function() {
     this.container.scrollTop = 100000000;
   },
-  filter: function(item) {
-
-  },
   clear: function() {
     this.props.modal.clear();
     this.setState({});
+  },
+  shouldScrollToBottom: function() {
+    var con = this.container;
+    var ctn =this.content;
+    var modal = this.props.modal;
+    var atBottom = con.scrollTop + con.offsetHeight + 5 > ctn.offsetHeight;
+    if (atBottom) {
+      modal.update();
+    }
+    return atBottom;
   },
   setContainer: function(container) {
     this.container = ReactDOM.findDOMNode(container);
@@ -62,7 +59,7 @@ var FrameList = React.createClass({
           <span className="glyphicon glyphicon-remove"></span>Clear
         </a>
       </div>
-      <div ref={self.setContainer} className="fill w-frames-list">
+      <div onScroll={self.shouldScrollToBottom} ref={self.setContainer} className="fill w-frames-list">
         <ul ref={self.setContent}>
           {modal.getList().map(function(item) {
             if (!item.data) {
@@ -72,9 +69,11 @@ var FrameList = React.createClass({
               }
             }
             return (
-              <li onClick={function() {
-                onClickFrame && onClickFrame(item);
-              }} className={item.isClient ? 'w-frames-send' : undefined}>
+              <li
+                style={{display: item.hide ? 'none' : undefined}}
+                onClick={function() {
+                  onClickFrame && onClickFrame(item);
+                }} className={(item.isClient ? 'w-frames-send' : '') + (item.active ? '  w-frames-selected' : '')}>
                 <span className={'glyphicon glyphicon-' + (item.isClient ? 'send' : 'flash')}></span>
                 {item.data}
               </li>
