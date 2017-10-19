@@ -90,7 +90,8 @@ proto.update = function() {
 	if (this._keyword) {
 		return;
 	}
-	var len = this.list.length - MAX_FRAMES_LENGTH;
+	var list = this.list;
+	var len = list.length - MAX_FRAMES_LENGTH;
 	if (len > 0) {
 		if (this._keyword) {
 			for (var i = 0; i < len; i++) {
