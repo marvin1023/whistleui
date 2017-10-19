@@ -440,8 +440,8 @@ var index = 0;
 			if (isSocket(curActiveItem)) {
 				data.frames = [{
 					isClient: ++index % 2 === 0,
-					text: index % 2 === 0 ? 'sfsdddddddddddddddddddddd' : '',
-					bin: index % 2 !== 0 ? 'a asfd asdf dsa fdsa ' : ''
+					text: index % 2 === 0 ? index + ' sfsdddddddddddddddddddddd' : '',
+					bin: index % 2 !== 0 ? index + ' a asfd asdf dsa fdsa ' : ''
 				}];
 			}
 			var hasFrames = data.frames && data.frames.length;
