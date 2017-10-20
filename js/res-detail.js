@@ -61,7 +61,9 @@ var ResDetail = React.createClass({
 			res = modal.res
 			rawHeaders = res.rawHeaders;
 			body = res.body || '';
-			frames = modal.frames;
+			if (!modal.reqError && !modal.resError) {
+				frames = modal.frames;
+			}
 			headers = res.headers;
 			if (res.json) {
 				json = res.json;
@@ -121,8 +123,6 @@ var ResDetail = React.createClass({
 			}
 			if (modal.isHttps) {
 				tips = { isHttps: true };
-			} else if (/^wss?:/.test(modal.url)) {
-				tips = { ws: true };
 			} else if (headers && !body && modal.responseTime) {
 				if (!res.size || util.isText(headers['content-type'])) {
 					tips = { message: res.size < 5120 ? 'No Content' : 'Respose data too large to display' };

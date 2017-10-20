@@ -8,16 +8,6 @@ var MAX_LENGTH =1024 * 100;
 var Tips = React.createClass({
 	render: function() {
 		var data = this.props.data || { hide: true };
-		if (data.ws) {
-			return (
-				<div className={'w-textview-tips' + (data.hide ? ' hide' : '')}>
-					<p>WebSocket</p>
-					<a href="https://github.com/whistle-plugins/whistle.websocket" target="_blank">
-						Click here for more information
-					</a>
-				</div>
-			);
-		}
 		if (data.isHttps) {
 			return (
 				<div className={'w-textview-tips' + (data.hide ? ' hide' : '')}>
