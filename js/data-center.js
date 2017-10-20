@@ -517,7 +517,7 @@ function isSocket(item) {
 	if (/^wss?:\/\//.test(item.url)) {
 		return true;
 	}
-	return /^tunnel:\/\//.test(item.url) && item.req.headers['x-whistle-policy'] === 'tunnel';
+	return item.isHttps && item.req.headers['x-whistle-policy'] === 'tunnel';
 }
 
 function setReqData(item) {
