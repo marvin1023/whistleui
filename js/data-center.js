@@ -511,7 +511,7 @@ function setRawHeaders(obj) {
 }
 
 function isSocket(item) {
-	if (!item) {
+	if (!item || !item.endTime || item.reqError || item.resError) {
 		return false;
 	}
 	if (/^wss?:\/\//.test(item.url)) {
