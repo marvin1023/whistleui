@@ -123,7 +123,7 @@ var ResDetail = React.createClass({
 			}
 			if (modal.isHttps) {
 				tips = { isHttps: true };
-			} else if (headers && !body && modal.responseTime) {
+			} else if (headers && !body && modal.responseTime && !/^ws/.test(modal.url)) {
 				if (!res.size || util.isText(headers['content-type'])) {
 					tips = { message: res.size < 5120 ? 'No Content' : 'Respose data too large to display' };
 				} else {

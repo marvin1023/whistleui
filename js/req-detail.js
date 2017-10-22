@@ -71,7 +71,7 @@ var ReqDetail = React.createClass({
 					+ '\r\n' + util.objectToString(headers, req.rawHeaderNames) + '\r\n\r\n' + body;
 			if (modal.isHttps) {
 				tips = { isHttps: true };
-			} else if (modal.requestTime && !body) {
+			} else if (modal.requestTime && !body && !/^ws/.test(modal.url)) {
 				if (req.size < 5120) {
 					tips = { message: 'No Content' };
 				}	else {
