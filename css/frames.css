@@ -23,6 +23,9 @@
   right: 65px;
   top: 7px;
 }
+.w-frames-action .w-connect-abort {
+  right: 157px;
+}
 .w-frames-action a:last-child {
   right: 10px;
 }
@@ -68,7 +71,7 @@
 }
 
 .w-frames-action .w-filter-con {
-  margin-right: 160px;
+  margin-right: 208px;
   border-right: 1px solid #ccc;
 }
 

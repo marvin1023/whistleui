@@ -19,6 +19,12 @@ var FrameList = React.createClass({
   stopRefresh: function() {
     this.container.scrollTop = this.container.scrollTop - 10;
   },
+  abort: function() {
+    if (!confirm('Are you sure abort this connection?')) {
+      return;
+    }
+
+  },
   autoRefresh: function() {
     this.container.scrollTop = 100000000;
   },
@@ -51,6 +57,10 @@ var FrameList = React.createClass({
     return (<div className="fill orient-vertical-box w-frames-list">
       <div className="w-frames-action">
         <FilterInput onChange={self.onFilterChange} />
+        <a onClick={self.abort} onDoubleClick={self.stopRefresh} className="w-connect-abort"
+          href="javascript:;" draggable="false">
+          <span className="glyphicon glyphicon-ban-circle"></span>Abort
+        </a>
         <a onClick={self.autoRefresh} onDoubleClick={self.stopRefresh} className="w-remove-menu"
           href="javascript:;" draggable="false">
           <span className="glyphicon glyphicon-play"></span>AutoRefresh
