@@ -28,13 +28,15 @@ function getDefaultColumns() {
     {
       title: 'ClientIP',
       name: 'clientIp',
-      className: 'clientIp'
+      className: 'clientIp',
+      showTitle: true
     },
     {
       title: 'ServerIP',
       name: 'hostIp',
       className: 'hostIp',
-      selected: true
+      selected: true,
+      showTitle: true
     },
     {
       title: 'ClientPort',
@@ -50,7 +52,8 @@ function getDefaultColumns() {
       title: 'Host',
       name: 'hostname',
       className: 'hostname',
-      selected: true
+      selected: true,
+      showTitle: true
     },
     {
       title: 'URL',
@@ -62,7 +65,8 @@ function getDefaultColumns() {
       title: 'Type',
       name: 'type',
       className: 'type',
-      selected: true
+      selected: true,
+      showTitle: true
     },
     {
       title: 'Body',

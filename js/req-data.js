@@ -358,7 +358,8 @@ var ReqData = React.createClass({
 																	}
 																	return <td key={name} className="path" title={url}>{path}</td>;
 																} 
-																return <td key={name} className={className}>{item[name]}</td>;
+																return (<td key={name} className={className}
+																	title={col.showTitle ? item[name] : undefined}>{item[name]}</td>);
 															})}
 						    		  			</tr>);
 						    	  })
