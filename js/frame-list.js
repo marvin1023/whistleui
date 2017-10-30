@@ -81,8 +81,14 @@ var FrameList = React.createClass({
                 item.data = item.data.substring(0, 3072) + '...';
               }
             }
+            if (!item.title) {
+              item.title = 'Date: ' + new Date(parseInt(item.frameId, 10)).toLocaleString()
+               + '\nFrom: ' + (item.isClient ? 'Client' : 'Server')
+               + '\nMessage: ' + item.data;
+            }
             return (
               <li
+                title={item.title}
                 style={{display: item.hide ? 'none' : undefined}}
                 onClick={function() {
                   onClickFrame && onClickFrame(item);
