@@ -389,11 +389,8 @@ function startLoadData() {
 		var curFrames = curActiveItem && curActiveItem.frames;
 		var lastFrameId, curReqId;
 		if (curFrames) {
-			var framesLen = curFrames.length - 1;
-			if (framesLen < MAX_FRAMES_LENGTH) {
-				curReqId = curActiveItem.id;
-				lastFrameId = curFrames[framesLen] && curFrames[framesLen].id;
-			}
+			curReqId = curActiveItem.id;
+			lastFrameId = curActiveItem.lastFrameId;
 		}
 		cgi.getData({
 			startLogTime: startLogTime,
@@ -434,12 +431,13 @@ function startLoadData() {
 			}
 
 			data = data.data;
-			var hasFrames = data.frames && data.frames.length;
-			if (hasFrames) {
+			var framesLen = data.frames && data.frames.length;
+			if (framesLen) {
+				curActiveItem.lastFrameId = data.frames[framesLen - 1].frameId;
 				curFrames.push.apply(curFrames, data.frames);
 			}
 			if (!data.ids.length && !data.newIds.length) {
-				if (hasFrames) {
+				if (framesLen) {
 					framesUpdateCallbacks.forEach(function(cb) {
 						cb();
 					});
