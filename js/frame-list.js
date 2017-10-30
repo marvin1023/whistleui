@@ -57,10 +57,10 @@ var FrameList = React.createClass({
     return (<div className="fill orient-vertical-box w-frames-list">
       <div className="w-frames-action">
         <FilterInput onChange={self.onFilterChange} />
-        <a onClick={self.abort} onDoubleClick={self.stopRefresh} className="w-connect-abort"
+        { false ? <a onClick={self.abort} onDoubleClick={self.stopRefresh} className="w-connect-abort"
           href="javascript:;" draggable="false">
           <span className="glyphicon glyphicon-ban-circle"></span>Abort
-        </a>
+        </a> : undefined }
         <a onClick={self.autoRefresh} onDoubleClick={self.stopRefresh} className="w-remove-menu"
           href="javascript:;" draggable="false">
           <span className="glyphicon glyphicon-play"></span>AutoRefresh

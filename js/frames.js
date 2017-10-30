@@ -3,7 +3,7 @@ var React = require('react');
 var util = require('./util');
 var Divider = require('./divider');
 var FrameList = require('./frame-list');
-var FrameDetail = require('./frame-detail');
+var FrameData = require('./frame-data');
 var FrameModal = require('./frame-modal');
 var dataCenter = require('./data-center');
 
@@ -37,7 +37,7 @@ var ImageView = React.createClass({
       <div className={'fill orient-vertical-box w-frames' + ((frames && !props.hide) ? '' : ' hide')}>
         <Divider vertical="true" rightWidth="180">
           <FrameList modal={modal} onClickFrame={this.onClickFrame} />
-          <FrameDetail data={modal.getActive()} />
+          <FrameData data={modal.getActive()} />
         </Divider>
       </div>
     );

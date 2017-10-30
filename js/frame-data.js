@@ -59,10 +59,10 @@ var FrameClient = React.createClass({
     }
     return (
       <div className={'fill orient-vertical-box w-frames-data' + (this.props.hide ? ' hide' : '')}>
-        <BtnGroup onClick={this.onClickBtn} type="s" btns={BTNS} />
-        <Textarea value={text} hide={btn.name !== 'TextView'} />
+        <BtnGroup onClick={this.onClickBtn} btns={BTNS} />
+        <Textarea className="fill" value={text} hide={btn.name !== 'TextView'} />
         <JSONViewer data={json} hide={btn.name !== 'JSONView'} />
-        <Textarea value={bin} hide={btn.name !== 'HexView'} />
+        <Textarea className="fill" value={bin} hide={btn.name !== 'HexView'} />
       </div>
     );
   }
