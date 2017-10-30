@@ -364,8 +364,6 @@ function startLoadData() {
 		return;
 	}
 	startedLoad = true;
-// TODO: remove
-var index = 0;
 	function load() {
 		var pendingIds = getPendingIds();
 		var startTime = getStartTime();
@@ -436,14 +434,6 @@ var index = 0;
 			}
 
 			data = data.data;
-			// TODO: remove
-			if (curReqId) {
-				data.frames = [{
-					isClient: ++index % 2 === 0,
-					text: index % 2 === 0 ? index + ' sfsddddddddd{"a": 123}ddddddddddddd' : '',
-					bin: index % 2 !== 0 ? index + ' a asfd asdf dsa fdsa ' : ''
-				}];
-			}
 			var hasFrames = data.frames && data.frames.length;
 			if (hasFrames) {
 				curFrames.push.apply(curFrames, data.frames);

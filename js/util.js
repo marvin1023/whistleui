@@ -261,7 +261,7 @@ exports.parseQueryString = function(str, delimiter, seperator, decode, donotAllo
 	return result;
 }
 
-exports.objectToString = function(obj, rawNames) {
+function objectToString(obj, rawNames) {
 	if (!obj) {
 		return '';
 	}
@@ -277,6 +277,14 @@ exports.objectToString = function(obj, rawNames) {
 			return key + ': ' + val;
 		}).join('\r\n');
 	}).join('\r\n');
+}
+
+exports.objectToString = objectToString;
+
+exports.getOriginalReqHeaders = function(item) {
+	var req = item.req;
+	var headers = $.extend({}, req.headers, item.rulesHeaders);
+	return objectToString(headers, req.rawHeaderNames)
 };
 
 function removeProtocol(url) {

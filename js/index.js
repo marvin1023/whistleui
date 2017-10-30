@@ -1580,11 +1580,12 @@ var Index = React.createClass({
 		}
 		
 		list.forEach(function(item) {
-			if (!item.isHttps) {
+			var req = item.req;
+			if (!item.isHttps || req.headers['x-whistle-policy'] === 'tunnel' || /^wss?:/.test(item.url)) {
 				dataCenter.composer({
 					url: item.url,
-					headers: JSON.stringify(item.req.headers),
-					method: item.req.method,
+					headers: 	util.getOriginalReqHeaders(item),
+					method: req.method,
 					body: item.reqError ? '' : item.req.body
 				});
 			}
