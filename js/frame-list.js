@@ -75,8 +75,13 @@ var FrameList = React.createClass({
         onScroll={self.shouldScrollToBottom} ref={self.setContainer} className="fill w-frames-list">
         <ul ref={self.setContent}>
           {modal.getList().map(function(item) {
-            if (!item.data) {
-              item.data = item.text || item.bin || '';
+            if (item.data == null) {
+              item.data = item.text || '';
+              var bin = [];
+              for (var i = 0, len = item.bin; i < len; i += 2) {
+                bin.push(item.bin[i] + item.bin[i + 1]);
+              }
+              item.bin = bin.join(' ');
               if (item.data.length > 3072) {
                 item.data = item.data.substring(0, 3072) + '...';
               }
