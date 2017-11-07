@@ -57,10 +57,10 @@ var FrameList = React.createClass({
     return (<div className="fill orient-vertical-box w-frames-list">
       <div className="w-frames-action">
         <FilterInput onChange={self.onFilterChange} />
-        { false ? <a onClick={self.abort} onDoubleClick={self.stopRefresh} className="w-connect-abort"
+        <a onClick={self.abort} onDoubleClick={self.stopRefresh} className="w-connect-abort"
           href="javascript:;" draggable="false">
           <span className="glyphicon glyphicon-ban-circle"></span>Abort
-        </a> : undefined }
+        </a>
         <a onClick={self.autoRefresh} onDoubleClick={self.stopRefresh} className="w-remove-menu"
           href="javascript:;" draggable="false">
           <span className="glyphicon glyphicon-play"></span>AutoRefresh
@@ -78,7 +78,7 @@ var FrameList = React.createClass({
             if (item.data == null) {
               item.data = item.text || '';
               var bin = [];
-              for (var i = 0, len = item.bin; i < len; i += 2) {
+              for (var i = 0, len = item.bin.length; i < len; i += 2) {
                 bin.push(item.bin[i] + item.bin[i + 1]);
               }
               item.bin = bin.join(' ');

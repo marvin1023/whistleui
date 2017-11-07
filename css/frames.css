@@ -45,7 +45,7 @@
   padding: 0 0 5px;
 }
 
-.w-frames-list .glyphicon {
+.w-frames-list ul .glyphicon {
   margin-right: 10px;
 }
 
@@ -71,8 +71,7 @@
 }
 
 .w-frames-action .w-filter-con {
-  /* margin-right: 208px; */
-  margin-right: 160px;
+  margin-right: 208px;
   border-right: 1px solid #ccc;
 }
 

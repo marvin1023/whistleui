@@ -50,19 +50,6 @@ var FrameClient = React.createClass({
 					str: JSON.stringify(json, null, '    ')
 				};
       }
-      if (!bin) {
-        bin = [];
-        for (var i = 0, len = text.length; i< len; i++) {
-          var ch = text[i];
-          var code = encodeURIComponent(ch);
-          if (code === ch) {
-            bin.push('%' + ch.charCodeAt().toString(16));
-          } else {
-            bin.push(code);
-          }
-        }
-        bin = data.bin = bin.join('').substring(1).replace(/%/g, ' ');
-      }
     }
     return (
       <div className={'fill orient-vertical-box w-frames-data' + (this.props.hide ? ' hide' : '')}>
