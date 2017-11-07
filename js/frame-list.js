@@ -83,8 +83,8 @@ var FrameList = React.createClass({
                 bin.push(item.bin[i] + item.bin[i + 1]);
               }
               item.bin = bin.join(' ');
-              if (item.data.length > 3072) {
-                item.data = item.data.substring(0, 3072) + '...';
+              if (item.data.length > 2051) {
+                item.data = item.data.substring(0, 2051) + '...';
               }
             }
             if (!item.title) {
