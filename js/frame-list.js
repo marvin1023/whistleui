@@ -77,6 +77,7 @@ var FrameList = React.createClass({
           {modal.getList().map(function(item) {
             if (item.data == null) {
               item.data = item.text || '';
+              item.size = Math.ceil(item.bin.length / 2);
               var bin = [];
               for (var i = 0, len = item.bin.length; i < len; i += 2) {
                 bin.push(item.bin[i] + item.bin[i + 1]);
@@ -88,8 +89,7 @@ var FrameList = React.createClass({
             }
             if (!item.title) {
               item.title = 'Date: ' + new Date(parseInt(item.frameId, 10)).toLocaleString()
-               + '\nFrom: ' + (item.isClient ? 'Client' : 'Server')
-               + '\nMessage: ' + item.data;
+               + '\nFrom: ' + (item.isClient ? 'Client' : 'Server');
             }
             return (
               <li
