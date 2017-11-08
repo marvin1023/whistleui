@@ -6,7 +6,7 @@ var FrameComposer = require('./frame-composer');
 var util = require('./util');
 
 var BTNS = getBtns();
-var COMPOSER_BTNS = BgetBtns(true);
+var COMPOSER_BTNS = getBtns(true);
 
 function getBtns(composer) {
   var btns = [
@@ -18,6 +18,10 @@ function getBtns(composer) {
     btns.push({name: 'Composer'});
   }
   return btns;
+}
+
+function findActive(btn) {
+  return btn.active;
 }
 
 var FrameClient = React.createClass({
@@ -37,7 +41,7 @@ var FrameClient = React.createClass({
     var btn = state.btn;
     var cId = this.props.cId;
     var btns = cId ? COMPOSER_BTNS : BTNS;
-		if (!btn || (!cId && btn.name === 'Composer')) {
+		if (btns.indexOf(btn) === -1 && !util.findArray(btns, findActive)) {
 			btn = btns[0];
 			this.selectBtn(btn);
     }
