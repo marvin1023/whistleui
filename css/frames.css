@@ -83,6 +83,18 @@
   color: #fff;
 }
 
+.w-frames-list .glyphicon-send {
+  color: #0d8f0d;
+}
+
+.w-frames-list .glyphicon-flash {
+  color: #e75b0f;;
+}
+
+.w-frames-list .w-frames-selected .glyphicon {
+  color: #fff;
+}
+
 .w-frames-composer-action {
   border-bottom: 1px solid #ccc;
   position: relative;
