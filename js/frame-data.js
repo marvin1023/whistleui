@@ -41,8 +41,8 @@ var FrameClient = React.createClass({
     var btn = state.btn;
     var cId = this.props.cId;
     var btns = cId ? COMPOSER_BTNS : BTNS;
-		if (btns.indexOf(btn) === -1 && !util.findArray(btns, findActive)) {
-			btn = btns[0];
+		if (btns.indexOf(btn) === -1) {
+			btn = util.findArray(btns, findActive) || btns[0];
 			this.selectBtn(btn);
     }
     var data = this.props.data;
