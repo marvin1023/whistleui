@@ -45,7 +45,7 @@ var Overview = React.createClass({
 				if (prop) {
 					var value = util.getProperty(modal, prop);
 					if (value) {
-						if ((prop == 'req.size' || prop == 'res.size') && value > 1024) {
+						if ((prop == 'req.size' || prop == 'res.size') && value >= 1024) {
 							value += '(' + Number(value / 1024).toFixed(2) + 'k)'
 						} else if (prop == 'realUrl' && value == modal.url) {
 							value = '';

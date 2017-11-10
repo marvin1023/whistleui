@@ -45,6 +45,7 @@ var FrameComposer = React.createClass({
     var self = this;
     dataCenter.socket.send({
       target: this.state.name,
+      cId: this.props.cId,
       type: e.target.nodeName === 'A' ? 'bin' : 'text/plain',
       data: value
     }, function(data) {
@@ -64,6 +65,8 @@ var FrameComposer = React.createClass({
     var data = state.data;
     var name = state.name;
     var noData = !data;
+    var cId = this.props.cId;
+
     return (
       <div onDrop={this.onDrop} className={'fill orient-vertical-box w-frames-composer' + (this.props.hide ? ' hide' : '')}>
         <div className="w-frames-composer-action">
@@ -79,7 +82,8 @@ var FrameComposer = React.createClass({
           </div>
         </div>
         <textarea value={data} onChange={this.onTextareaChange} ref="textarea" placeholder={'Input the text to be sent to the ' + name + ', and press Ctrl [Command] + Enter, or click the send button'} className="fill"></textarea>
-        <form ref="uploadDataForm" enctype="multipart/form-data" style={{display: 'none'}}>  
+        <form ref="uploadDataForm" enctype="multipart/form-data" style={{display: 'none'}}> 
+          <input name="cId" value={cId} type="hidden" /> 
           <input ref="uploadData" onChange={this.onFormChange} type="file" name="data" />
         </form>
       </div>

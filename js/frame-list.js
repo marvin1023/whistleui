@@ -80,6 +80,18 @@ var FrameList = React.createClass({
             if (!item.title) {
               item.title = 'Date: ' + new Date(parseInt(item.frameId, 10)).toLocaleString()
                + '\nFrom: ' + (item.isClient ? 'Client' : 'Server');
+              if (item.compressed) {
+                item.title += '\nCompressed: ' + item.compressed;
+              }
+              if (item.opcode) {
+                item.title += '\nOpcode: ' + item.opcode;
+                item.title += '\nType: ' + (item.opcode == 1 ? 'Text' : 'Binary');
+              }
+              var length = item.length >= 0 ? item.length : item.size;
+              if (length >= 1024) {
+                length += '(' + Number(length / 1024).toFixed(2) + 'k)';
+              }
+              item.title += '\nLength: ' + length;
             }
             return (
               <li
