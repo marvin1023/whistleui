@@ -218,7 +218,7 @@ $.extend(exports, createCgi({
 
 exports.socket = $.extend(createCgi({
 	upload: 'cgi-bin/socket/upload'
-}, $.extend({
+},$.extend({
 	type: 'post'
 }, DEFAULT_CONF, {
 	contentType: false,
