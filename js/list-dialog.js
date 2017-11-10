@@ -1,6 +1,7 @@
 require('./base-css.js');
 require('../css/list-dialog.css');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Dialog = require('./dialog');
 
 var ListDialog = React.createClass({
@@ -25,10 +26,17 @@ var ListDialog = React.createClass({
       return;
     }
     this.refs.dialog.hide();
-    window.open(this.props.url + encodeURIComponent(JSON.stringify(this.state.checkedItems)));
+    var input = ReactDOM.findDOMNode(this.refs.filename);
+    var filename = '&filename=' + encodeURIComponent(input.value.trim());
+    window.open(this.props.url + encodeURIComponent(JSON.stringify(this.state.checkedItems)) + filename);
+    input.value = '';
   },
   show: function() {
-    this.refs.dialog.show();
+    var self = this;
+    self.refs.dialog.show();
+    setTimeout(function() {
+      ReactDOM.findDOMNode(self.refs.filename).focus();
+    }, 500);
   },
   render: function() {
     var self = this;
@@ -41,6 +49,14 @@ var ListDialog = React.createClass({
           <button type="button" className="close" data-dismiss="modal">
             <span aria-hidden="true">&times;</span>
           </button>
+          <p>
+            Filename:
+            <input ref="filename"
+              style={{width: 390, display: 'inline-block', marginLeft: 5}}
+              className="form-control"
+              placeholder="Input the filename"
+            />
+          </p>
           {list.map(function(name) {
             return (
               <label title={name}>
@@ -58,6 +74,9 @@ var ListDialog = React.createClass({
           <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
           <button type="button" className="btn btn-primary"
             disabled={!Object.keys(checkedItems).length}
+            onMouseDown={function(e) {
+              e.preventDefault();
+            }}
             onClick={this.onConfirm}>Confirm</button>
         </div>
       </Dialog>
