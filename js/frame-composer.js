@@ -20,7 +20,7 @@ var FrameComposer = React.createClass({
       return;
     }
     var form = new FormData();
-    form.append('data', files[0]);
+    form.append('uploadData', files[0]);
     form.append('cId', this.props.cId);
     this.uploadForm(form);
   },
@@ -32,7 +32,7 @@ var FrameComposer = React.createClass({
 	  this.dataField.value = '';
   },
   uploadForm: function(form) {
-    if (form.get('data').size > MAX_FILE_SIZE) {
+    if (form.get('uploadData').size > MAX_FILE_SIZE) {
       return alert('The file size can not exceed 16m.');
     }
     dataCenter.socket.upload(form);
@@ -82,7 +82,7 @@ var FrameComposer = React.createClass({
         <textarea value={data} onChange={this.onTextareaChange} ref="textarea" placeholder={'Input the text to be sent to the server, and press Ctrl [Command] + Enter, or click the send button'} className="fill"></textarea>
         <form ref="uploadDataForm" method="post" enctype="multipart/form-data" style={{display: 'none'}}> 
           <input name="cId" value={cId} type="hidden" /> 
-          <input ref="uploadData" onChange={this.onFormChange} type="file" name="data" />
+          <input ref="uploadData" onChange={this.onFormChange} type="file" name="uploadData" />
         </form>
       </div>
     );
