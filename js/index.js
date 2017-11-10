@@ -1864,19 +1864,23 @@ var Index = React.createClass({
     }
     dataCenter.upload.importSessions(data, dataCenter.addNetworkList);
 	},
-	exportSessions: function(type) {
+	exportSessions: function(type, name) {
 	  var modal = this.state.network;
 	  var sessions = modal && modal.getSelectedList();
 	  if (!sessions || !sessions.length) {
 	    return;
 	  }
-	  var form = ReactDOM.findDOMNode(this.refs.exportSessionsForm);
-    ReactDOM.findDOMNode(this.refs.exportFileType).value = type;
+		var form = ReactDOM.findDOMNode(this.refs.exportSessionsForm);
+		ReactDOM.findDOMNode(this.refs.exportFilename).value = name || '';
+		ReactDOM.findDOMNode(this.refs.exportFileType).value = type;
     ReactDOM.findDOMNode(this.refs.sessions).value = JSON.stringify(sessions, null, '  ');
     form.submit();
 	},
 	exportBySave: function() {
-	  this.exportSessions(this.state.exportFileType);
+		var input = ReactDOM.findDOMNode(this.refs.sessionsName);
+		var name = input.value.trim()
+		input.value = '';
+	  this.exportSessions(this.state.exportFileType, name);
 	  $(ReactDOM.findDOMNode(this.refs.chooseFileType)).modal('hide');
 	},
 	render: function() {
@@ -2163,7 +2167,11 @@ var Index = React.createClass({
   			<div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-body">
-              <label className="w-choose-filte-type-label">Save as:
+							<label className="w-choose-filte-type-label">
+								Save as:
+								<input ref="sessionsName"
+									placeholder="Input the filename"						
+								  className="form-control" maxLength="64" />
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
 									<option value="whistle">*.txt</option>
 									<option value="Fiddler">*.saz (For Fiddler)</option>
@@ -2234,7 +2242,8 @@ var Index = React.createClass({
 			<ListDialog ref="selectRulesDialog" url="cgi-bin/rules/export?rules=" list={state.rules.list} />
 			<ListDialog ref="selectValuesDialog" url="cgi-bin/values/export?values=" list={state.values.list} />
 			<form ref="exportSessionsForm" action="cgi-bin/sessions/export" style={{display: 'none'}}
-			  method="post" enctype="multipart/form-data" target="_blank">
+				method="post" enctype="multipart/form-data" target="_blank">
+				<input ref="exportFilename" name="exportFilename" type="hidden" />
 			  <input ref="exportFileType" name="exportFileType" type="hidden" />
 			  <input ref="sessions" name="sessions" type="hidden" />
 			</form>
