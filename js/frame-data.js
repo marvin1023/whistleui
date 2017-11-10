@@ -65,7 +65,7 @@ var FrameClient = React.createClass({
         <Textarea className="fill" value={text} hide={btn.name !== 'TextView'} />
         <JSONViewer data={json} hide={btn.name !== 'JSONView'} />
         <Textarea className="fill" value={bin} hide={btn.name !== 'HexView'} />
-        <FrameComposer cId={cId} hide={!cId || btn.name !== 'Composer'} />
+        <FrameComposer cId={cId} hide={btn.name !== 'Composer'} />
       </div>
     );
   }
