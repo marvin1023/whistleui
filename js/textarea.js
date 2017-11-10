@@ -43,14 +43,23 @@ var Textarea = React.createClass({
 	edit: function() {
 		util.openEditor(this.props.value);
 	},
-	showAddToValues: function() {
+	showNameInput: function(e) {
 		var self = this;
-		self.state.showAddToValues = true;
+		self.state.showDownloadInput = /w-download/.test(e.target.className);
+		self.state.showNameInput = true;
 		self.forceUpdate(function() {
-			ReactDOM.findDOMNode(self.refs.valuesNameInput).focus();
+			ReactDOM.findDOMNode(self.refs.nameInput).focus();
 		});
 	},
-	addToValues: function(e) {
+	download: function() {
+		var target = ReactDOM.findDOMNode(this.refs.nameInput);
+		var name = target.value.trim();
+		target.value = '';
+		ReactDOM.findDOMNode(this.refs.filename).value = name;
+		ReactDOM.findDOMNode(this.refs.content).value = this.props.value || '';
+		ReactDOM.findDOMNode(this.refs.downloadForm).submit();
+	},
+	submit: function(e) {
 		if (e.keyCode != 13 && e.type != 'click') {
 			return;
 		}
@@ -58,8 +67,12 @@ var Textarea = React.createClass({
 		if (!modal) {
 			return;
 		}
-		var target = ReactDOM.findDOMNode(this.refs.valuesNameInput);
+		var target = ReactDOM.findDOMNode(this.refs.nameInput);
 		var name = target.value.trim();
+		if (this.state.showDownloadInput) {
+			this.download();
+			return;
+		}
 		if (!name) {
 			alert('Value name can not be empty.');
 			return;
@@ -87,7 +100,7 @@ var Textarea = React.createClass({
 		});
 	},
 	hideAddValuesInput: function() {
-		this.state.showAddToValues = false;
+		this.state.showNameInput = false;
 		this.forceUpdate();
 	},
 	updateValue: function() {
@@ -133,11 +146,26 @@ var Textarea = React.createClass({
 				<div className={'fill orient-vertical-box w-textarea' + (this.props.hide ? ' hide' : '')}>
 					<Tips data={this.props.tips} />
 					<div className="w-textarea-bar">
-						{showAddToValuesBtn ? <a className={'w-add' + displayClass} onClick={this.showAddToValues} href="javascript:;" draggable="false">AddToValues</a> : ''}	
+						<a className={'w-download' + displayClass} onDoubleClick={this.download}
+							onClick={this.showNameInput} href="javascript:;" draggable="false">Download</a>
+						{showAddToValuesBtn ? <a className={'w-add' + displayClass} onClick={this.showNameInput} href="javascript:;" draggable="false">AddToValues</a> : ''}	
 						<a className={'w-edit' + displayClass} onClick={this.edit} href="javascript:;" draggable="false">Edit</a>
-						<div onMouseDown={this.preventBlur} style={{display: this.state.showAddToValues ? 'block' : 'none'}} className="shadow w-textarea-input"><input ref="valuesNameInput" onKeyDown={this.addToValues} onBlur={this.hideAddValuesInput} type="text" maxLength="64" placeholder="name" /><button type="button" onClick={this.addToValues} className="btn btn-primary">OK</button></div>
+						<div onMouseDown={this.preventBlur}
+							style={{display: this.state.showNameInput ? 'block' : 'none'}}
+							className="shadow w-textarea-input"><input ref="nameInput"
+							onKeyDown={this.submit}
+							onBlur={this.hideAddValuesInput}
+							type="text"
+							maxLength="64"
+							placeholder={this.state.showDownloadInput ? 'Input the filename' : 'Input the key'}
+						/><button type="button" onClick={this.submit} className="btn btn-primary">OK</button></div>
 					</div>
 					<textarea ref="textarea" onKeyDown={util.preventDefault} readOnly="readonly" className={this.props.className || ''}></textarea>
+					<form ref="downloadForm" action="cgi-bin/download" style={{display: 'none'}}
+						method="post" target="_blank">
+						<input ref="filename" name="filename" type="hidden" />
+						<input ref="content" name="content" type="hidden" />
+					</form>
 				</div>
 		);
 	}

@@ -4,8 +4,8 @@
 .w-textarea:hover .w-textarea-bar { display: block; }
 .w-textarea-bar a {display: inline-block; text-decoration: none; color: #747474; padding: 0 5px;}
 .w-textarea-bar a:hover {color: #333373;}
-.w-textarea-bar .w-add {display: none;}
-.w-textarea-bar:hover .w-add {display: inline-block;}
+.w-textarea-bar .w-add, .w-textarea-bar .w-download {display: none;}
+.w-textarea-bar:hover .w-add, .w-textarea-bar:hover .w-download {display: inline-block;}
 
 .w-textarea-input {display: block; position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 2px; z-index: 101; top: 22px; right: 0; display: none; white-space: nowrap;}
 .w-textarea-input input {width: 246px; height: 32px; border: 1px solid #ccc; border-radius: 2px; padding: 0 5px; vertical-align: middle;}
