@@ -552,6 +552,9 @@ var Index = React.createClass({
 				var hasSelected = modal && modal.hasSelected();
 				if (hasSelected) {
 					$(ReactDOM.findDOMNode(self.refs.chooseFileType)).modal('show');
+					setTimeout(function() {
+						ReactDOM.findDOMNode(self.refs.sessionsName).focus();
+					}, 500);
 				}
 			}
 			
@@ -900,6 +903,10 @@ var Index = React.createClass({
 				var hasSelected = modal && modal.hasSelected();
 				if (hasSelected) {
 					$(ReactDOM.findDOMNode(this.refs.chooseFileType)).modal('show');
+					var self = this;
+					setTimeout(function() {
+						ReactDOM.findDOMNode(self.refs.sessionsName).focus();
+					}, 500);
 				}
 				break;
 			case 'rules':
@@ -2177,7 +2184,7 @@ var Index = React.createClass({
 									<option value="Fiddler">*.saz (For Fiddler)</option>
                 </select>
               </label>
-              <a type="button" className="btn btn-primary" onClick={this.exportBySave}>Confirm</a>
+              <a type="button" onMouseDown={this.preventBlur} className="btn btn-primary" onClick={this.exportBySave}>Confirm</a>
             </div>
           </div>
         </div>
