@@ -67,7 +67,6 @@ var FrameList = React.createClass({
           {modal.getList().map(function(item) {
             if (item.data == null) {
               item.data = item.text || '';
-              item.size = Math.ceil(item.bin.length / 2);
               var bin = [];
               for (var i = 0, len = item.bin.length; i < len; i += 2) {
                 bin.push(item.bin[i] + item.bin[i + 1]);
@@ -87,7 +86,7 @@ var FrameList = React.createClass({
                 item.title += '\nOpcode: ' + item.opcode;
                 item.title += '\nType: ' + (item.opcode == 1 ? 'Text' : 'Binary');
               }
-              var length = item.length >= 0 ? item.length : item.size;
+              var length = item.length;
               if (length >= 1024) {
                 length += '(' + Number(length / 1024).toFixed(2) + 'k)';
               }
