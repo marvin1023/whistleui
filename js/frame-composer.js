@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var dataCenter = require('./data-center');
 
-var MAX_FILE_SIZE = 1024 * 1024 * 16;
+var MAX_FILE_SIZE = 1024 * 1025;
 
 var FrameComposer = React.createClass({
   getInitialState: function() {
@@ -33,7 +33,7 @@ var FrameComposer = React.createClass({
   },
   uploadForm: function(form) {
     if (form.get('uploadData').size > MAX_FILE_SIZE) {
-      return alert('The file size can not exceed 16m.');
+      return alert('The file size can not exceed 1m.');
     }
     dataCenter.socket.upload(form);
   },
