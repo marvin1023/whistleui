@@ -78,11 +78,14 @@
 .w-frames-list .w-frames-send {
   background: #e2f7da;
 }
-.w-frames-list .w-connection-closed {
+.w-frames-list .w-connection-error {
   background: #f2dede;
   color: red;
 }
-.w-connection-closed span, .w-connection-error {
+.w-frames-list .w-connection-closed {
+  background: #ccc;
+}
+.w-connection-closed span {
   color: red;
 }
 .w-frames-list .w-frames-selected {
