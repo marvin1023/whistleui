@@ -46,7 +46,7 @@ var FrameComposer = React.createClass({
     dataCenter.socket.send({
       cId: this.props.cId,
       type: e.target.nodeName === 'A' ? 'bin' : 'text/plain',
-      data: value
+      data: value.replace(/\r\n|\r|\n/g, '\r\n')
     }, function(data) {
       self.setState({ data: '' });
     });

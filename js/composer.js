@@ -46,7 +46,7 @@ var Composer = React.createClass({
 			url: url,
 			headers: ReactDOM.findDOMNode(refs.headers).value,
 			method: ReactDOM.findDOMNode(refs.method).value || 'GET',
-			body: ReactDOM.findDOMNode(refs.body).value
+			body: ReactDOM.findDOMNode(refs.body).value.replace(/\r\n|\r|\n/g, '\r\n')
 		});
 		events.trigger('executeComposer');
 	},
