@@ -15,6 +15,9 @@ var FrameComposer = React.createClass({
   onDrop: function(e) {
     e.stopPropagation();
     e.preventDefault();
+    if (this.props.closed) {
+      return;
+    }
     var files = e.dataTransfer.files;
     if (!files || !files.length) {
       return;
@@ -64,14 +67,16 @@ var FrameComposer = React.createClass({
     var data = state.data;
     var noData = !data;
     var cId = this.props.cId;
+    var closed = this.props.closed;
+    var disabled = closed || noData;
 
     return (
       <div onDrop={this.onDrop} className={'fill orient-vertical-box w-frames-composer' + (this.props.hide ? ' hide' : '')}>
         <div className="w-frames-composer-action">
-          <a href="javascript:;" onClick={this.selectFile}>Click here</a> or drag a file to here to send to the server
+          {closed ? 'Click here' : <a href="javascript:;" onClick={this.selectFile}>Click here</a>} or drag a file to here to send to the server
           <div className="btn-group">
-            <button disabled={noData} onMouseDown={this.preventDefault} onClick={this.onSend} type="button" className="btn btn-primary btn-sm">Send</button>
-            <button disabled={noData} type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button disabled={disabled} onMouseDown={this.preventDefault} onClick={this.onSend} type="button" className="btn btn-primary btn-sm">Send</button>
+            <button disabled={disabled} type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu">

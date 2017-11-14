@@ -45,6 +45,7 @@ var FrameList = React.createClass({
   render: function() {
     var self = this;
     var props = self.props;
+    var reqData = props.reqData;
     var onClickFrame = props.onClickFrame;
     var modal = self.props.modal;
     var keyword = this.state && this.state.keyword;
@@ -65,6 +66,17 @@ var FrameList = React.createClass({
         onScroll={self.shouldScrollToBottom} ref={self.setContainer} className="fill w-frames-list">
         <ul ref={self.setContent}>
           {modal.getList().map(function(item) {
+            var statusClass = '';
+            if (item.closed || item.err) {
+              reqData.closed = item.closed;
+              reqData.err = item.err;
+              item.text = item.err || 'Closed';
+              if (item.closed) {
+                statusClass = ' w-connection-closed';
+              } else {
+                statusClass = ' w-connection-error';
+              }
+            }
             if (item.data == null) {
               item.data = item.text || '';
               var bin = [];
@@ -76,7 +88,7 @@ var FrameList = React.createClass({
                 item.data = item.data.substring(0, 2051) + '...';
               }
             }
-            if (!item.title) {
+            if (!item.title && !item.closed && !item.err) {
               item.title = 'Date: ' + new Date(parseInt(item.frameId, 10)).toLocaleString()
                + '\nFrom: ' + (item.isClient ? 'Client' : 'Server');
               if (item.opcode) {
@@ -95,14 +107,21 @@ var FrameList = React.createClass({
               }
               item.title += '\nLength: ' + length;
             }
+            var icon = 'flash';
+            if (item.closed)　{
+              icon = 'minus-sign';
+            } else if (item.isClient) {
+              icon = 'send';
+            }
             return (
               <li
                 title={item.title}
                 style={{display: item.hide ? 'none' : undefined}}
                 onClick={function() {
                   onClickFrame && onClickFrame(item);
-                }} className={(item.isClient ? 'w-frames-send' : '') + (item.active ? '  w-frames-selected' : '')}>
-                <span className={'glyphicon glyphicon-' + (item.isClient ? 'send' : 'flash')}></span>
+                }} className={(item.isClient ? 'w-frames-send' : '')
+                  + (item.active ? '  w-frames-selected' : '') + statusClass}>
+                <span className={'glyphicon glyphicon-' + icon}></span>
                 {item.data}
               </li>
             );

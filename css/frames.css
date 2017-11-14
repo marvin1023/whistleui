@@ -78,9 +78,16 @@
 .w-frames-list .w-frames-send {
   background: #e2f7da;
 }
+.w-frames-list .w-connection-closed {
+  background: #f2dede;
+  color: red;
+}
+.w-connection-closed span, .w-connection-error {
+  color: red;
+}
 .w-frames-list .w-frames-selected {
-  background: #337ab7;
-  color: #fff;
+  background: #337ab7!important;
+  color: #fff!important;
 }
 
 .w-frames-list .glyphicon-send {
