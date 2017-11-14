@@ -88,7 +88,7 @@ var FrameList = React.createClass({
                 item.data = item.data.substring(0, 2051) + '...';
               }
             }
-            if (!item.title && !item.closed && !item.err) {
+            if (!item.title && !item.closed) {
               item.title = 'Date: ' + new Date(parseInt(item.frameId, 10)).toLocaleString()
                + '\nFrom: ' + (item.isClient ? 'Client' : 'Server');
               if (item.opcode) {
@@ -102,10 +102,12 @@ var FrameList = React.createClass({
                 item.title += '\nMask: ' + item.mask;
               }
               var length = item.length;
-              if (length >= 1024) {
-                length += '(' + Number(length / 1024).toFixed(2) + 'k)';
+              if (length >= 0) {
+                if (length >= 1024) {
+                  length += '(' + Number(length / 1024).toFixed(2) + 'k)';
+                }
+                item.title += '\nLength: ' + length;
               }
-              item.title += '\nLength: ' + length;
             }
             var icon = 'flash';
             if (item.closed)　{
