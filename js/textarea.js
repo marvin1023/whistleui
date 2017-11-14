@@ -99,7 +99,7 @@ var Textarea = React.createClass({
 			}
 		});
 	},
-	hideAddValuesInput: function() {
+	hideNameInput: function() {
 		this.state.showNameInput = false;
 		this.forceUpdate();
 	},
@@ -141,20 +141,19 @@ var Textarea = React.createClass({
 		}
 		
 		this.state.value = value;
-		var displayClass = value ? '' : ' hide';
 		return (
 				<div className={'fill orient-vertical-box w-textarea' + (this.props.hide ? ' hide' : '')}>
 					<Tips data={this.props.tips} />
-					<div className="w-textarea-bar">
-						<a className={'w-download' + displayClass} onDoubleClick={this.download}
+					<div className={'w-textarea-bar' + (value ? '' : ' hide')}>
+						<a className="w-download" onDoubleClick={this.download}
 							onClick={this.showNameInput} href="javascript:;" draggable="false">Download</a>
-						{showAddToValuesBtn ? <a className={'w-add' + displayClass} onClick={this.showNameInput} href="javascript:;" draggable="false">AddToValues</a> : ''}	
-						<a className={'w-edit' + displayClass} onClick={this.edit} href="javascript:;" draggable="false">ViewAll</a>
+						{showAddToValuesBtn ? <a className="w-add" onClick={this.showNameInput} href="javascript:;" draggable="false">AddToValues</a> : ''}	
+						<a className="w-edit" onClick={this.edit} href="javascript:;" draggable="false">ViewAll</a>
 						<div onMouseDown={this.preventBlur}
 							style={{display: this.state.showNameInput ? 'block' : 'none'}}
 							className="shadow w-textarea-input"><input ref="nameInput"
 							onKeyDown={this.submit}
-							onBlur={this.hideAddValuesInput}
+							onBlur={this.hideNameInput}
 							type="text"
 							maxLength="64"
 							placeholder={this.state.showDownloadInput ? 'Input the filename' : 'Input the key'}
