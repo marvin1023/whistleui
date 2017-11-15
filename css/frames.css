@@ -84,6 +84,7 @@
 }
 .w-frames-list .w-connection-closed {
   background: #ccc;
+  color: red;
 }
 .w-connection-closed span {
   color: red;
