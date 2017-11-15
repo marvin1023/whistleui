@@ -300,6 +300,11 @@ var Index = React.createClass({
 				icon: false,
 			},
 			{
+				name: 'WebSocket',
+				href: 'https://avwo.github.io/whistle/webui/websocket.html',
+				icon: false,
+			},
+			{
 				name: 'Composer',
 				href: 'https://avwo.github.io/whistle/webui/composer.html',
 				icon: false,
