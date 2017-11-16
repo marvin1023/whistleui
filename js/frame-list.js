@@ -68,7 +68,7 @@ var FrameList = React.createClass({
       </div>
       <div
         tabIndex="0"
-        onKeyUp={this.onClear}
+        onKeyDown={this.onClear}
         style={{background: keyword ? '#ffffe0' : undefined}}
         onScroll={self.shouldScrollToBottom} ref={self.setContainer} className="fill w-frames-list">
         <ul ref={self.setContent}>
