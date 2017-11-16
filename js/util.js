@@ -495,3 +495,12 @@ function findArray(arr, cb) {
   }
 }
 exports.findArray = findArray;
+
+exports.isFocusEditor = function() {
+	var activeElement = document.activeElement;
+	var nodeName = activeElement && activeElement.nodeName;
+	if (nodeName !== 'INPUT' && nodeName !== 'TEXTAREA') {
+		return false;
+	}
+	return !activeElement.readOnly && !activeElement.disabled;
+};

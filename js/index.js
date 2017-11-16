@@ -533,10 +533,7 @@ var Index = React.createClass({
 			}
 			var isNetwork = self.state.name === 'network';
 			if (isNetwork && e.keyCode == 88) {
-				var activeElement = document.activeElement;
-				var nodeName = activeElement && activeElement.nodeName;
-				if (nodeName !== 'INPUT' && nodeName !== 'TEXTAREA'
-					&& !$(e.target).closest('.w-frames-list').length) {
+				if (!util.isFocusEditor() && !$(e.target).closest('.w-frames-list').length) {
 					self.clear();
 				}
 			}
