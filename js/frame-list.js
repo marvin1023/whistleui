@@ -25,6 +25,9 @@ var FrameList = React.createClass({
   clear: function() {
     this.props.modal.clear();
     this.setState({});
+    if (this.props.onUpdate) {
+      this.props.onUpdate();
+    }
   },
   onClear: function(e) {
     if ((e.ctrlKey || !e.metaKey) && e.keyCode === 88) {

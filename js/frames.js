@@ -28,6 +28,9 @@ var ImageView = React.createClass({
     modal.setActive(frame);
     this.setState({});
   },
+  onUpdate: function() {
+    this.setState({});
+  },
   render: function() {
     var props = this.props;
     var modal = this.state.modal;
@@ -37,7 +40,7 @@ var ImageView = React.createClass({
     return (
       <div className={'fill orient-vertical-box w-frames' + ((frames && !props.hide) ? '' : ' hide')}>
         <Divider vertical="true" rightWidth="250">
-          <FrameList reqData={reqData} modal={modal} onClickFrame={this.onClickFrame} />
+          <FrameList reqData={reqData} modal={modal} onUpdate={this.onUpdate} onClickFrame={this.onClickFrame} />
           <FrameData reqData={reqData} cId={props.cId} data={modal.getActive()} />
         </Divider>
       </div>
