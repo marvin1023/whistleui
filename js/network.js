@@ -16,15 +16,20 @@ var Network = React.createClass({
 				return;
 			}
 			if ((e.ctrlKey || e.metaKey) && e.keyCode == 68) {
-				var modal = self.props.modal;
-				if (e.shiftKey) {
-				  if (modal && modal.removeUnselectedItems()) {
-            self.setState({});
-          }
-				} else {
-				  if (modal && modal.removeSelectedItems()) {
-	          self.setState({});
-	        }
+				var activeElement = document.activeElement;
+				var nodeName = activeElement && activeElement.nodeName;
+				if (nodeName !== 'INPUT' && nodeName !== 'TEXTAREA'
+					&& !$(e.target).closest('.w-frames-list').length) {
+						var modal = self.props.modal;
+						if (e.shiftKey) {
+							if (modal && modal.removeUnselectedItems()) {
+								self.setState({});
+							}
+						} else {
+							if (modal && modal.removeSelectedItems()) {
+								self.setState({});
+							}
+						}
 				}
 			}
 		});
