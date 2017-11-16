@@ -69,14 +69,14 @@ var FrameComposer = React.createClass({
     var cId = this.props.cId;
     var closed = this.props.closed;
     var disabled = closed || noData;
-
+    var tips = disabled ? 'The connection is closed' : undefined;
     return (
       <div onDrop={this.onDrop} className={'fill orient-vertical-box w-frames-composer' + (this.props.hide ? ' hide' : '')}>
         <div className="w-frames-composer-action">
           {closed ? 'Click here' : <a href="javascript:;" onClick={this.selectFile}>Click here</a>} or drag a file to here to send to the server
           <div className="btn-group">
-            <button disabled={disabled} onMouseDown={this.preventDefault} onClick={this.onSend} type="button" className="btn btn-primary btn-sm">Send</button>
-            <button disabled={disabled} type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button title={tips} disabled={disabled} onMouseDown={this.preventDefault} onClick={this.onSend} type="button" className="btn btn-primary btn-sm">Send</button>
+            <button title={tips} disabled={disabled} type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span className="caret"></span>
             </button>
             <ul className="dropdown-menu">

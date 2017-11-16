@@ -26,6 +26,11 @@ var FrameList = React.createClass({
     this.props.modal.clear();
     this.setState({});
   },
+  onClear: function(e) {
+    if ((e.ctrlKey || !e.metaKey) || e.keyCode === 88) {
+      this.clear();
+    }
+  },
   shouldScrollToBottom: function() {
     var con = this.container;
     var ctn =this.content;
@@ -62,6 +67,8 @@ var FrameList = React.createClass({
         </a>
       </div>
       <div
+        tabIndex="0"
+        onKeyUp={this.onClear}
         style={{background: keyword ? '#ffffe0' : undefined}}
         onScroll={self.shouldScrollToBottom} ref={self.setContainer} className="fill w-frames-list">
         <ul ref={self.setContent}>
