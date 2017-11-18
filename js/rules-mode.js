@@ -110,7 +110,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 
 			function isWildcard(str) {
-				return /^(?:\$?(?:https?:|wss?:|tunnel:)?\/\/)?(?:\*\*?\.|~\/)/.test(str);
+				return /^(?:\$?(?:https?:|wss?:|tunnel:)?\/\/)?(?:\*\*?\.|[~*]\/)/.test(str);
 			}
 			
 			return {
