@@ -13,10 +13,10 @@ var JSONViewer = require('./json-viewer');
 var BTNS = [
 	{name: 'Headers'},
 	{name: 'TextView'},
+	{name: 'JSON'},
 	{name: 'Frames'},
 	{name: 'ImageView'},
 	{name: 'Cookies'},
-	{name: 'JSON'},
 	{name: 'Raw'}
 ];
 var COOKIE_HEADERS = ['Name', 'Value', 'Domain', 'Path', 'Expires', 'Max-Age', 'HttpOnly', 'Secure'];

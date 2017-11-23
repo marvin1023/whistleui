@@ -8,7 +8,7 @@ var BtnGroup = require('./btn-group');
 var JSONViewer = require('./json-viewer');
 var Textarea = require('./textarea');
 
-var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'Cookies'}, {name: 'WebForms'}, {name: 'JSON'}, {name: 'Raw'}];
+var BTNS = [{name: 'Headers'}, {name: 'TextView'}, {name: 'JSON'}, {name: 'WebForms'}, {name: 'Cookies'}, {name: 'Raw'}];
 
 var ReqDetail = React.createClass({
 	getInitialState: function() {
