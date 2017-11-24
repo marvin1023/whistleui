@@ -1791,8 +1791,11 @@ var Index = React.createClass({
 		 e.preventDefault();
 	},
 	disableAllPlugins: function(e) {
+		var self = this;
 		 var checked = e.target.checked;
-		 var self = this;
+		 if (e.target.nodeName !== 'INPUT') {
+			 checked = !self.state.disabledAllPlugins;
+		 }
 		 dataCenter.plugins.disableAllPlugins({disabledAllPlugins: checked ? 1 : 0}, function(data) {
 			  if (data && data.ec === 0) {
 			    self.state.disabledAllPlugins = checked;
@@ -2122,6 +2125,8 @@ var Index = React.createClass({
 							<span className="w-left-menu-tips" style={{display:  name == 'values' ? 'none' : undefined}}>Values</span>
 						</a>
 						<a onClick={this.showPlugins} className="w-plugins-menu"
+							onDoubleClick={this.disableAllPlugins}
+							title={name == 'plugins' ? 'Double to ' + (state.disableAllPlugins ? 'enable' : 'disable') + ' all plugins': undefined}
 							style={{background: name == 'plugins' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-list-alt"></span>
 							<span className="w-left-menu-tips" style={{display:  name == 'plugins' ? 'none' : undefined}}>Plugins</span>
