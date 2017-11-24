@@ -62,7 +62,7 @@ function parseLog(log) {
 				return <span>{hasNonStr ? '"' + data + '"' : data}</span>;
 			}
 			if (!data || typeof data !== 'object') {
-				return <span>{data + ''}</span>;
+				return <span style={{color: 'rgb(203, 75, 22)'}}>{data + ''}</span>;
 			}
 			return <JSONTree data={data} />
 		});
