@@ -71,7 +71,7 @@ function parseLog(log) {
 		});
 		return log.view;
 	} catch(e) {}
-	return data;
+	return log.text;
 }
 
 var Log = React.createClass({
