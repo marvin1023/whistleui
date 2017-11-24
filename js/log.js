@@ -58,7 +58,7 @@ function parseLog(log) {
 			return typeof data !== 'string';
 		});
 		log = log.map(function(data) {
-			if (typeof data === 'string') {
+			if (typeof data === 'string' && data !== 'undefined') {
 				return <span>{hasNonStr ? '"' + data + '"' : data}</span>;
 			}
 			if (!data || typeof data !== 'object') {
