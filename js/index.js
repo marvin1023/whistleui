@@ -2100,18 +2100,23 @@ var Index = React.createClass({
 				<div className="w-container box fill">
 					<div className="w-left-menu">
 						<a onClick={this.showNetwork} onDoubleClick={this.clearNetwork}
+							title={name == 'network' ? 'Double click to remove all sessions' : undefined}
 							className="w-network-menu"
 							style={{background: name == 'network' ? '#ddd' : null}} 
 							href="javascript:;"  draggable="false">
 								<span className="glyphicon glyphicon-align-justify"></span>
 								<span className="w-left-menu-tips" style={{display:  name == 'network' ? 'none' : undefined}}>Network</span>
 						</a>
-						<a onClick={this.showRules} className="w-rules-menu"
+						<a onClick={this.showRules} className="w-save-menu w-rules-menu"
+							onDoubleClick={this.onClickMenu}
+							title={name == 'rules' ? 'Double click to save all changed' : undefined}
 							style={{background: name == 'rules' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-list"></span>
 							<span className="w-left-menu-tips" style={{display:  name == 'rules' ? 'none' : undefined}}>Rules</span>
 						</a>
-						<a onClick={this.showValues} className="w-values-menu"
+						<a onClick={this.showValues} className="w-save-menu w-values-menu"
+							onDoubleClick={this.onClickMenu}
+							title={name == 'values' ? 'Double click to save all changed' : undefined}
 							style={{background: name == 'values' ? '#ddd' : null}} href="javascript:;" draggable="false">
 							<span className="glyphicon glyphicon-folder-open"></span>
 							<span className="w-left-menu-tips" style={{display:  name == 'values' ? 'none' : undefined}}>Values</span>
