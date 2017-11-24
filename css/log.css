@@ -11,6 +11,16 @@
 .w-detail-page-log li.w-error pre {color: #c41a16;}
 .w-detail-page-log li.w-warn pre {color: #5c3b00;}
 
+.w-detail-page-log li>pre>ul {
+  display: inline-block; background: transparent!important;
+  margin: 0 0 0 10px!important; vertical-align: top;
+}
+.w-detail-page-log li>pre>span {vertical-align: top; line-height: 24px; margin-top: }
+.w-detail-page-log li>pre ul, .w-detail-page-log li>pre li { width: auto!important; }
+.w-detail-page-log>.w-detail-log-content>ul>li { border-bottom: 1px solid #ddd; }
+.w-detail-page-log li>pre>span { margin-left: 10px; }
+.w-detail-page-log li>pre>span:first-child, .w-detail-page-log li>pre>ul:first-child { margin-left: 0!important; }
+
 .w-detail-svr-log li.w-fatal pre { color: magenta; }
 .w-detail-svr-log li.w-error pre { color: red; }
 .w-detail-svr-log li.w-warn pre { color: yellow; }

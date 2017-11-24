@@ -3,6 +3,7 @@ require('../css/log.css');
 var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
+var JSONTree = require('react-json-tree')['default'];
 var BtnGroup = require('./btn-group');
 var util = require('./util');
 var dataCenter = require('./data-center');
@@ -48,6 +49,26 @@ function checkLogText(text, keyword) {
 		return ' hide'; 
 	}
 	return '';
+}
+
+function parseLog(log) {
+	try {
+		log = JSON.parse(log);
+		var hasNonStr = log.some(function(obj) {
+			return typeof data !== 'string';
+		});
+		log = log.map(function(data, i) {
+			if (typeof data === 'string') {
+				return <span>{hasNonStr ? '"' + data + '"' : data}</span>;
+			}
+			if (!data || typeof data !== 'object') {
+				return <span>{data + ''}</span>;
+			}
+			return <JSONTree data={data} />
+		});
+		return log;
+	} catch(e) {}
+	return log;
 }
 
 var Log = React.createClass({
@@ -184,20 +205,21 @@ var Log = React.createClass({
 						<div ref="container" className="fill w-detail-log-content">
 							<ul ref="content">
 								{logs.map(function(log) {
-									var text = 'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n' + log.text;
+									var date = 'Date: ' + (new Date(log.date)).toLocaleString() + '\r\n';
 									var hide = '';
 									if (consoleKeyword) {
 										var level = consoleKeyword.level;
 										if (level && log.level !== level) {
 											hide = ' hide';
 										} else {
-											hide = checkLogText(text, consoleKeyword);
+											hide = checkLogText(date + log.text, consoleKeyword);
 										}
 									}
 									return (
 										<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level + hide}>
 											<pre>
-												{text}
+												{date}
+												{parseLog(log.text)}
 											</pre>
 										</li>		
 									);
