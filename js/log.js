@@ -52,12 +52,15 @@ function checkLogText(text, keyword) {
 }
 
 function parseLog(log) {
+	if (log.view) {
+		return log.view;
+	}
 	try {
-		log = JSON.parse(log);
-		var hasNonStr = log.some(function(obj) {
+		var data = JSON.parse(log.text);
+		var hasNonStr = data.some(function(obj) {
 			return typeof data !== 'string';
 		});
-		log = log.map(function(data) {
+		log.view = data.map(function(data) {
 			if (typeof data === 'string' && data !== 'undefined') {
 				return <span>{hasNonStr ? '"' + data + '"' : data}</span>;
 			}
@@ -66,9 +69,9 @@ function parseLog(log) {
 			}
 			return <JSONTree data={data} />
 		});
-		return log;
+		return log.view;
 	} catch(e) {}
-	return log;
+	return data;
 }
 
 var Log = React.createClass({
@@ -219,7 +222,7 @@ var Log = React.createClass({
 										<li key={log.id} title={log.level.toUpperCase()} className={'w-' + log.level + hide}>
 											<pre>
 												{date}
-												{parseLog(log.text)}
+												{parseLog(log)}
 											</pre>
 										</li>		
 									);
