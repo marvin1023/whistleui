@@ -58,7 +58,7 @@ function parseLog(log) {
 	try {
 		var data = JSON.parse(log.text);
 		var hasNonStr = data.some(function(obj) {
-			return typeof data !== 'string';
+			return typeof obj !== 'string' || obj === 'undefined';
 		});
 		log.view = data.map(function(data) {
 			if (typeof data === 'string' && data !== 'undefined') {
