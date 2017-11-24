@@ -57,7 +57,7 @@ function parseLog(log) {
 		var hasNonStr = log.some(function(obj) {
 			return typeof data !== 'string';
 		});
-		log = log.map(function(data, i) {
+		log = log.map(function(data) {
 			if (typeof data === 'string') {
 				return <span>{hasNonStr ? '"' + data + '"' : data}</span>;
 			}
