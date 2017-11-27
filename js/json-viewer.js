@@ -8,6 +8,10 @@ var JsonViewer = React.createClass({
 	getInitialState: function() {
 		return { lastData: {} };
 	},
+	shouldComponentUpdate: function(nextProps) {
+		var hide = util.getBoolean(this.props.hide);
+		return hide != util.getBoolean(nextProps.hide) || !hide;
+	},
 	preventBlur: function(e) {
 		e.target.nodeName != 'INPUT' && e.preventDefault();
 	},

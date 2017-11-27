@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var dataCenter = require('./data-center');
+var util = require('./util');
 
 var MAX_FILE_SIZE = 1024 * 1025;
 
@@ -12,6 +13,10 @@ var FrameComposer = React.createClass({
     this.dataField = ReactDOM.findDOMNode(this.refs.uploadData);
     this.dataForm = ReactDOM.findDOMNode(this.refs.uploadDataForm);
   },
+  shouldComponentUpdate: function(nextProps) {
+		var hide = util.getBoolean(this.props.hide);
+		return hide != util.getBoolean(nextProps.hide) || !hide;
+	},
   onDrop: function(e) {
     e.stopPropagation();
     e.preventDefault();
