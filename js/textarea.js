@@ -36,7 +36,14 @@ var Textarea = React.createClass({
 	},
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
-		return hide != util.getBoolean(nextProps.hide) || !hide;
+		var nextHide = util.getBoolean(nextProps.hide);
+		if (hide !== nextHide) {
+			return true;
+		}
+		if (hide) {
+			return false;
+		}
+		return this.props.value !== nextProps.value;
 	},
 	componentDidUpdate: function() {
 		this.updateValue();
