@@ -89,8 +89,22 @@ var ReqDetail = React.createClass({
 				{state.initedTextView ? <Textarea tips={tips} value={body} className="fill w-detail-request-textview" hide={name != BTNS[1].name} /> : ''}
 				{state.initedJSON ? <JSONViewer data={json} hide={name != BTNS[2].name} /> : undefined}
 				{state.initedWebForms ? <Divider vertical="true" className={'w-detail-request-webforms' + (name == BTNS[3].name ? '' : ' hide')}>
-					<div className="fill w-detail-request-query"><Properties modal={query} enableViewSource="1" /></div>
-					<div className="fill w-detail-request-form"><Properties modal={form} enableViewSource="1" /></div>
+					<div className="fill orient-vertical-box">
+						<div className="w-detail-request-webforms-title">
+							Query
+						</div>
+						<div className="fill w-detail-request-query">
+							<Properties modal={query} enableViewSource="1" />
+						</div>
+					</div>
+					<div className="fill orient-vertical-box">
+						<div className="w-detail-request-webforms-title">
+							Body
+						</div>
+						<div className="fill orient-vertical-box w-detail-request-form">
+							<Properties modal={form} enableViewSource="1" />
+						</div>
+					</div>
 				</Divider> : ''}
 				{state.initedCookies ? <div className={'fill w-detail-request-cookies' + (name == BTNS[4].name ? '' : ' hide')}><Properties modal={cookies} enableViewSource="1" /></div> : ''}
 				{state.initedRaw ? <Textarea value={raw} className="fill w-detail-request-raw" hide={name != BTNS[5].name} /> : ''}

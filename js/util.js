@@ -301,7 +301,7 @@ exports.getPath = function(url) {
 };
 
 function parseJSON(str) {
-	if (!str || !(str = str.trim()) || !/({[\w\W]+}|\[[\w\W]+\])/.test(str)) {
+	if (!str || !(str = str.trim()) || !/({[\w\W]*}|\[[\w\W]*\])/.test(str)) {
 		return '';
 	}
 	
