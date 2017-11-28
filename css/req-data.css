@@ -8,8 +8,9 @@
 .w-req-data-content .sent {width: 65px;}
 .w-req-data-content .dns {width: 65px;}
 .w-req-data-content .serverPort, .w-req-data-content .clientPort {width: 90px;}
-.w-req-data-content .hostIp, .w-req-data-content .type,
+.w-req-data-content .type,
 .w-req-data-content .body, .w-req-data-content .clientIp {width: 100px;}
+.w-req-data-content .hostIp {width: 115px;}
 .w-req-data-content .hostname {width: 136px;}
 .w-req-data-content .request, .w-req-data-content .response, 
 .w-req-data-content .download { width: 85px; }
