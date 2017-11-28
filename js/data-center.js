@@ -5,7 +5,7 @@ var NetworkModal = require('./network-modal');
 var storage = require('./storage');
 var events = require('./events');
 
-var MAX_FRAMES_LENGTH = exports.MAX_FRAMES_LENGTH = 100;
+var MAX_FRAMES_LENGTH = exports.MAX_FRAMES_LENGTH = 60;
 var MAX_COUNT = NetworkModal.MAX_COUNT;
 var TIMEOUT = 20000;
 var dataCallbacks = [];
@@ -388,7 +388,7 @@ function startLoadData() {
 		var curActiveItem = networkModal.getActive();
 		var curFrames = curActiveItem && curActiveItem.frames;
 		var lastFrameId, curReqId;
-		if (curFrames) {
+		if (curFrames && curFrames.length <= MAX_FRAMES_LENGTH) {
 			curReqId = curActiveItem.id;
 			lastFrameId = curActiveItem.lastFrameId;
 		}
