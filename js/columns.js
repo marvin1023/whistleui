@@ -74,6 +74,11 @@ function getDefaultColumns() {
       className: 'body'
     },
     {
+      title: 'Encoding',
+      name: 'contentEncoding',
+      className: 'encoding'
+    },
+    {
       title: 'DNS',
       name: 'dns',
       className: 'dns'

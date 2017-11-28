@@ -13,7 +13,7 @@
 .w-req-data-content .hostIp {width: 115px;}
 .w-req-data-content .hostname {width: 136px;}
 .w-req-data-content .request, .w-req-data-content .response, 
-.w-req-data-content .download { width: 85px; }
+.w-req-data-content .download, .w-req-data-content .encoding { width: 85px; }
 
 .w-req-data-headers {height: 30px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden;}
 .w-req-data-headers .table {height: 30px;}

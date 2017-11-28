@@ -4,10 +4,9 @@ var React = require('react');
 var util = require('./util');
 var Properties = require('./properties');
 
-var ENCODING = 'Content Encoding';
 var OVERVIEW = ['Url', 'Real Url', 'Method', 'Http Version', 'Status Code', 'Status Message', 'Client IP', 'Server IP', 'Client Port', 'Server Port', 'Request Length', 'Content Length'
-                      , ENCODING, 'Start Date', 'DNS Lookup', 'Request Sent', 'Response Headers', 'Content Download'];
-var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.statusCode', 'res.statusMessage', 'req.ip', 'res.ip', 'req.port', 'res.port', 'req.size', 'res.size'];
+                      , 'Content Encoding', 'Start Date', 'DNS Lookup', 'Request Sent', 'Response Headers', 'Content Download'];
+var OVERVIEW_PROPS = ['url', 'realUrl', 'req.method', 'req.httpVersion', 'res.statusCode', 'res.statusMessage', 'req.ip', 'res.ip', 'req.port', 'res.port', 'req.size', 'res.size', 'contentEncoding'];
 /**
  * statusCode://, redirect://[statusCode:]url, [req, res]speed://, 
  * [req, res]delay://, method://, [req, res][content]Type://自动lookup, 
@@ -43,11 +42,6 @@ var Overview = React.createClass({
 		if (modal) {
 			overviewModal = {};
 			OVERVIEW.forEach(function(name, i) {
-				if (name === ENCODING) {
-					var headers = modal.res.headers || {};
-					overviewModal[name] =  headers['content-encoding'];
-					return;
-				}
 				var prop = OVERVIEW_PROPS[i];
 				if (prop) {
 					var value = util.getProperty(modal, prop);
