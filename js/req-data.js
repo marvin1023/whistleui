@@ -353,7 +353,7 @@ var ReqData = React.createClass({
 																if (name === 'path') {
 																	var url, path;
 																	if (!item.hide && i >= startIndex && i <= endIndex) {
-																		url = item.shortUrl || item.url;
+																		url = item.url;
 																		path = item.path;
 																	}
 																	return <td key={name} className="path" title={url}>{path}</td>;

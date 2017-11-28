@@ -23,7 +23,7 @@ var initialDataPromise, initialData, startedLoad;
 var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
 var dataIndex = 10000;
-var MAX_URL_LENGTH = 1024;
+var MAX_PATH_LENGTH = 812;
 var lastRowId;
 var DEFAULT_CONF = {
 	timeout: TIMEOUT,
@@ -538,9 +538,7 @@ function setReqData(item) {
 	}
 	setRawHeaders(item.req);
 	setRawHeaders(res);
-	if (url.length > MAX_URL_LENGTH) {
-		item.shortUrl = url = url.substring(0, MAX_URL_LENGTH) + '...';
-	}
+	
 	if (!item.path) {
 		item.protocol = item.isHttps ? 'HTTP' : util.getProtocol(url);
 		item.hostname = item.isHttps ? 'Tunnel to' : util.getHost(url);
@@ -550,6 +548,9 @@ function setReqData(item) {
 			item.path = pathIndex === -1 ? '/' : url.substring(pathIndex);
 		} else {
 			item.path = url;
+		}
+		if (item.path.length > MAX_PATH_LENGTH) {
+			item.path = item.path.substring(0, MAX_PATH_LENGTH) + '...';
 		}
 	}
 	if (!item.frames && isSocket(item)) {
