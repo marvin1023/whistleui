@@ -140,16 +140,20 @@ function compare(prev, next, order) {
     }
     if (next == '-') {
         return -1;
-    }
-
+		}
     return order == 'asc' ? -_compare(prev, next) : _compare(prev, next);
 }
 
 function _compare(prev, next) {
+	if (prev == null || prev == '') {
+		return -1;
+	}
+	if (next == null || next == '') {
+		return 1;
+	}
 	if (prev > next) {
 		return 1;
 	}
-	
 	var prevType = typeof prev;
 	var nextType = typeof next;
 	if (prevType != nextType && prevType == 'number') {
