@@ -127,6 +127,7 @@ var FrameList = React.createClass({
             }
             return (
               <li
+                key={item.frameId}
                 title={item.title}
                 style={{display: item.hide ? 'none' : undefined}}
                 onClick={function() {
