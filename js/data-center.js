@@ -23,7 +23,7 @@ var initialDataPromise, initialData, startedLoad;
 var lastPageLogTime = -2;
 var lastSvrLogTime = -2;
 var dataIndex = 10000;
-var MAX_PATH_LENGTH = 812;
+var MAX_PATH_LENGTH = 1024;
 var lastRowId;
 var DEFAULT_CONF = {
 	timeout: TIMEOUT,
