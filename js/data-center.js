@@ -334,7 +334,7 @@ function filterData(obj, item) {
 	}
 
 	if (!checkFiled(obj.headers, joinString(util.objectToString(item.req.headers),
-		util.objectToString(item.res.headers)), needDecode)) {
+		util.objectToString(item.res.headers)), true)) {
 		return false;
 	}
 	return true;
