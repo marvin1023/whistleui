@@ -123,7 +123,7 @@ var Editor = React.createClass({
 		$(elem).on('keydown', function(e) {
 			var isRules = isRulesEditor || self._mode === 'rules';
 			var isJS = self._mode == 'javascript';
-			if (!e.ctrlKey && !e.metaKey && e.keyCode === 112) {
+			if (isRules && !e.ctrlKey && !e.metaKey && e.keyCode === 112) {
 				window.open('https://avwo.github.io/whistle/rules/');
 				return true;
 			}
