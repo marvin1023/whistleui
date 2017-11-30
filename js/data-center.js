@@ -260,7 +260,7 @@ exports.getInitialData = function (callback) {
 	initialDataPromise.done(callback);
 };
 
-function checkFiled(keyword, text) {
+function checkFiled(keyword, text, needDecode) {
 	if (!keyword) {
 		return true;
 	}
@@ -269,6 +269,14 @@ function checkFiled(keyword, text) {
 	}
 	keyword = toLowerCase(keyword);
 	keyword = keyword.split(/\n/g);
+	if (needDecode) {
+		try {
+			var dtext = decodeURIComponent(text);
+			if (dtext !== text) {
+				text += '\n' + dtext;
+			}
+		} catch(e) {}
+	}
 	text = toLowerCase(text);
 	var check = function(kw) {
 		if (!kw) {
@@ -326,7 +334,7 @@ function filterData(obj, item) {
 	}
 
 	if (!checkFiled(obj.headers, joinString(util.objectToString(item.req.headers),
-		util.objectToString(item.res.headers)))) {
+		util.objectToString(item.res.headers)), needDecode)) {
 		return false;
 	}
 	return true;
