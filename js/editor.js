@@ -27,6 +27,8 @@ var css = require('codemirror/mode/css/css');
 var xml = require('codemirror/mode/xml/xml');
 var htmlmixed = require('codemirror/mode/htmlmixed/htmlmixed');
 var markdown = require('codemirror/mode/markdown/markdown');
+require('./rules-hint');
+
 var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', 'cobalt', 'eclipse'
               , 'rubyblue', 'lesser-dark', 'xq-dark', 'xq-light', 'ambiance'
               , 'blackboard', 'vibrant-ink', 'solarized dark', 'solarized light', 'twilight', 'midnight'];
@@ -92,6 +94,14 @@ var Editor = React.createClass({
 			this._editor.setOption('readOnly', readOnly);
 		}
 	},
+	setAutoComplete: function(enable) {
+		// TODO: 测试下Mac的Option + /
+		var option = this.isRulesEditor() ? {'Alt-/': 'autocomplete'} : null;
+		this._editor.setOption('extraKeys', option);
+	},
+	isRulesEditor: function() {
+		return this.props.name === 'rules' || this._mode === 'rules';
+	},
 	componentDidMount: function() {
 		var timeout;
 		var self = this;
@@ -119,12 +129,17 @@ var Editor = React.createClass({
 				editor.setSize(null, height);
 			}
 		}
-		var isRulesEditor = self.props.name == 'rules';
 		$(elem).on('keydown', function(e) {
-			var isRules = isRulesEditor || self._mode === 'rules';
+			var isRules = self.isRulesEditor();
 			var isJS = self._mode == 'javascript';
 			if (isRules && !e.ctrlKey && !e.metaKey && e.keyCode === 112) {
-				window.open('https://avwo.github.io/whistle/rules/');
+				var activeHint = $('li.CodeMirror-hint-active');
+				if (activeHint.is(':visible')) {
+					// TODO: 细化
+					window.open('https://avwo.github.io/whistle/rules/' + activeHint.text().replace('://', '') + '.html');
+				} else {
+					window.open('https://avwo.github.io/whistle/rules/');
+				}
 				return true;
 			}
 			if ((!isRules && !isJS) || !(e.ctrlKey || e.metaKey) || e.keyCode != 191) {
@@ -219,6 +234,7 @@ var Editor = React.createClass({
 		this.setTheme(this.props.theme);
 		this.showLineNumber(this.props.lineNumbers || false);
 		this.setReadOnly(this.props.readOnly || false);
+		this.setAutoComplete();
 	},
 	componentDidUpdate: function() {
 		this._init();
