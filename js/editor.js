@@ -44,13 +44,13 @@ var Editor = React.createClass({
 		return themes;
 	},
 	setMode: function(mode) {
-		if (/(javascript|css|xml|rules|markdown)/.test(mode)) {
-			mode = RegExp.$1;
-		} else if (/js/.test(mode)) {
+		if (/^(javascript|css|xml|rules|markdown)$/i.test(mode)) {
+			mode = RegExp.$1.toLowerCase();
+		} else if (/^js$/i.test(mode)) {
 			mode = 'javascript';
-		} else if (/html?/.test(mode)) {
+		} else if (/^html?$/i.test(mode)) {
 			mode = 'htmlmixed';
-		} else if (/md/.test(mode)) {
+		} else if (/^md$/i.test(mode)) {
 			mode = 'markdown';
 		}
 		
