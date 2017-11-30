@@ -526,6 +526,10 @@ var Index = React.createClass({
 			}
 		}).on('keydown', function(e) {
 			if (!e.ctrlKey && !e.metaKey) {
+				if (e.keyCode === 112) {
+					e.preventDefault();
+					window.open('https://avwo.github.io/whistle/webui/' + self.state.name + '.html');
+				}
 				return;
 			}
 			if (e.keyCode === 77) {
