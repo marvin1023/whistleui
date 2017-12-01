@@ -65,7 +65,7 @@ exports.getHelpUrl = function(rule) {
   if (!rule || rule === 'rule') {
     return ROOT_HELP_URL;
   }
-  rule = rule.replace('://', '');
+  rule = rule.replace(/\:\/\/.*/, '');
   if (innerRules.indexOf(rule) !== -1) {
     return ROOT_HELP_URL + 'rule/' + rule + '.html';
   }

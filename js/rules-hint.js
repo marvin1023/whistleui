@@ -23,6 +23,9 @@ function getHints(keyword) {
     return allRules;
   }
   keyword = keyword.toLowerCase();
+  if (keyword === 'csp') {
+    return ['disable://csp'];
+  }
   var list = allRules.filter(function(name) {
     return name.toLowerCase().indexOf(keyword) !== -1;
   });
