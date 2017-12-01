@@ -6,18 +6,22 @@ var protocols = require('./protocols');
 
 var PROTOCOL_RE = /^([^\s]+):\/\//;
 var SPACE_RE = /(\s+)/;
+var extraKeys = {'Alt-/': 'autocomplete'};
+var CHARS = ['-', '_'];
+
 
 function getHints(keyword) {
   var allRules = protocols.getAllRules();
   if (!keyword) {
     return allRules;
   }
+  keyword = keyword.toLowerCase();
   var list = allRules.filter(function(name) {
-    return name.indexOf(keyword) !== -1;
+    return name.toLowerCase().indexOf(keyword) !== -1;
   });
   list.sort(function(cur, next) {
-    var curIndex = cur.indexOf(keyword);
-    var nextIndex = next.indexOf(keyword);
+    var curIndex = cur.toLowerCase().indexOf(keyword);
+    var nextIndex = next.toLowerCase().indexOf(keyword);
     if (curIndex === nextIndex) {
       return 0;
     }
@@ -69,6 +73,10 @@ function getFocusRuleName(editor) {
   }
   return name;
 }
+
+exports.getExtraKeys = function() {
+  return extraKeys;
+};
 
 exports.getHelpUrl = function(editor) {
   return protocols.getHelpUrl(getFocusRuleName(editor));
