@@ -43,10 +43,20 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   var curLine = editor.getLine(cur.line);
   var end = cur.ch, start = end, list;
   var commentIndex = curLine.indexOf('#');
-  var endChar = curLine[end];
-  if ((commentIndex !== -1 && commentIndex < start)
-    || endChar === ':' || endChar === '/') {
+  if ((commentIndex !== -1 && commentIndex < start)) {
     return;
+  }
+  var curChar = curLine[end];
+  if (curChar === ':') {
+    end++;
+    curChar = curLine[end];
+  }
+  if (curChar === '/') {
+    end++;
+    curChar = curLine[end];
+    if (curChar === '/') {
+      end++;
+    }
   }
   while (start && WORD.test(curLine.charAt(start - 1))) {
     --start;
