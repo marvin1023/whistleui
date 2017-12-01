@@ -27,7 +27,7 @@ var css = require('codemirror/mode/css/css');
 var xml = require('codemirror/mode/xml/xml');
 var htmlmixed = require('codemirror/mode/htmlmixed/htmlmixed');
 var markdown = require('codemirror/mode/markdown/markdown');
-require('./rules-hint');
+var rulesHint = require('./rules-hint');
 
 var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', 'cobalt', 'eclipse'
               , 'rubyblue', 'lesser-dark', 'xq-dark', 'xq-light', 'ambiance'
@@ -38,8 +38,6 @@ var DEFAULT_FONT_SIZE = '16px';
 var RULES_COMMENT_RE = /^()\s*#\s*/;
 var JS_COMMENT_RE = /^(\s*)\/\/+\s?/;
 var NO_SPACE_RE = /[^\s]/;
-var SPACE_RE = /(\s+)/;
-var PROTOCOL_RE = /^([^\s]+):\/\//;
 
 var Editor = React.createClass({
 	getThemes: function() {
@@ -135,25 +133,10 @@ var Editor = React.createClass({
 			var isRules = self.isRulesEditor();
 			var isJS = self._mode == 'javascript';
 			if (isRules && !e.ctrlKey && !e.metaKey && e.keyCode === 112) {
-				var activeHint = $('li.CodeMirror-hint-active');
-				if (activeHint.is(':visible')) {
-					// TODO: 细化
-					window.open('https://avwo.github.io/whistle/rules/' + activeHint.text().replace('://', '') + '.html');
+				var ruleName = rulesHint.getFocusRuleName(self._editor);
+				if (ruleName) {
+					window.open('https://avwo.github.io/whistle/rules/' + ruleName + '.html');
 				} else {
-					var cur = editor.getCursor();
-					var curLine = editor.getLine(cur.line).replace(/#/, ' ');
-					var end = cur.ch;
-					var protocol;
-					if (end > 0) {
-						var start = SPACE_RE.test(curLine) ? curLine.indexOf(RegExp.$1) + 1 : 0;
-						if (start < end) {
-							curLine = curLine.slice(start);
-							if (PROTOCOL_RE.test(curLine)) {
-								protocol = RegExp.$1;
-								console.log(RegExp.$1);
-							}
-						}
-					}
 					window.open('https://avwo.github.io/whistle/rules/');
 				}
 				return true;

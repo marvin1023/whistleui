@@ -1,6 +1,10 @@
 require('codemirror/addon/hint/show-hint.css');
 require('codemirror/addon/hint/show-hint.js');
+var $ = require('jquery');
 var CodeMirror = require('codemirror');
+
+var PROTOCOL_RE = /^([^\s]+):\/\//;
+var SPACE_RE = /(\s+)/;
 
 function getHints(keyword) {
   
@@ -31,3 +35,25 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
 CodeMirror.commands.autocomplete = function(cm) {
   cm.showHint({hint: CodeMirror.hint.rulesHint});
 };
+
+function getFocusRuleName(editor) {
+	var name;
+	var activeHint = $('li.CodeMirror-hint-active');
+	if (activeHint.is(':visible')) {
+		name = activeHint.text().replace('://', '');
+	} else {
+		var cur = editor.getCursor();
+		var curLine = editor.getLine(cur.line).replace(/#/, ' ');
+		var end = cur.ch;
+		if (end > 0) {
+      var start = SPACE_RE.test(curLine) ? curLine.indexOf(RegExp.$1) + 1 : 0;
+			curLine = curLine.slice(start > end ? 0 :start);
+      if (PROTOCOL_RE.test(curLine)) {
+        name = RegExp.$1;
+      }
+		}
+  }
+  return name;
+}
+
+exports.getFocusRuleName = getFocusRuleName;
