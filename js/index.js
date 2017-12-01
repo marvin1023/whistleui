@@ -1906,18 +1906,15 @@ var Index = React.createClass({
     ReactDOM.findDOMNode(this.refs.sessions).value = JSON.stringify(sessions, null, '  ');
     form.submit();
 	},
-	exportBySave: function() {
+	exportBySave: function(e) {
+		if (e && e.type !== 'click' && e.keyCode !== 13) {
+			return;
+		}
 		var input = ReactDOM.findDOMNode(this.refs.sessionsName);
 		var name = input.value.trim()
 		input.value = '';
 	  this.exportSessions(this.state.exportFileType, name);
 	  $(ReactDOM.findDOMNode(this.refs.chooseFileType)).modal('hide');
-	},
-	exportByEnterKey: function(e) {
-		if (e.keyCode !== 13) {
-			return;
-		}
-		this.exportBySave();
 	},
 	render: function() {
 		var state = this.state;
@@ -2213,7 +2210,7 @@ var Index = React.createClass({
 							<label className="w-choose-filte-type-label">
 								Save as:
 								<input ref="sessionsName"
-									onKeyDown={this.exportByEnterKey}
+									onKeyDown={this.exportBySave}
 									placeholder="Input the filename"						
 								  className="form-control" maxLength="64" />
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
@@ -2221,7 +2218,10 @@ var Index = React.createClass({
 									<option value="Fiddler">*.saz (For Fiddler)</option>
                 </select>
               </label>
-              <a type="button" onMouseDown={this.preventBlur} className="btn btn-primary" onClick={this.exportBySave}>Confirm</a>
+							<a type="button"
+							  onKeyDown={this.exportBySave}
+								tabIndex="0" onMouseDown={this.preventBlur}
+								className="btn btn-primary" onClick={this.exportBySave}>Confirm</a>
             </div>
           </div>
         </div>
