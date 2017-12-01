@@ -13,17 +13,25 @@ var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy',
 var innerRules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile'];
 var pluginRules = [];
 var forwardRules = innerRules.slice();
+var allInnerRules = PROTOCOLS.slice(0, 1).concat(innerRules).concat(PROTOCOLS.slice(2));
+var allRules = allInnerRules = allInnerRules.map(function(name) {
+  return name + '://';
+});
 
 exports.setPlugins = function(pluginsState) {
   var pluginsOptions = pluginsState.pluginsOptions;
   var disabledPlugins = pluginsState.disabledPlugins;
   pluginRules = [];
+  forwardRules = innerRules.slice();
+  allRules = allInnerRules.slice();
   if (!pluginsState.disabledAllPlugins) {
     pluginsOptions.forEach(function(plugin) {
       var name = plugin.name;
       if (!disabledPlugins[name]) {
         forwardRules.push(name);
         pluginRules.push('whistle.' + name, 'plugin.' + name);
+        name += '://';
+        allRules.push(name, 'whistle.' + name, 'plugin.' + name);
       }
     });
   }
@@ -40,4 +48,6 @@ exports.getPluginRules = function() {
   return pluginRules;
 };
 
-
+exports.getAllRules = function() {
+  return allRules;
+};
