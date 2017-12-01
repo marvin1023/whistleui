@@ -13,7 +13,8 @@ var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy',
 var innerRules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile'];
 var pluginRules = [];
 var forwardRules = innerRules.slice();
-var allInnerRules = PROTOCOLS.slice(0, 1).concat(innerRules).concat(PROTOCOLS.slice(2));
+var webProtocols = ['http', 'https', 'ws', 'wss', 'tunnel'];
+var allInnerRules = PROTOCOLS.slice(0, 1).concat(webProtocols).concat(innerRules).concat(PROTOCOLS.slice(2));
 var allRules = allInnerRules = allInnerRules.map(function(name) {
   return name + '://';
 });
@@ -66,6 +67,9 @@ exports.getHelpUrl = function(rule) {
   rule = rule.replace('://', '');
   if (innerRules.indexOf(rule) !== -1) {
     return ROOT_HELP_URL + 'rule/' + rule + '.html';
+  }
+  if (webProtocols.indexOf(rule) !== -1) {
+    return ROOT_HELP_URL + 'rule/replace.html';
   }
   if (PROTOCOLS.indexOf(rule) !== -1) {
     return ROOT_HELP_URL + rule + '.html';
