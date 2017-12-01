@@ -8,7 +8,14 @@ var PROTOCOL_RE = /^([^\s]+):\/\//;
 var SPACE_RE = /(\s+)/;
 var extraKeys = {'Alt-/': 'autocomplete'};
 var CHARS = ['-', '_'];
-
+for (var i = 0; i < 10; i++) {
+  CHARS.push(i + '');
+}
+for (var a = 'a'.charCodeAt(), z = 'z'.charCodeAt(); a <= z; a++) {
+  var ch = String.fromCharCode(a);
+  CHARS.push(ch.toUpperCase());
+  CHARS.push(ch);
+}
 
 function getHints(keyword) {
   var allRules = protocols.getAllRules();
@@ -36,7 +43,9 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   var curLine = editor.getLine(cur.line);
   var end = cur.ch, start = end, list;
   var commentIndex = curLine.indexOf('#');
-  if (commentIndex !== -1 && commentIndex < start) {
+  var endChar = curLine[end];
+  if ((commentIndex !== -1 && commentIndex < start)
+    || endChar === ':' || endChar === '/') {
     return;
   }
   while (start && WORD.test(curLine.charAt(start - 1))) {
@@ -53,6 +62,14 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
 CodeMirror.commands.autocomplete = function(cm) {
   cm.showHint({hint: CodeMirror.hint.rulesHint});
 };
+
+function completeAfter(cm, pred) {
+  if (!pred || pred()) setTimeout(function() {
+    if (!cm.state.completionActive)
+      cm.showHint({completeSingle: false});
+  }, 100);
+  return CodeMirror.Pass;
+}
 
 function getFocusRuleName(editor) {
 	var name;
