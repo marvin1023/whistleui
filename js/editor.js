@@ -133,12 +133,7 @@ var Editor = React.createClass({
 			var isRules = self.isRulesEditor();
 			var isJS = self._mode == 'javascript';
 			if (isRules && !e.ctrlKey && !e.metaKey && e.keyCode === 112) {
-				var ruleName = rulesHint.getFocusRuleName(self._editor);
-				if (ruleName) {
-					window.open('https://avwo.github.io/whistle/rules/' + ruleName + '.html');
-				} else {
-					window.open('https://avwo.github.io/whistle/rules/');
-				}
+				window.open(rulesHint.getHelpUrl(self._editor));
 				return true;
 			}
 			if ((!isRules && !isJS) || !(e.ctrlKey || e.metaKey) || e.keyCode != 191) {

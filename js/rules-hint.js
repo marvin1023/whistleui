@@ -2,6 +2,7 @@ require('codemirror/addon/hint/show-hint.css');
 require('codemirror/addon/hint/show-hint.js');
 var $ = require('jquery');
 var CodeMirror = require('codemirror');
+var protocols = require('./protocols');
 
 var PROTOCOL_RE = /^([^\s]+):\/\//;
 var SPACE_RE = /(\s+)/;
@@ -56,4 +57,6 @@ function getFocusRuleName(editor) {
   return name;
 }
 
-exports.getFocusRuleName = getFocusRuleName;
+exports.getHelpUrl = function(editor) {
+  return protocols.getHelpUrl(getFocusRuleName(editor));
+};
