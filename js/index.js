@@ -351,10 +351,12 @@ var Index = React.createClass({
 			var p2 = plugins[b];
 			return (p1.mtime > p2.mtime) ? 1 : -1;
 		}).forEach(function(name) {
+			var plugin = plugins[name];
 			pluginsOptions.push({
 				name: name.slice(0, -1),
 				icon: 'checkbox',
-				mtime: plugins[name].mtime
+				mtime: plugin.mtime,
+				homepage: plugin.homepage
 			});
 		});
 		return pluginsOptions;
