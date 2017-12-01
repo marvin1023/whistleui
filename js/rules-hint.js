@@ -76,7 +76,10 @@ CodeMirror.commands.autocomplete = function(cm) {
 function completeAfter(cm, pred) {
   if (!pred || pred()) setTimeout(function() {
     if (!cm.state.completionActive) {
-      cm.showHint({hint: CodeMirror.hint.rulesHint});
+      cm.showHint({
+        hint: CodeMirror.hint.rulesHint,
+        completeSingle: false
+      });
     }
   }, 100);
   return CodeMirror.Pass;
