@@ -27,7 +27,10 @@ exports.setPlugins = function(pluginsState) {
   forwardRules = innerRules.slice();
   allRules = allInnerRules.slice();
   if (!pluginsState.disabledAllPlugins) {
-    pluginsOptions.forEach(function(plugin) {
+    pluginsOptions.forEach(function(plugin, i) {
+      if (!i) {
+        return;
+      }
       var name = plugin.name;
       plugins[name] = plugin;
       if (!disabledPlugins[name]) {

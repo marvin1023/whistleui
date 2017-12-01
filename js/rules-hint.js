@@ -8,7 +8,22 @@ var PROTOCOL_RE = /^([^\s]+):\/\//;
 var SPACE_RE = /(\s+)/;
 
 function getHints(keyword) {
-  
+  var allRules = protocols.getAllRules();
+  if (!keyword) {
+    return allRules;
+  }
+  var list = allRules.filter(function(name) {
+    return name.indexOf(keyword) !== -1;
+  });
+  list.sort(function(cur, next) {
+    var curIndex = cur.indexOf(keyword);
+    var nextIndex = next.indexOf(keyword);
+    if (curIndex === nextIndex) {
+      return 0;
+    }
+    return curIndex > nextIndex ? 1 : -1;
+  });
+  return list;
 }
 
 var WORD = /[^\s]+/;
@@ -24,9 +39,7 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
     --start;
   }
   var curWord = start != end && curLine.slice(start, end);
-  list = ['1111','212222','33121321'].filter(function(i) {
-    return !curWord || i.indexOf(curWord) !== -1;
-  });
+  var list = getHints(curWord);
   if (!list.length) {
     return;
   }
