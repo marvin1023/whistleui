@@ -95,7 +95,6 @@ var Editor = React.createClass({
 		}
 	},
 	setAutoComplete: function(enable) {
-		// TODO: 测试下Mac的Option + /
 		var option = this.isRulesEditor() ? rulesHint.getExtraKeys() : null;
 		this._editor.setOption('extraKeys', option);
 	},
