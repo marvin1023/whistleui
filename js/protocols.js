@@ -15,6 +15,7 @@ var pluginRules = [];
 var forwardRules = innerRules.slice();
 var webProtocols = ['http', 'https', 'ws', 'wss', 'tunnel'];
 var allInnerRules = PROTOCOLS.slice(0, 1).concat(webProtocols).concat(innerRules).concat(PROTOCOLS.slice(2));
+allInnerRules.splice(allInnerRules.indexOf('plugin'), 1);
 var allRules = allInnerRules = allInnerRules.map(function(name) {
   return name + '://';
 });
