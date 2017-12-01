@@ -4,7 +4,7 @@ var $ = require('jquery');
 var CodeMirror = require('codemirror');
 var protocols = require('./protocols');
 
-var PROTOCOL_RE = /^([^\s]+):\/\//;
+var PROTOCOL_RE = /^([^\s:]+):\/\//;
 var SPACE_RE = /(\s+)/;
 var extraKeys = {'Alt-/': 'autocomplete'};
 var CHARS = ['"-"', '"_"'];
@@ -96,7 +96,11 @@ function getFocusRuleName(editor) {
 	var name;
 	var activeHint = $('li.CodeMirror-hint-active');
 	if (activeHint.is(':visible')) {
-		name = activeHint.text().replace('://', '');
+    name = activeHint.text();
+    var index = name.indexOf(':');
+    if (index !== -1) {
+      name = name.substring(0, index);
+    }
 	} else {
 		var cur = editor.getCursor();
 		var curLine = editor.getLine(cur.line).replace(/#/, ' ');
