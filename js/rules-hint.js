@@ -7,14 +7,14 @@ var protocols = require('./protocols');
 var PROTOCOL_RE = /^([^\s]+):\/\//;
 var SPACE_RE = /(\s+)/;
 var extraKeys = {'Alt-/': 'autocomplete'};
-var CHARS = ['-', '_'];
+var CHARS = ['"-"', '"_"'];
 for (var i = 0; i < 10; i++) {
-  CHARS.push(i + '');
+  CHARS.push('\'' + i + '\'');
 }
 for (var a = 'a'.charCodeAt(), z = 'z'.charCodeAt(); a <= z; a++) {
   var ch = String.fromCharCode(a);
-  CHARS.push(ch.toUpperCase());
-  CHARS.push(ch);
+  CHARS.push('\'' + ch.toUpperCase() + '\'');
+  CHARS.push('\'' + ch + '\'');
 }
 
 function getHints(keyword) {
@@ -75,11 +75,16 @@ CodeMirror.commands.autocomplete = function(cm) {
 
 function completeAfter(cm, pred) {
   if (!pred || pred()) setTimeout(function() {
-    if (!cm.state.completionActive)
-      cm.showHint({completeSingle: false});
+    if (!cm.state.completionActive) {
+      cm.showHint({hint: CodeMirror.hint.rulesHint});
+    }
   }, 100);
   return CodeMirror.Pass;
 }
+
+CHARS.forEach(function(ch) {
+  extraKeys[ch] = completeAfter;
+});
 
 function getFocusRuleName(editor) {
 	var name;
