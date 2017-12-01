@@ -38,7 +38,7 @@ exports.setPlugins = function(pluginsState) {
         forwardRules.push(name);
         pluginRules.push('whistle.' + name, 'plugin.' + name);
         name += '://';
-        allRules.push(name, 'whistle.' + name, 'plugin.' + name);
+        allRules.push(name, 'whistle.' + name);
       }
     });
   }
