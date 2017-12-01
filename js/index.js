@@ -1913,6 +1913,12 @@ var Index = React.createClass({
 	  this.exportSessions(this.state.exportFileType, name);
 	  $(ReactDOM.findDOMNode(this.refs.chooseFileType)).modal('hide');
 	},
+	exportByEnterKey: function(e) {
+		if (e.keyCode !== 13) {
+			return;
+		}
+		this.exportBySave();
+	},
 	render: function() {
 		var state = this.state;
 		var name = state.name;
@@ -2207,6 +2213,7 @@ var Index = React.createClass({
 							<label className="w-choose-filte-type-label">
 								Save as:
 								<input ref="sessionsName"
+									onKeyDown={this.exportByEnterKey}
 									placeholder="Input the filename"						
 								  className="form-control" maxLength="64" />
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
