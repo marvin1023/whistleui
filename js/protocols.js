@@ -10,19 +10,20 @@ var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy',
                   'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace',
                   'req', 'res', 'reqWrite',  'resWrite', 'reqWriteRaw', 'resWriteRaw', 'exportsUrl', 'exports'];
 
-var rules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile',
-  'host', 'https2http-proxy', 'http2https-proxy', 'reqHost'].concat(PROTOCOLS.slice(2));
-var allRules = rules.slice();
+var innerRules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile'];
+var pluginRules = [];
+var forwardRules = innerRules.slice();
 
 exports.setPlugins = function(pluginsState) {
   var pluginsOptions = pluginsState.pluginsOptions;
   var disabledPlugins = pluginsState.disabledPlugins;
-  allRules = rules.slice();
+  pluginRules = [];
   if (!pluginsState.disabledAllPlugins) {
     pluginsOptions.forEach(function(plugin) {
       var name = plugin.name;
       if (!disabledPlugins[name]) {
-        allRules.push(name, 'whistle.' + name, 'plugin.' + name);
+        forwardRules.push(name);
+        pluginRules.push('whistle.' + name, 'plugin.' + name);
       }
     });
   }
@@ -31,10 +32,12 @@ exports.setPlugins = function(pluginsState) {
 
 exports.PROTOCOLS = PROTOCOLS;
 
-function getAllRules() {
-  return allRules;
-}
+exports.getForwardRules = function() {
+  return forwardRules;
+};
 
-exports.getAllRules = getAllRules;
+exports.getPluginRules = function() {
+  return pluginRules;
+};
 
 

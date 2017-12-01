@@ -1,9 +1,11 @@
 var CodeMirror = require('codemirror');
 var events = require('./events');
 var protocols = require('./protocols');
-var allRules = protocols.getAllRules();
+var forwardRules = protocols.getForwardRules();
+var pluginRules = protocols.getPluginRules();
 events.on('updatePlugins', function() {
-  allRules = protocols.getAllRules();
+	forwardRules = protocols.getForwardRules();
+	pluginRules = protocols.getPluginRules();
 });
 
 CodeMirror.defineMode('rules', function() {
@@ -37,7 +39,12 @@ CodeMirror.defineMode('rules', function() {
 			
 			function notExistRule(str) {
 			  str = str.substring(0, str.indexOf(':'));
-			  return allRules.indexOf(str) == -1;
+			  return forwardRules.indexOf(str) == -1;
+			}
+
+			function notExistPlugin(str) {
+			  str = str.substring(0, str.indexOf(':'));
+			  return pluginRules.indexOf(str) == -1;
 			}
 			
 			function isRegExp(str) {
@@ -58,7 +65,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isPlugin(str) {
-				return (/^plugin:\/\//.test(str) || /^(?:plugin|whistle)\.[a-z\d_\-]+:\/\//.test(str)) && !notExistRule(str);
+				return (/^plugin:\/\//.test(str) || /^(?:plugin|whistle)\.[a-z\d_\-]+:\/\//.test(str)) && !notExistPlugin(str);
 			}
 			
 			function isRulesFile(str) {
