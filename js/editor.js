@@ -38,6 +38,8 @@ var DEFAULT_FONT_SIZE = '16px';
 var RULES_COMMENT_RE = /^()\s*#\s*/;
 var JS_COMMENT_RE = /^(\s*)\/\/+\s?/;
 var NO_SPACE_RE = /[^\s]/;
+var SPACE_RE = /(\s+)/;
+var PROTOCOL_RE = /^([^\s]+):\/\//;
 
 var Editor = React.createClass({
 	getThemes: function() {
@@ -138,6 +140,20 @@ var Editor = React.createClass({
 					// TODO: 细化
 					window.open('https://avwo.github.io/whistle/rules/' + activeHint.text().replace('://', '') + '.html');
 				} else {
+					var cur = editor.getCursor();
+					var curLine = editor.getLine(cur.line).replace(/#/, ' ');
+					var end = cur.ch;
+					var protocol;
+					if (end > 0) {
+						var start = SPACE_RE.test(curLine) ? curLine.indexOf(RegExp.$1) + 1 : 0;
+						if (start < end) {
+							curLine = curLine.slice(start);
+							if (PROTOCOL_RE.test(curLine)) {
+								protocol = RegExp.$1;
+								console.log(RegExp.$1);
+							}
+						}
+					}
 					window.open('https://avwo.github.io/whistle/rules/');
 				}
 				return true;

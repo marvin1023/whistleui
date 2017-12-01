@@ -529,6 +529,8 @@ var Index = React.createClass({
 				if (e.keyCode === 112) {
 					e.preventDefault();
 					window.open('https://avwo.github.io/whistle/webui/' + self.state.name + '.html');
+				} else if (e.keyCode === 116) {
+					e.preventDefault();
 				}
 				return;
 			}
