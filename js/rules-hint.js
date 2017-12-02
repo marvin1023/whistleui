@@ -52,6 +52,10 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   while (start && WORD.test(curLine.charAt(start - 1))) {
     --start;
   }
+  var curWord = start != end && curLine.slice(start, end);
+  if (curWord && curWord.indexOf('//') !== -1) {
+    return;
+  }
   var curChar = curLine[end];
   if (curChar === ':') {
     end++;
@@ -63,10 +67,6 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
     if (curChar === '/') {
       end++;
     }
-  }
-  var curWord = start != end && curLine.slice(start, end);
-  if (curWord && curWord.indexOf('//') !== -1) {
-    return;
   }
   var list = getHints(curWord);
   if (!list.length) {
