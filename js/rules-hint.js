@@ -65,6 +65,9 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
     --start;
   }
   var curWord = start != end && curLine.slice(start, end);
+  if (curWord && curWord.indexOf('//') !== -1) {
+    return;
+  }
   var list = getHints(curWord);
   if (!list.length) {
     return;
@@ -73,7 +76,10 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
 });
 
 CodeMirror.commands.autocomplete = function(cm) {
-  cm.showHint({hint: CodeMirror.hint.rulesHint});
+  cm.showHint({
+    hint: CodeMirror.hint.rulesHint,
+    completeSingle: false
+  });
 };
 
 function completeAfter(cm, pred) {
