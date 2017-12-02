@@ -49,6 +49,9 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   if ((commentIndex !== -1 && commentIndex < start)) {
     return;
   }
+  while (start && WORD.test(curLine.charAt(start - 1))) {
+    --start;
+  }
   var curChar = curLine[end];
   if (curChar === ':') {
     end++;
@@ -60,9 +63,6 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
     if (curChar === '/') {
       end++;
     }
-  }
-  while (start && WORD.test(curLine.charAt(start - 1))) {
-    --start;
   }
   var curWord = start != end && curLine.slice(start, end);
   if (curWord && curWord.indexOf('//') !== -1) {
