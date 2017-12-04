@@ -48,8 +48,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRegExp(str) {
-				
-				return /^\/[^/](.*)\/i?$/.test(str);
+				return /^\/[^/](.*)\/i?$/.test(str) || /^\$/.test(str);
 			}
 			
 			function isParams(str) {
@@ -136,7 +135,8 @@ CodeMirror.defineMode('rules', function() {
 
 					 var not = ch === '!';
 					 var str = not ? stream.next() : ch;
-					 var pre, type;
+					 var type = '';
+					 var pre;
 					 stream.eatWhile(function(ch) {
 						if (/\s/.test(ch) || ch == '#') {
 							return false;
@@ -185,10 +185,8 @@ CodeMirror.defineMode('rules', function() {
                } else if (isRulesFile(str)) {
                  type = 'variable-2 js-rulesFile js-type';
                } else if (isUrl(str)) {
-								 not = false;
 								 type = 'string-2 js-url js-type';
 							 } else if (isWildcard(str)) {
-								 not = false;
 								 type = 'attribute js-attribute';
 							 } else if (isRule(str)) {
 								 type = 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
@@ -197,20 +195,20 @@ CodeMirror.defineMode('rules', function() {
 						pre = ch;
 						return true;
 					 });
-					
-					 if (isIP(str)) {
-						 return 'number js-number';
-					 }
-					 
-					 if (isRegExp(str) || isWildcard(str)) {
+					 if (isRegExp(str)) {
 						 return 'attribute js-attribute';
 					 }
-
+					 if (isWildcard(str)) {
+						 type = 'attribute js-attribute';
+					 }
+					 if (isIP(str)) {
+						 type = 'number js-number';
+					 }
 					 if (isLocalPath(str)) {
 						 type = 'builtin js-rule js-type';
 					 }
 					 
-					 return not && type ? type + ' error-rule' : type;
+					 return not ? type + ' error-rule' : type;
 				 }
 			};
 });
