@@ -46,7 +46,7 @@ var Editor = React.createClass({
 	setMode: function(mode) {
 		if (/^(javascript|css|xml|rules|markdown)$/i.test(mode)) {
 			mode = RegExp.$1.toLowerCase();
-		} else if (/^(js|pac|jsx)$/i.test(mode)) {
+		} else if (/^(js|pac|jsx|json)$/i.test(mode)) {
 			mode = 'javascript';
 		} else if (/^html?$/i.test(mode)) {
 			mode = 'htmlmixed';
