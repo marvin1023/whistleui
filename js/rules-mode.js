@@ -207,7 +207,9 @@ CodeMirror.defineMode('rules', function() {
 					 if (isLocalPath(str)) {
 						 type = 'builtin js-rule js-type';
 					 }
-					 
+					 if (/^\{.+\}$/.test(str) || /^<.+>$/.test(str) || /^\(.*\)$/.test(str)) {
+						 return 'builtin js-rule js-type';
+					 }
 					 return not ? type + ' error-rule' : type;
 				 }
 			};
