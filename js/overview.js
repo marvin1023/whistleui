@@ -94,7 +94,7 @@ var Overview = React.createClass({
 				  if (name == 'socks') {
             return;
           }
-				  var rule = rules[name];
+				  var rule = rules[name === 'reqScript' ? 'rulesFile' : name];
 				  if (name == 'proxy') {
 				    name = 'proxy/socks';
 				  }

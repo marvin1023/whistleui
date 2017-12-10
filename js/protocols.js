@@ -1,10 +1,10 @@
 var events = require('./events');
-var PROTOCOLS = ['host', 'rule', 'rulesFile', 'weinre', 'log', 'proxy',
+var PROTOCOLS = ['host', 'rule', 'weinre', 'log', 'proxy',
                  'socks', 'pac', 'filter', 'ignore', 'enable', 'disable', 'delete', 
                  'plugin', 'dispatch', 'urlParams', 'urlReplace', 'method', 'statusCode', 
                  'replaceStatus', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
                   'cache', 'redirect', 'location', 'attachment', 'forwardedFor', 'params', 
-                  'html', 'css', 'js', 'reqDelay', 'resDelay', 'reqSpeed', 'resSpeed', 
+                  'html', 'css', 'js', 'reqScript', 'resScript', 'reqDelay', 'resDelay', 'reqSpeed', 'resSpeed', 
                  'reqHeaders', 'resHeaders', 'reqType', 'resType', 'reqCharset', 'resCharset', 
                  'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqPrepend', 'resPrepend',
                   'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace',
