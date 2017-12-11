@@ -211,10 +211,12 @@ exports.log = createCgi({
 $.extend(exports, createCgi({
 	composer: 'cgi-bin/composer',
 	interceptHttpsConnects: 'cgi-bin/intercept-https-connects',
-	hideHttpsConnects: 'cgi-bin/hide-https-connects',
+	hideHttpsConnects: 'cgi-bin/hide-https-connects'
+}, POST_CONF));
+$.extend(exports, createCgi({
 	donotShowAgain: 'cgi-bin/do-not-show-again',
 	checkUpdate: 'cgi-bin/check-update'
-}, POST_CONF));
+}, GET_CONF));
 
 exports.socket = $.extend(createCgi({
 	upload: 'cgi-bin/socket/upload'
