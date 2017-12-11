@@ -119,7 +119,7 @@ function getBoolean(val) {
 exports.getBoolean = getBoolean;
 
 exports.showSystemError = function showSystemError() {
-	alert('Please check if the whistle server is started.');
+	alert('Please check if the whistle server is started.\nOr you do not have permission to operate.');
 };
 
 exports.getClasses = function getClasses(obj) {
