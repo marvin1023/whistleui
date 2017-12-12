@@ -82,6 +82,13 @@ function getPageName() {
 	return hash;
 }
 
+function changePageName(name) {
+	var hash = location.hash.substring(1);
+	var index = hash.indexOf('?');
+	hash = index === -1 ? '' : hash.substring(index);
+	location.hash = name + hash;
+}
+
 function compareSelectedNames(src, target) {
 	var srcLen = src.length;
 	if (srcLen !== target.length) {
@@ -871,7 +878,7 @@ var Index = React.createClass({
 			hasPlugins: true,
 			name: 'plugins'
 		});
-		location.hash = 'plugins';
+		changePageName('plugins');
 	},
 	showNetwork: function(e) {
 		if (this.state.name == 'network') {
@@ -885,7 +892,7 @@ var Index = React.createClass({
 		}, function() {
 			this.startLoadData();
 		});
-		location.hash = 'network';
+		changePageName('network');
 	},
 	handleNetwork: function(item) {
 	  var modal = this.state.network;
@@ -1044,7 +1051,7 @@ var Index = React.createClass({
 			hasRules: true,
 			name: 'rules'
 		});
-		location.hash = 'rules';
+		changePageName('rules');
 	},
 	showAndActiveValues: function(item) {
 		var self = this;
@@ -1092,7 +1099,7 @@ var Index = React.createClass({
 			hasValues: true,
 			name: 'values'
 		});
-		location.hash = 'values';
+		changePageName('values');
 	},
 	showNetworkOptions: function() {
 	  if (this.state.name == 'network') {
