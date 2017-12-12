@@ -36,7 +36,7 @@ var Settings = React.createClass({
     if (name === 'viewOwn') {
       dataCenter.setOnlyViewOwnData(target.checked);
       this.setState({});
-      this.props.onFilterTextChanged();
+      this.props.onFilterTextChanged(true);
       return;
     }
     var settings = this.state;

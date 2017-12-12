@@ -374,9 +374,8 @@ var Index = React.createClass({
 		});
 		return pluginsOptions;
 	},
-	setFilterTextState: function() {
+	setFilterTextState: function(changed) {
 		if (this.state.name === 'network') {
-			var changed = dataCenter.isOnlyViewOwnData();
 			if (!changed) {
 				var hasFilterText = dataCenter.hasFilterText();
 				changed = hasFilterText !== this.state.hasFilterText;
