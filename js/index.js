@@ -1962,7 +1962,7 @@ var Index = React.createClass({
 		var hasFilterText;
 
 		if (isNetwork) {
-			hasFilterText = state.hasFilterText;
+			hasFilterText = dataCenter.isOnlyViewOwnData() || state.hasFilterText;
 		}
 		
 		if (rulesOptions[0].name === DEFAULT) {

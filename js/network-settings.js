@@ -32,7 +32,12 @@ var Settings = React.createClass({
 		var name = target.getAttribute('data-name');
 		if (!name) {
 			return;
-		}
+    }
+    if (name === 'viewOwn') {
+      dataCenter.setOnlyViewOwnData(target.checked);
+      this.setState({});
+      return;
+    }
     var settings = this.state;
     var filterTextChanged;
     var filterStateChanged;
@@ -120,10 +125,13 @@ var Settings = React.createClass({
               value={state.filterText} data-name="filterText"
               placeholder="type filter text" maxLength={300} />
           </fieldset>
+          <label className="w-network-settings-own">
+            <input checked={dataCenter.isOnlyViewOwnData()} data-name="viewOwn" type="checkbox" />Only view own request data(IP: {dataCenter.clientIp})
+          </label>
           <fieldset className="network-settings-columns">
             <legend>
               <label>
-                <input checked={!disabledColumns} data-name="networkColumns" onChange={this.change} type="checkbox" />Network Columns
+                <input checked={!disabledColumns} data-name="networkColumns" type="checkbox" />Network Columns
               </label>
               <label onClick={this.resetColumns} className="btn btn-default">Reset</label>
             </legend>

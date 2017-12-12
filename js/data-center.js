@@ -26,6 +26,7 @@ var dataIndex = 10000;
 var MAX_PATH_LENGTH = 1024;
 var lastRowId;
 var hashFilterObj;
+var onlyViewOwnData = storage.get('onlyViewOwnData') == 1;
 var DEFAULT_CONF = {
 	timeout: TIMEOUT,
 	xhrFields: {
@@ -33,7 +34,15 @@ var DEFAULT_CONF = {
 	},
 	data: {}
 };
+exports.clientIp = '127.0.0.1';
 
+exports.setOnlyViewOwnData = function(enable) {
+	onlyViewOwnData = enable !== false;
+	storage.set('onlyViewOwnData', onlyViewOwnData ? 1 : 0);
+};
+exports.isOnlyViewOwnData = function() {
+	return onlyViewOwnData;
+};
 
 function handleHashFilterChanged() {
 	var hash = location.hash.substring(1);
@@ -277,7 +286,10 @@ exports.getInitialData = function (callback) {
 						processData: false,
 						timeout: 36000
 					}));
-					initialDataPromise.resolve(data)
+					initialDataPromise.resolve(data);
+					if (data.clientIp) {
+						exports.clientIp = data.clientIp;
+					}
 				} else {
 					setTimeout(load, 1000);
 				}
@@ -440,11 +452,17 @@ function startLoadData() {
 			count: 60
 		};
 		$.extend(options, hashFilterObj);
+		if (onlyViewOwnData) {
+			options.ip = 'self';
+		}
 		cgi.getData(options, function (data) {
 			setTimeout(load, 900);
 			updateServerInfo(data);
 			if (!data || data.ec !== 0) {
 				return;
+			}
+			if (data.clientIp) {
+				exports.clientIp = data.clientIp;
 			}
 			emitRulesChanged(data);
 			emitValuesChanged(data);
