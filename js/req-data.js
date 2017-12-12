@@ -8,6 +8,7 @@ var columns = require('./columns');
 var FilterInput = require('./filter-input');
 var Spinner = require('./spinner');
 var events = require('./events');
+var dataCenter = require('./data-center');
 var HEIGHT = 24; //每条数据的高度
 var columnState = {};
 var NOT_BOLD_RULES = {
@@ -334,7 +335,7 @@ var ReqData = React.createClass({
 						    </table>
 						</div>
 						<div ref="container" tabIndex="0"
-							style={{background: filterText ? 'lightyellow' : undefined}}
+							style={{background: (dataCenter.hashFilterObj || filterText) ? 'lightyellow' : undefined}}
 							className="w-req-data-list fill">
 							<table ref="content" className="table" onDragStart={this.onDragStart}>
 						      <tbody>

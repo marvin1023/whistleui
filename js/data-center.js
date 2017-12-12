@@ -33,6 +33,32 @@ var DEFAULT_CONF = {
 	data: {}
 };
 
+
+function handleHashFilterChanged() {
+	var hash = location.hash.substring(1);
+	var index = hash.indexOf('?');
+	var filter;
+	if (index !== -1) {
+		var obj = util.parseQueryString(hash.substring(index + 1), null, null, decodeURIComponent);
+		if (obj.url) {
+			filter = {};
+			filter.url = obj.url;
+		}
+		if (obj.name && obj.value) {
+			filter = filter || {};
+			filter.name = obj.name;
+			filter.value = obj.value;
+		}
+		if (obj.ip) {
+			filter = filter || {};
+			filter.ip = obj.ip;
+		}
+	}
+	exports.hashFilterObj = filter;
+}
+handleHashFilterChanged();
+$(window).on('hashchange', handleHashFilterChanged);
+
 function setFilterText(settings) {
 	settings = settings || {};
 	storage.set('filterText', JSON.stringify({
