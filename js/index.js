@@ -73,7 +73,13 @@ var REMOVE_OPTIONS = [
 ];
 
 function getPageName() {
-	return location.hash.substring(1) || location.href.replace(/[#?].*$/, '').replace(/.*\//, '');
+	var hash = location.hash.substring(1);
+	if (hash) {
+		hans = hash.replace(/[?#].*$/, '');
+	} else {
+		hash = location.href.replace(/[?#].*$/, '').replace(/.*\//, '');
+	}
+	return hash;
 }
 
 function compareSelectedNames(src, target) {
