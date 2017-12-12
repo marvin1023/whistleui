@@ -159,7 +159,7 @@ CodeMirror.defineMode('rules', function() {
 							 } else if (isLog(str)) {
 								 type = 'atom js-log js-type';
 							 } else if (isPlugin(str)) {
-                 type = 'atom js-plugin js-type';
+                 type = 'variable-2 js-plugin js-type';
                } else if (isFilter(str)) {
                  type = 'negative js-filter js-type';
                } else if (isIgnore(str)) {
