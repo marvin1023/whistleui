@@ -243,8 +243,12 @@ exports.parseQueryString = function(str, delimiter, seperator, decode, donotAllo
 					val = value.replace(/\+/g, ' ');
 					k = k.replace(/\+/g, ' ');
 				}
-				value = decode ? decode(val) : value;
-				key = decode ? decode(k) : key;
+				try {
+					value = decode ? decode(val) : value;
+				} catch(e) {}
+				try {
+					key = decode ? decode(k) : key;
+				} catch(e) {}
 			} catch(e) {}
 			if (!donotAllowRepeat && (key in result)) {
 				var curVal = result[key];
