@@ -25,6 +25,7 @@ var lastSvrLogTime = -2;
 var dataIndex = 10000;
 var MAX_PATH_LENGTH = 1024;
 var lastRowId;
+var hashFilterObj;
 var DEFAULT_CONF = {
 	timeout: TIMEOUT,
 	xhrFields: {
@@ -54,7 +55,7 @@ function handleHashFilterChanged() {
 			filter.ip = obj.ip;
 		}
 	}
-	exports.hashFilterObj = filter;
+	hashFilterObj = exports.hashFilterObj = filter;
 }
 handleHashFilterChanged();
 $(window).on('hashchange', handleHashFilterChanged);
@@ -428,7 +429,7 @@ function startLoadData() {
 			curReqId = curActiveItem.id;
 			lastFrameId = curActiveItem.lastFrameId;
 		}
-		cgi.getData({
+		var options = {
 			startLogTime: startLogTime,
 			startSvrLogTime: startSvrLogTime,
 			ids: pendingIds.join(),
@@ -437,7 +438,9 @@ function startLoadData() {
 			curReqId: curReqId,
 			lastFrameId: lastFrameId,
 			count: 60
-		}, function (data) {
+		};
+		$.extend(options, hashFilterObj);
+		cgi.getData(options, function (data) {
 			setTimeout(load, 900);
 			updateServerInfo(data);
 			if (!data || data.ec !== 0) {
