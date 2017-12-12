@@ -376,8 +376,12 @@ var Index = React.createClass({
 	},
 	setFilterTextState: function() {
 		if (this.state.name === 'network') {
-			var hasFilterText = dataCenter.hasFilterText();
-			if (hasFilterText !== this.state.hasFilterText) {
+			var changed = dataCenter.isOnlyViewOwnData();
+			if (!changed) {
+				var hasFilterText = dataCenter.hasFilterText();
+				changed = hasFilterText !== this.state.hasFilterText;
+			}
+			if (changed) {
 				this.setState({
 					hasFilterText: hasFilterText
 				});
