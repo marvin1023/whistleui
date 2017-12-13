@@ -501,6 +501,7 @@ function startLoadData() {
 				}
 				return;
 			}
+			var lastId = data.lastId;
 			var ids = data.newIds;
 			var data = data.data;
 			dataList.forEach(function (item) {
@@ -512,25 +513,20 @@ function startLoadData() {
 					item.lost = true;
 				}
 			});
-
+			if (lastId && (!lastRowId || util.compareReqId(lastId, lastRowId))) {
+				lastRowId = lastId;
+			}
 			if (ids.length) {
 				var filterObj = parseFilterText();
-				var lastRow;
 				ids.forEach(function (id) {
 					var item = data[id];
 					if (item) {
-						lastRow = item;
 						if (filterData(filterObj, item)) {
 							setReqData(item);
 							dataList.push(item);
 						}
 					}
 				});
-
-				lastRow = lastRow || dataList[dataList.length - 1];
-				if (lastRow && (!lastRowId || util.compareReqId(lastRow.id, lastRowId))) {
-					lastRowId = lastRow.id;
-				}
 			}
 			dataCallbacks.forEach(function (cb) {
 				cb(networkModal);
