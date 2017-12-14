@@ -111,6 +111,19 @@ function getProperty(obj, name, defaultValue) {
 
 exports.getProperty = getProperty;
 
+function getServerIp(modal) {
+	var ip = modal.hostIp;
+	if (ip) {
+		var realEnv = util.getProperty(item, 'res.headers.x-whistle-response-for');
+		if (realEnv) {
+			ip = realEnv + ',' + ip;
+		}
+	}
+	return ip;
+}
+
+exports.getServerIp = getServerIp;
+
 function getBoolean(val) {
 	
 	return !(!val || val === 'false');

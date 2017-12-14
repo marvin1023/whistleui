@@ -45,6 +45,9 @@ var Overview = React.createClass({
 				var prop = OVERVIEW_PROPS[i];
 				if (prop) {
 					var value = util.getProperty(modal, prop);
+					if (value && prop === 'res.ip') {
+						value = util.getServerIp(modal);
+					}
 					if (value) {
 						if ((prop == 'req.size' || prop == 'res.size') && value >= 1024) {
 							value += '(' + Number(value / 1024).toFixed(2) + 'k)'

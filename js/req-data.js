@@ -358,9 +358,10 @@ var ReqData = React.createClass({
 																		path = item.path;
 																	}
 																	return <td key={name} className="path" title={url}>{path}</td>;
-																} 
+																}
+																var value = name === 'hostIp' ? util.getServerIp(item) : item[name];
 																return (<td key={name} className={className}
-																	title={col.showTitle ? item[name] : undefined}>{item[name]}</td>);
+																	title={col.showTitle ? value : undefined}>{value}</td>);
 															})}
 						    		  			</tr>);
 						    	  })
