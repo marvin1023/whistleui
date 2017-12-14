@@ -114,7 +114,7 @@ exports.getProperty = getProperty;
 function getServerIp(modal) {
 	var ip = modal.hostIp;
 	if (ip) {
-		var realEnv = getProperty(item, 'res.headers.x-whistle-response-for');
+		var realEnv = getProperty(modal, 'res.headers.x-whistle-response-for');
 		if (realEnv) {
 			ip = realEnv + ',' + ip;
 		}
