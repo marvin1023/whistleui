@@ -1,6 +1,8 @@
 require('./base-css.js');
 require('../css/overview.css');
 var React = require('react');
+var ReactDOM = require('react-dom');
+var events = require('./events');
 var util = require('./util');
 var Properties = require('./properties');
 
@@ -33,6 +35,15 @@ var Overview = React.createClass({
 	shouldComponentUpdate: function(nextProps) {
 		var hide = util.getBoolean(this.props.hide);
 		return hide != util.getBoolean(nextProps.hide) || !hide;
+	},
+	componentDidMount: function() {
+		var self = this;
+		var container = ReactDOM.findDOMNode(self.refs.container);
+		events.on('overviewScrollTop', function() {
+			if (!util.getBoolean(self.props.hide)) {
+				container.scrollTop = 0;
+			}
+		});
 	},
 	render: function() {
 		var overviewModal = DEFAULT_OVERVIEW_MODAL;
@@ -117,7 +128,7 @@ var Overview = React.createClass({
 		}
 		
 		return (
-			<div className={'fill orient-vertical-box w-detail-content w-detail-overview' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
+			<div ref="container" className={'fill orient-vertical-box w-detail-content w-detail-overview' + (util.getBoolean(this.props.hide) ? ' hide' : '')}>
 				<Properties modal={overviewModal} />
 				<p className="w-detail-overview-title"><a href="https://avwo.github.io/whistle/rules/" target="_blank"><span className="glyphicon glyphicon-question-sign"></span></a>All rules:</p>
 				<Properties modal={rulesModal} title={titleModal} />

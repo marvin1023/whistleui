@@ -46,6 +46,7 @@ var ReqData = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		events.on('showOverview', function() {
+			events.trigger('overviewScrollTop');
 			self.toggleTab(TABS[0]);
 		}).on('composer', function() {
 			var modal = self.props.modal;
@@ -78,6 +79,12 @@ var ReqData = React.createClass({
 			if (data && data.id === id) {
 				return this.showComposer(data);
 			}
+		}
+	},
+	onDoubleClick: function(e) {
+		var target = e.target;
+		if (/overview/i.test(target.innerHTML)) {
+			events.trigger('overviewScrollTop');
 		}
 	},
 	toggleTab: function(tab, callback) {
@@ -138,7 +145,7 @@ var ReqData = React.createClass({
 		
 		return (
 				<div className="fill orient-vertical-box w-detail" onDragEnter={this.onDragEnter} onDrop={this.onDrop}>
-				<BtnGroup onClick={this.toggleTab} tabs={TABS} />
+				<BtnGroup onDoubleClick={this.onDoubleClick} onClick={this.toggleTab} tabs={TABS} />
 				{this.state.initedOverview ? <Overview modal={overview} hide={name != TABS[0].name} /> : ''}
 				{this.state.initedRequest ? <ReqDetail modal={activeItem} hide={name != TABS[1].name} /> : ''}
 				{this.state.initedResponse ? <ResDetail modal={activeItem} hide={name != TABS[2].name} /> : ''}
