@@ -116,6 +116,9 @@ function getServerIp(modal) {
 	if (ip) {
 		var realEnv = getProperty(modal, 'res.headers.x-whistle-response-for');
 		if (realEnv) {
+			try {
+				realEnv = decodeURIComponent(realEnv);
+			} catch(e) {}
 			ip = realEnv + ',' + ip;
 		}
 	}
