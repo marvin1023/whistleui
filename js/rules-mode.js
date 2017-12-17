@@ -175,28 +175,31 @@ CodeMirror.defineMode('rules', function() {
 							 } else if (isExportsUrl(str)) {
 								 type = 'atom js-exportsUrl js-type';
 							 } else if (isDispatch(str)) {
-                 type = 'atom js-dispatch js-type';
-               } else if (isProxy(str)) {
-                 type = 'variable-2 js-proxy js-type';
-               } else if (isSocks(str)) {
-                 type = 'variable-2 js-socks js-type';
-               } else if (isPac(str)) {
-                 type = 'variable-2 js-pac js-type';
-               } else if (isRulesFile(str)) {
-                 type = 'variable-2 js-rulesFile js-type';
-               } else if (isUrl(str)) {
-								 type = 'string-2 js-url js-type';
-							 } else if (isWildcard(str)) {
-								 type = 'attribute js-attribute';
-							 } else if (isRule(str)) {
-								 type = 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
-							 }
+								type = 'atom js-dispatch js-type';
+							} else if (isProxy(str)) {
+								type = 'variable-2 js-proxy js-type';
+							} else if (isSocks(str)) {
+								type = 'variable-2 js-socks js-type';
+							} else if (isPac(str)) {
+								type = 'variable-2 js-pac js-type';
+							} else if (isRulesFile(str)) {
+								type = 'variable-2 js-rulesFile js-type';
+							} else if (isUrl(str)) {
+								type = 'string-2 js-url js-type';
+							} else if (isWildcard(str)) {
+								type = 'attribute js-attribute';
+							} else if (isRule(str)) {
+								type = 'builtin js-rule js-type' + (notExistRule(str) ? ' error-rule' : '');
+							}
 						}
 						pre = ch;
 						return true;
 					 });
 					 if (isRegExp(str)) {
 						 return 'attribute js-attribute';
+					 }
+					 if (/^@/.test(str)) {
+						 return 'atom js-at js-type';
 					 }
 					 if (isWildcard(str)) {
 						 type = 'attribute js-attribute';
