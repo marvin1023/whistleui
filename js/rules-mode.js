@@ -175,7 +175,7 @@ CodeMirror.defineMode('rules', function() {
 							 } else if (isExportsUrl(str)) {
 								 type = 'atom js-exportsUrl js-type';
 							 } else if (isDispatch(str)) {
-								type = 'atom js-dispatch js-type';
+								type = 'variable-2 js-dispatch js-type';
 							} else if (isProxy(str)) {
 								type = 'variable-2 js-proxy js-type';
 							} else if (isSocks(str)) {
