@@ -160,14 +160,6 @@ var cgi = createCgi({
 	getInitaial: 'cgi-bin/init'
 }, GET_CONF);
 
-if (/_lastPageLogTime=([^;]+)/.test(document.cookie)) {
-	lastPageLogTime = RegExp.$1;
-}
-
-if (/_lastSvrLogTime=([^;]+)/.test(document.cookie)) {
-	lastSvrLogTime = RegExp.$1;
-}
-
 function toLowerCase(str) {
 	return String(str == null ? '' : str).trim().toLowerCase();
 }
@@ -474,12 +466,12 @@ function startLoadData() {
 			if (len || svrLen) {
 				if (len) {
 					logList.push.apply(logList, data.log);
-					document.cookie = '_lastPageLogTime=' + data.log[data.log.length - 1].id;
+					lastPageLogTime = data.log[data.log.length - 1].id;
 				}
 
 				if (svrLen) {
 					svrLogList.push.apply(svrLogList, data.svrLog);
-					document.cookie = '_lastSvrLogTime=' + data.svrLog[data.svrLog.length - 1].id;
+					lastSvrLogTime = data.svrLog[data.svrLog.length - 1].id;
 				}
 
 				logCallbacks.forEach(function (cb) {
