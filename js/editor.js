@@ -33,7 +33,6 @@ var themes = ['default', 'neat', 'elegant', 'erlang-dark', 'night', 'monokai', '
               , 'rubyblue', 'lesser-dark', 'xq-dark', 'xq-light', 'ambiance'
               , 'blackboard', 'vibrant-ink', 'solarized dark', 'solarized light', 'twilight', 'midnight'];
 var rulesMode = require('./rules-mode');
-var confMode = require('./conf-mode');
 var DEFAULT_THEME = 'cobalt';
 var DEFAULT_FONT_SIZE = '16px';
 var RULES_COMMENT_RE = /^()\s*#\s*/;
@@ -45,7 +44,7 @@ var Editor = React.createClass({
 		return themes;
 	},
 	setMode: function(mode) {
-		if (/^(javascript|css|xml|rules|markdown|conf)$/i.test(mode)) {
+		if (/^(javascript|css|xml|rules|markdown)$/i.test(mode)) {
 			mode = RegExp.$1.toLowerCase();
 		} else if (/^(js|pac|jsx|json)$/i.test(mode)) {
 			mode = 'javascript';
@@ -53,8 +52,6 @@ var Editor = React.createClass({
 			mode = 'htmlmixed';
 		} else if (/^md$/i.test(mode)) {
 			mode = 'markdown';
-		} else if (/^config$/i.test(mode)) {
-			mode = 'conf';
 		}
 		
 		this._mode = mode;
