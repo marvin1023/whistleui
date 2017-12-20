@@ -60,21 +60,28 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   if (!list.length) {
     return;
   }
-  var colonIndex = curLine.indexOf(':', start);
-  if (colonIndex === -1) {
-    colonIndex = curLine.indexOf(':', end);
-  }
-  if (colonIndex !== -1) {
-    ++colonIndex;
-    var protocol = curLine.substring(start, colonIndex) + '//';
-    if (list.indexOf(protocol) !== -1) {
-      end = colonIndex;
-      var curChar = curLine[end];
-      if (curChar === '/') {
-        end++;
-        curChar = curLine[end];
+  var index = curLine.indexOf('://', start);
+  var protocol;
+  if (index !== -1) {
+    index = index + 3;
+    protocol = curLine.substring(start, index);
+    if (!/\s/.test(protocol)) {
+      end = index;
+    }
+  } else {
+    index = curLine.indexOf(':', start);
+    if (index !== -1) {
+      ++index;
+      protocol = curLine.substring(start, index) + '//';
+      if (list.indexOf(protocol) !== -1) {
+        end = index;
+        var curChar = curLine[end];
         if (curChar === '/') {
           end++;
+          curChar = curLine[end];
+          if (curChar === '/') {
+            end++;
+          }
         }
       }
     }
