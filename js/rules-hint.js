@@ -52,25 +52,34 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   while (start && WORD.test(curLine.charAt(start - 1))) {
     --start;
   }
-  var curWord = start != end && curLine.slice(start, end);
+  var curWord = start != end && curLine.substring(start, end) || '';
   if (curWord && curWord.indexOf('//') !== -1) {
     return;
-  }
-  var curChar = curLine[end];
-  if (curChar === ':') {
-    end++;
-    curChar = curLine[end];
-  }
-  if (curChar === '/') {
-    end++;
-    curChar = curLine[end];
-    if (curChar === '/') {
-      end++;
-    }
   }
   var list = getHints(curWord);
   if (!list.length) {
     return;
+  }
+  var colonIndex = curWord.indexOf(':');
+  if (colonIndex === -1) {
+    colonIndex = curLine.indexOf(':', end);
+  }
+  if (colonIndex !== -1) {
+    ++colonIndex;
+    var protocol = curLine.substring(start, colonIndex) + '//';
+    if (curWord || !/^(?:http|ws)s?:\/\//.test(protocol)) {
+      if (list.indexOf(protocol) !== -1) {
+        end = colonIndex;
+        var curChar = curLine[end];
+        if (curChar === '/') {
+          end++;
+          curChar = curLine[end];
+          if (curChar === '/') {
+            end++;
+          }
+        }
+      }
+    }
   }
   return {list: list, from: CodeMirror.Pos(cur.line, start), to: CodeMirror.Pos(cur.line, end)};
 });
