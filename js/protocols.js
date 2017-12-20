@@ -4,11 +4,13 @@ var PROTOCOLS = ['host', 'rule', 'weinre', 'log', 'proxy',
                  'plugin', 'dispatch', 'urlParams', 'urlReplace', 'method', 'statusCode', 
                  'replaceStatus', 'hostname', 'referer', 'accept', 'auth', 'etag', 'ua',
                   'cache', 'redirect', 'location', 'attachment', 'forwardedFor', 'responseFor', 'params', 
-                  'html', 'css', 'js', 'reqScript', 'resScript', 'reqDelay', 'resDelay', 'reqSpeed', 'resSpeed', 
-                 'reqHeaders', 'resHeaders', 'reqType', 'resType', 'reqCharset', 'resCharset', 
-                 'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqPrepend', 'resPrepend',
+                  'reqScript', 'resScript', 'reqDelay', 'resDelay', 'reqSpeed', 'resSpeed', 
+                  'reqHeaders', 'resHeaders', 'reqType', 'resType', 'reqCharset', 'resCharset', 
+                  'reqCookies', 'resCookies', 'reqCors', 'resCors', 'reqPrepend', 'resPrepend',
                   'reqBody', 'resBody', 'reqAppend', 'resAppend', 'reqReplace', 'resReplace',
-                  'req', 'res', 'reqWrite',  'resWrite', 'reqWriteRaw', 'resWriteRaw', 'exportsUrl', 'exports'];
+                  'htmlPrepend', 'htmlBody', 'htmlAppend', 'cssPrepend', 'cssBody', 'cssAppend',
+                  'jsPrepend', 'jsBody', 'jsAppend', 'req', 'res', 'reqWrite',  'resWrite',
+                  'reqWriteRaw', 'resWriteRaw', 'exportsUrl', 'exports'];
 
 var innerRules = ['file', 'xfile', 'tpl', 'xtpl', 'rawfile', 'xrawfile'];
 var pluginRules = [];
