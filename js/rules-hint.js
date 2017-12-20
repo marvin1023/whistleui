@@ -52,7 +52,7 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   while (start && WORD.test(curLine.charAt(start - 1))) {
     --start;
   }
-  var curWord = start != end && curLine.substring(start, end) || '';
+  var curWord = start != end && curLine.substring(start, end);
   if (curWord && curWord.indexOf('//') !== -1) {
     return;
   }
@@ -60,7 +60,7 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   if (!list.length) {
     return;
   }
-  var colonIndex = curWord.indexOf(':');
+  var colonIndex = curLine.indexOf(':', start);
   if (colonIndex === -1) {
     colonIndex = curLine.indexOf(':', end);
   }
