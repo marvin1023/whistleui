@@ -1554,6 +1554,7 @@ var Index = React.createClass({
 		dataCenter.rules[item.isDefault ? 'enableDefault' : 'select'](item, function(data) {
 			if (data && data.ec === 0) {
 				self.reselectRules(data);
+				self.state.rules.setChanged(item.name, false);
 				self.setState({});
 			} else {
 				util.showSystemError();
