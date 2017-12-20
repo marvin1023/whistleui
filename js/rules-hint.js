@@ -67,16 +67,14 @@ CodeMirror.registerHelper('hint', 'rulesHint', function(editor, options) {
   if (colonIndex !== -1) {
     ++colonIndex;
     var protocol = curLine.substring(start, colonIndex) + '//';
-    if (curWord || !/^(?:http|ws)s?:\/\//.test(protocol)) {
-      if (list.indexOf(protocol) !== -1) {
-        end = colonIndex;
-        var curChar = curLine[end];
+    if (list.indexOf(protocol) !== -1) {
+      end = colonIndex;
+      var curChar = curLine[end];
+      if (curChar === '/') {
+        end++;
+        curChar = curLine[end];
         if (curChar === '/') {
           end++;
-          curChar = curLine[end];
-          if (curChar === '/') {
-            end++;
-          }
         }
       }
     }
