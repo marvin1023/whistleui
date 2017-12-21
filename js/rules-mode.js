@@ -209,6 +209,8 @@ CodeMirror.defineMode('rules', function() {
 								type = 'variable-2 js-pac js-type';
 							} else if (isRulesFile(str)) {
 								type = 'variable-2 js-rulesFile js-type';
+							} else if (isUrl(str)) {
+								type = 'string-2 js-url js-type';
 							} else if (isWildcard(str)) {
 								type = 'attribute js-attribute';
 							} else if (isRule(str)) {
@@ -234,8 +236,6 @@ CodeMirror.defineMode('rules', function() {
 						 type = 'builtin js-rule js-type';
 					 } else if (isLocalPath(str)) {
 					   type = 'builtin js-rule js-type';
-					 } else if (isUrl(str)) {
-						 type = 'string-2 js-url js-type';
 					 } else if (isRegUrl(str)) {
 						 type = 'attribute js-attribute';
 					 } else if (/^\^/.test(str)) {
