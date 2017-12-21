@@ -145,61 +145,60 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			return {
-				 token: function(stream, state) {
-					 if (stream.eatSpace()) {
-					     return null;
-					   }
+				token: function(stream, state) {
+					if (stream.eatSpace()) {
+						return null;
+					}
 					 
-					 var ch = stream.next();
-					 if (ch == '#') {
-						 stream.eatWhile(function(ch) {
-							 return true;
-						 });
-						 return 'comment';
-					 }
+					var ch = stream.next();
+					if (ch == '#') {
+						stream.eatWhile(function(ch) {
+							return true;
+						});
+						return 'comment';
+					}
 
-					 var not = ch === '!';
-					 var str = not ? stream.next() : ch;
-					 var type = '';
-					 var pre;
-					 stream.eatWhile(function(ch) {
+					var not = ch === '!';
+					var str = not ? stream.next() : ch;
+					var type = '';
+					var pre, isWebUrl;
+					stream.eatWhile(function(ch) {
 						if (/\s/.test(ch) || ch == '#') {
 							return false;
 						}
-						
 						str += ch;
 						if (!type && ch == '/' && pre == '/') {
 							if (isHead(str)) {
-								 type = 'header js-head js-type';
-							 } else if (isWeinre(str)) {
-								 type = 'atom js-weinre js-type';
-							 } else if (isProxy(str)) {
-								 type = 'tag js-proxy js-type';
-							 } else if (isReq(str)) {
-								 type = 'variable-2 js-req js-type';
-							 } else if (isRes(str)) {
-								 type = 'positive js-res js-type';
-							 } else if (isParams(str)) {
-								 type = 'meta js-params js-type';
-							 } else if (isLog(str)) {
-								 type = 'atom js-log js-type';
-							 } else if (isPlugin(str)) {
-                 type = 'variable-2 js-plugin js-type';
-               } else if (isFilter(str)) {
-                 type = 'negative js-filter js-type';
-               } else if (isIgnore(str)) {
-                 type = 'negative js-ignore js-type';
-               } else if (isEnable(str)) {
-                 type = 'atom js-enable js-type';
-               } else if (isDisable(str)) {
-                 type = 'negative js-disable js-type';
-               } else if (isDelete(str)) {
-                 type = 'negative js-delete js-type';
-               } else if (isExports(str)) {
-								 type = 'atom js-exports js-type';
-							 } else if (isExportsUrl(str)) {
-								 type = 'atom js-exportsUrl js-type';
-							 } else if (isDispatch(str)) {
+								type = 'header js-head js-type';
+							} else if (isWeinre(str)) {
+								type = 'atom js-weinre js-type';
+							} else if (isProxy(str)) {
+								type = 'tag js-proxy js-type';
+							} else if (isReq(str)) {
+								type = 'variable-2 js-req js-type';
+							} else if (isRes(str)) {
+								type = 'positive js-res js-type';
+							} else if (isParams(str)) {
+								type = 'meta js-params js-type';
+							} else if (isLog(str)) {
+								type = 'atom js-log js-type';
+							} else if (isPlugin(str)) {
+								type = 'variable-2 js-plugin js-type';
+							} else if (isFilter(str)) {
+								type = 'negative js-filter js-type';
+							} else if (isIgnore(str)) {
+								type = 'negative js-ignore js-type';
+							} else if (isEnable(str)) {
+								type = 'atom js-enable js-type';
+							} else if (isDisable(str)) {
+								type = 'negative js-disable js-type';
+							} else if (isDelete(str)) {
+								type = 'negative js-delete js-type';
+							} else if (isExports(str)) {
+								type = 'atom js-exports js-type';
+							} else if (isExportsUrl(str)) {
+								type = 'atom js-exportsUrl js-type';
+							} else if (isDispatch(str)) {
 								type = 'variable-2 js-dispatch js-type';
 							} else if (isProxy(str)) {
 								type = 'variable-2 js-proxy js-type';
@@ -210,6 +209,7 @@ CodeMirror.defineMode('rules', function() {
 							} else if (isRulesFile(str)) {
 								type = 'variable-2 js-rulesFile js-type';
 							} else if (isUrl(str)) {
+								isWebUrl = true;
 								type = 'string-2 js-url js-type';
 							} else if (isWildcard(str)) {
 								type = 'attribute js-attribute';
@@ -219,31 +219,37 @@ CodeMirror.defineMode('rules', function() {
 						}
 						pre = ch;
 						return true;
-					 });
-					 if (type) {
-						 return not ? type + ' error-rule' : type;
-					 }
-					 if (isRegExp(str)) {
-						 return 'attribute js-attribute';
-					 }
-					 if (/^@/.test(str)) {
-						 type = 'atom js-at js-type';
-					 } else if (isWildcard(str)) {
-						 type = 'attribute js-attribute';
-					 } else if (isIP(str)) {
-						 type = 'number js-number';
-					 } else if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
-						 type = 'builtin js-rule js-type';
-					 } else if (isLocalPath(str)) {
-					   type = 'builtin js-rule js-type';
-					 } else if (isRegUrl(str)) {
-						 type = 'attribute js-attribute';
-					 } else if (/^\^/.test(str)) {
-						 not = true;
-						 type = '';
-					 }
-					 
-					 return not ? type + ' error-rule' : type;
+					});
+					if (!isWebUrl) {
+						if (type) {
+							return not ? type + ' error-rule' : type;
+						}
+						if (isRegExp(str)) {
+							return 'attribute js-attribute';
+						}
+					} else {
+						if (/^@/.test(str)) {
+							type = 'atom js-at js-type';
+						} else if (isWildcard(str)) {
+							type = 'attribute js-attribute';
+						} else if (isIP(str)) {
+							type = 'number js-number';
+						} else if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
+							type = 'builtin js-rule js-type';
+						} else if (isLocalPath(str)) {
+							type = 'builtin js-rule js-type';
+						}
+					}
+					if (isWebUrl || !type) {
+						if (isRegUrl(str)) {
+							type = 'attribute js-attribute';
+						} else if (/^\^/.test(str)) {
+							not = true;
+							type = '';
+						}
+					}
+
+					return not ? type + ' error-rule' : type;
 				 }
 			};
 });
