@@ -16,7 +16,7 @@ function isRegUrl(url) {
   if (hasStartSymbol) {
     url = url.replace(/^\^+/, '');
   }
-  if (/^(?:([\w.*-]+:)?\/\/)?([^/]*)/.test(url)) {
+  if (/^(?:([\w.*-]+:)?\/\/)?([\w*.-]*)/.test(url)) {
     var protocol = RegExp.$1 || '';
     var domain = RegExp.$2;
     var result = hasStartSymbol || domain.indexOf('*') !== -1;
@@ -235,9 +235,6 @@ CodeMirror.defineMode('rules', function() {
 					 if (isIP(str)) {
 						 type = 'number js-number';
 					 }
-					 if (isLocalPath(str)) {
-						 type = 'builtin js-rule js-type';
-					 }
 					 if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
 						 type = 'builtin js-rule js-type';
 					 }
@@ -247,7 +244,9 @@ CodeMirror.defineMode('rules', function() {
 					 } else if (/^\^/.test(str)) {
 						 not = true;
 						 type = '';
-					 }
+					 } else if (isLocalPath(str)) {
+						type = 'builtin js-rule js-type';
+					}
 					 
 					 return not ? type + ' error-rule' : type;
 				 }
