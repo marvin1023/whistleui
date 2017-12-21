@@ -227,18 +227,16 @@ CodeMirror.defineMode('rules', function() {
 						if (isRegExp(str)) {
 							return 'attribute js-attribute';
 						}
-					} else {
-						if (/^@/.test(str)) {
-							type = 'atom js-at js-type';
-						} else if (isWildcard(str)) {
-							type = 'attribute js-attribute';
-						} else if (isIP(str)) {
-							type = 'number js-number';
-						} else if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
-							type = 'builtin js-rule js-type';
-						} else if (isLocalPath(str)) {
-							type = 'builtin js-rule js-type';
-						}
+					} else if (/^@/.test(str)) {
+						type = 'atom js-at js-type';
+					} else if (isWildcard(str)) {
+						type = 'attribute js-attribute';
+					} else if (isIP(str)) {
+						type = 'number js-number';
+					} else if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
+						type = 'builtin js-rule js-type';
+					} else if (isLocalPath(str)) {
+						type = 'builtin js-rule js-type';
 					}
 					if (isWebUrl || !type) {
 						if (isRegUrl(str)) {
