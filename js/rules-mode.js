@@ -209,8 +209,6 @@ CodeMirror.defineMode('rules', function() {
 								type = 'variable-2 js-pac js-type';
 							} else if (isRulesFile(str)) {
 								type = 'variable-2 js-rulesFile js-type';
-							} else if (isUrl(str)) {
-								type = 'string-2 js-url js-type';
 							} else if (isWildcard(str)) {
 								type = 'attribute js-attribute';
 							} else if (isRule(str)) {
@@ -228,25 +226,22 @@ CodeMirror.defineMode('rules', function() {
 					 }
 					 if (/^@/.test(str)) {
 						 type = 'atom js-at js-type';
-					 }
-					 if (isWildcard(str)) {
+					 } else if (isWildcard(str)) {
 						 type = 'attribute js-attribute';
-					 }
-					 if (isIP(str)) {
+					 } else if (isIP(str)) {
 						 type = 'number js-number';
-					 }
-					 if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
+					 } else if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
 						 type = 'builtin js-rule js-type';
-					 }
-					 
-					 if (isRegUrl(str)) {
+					 } else if (isLocalPath(str)) {
+					   type = 'builtin js-rule js-type';
+					 } else if (isUrl(str)) {
+						 type = 'string-2 js-url js-type';
+					 } else if (isRegUrl(str)) {
 						 type = 'attribute js-attribute';
 					 } else if (/^\^/.test(str)) {
 						 not = true;
 						 type = '';
-					 } else if (isLocalPath(str)) {
-						type = 'builtin js-rule js-type';
-					}
+					 }
 					 
 					 return not ? type + ' error-rule' : type;
 				 }
