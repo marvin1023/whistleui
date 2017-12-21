@@ -3,10 +3,35 @@ var events = require('./events');
 var protocols = require('./protocols');
 var forwardRules = protocols.getForwardRules();
 var pluginRules = protocols.getPluginRules();
+var webProtocols = ['http:', 'https:', 'ws:', 'wss:', 'tunnel:'];
+var webProtocolString = webProtocols.join('');
+
 events.on('updatePlugins', function() {
 	forwardRules = protocols.getForwardRules();
 	pluginRules = protocols.getPluginRules();
 });
+
+function isRegUrl(url) {
+  var hasStartSymbol = /^\^/.test(url);
+  if (hasStartSymbol) {
+    url = url.replace(/^\^+/, '');
+  }
+  if (/^(?:([\w.*-]+:)?\/\/)?([^/]*)/.test(url)) {
+    var protocol = RegExp.$1 || '';
+    var domain = RegExp.$2;
+    var result = hasStartSymbol || domain.indexOf('*') !== -1;
+    if (protocol) {
+      if (webProtocols.indexOf(protocol) !== -1) {
+        return result;
+      }
+      protocol = '(?:^|:)' + protocol.replace(/\*+/, '[a-z]*');
+      protocol = new RegExp(protocol);
+      return protocol.test(webProtocolString) && result;
+    }
+    return result;
+  }
+  return false;
+}
 
 CodeMirror.defineMode('rules', function() {
 			function isIP(str) {
@@ -34,7 +59,7 @@ CodeMirror.defineMode('rules', function() {
 			}
 			
 			function isRule(str) {
-				return /^[^\s:]+:\/\//i.test(str);
+				return /^[\w\.-]+:\/\//i.test(str);
 			}
 			
 			function notExistRule(str) {
@@ -195,11 +220,14 @@ CodeMirror.defineMode('rules', function() {
 						pre = ch;
 						return true;
 					 });
+					 if (type) {
+						 return not ? type + ' error-rule' : type;
+					 }
 					 if (isRegExp(str)) {
 						 return 'attribute js-attribute';
 					 }
 					 if (/^@/.test(str)) {
-						 return 'atom js-at js-type';
+						 type = 'atom js-at js-type';
 					 }
 					 if (isWildcard(str)) {
 						 type = 'attribute js-attribute';
@@ -211,8 +239,16 @@ CodeMirror.defineMode('rules', function() {
 						 type = 'builtin js-rule js-type';
 					 }
 					 if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
-						 return 'builtin js-rule js-type';
+						 type = 'builtin js-rule js-type';
 					 }
+					 
+					 if (isRegUrl(str)) {
+						 type = 'attribute js-attribute';
+					 } else if (/^\^/.test(str)) {
+						 not = true;
+						 type = '';
+					 }
+					 
 					 return not ? type + ' error-rule' : type;
 				 }
 			};
