@@ -243,9 +243,10 @@ CodeMirror.defineMode('rules', function() {
 					}
 					if (isWebUrl || !type) {
 						if (isRegUrl(str)) {
-							type = 'attribute js-attribute';
-						} else if (/^\^/.test(str)) {
-							not = true;
+							return 'attribute js-attribute';
+						}
+						if (/^\^/.test(str)) {
+							not = isWebUrl;
 							type = '';
 						}
 					}
