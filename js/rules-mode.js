@@ -20,16 +20,13 @@ function isRegUrl(url) {
     var protocol = RegExp.$1 || '';
     var domain = RegExp.$2;
     var result = hasStartSymbol || domain.indexOf('*') !== -1;
-    if (protocol) {
-      if (webProtocols.indexOf(protocol) !== -1) {
-        return result;
-			}
-			if (protocol.indexOf('*') === -1) {
+    if (protocol && !webProtocols.indexOf(protocol) !== -1) {
+      if (protocol.indexOf('*') === -1) {
         return false;
       }
       protocol = '(?:^|:)' + protocol.replace(/\./g, '\\.').replace(/\*+/, '[a-z]*');
       protocol = new RegExp(protocol);
-      return protocol.test(webProtocolString);
+      result = protocol.test(webProtocolString);
     }
     return result;
   }
