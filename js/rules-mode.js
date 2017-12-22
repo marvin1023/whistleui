@@ -20,7 +20,7 @@ function isRegUrl(url) {
     var protocol = RegExp.$1 || '';
     var domain = RegExp.$2;
     var result = hasStartSymbol || domain.indexOf('*') !== -1;
-    if (protocol && !webProtocols.indexOf(protocol) !== -1) {
+    if (protocol && webProtocols.indexOf(protocol) === -1) {
       if (protocol.indexOf('*') === -1) {
         return false;
       }
