@@ -24,7 +24,7 @@ function isRegUrl(url) {
       if (webProtocols.indexOf(protocol) !== -1) {
         return result;
       }
-      protocol = '(?:^|:)' + protocol.replace(/\*+/, '[a-z]*');
+      protocol = '(?:^|:)' + protocol.replace(/\./g, '\\.').replace(/\*+/, '[a-z]*');
       protocol = new RegExp(protocol);
       return protocol.test(webProtocolString) && result;
     }
