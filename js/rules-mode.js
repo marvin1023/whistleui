@@ -26,9 +26,14 @@ function isRegUrl(url) {
 	}
 	var result = hasStartSymbol || domain.indexOf('*') !== -1;
 	if (protocol && webProtocols.indexOf(protocol) === -1) {
-		protocol = '(?:^|:)' + protocol.replace(/\./g, '\\.').replace(/\*+/, '[a-z]*');
-		protocol = new RegExp(protocol);
-		result = protocol.test(webProtocolString);
+		if (protocol === '//') {
+			protocol = '[a-z]+://';
+			result = true;
+    } else {
+			protocol = '(?:^|:)' + protocol.replace(/\./g, '\\.').replace(/\*+/, '[a-z]*');
+			protocol = new RegExp(protocol);
+			result = protocol.test(webProtocolString);
+		}
 	}
 	return result;
 }
