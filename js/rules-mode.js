@@ -16,21 +16,21 @@ function isRegUrl(url) {
   if (hasStartSymbol) {
     url = url.replace(/^\^+/, '');
   }
-  if (/^(?:([\w.*-]+:)?\/\/)?([\w*.-]*)/.test(url)) {
-    var protocol = RegExp.$1 || '';
-    var domain = RegExp.$2;
-    var result = hasStartSymbol || domain.indexOf('*') !== -1;
-    if (protocol && webProtocols.indexOf(protocol) === -1) {
-      if (protocol.indexOf('*') === -1) {
-        return false;
-      }
-      protocol = '(?:^|:)' + protocol.replace(/\./g, '\\.').replace(/\*+/, '[a-z]*');
-      protocol = new RegExp(protocol);
-      result = protocol.test(webProtocolString);
-    }
-    return result;
+  if (!/^(?:([\w.*-]+:)?\/\/)?([\w*.-]*)/.test(url)) {
+    return false;
   }
-  return false;
+  var protocol = RegExp.$1 || '';
+	var domain = RegExp.$2;
+	var result = hasStartSymbol || domain.indexOf('*') !== -1;
+	if (protocol && webProtocols.indexOf(protocol) === -1) {
+		if (protocol.indexOf('*') === -1) {
+			return false;
+		}
+		protocol = '(?:^|:)' + protocol.replace(/\./g, '\\.').replace(/\*+/, '[a-z]*');
+		protocol = new RegExp(protocol);
+		result = protocol.test(webProtocolString);
+	}
+	return result;
 }
 
 CodeMirror.defineMode('rules', function() {
