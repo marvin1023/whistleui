@@ -21,7 +21,7 @@ function isRegUrl(url) {
   }
   var protocol = RegExp.$1 || '';
 	var domain = RegExp.$2;
-	if (protocol.indexOf('*') === -1) {
+	if (!hasStartSymbol && protocol.indexOf('*') === -1) {
 		return false;
 	}
 	var result = hasStartSymbol || domain.indexOf('*') !== -1;
