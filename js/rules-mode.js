@@ -21,15 +21,11 @@ function isRegUrl(url) {
   }
   var protocol = RegExp.$1 || '';
 	var domain = RegExp.$2;
-	if ((!protocol && !domain) ||
-		(domain === '*' && protocol.indexOf('*') === -1)) {
+	if (protocol.indexOf('*') === -1) {
 		return false;
 	}
 	var result = hasStartSymbol || domain.indexOf('*') !== -1;
 	if (protocol && webProtocols.indexOf(protocol) === -1) {
-		if (protocol.indexOf('*') === -1) {
-			return false;
-		}
 		protocol = '(?:^|:)' + protocol.replace(/\./g, '\\.').replace(/\*+/, '[a-z]*');
 		protocol = new RegExp(protocol);
 		result = protocol.test(webProtocolString);
@@ -243,7 +239,7 @@ CodeMirror.defineMode('rules', function() {
 							type = 'builtin js-rule js-type';
 						}
 					}
-					
+
 					if (isWebUrl || !type) {
 						if (isRegUrl(str)) {
 							return 'attribute js-attribute';
