@@ -3,40 +3,12 @@ var events = require('./events');
 var protocols = require('./protocols');
 var forwardRules = protocols.getForwardRules();
 var pluginRules = protocols.getPluginRules();
-var webProtocols = ['http:', 'https:', 'ws:', 'wss:', 'tunnel:'];
-var webProtocolString = webProtocols.join('');
 
 events.on('updatePlugins', function() {
 	forwardRules = protocols.getForwardRules();
 	pluginRules = protocols.getPluginRules();
 });
 
-function isRegUrl(url) {
-  var hasStartSymbol = /^\^/.test(url);
-  if (hasStartSymbol) {
-    url = url.replace(/^\^+/, '');
-  }
-  if (!/^(?:([\w.*-]+:)?\/\/)?([\w*.-]*)/.test(url)) {
-    return false;
-  }
-  var protocol = RegExp.$1 || '';
-	var domain = RegExp.$2;
-	if (!hasStartSymbol && protocol.indexOf('*') === -1) {
-		return false;
-	}
-	var result = hasStartSymbol || domain.indexOf('*') !== -1;
-	if (protocol && webProtocols.indexOf(protocol) === -1) {
-		if (protocol === '//') {
-			protocol = '[a-z]+://';
-			result = true;
-    } else {
-			protocol = '(?:^|:)' + protocol.replace(/\./g, '\\.').replace(/\*+/, '[a-z]*');
-			protocol = new RegExp(protocol);
-			result = protocol.test(webProtocolString);
-		}
-	}
-	return result;
-}
 
 CodeMirror.defineMode('rules', function() {
 			function isIP(str) {
@@ -148,6 +120,10 @@ CodeMirror.defineMode('rules', function() {
 			function isWildcard(str) {
 				return /^(?:\$?(?:https?:|wss?:|tunnel:)?\/\/)?(?:\*\*?\.|[~*]\/)/.test(str);
 			}
+
+			function isRegUrl(url) {
+				return /^\^/.test(url);
+			}
 			
 			return {
 				token: function(stream, state) {
@@ -166,7 +142,7 @@ CodeMirror.defineMode('rules', function() {
 					var not = ch === '!';
 					var str = not ? stream.next() : ch;
 					var type = '';
-					var pre, isWebUrl;
+					var pre;
 					stream.eatWhile(function(ch) {
 						if (/\s/.test(ch) || ch == '#') {
 							return false;
@@ -214,7 +190,6 @@ CodeMirror.defineMode('rules', function() {
 							} else if (isRulesFile(str)) {
 								type = 'variable-2 js-rulesFile js-type';
 							} else if (isUrl(str)) {
-								isWebUrl = true;
 								type = 'string-2 js-url js-type';
 							} else if (isWildcard(str)) {
 								type = 'attribute js-attribute';
@@ -225,34 +200,22 @@ CodeMirror.defineMode('rules', function() {
 						pre = ch;
 						return true;
 					});
-					if (!isWebUrl) {
-						if (type) {
-							return not ? type + ' error-rule' : type;
-						}
-						if (isRegExp(str)) {
-							return 'attribute js-attribute';
-						}
-						if (/^@/.test(str)) {
-							type = 'atom js-at js-type';
-						} else if (isWildcard(str)) {
-							type = 'attribute js-attribute';
-						} else if (isIP(str)) {
-							type = 'number js-number';
-						} else if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
-							type = 'builtin js-rule js-type';
-						} else if (isLocalPath(str)) {
-							type = 'builtin js-rule js-type';
-						}
+					if (type) {
+						return not ? type + ' error-rule' : type;
 					}
-
-					if (isWebUrl || !type) {
-						if (isRegUrl(str)) {
-							return 'attribute js-attribute';
-						}
-						if (/^\^/.test(str)) {
-							not = isWebUrl;
-							type = '';
-						}
+					if (isRegExp(str) || isRegUrl(str)) {
+						return 'attribute js-attribute';
+					}
+					if (/^@/.test(str)) {
+						type = 'atom js-at js-type';
+					} else if (isWildcard(str)) {
+						type = 'attribute js-attribute';
+					} else if (isIP(str)) {
+						type = 'number js-number';
+					} else if (/^\{.*\}$/.test(str) || /^<.*>$/.test(str) || /^\(.*\)$/.test(str)) {
+						type = 'builtin js-rule js-type';
+					} else if (isLocalPath(str)) {
+						type = 'builtin js-rule js-type';
 					}
 
 					return not ? type + ' error-rule' : type;
