@@ -118,7 +118,10 @@ CodeMirror.defineMode('rules', function() {
 			}
 
 			function isWildcard(str) {
-				return /^(?:\$?(?:https?:|wss?:|tunnel:)?\/\/)?(?:\*\*?\.|[~*]\/)/.test(str);
+				if (!/^(?:\$?(?:https?:|wss?:|tunnel:)?\/\/)?([^/]+)/.test(str)) {
+					return false;
+				}
+				return RegExp.$1.indexOf('*') !== -1 || RegExp.$1.indexOf('~') !== -1;
 			}
 
 			function isRegUrl(url) {
