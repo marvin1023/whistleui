@@ -113,14 +113,17 @@ exports.getProperty = getProperty;
 
 function getServerIp(modal) {
 	var ip = modal.hostIp;
-	if (ip) {
+	if (!modal.serverIp && typeof ip === 'string') {
 		var realEnv = getProperty(modal, 'res.headers.x-whistle-response-for');
 		if (realEnv) {
 			try {
 				realEnv = decodeURIComponent(realEnv);
 			} catch(e) {}
-			ip = realEnv + ',' + ip;
+			if (realEnv !== ip && ip.split(/\s*,\s*/).indexOf(ip) === -1) {
+				ip = realEnv + ',' + ip;
+			}
 		}
+		modal.serverIp = ip;
 	}
 	return ip;
 }
