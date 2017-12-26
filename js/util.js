@@ -121,6 +121,8 @@ function getServerIp(modal) {
 			} catch(e) {}
 			if (realEnv !== ip && realEnv.split(/\s*,\s*/).indexOf(ip) === -1) {
 				ip = realEnv + ',' + ip;
+			} else {
+				ip = realEnv;
 			}
 		}
 		modal.serverIp = ip;
