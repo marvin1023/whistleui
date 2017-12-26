@@ -113,13 +113,14 @@ exports.getProperty = getProperty;
 
 function getServerIp(modal) {
 	var ip = modal.hostIp;
-	if (!modal.serverIp && typeof ip === 'string') {
-		var realEnv = getProperty(modal, 'res.headers.x-whistle-response-for') + '';
+	if (!modal.serverIp && ip) {
+		var realEnv = getProperty(modal, 'res.headers.x-whistle-response-for');
 		if (realEnv) {
+			realEnv += '';
 			try {
 				realEnv = decodeURIComponent(realEnv);
 			} catch(e) {}
-			if (realEnv !== ip && realEnv.split(/\s*,\s*/).indexOf(ip) === -1) {
+			if (realEnv !== ip && realEnv.trim().split(/\s*,\s*/).indexOf(ip) === -1) {
 				ip = realEnv + ',' + ip;
 			} else {
 				ip = realEnv;
@@ -127,7 +128,7 @@ function getServerIp(modal) {
 		}
 		modal.serverIp = ip;
 	}
-	return ip;
+	return modal.serverIp || ip;
 }
 
 exports.getServerIp = getServerIp;
