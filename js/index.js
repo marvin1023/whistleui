@@ -257,14 +257,14 @@ var Index = React.createClass({
                               title: 'Ctrl[Command] + Shift + D'
 		                        },
 		                        {
-		                          name: 'Export Selected Sessions',
+		                          name: 'Export Selected Sessions (*.txt)',
 		                          icon: 'export',
 		                          id: 'exportWhistleFile',
 		                          disabled: true,
                               title: 'Ctrl + S'
 		                        },
                             {
-                              name: 'Export Selected Sessions (For Fiddler)',
+                              name: 'Export Selected Sessions (*.saz)',
                               id: 'exportSazFile',
                               disabled: true,
                               title: 'Ctrl + S'
@@ -2236,7 +2236,7 @@ var Index = React.createClass({
 								  className="form-control" maxLength="64" />
                 <select ref="fileType" className="form-control" value={state.exportFileType} onChange={this.chooseFileType}>
 									<option value="whistle">*.txt</option>
-									<option value="Fiddler">*.saz (For Fiddler)</option>
+									<option value="Fiddler">*.saz</option>
                 </select>
               </label>
 							<a type="button"
